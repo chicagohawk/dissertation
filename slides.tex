@@ -320,7 +320,7 @@
         \barrow Basis selection\\\vspace{.05cm}
             \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
             regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
-            \small
+            \small\vspace{.16cm}
             \begin{dinglist}{227}
                 \carrow we choose Lasso regularization for basis selection.\scriptsize\\
                 $
@@ -356,7 +356,7 @@
         \barrow Basis selection\\\vspace{.05cm}
             \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
             regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
-            \small
+            \small\vspace{.16cm}
             \begin{dinglist}{227}
                 \carrow we choose Lasso regularization for basis selection.\scriptsize\\
                 $
@@ -392,7 +392,7 @@
         \barrow Basis selection\\\vspace{.05cm}
             \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
             regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
-            \small
+            \small\vspace{.16cm}
             \begin{dinglist}{227}
                 \carrow we choose Lasso regularization for basis selection.\scriptsize\\
                 $
@@ -428,7 +428,7 @@
         \barrow Basis selection\\\vspace{.05cm}
             \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
             regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
-            \small
+            \small\vspace{.16cm}
             \begin{dinglist}{227}
                 \carrow we choose Lasso regularization for basis selection.\scriptsize\\
                 $
@@ -464,7 +464,7 @@
         \barrow Basis selection\\\vspace{.05cm}
             \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
             regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
-            \small
+            \small\vspace{.16cm}
             \begin{dinglist}{227}
                 \carrow we choose Lasso regularization for basis selection.\scriptsize\\
                 $
@@ -499,7 +499,7 @@
         \barrow Basis selection\\\vspace{.05cm}
             \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
             regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
-            \small
+            \small\vspace{.16cm}
             \begin{dinglist}{227}
                 \carrow we choose Lasso regularization for basis selection.\scriptsize\\
                 $
@@ -534,7 +534,7 @@
         \barrow Basis selection\\\vspace{.05cm}
             \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
             regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
-            \small
+            \small\vspace{.16cm}
             \begin{dinglist}{227}
                 \carrow we choose Lasso regularization for basis selection.\scriptsize\\
                 $
@@ -589,7 +589,7 @@
 
 
 \begin{frame}
-    \frametitle{Review of multi-fidelity optimization (MFO)\hfill \scriptsize{optimization}}
+    \frametitle{Review of multi-fidelity optimization (MFO)\hfill \scriptsize{optimization}}\small
     \vspace{-.4cm}
     \begin{center}
         \includegraphics[height=2.5cm]{mfo.png}
@@ -628,7 +628,7 @@
         \end{dinglist}
         \small
         \vspace{.2cm}
-        \barrow Relates gray-box model's objective with twin model's gradient:
+        \barrow Relate gray-box model's objective with twin model's gradient:
         \begin{equation*}\left\{\begin{split}
             &g(c) = \nabla J(c) + \mathbf{\epsilon}(c)\\
             &\textrm{cov} \left[\nabla J(c_1), \mathbf{\epsilon}(c_2) \right] = 0\\
@@ -729,33 +729,13 @@
                     \small \vspace{.15cm}
                     \carrow Space-time dependent quantities:\\\scriptsize\vspace{.1cm}
                     LES, DNS, etc
-                \end{dinglist}
-        \barrow Apply twin model optimization framework:
+                \end{dinglist}\vspace{.1cm}
+        \barrow Apply twin model optimization framework:\vspace{.15cm}
                 \begin{dinglist}{227}
-                    \carrow \textcolor{darkred}{Gray-box model}: time averaged quantities of LES simulation.
+                    \carrow \textcolor{darkred}{Gray-box model}: time averaged quantities of LES simulation.\vspace{.15cm}
                     \carrow \textcolor{darkred}{Twin model}: a RANS model with adaptive eddy viscosity modelling.
                 \end{dinglist}
    \end{dinglist}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Candidate models for turbulent flow \hfill \scriptsize{application}}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Review of RANS models \hfill \scriptsize{application}}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Optimization by twin model \hfill \scriptsize{application}}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Infer PDEs for eddy viscosity \hfill \scriptsize{application}}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Future work for turbulent flow optimization \hfill \scriptsize{application}}
 \end{frame}
 
 % ======================== SECTION 5 =============================
@@ -767,7 +747,7 @@
         \vspace{.35cm}
         \barrow Estimate gradient by twin model.\hfill(objective 1)
         \barrow Optimization framework.\hfill(objective 2)
-        \barrow Application to  turbulent flow optimization.\hfill(objective 3)
+        \barrow Application to turbulent flow optimization.\hfill(objective 3)\\
         \vspace{.35cm}
                 \transparent{1.}
         \barrow Expected contribution.
@@ -775,13 +755,14 @@
     \end{dinglist}
 \end{frame}
 
+
 \begin{frame}
-    \frametitle{Expected contributions \hfill}
+    \frametitle{Expected contributions \hfill\scriptsize{contribution and schedule}}\small
     \begin{dinglist}{228}
         \barrow Develop an efficient method to estimate gradients when the governing PDE
-                is not available.
+                is not available.\vspace{.2cm}
         \barrow Provide an optimization framework based on gray-box conservation law
-                simulation in high-dimensional design problems.
+                simulation for high-dimensional design problems.\vspace{.2cm}
         \barrow A demonstration of the twin model optimization framework in a high-dimensional
                 turbulent flow optimization, showing superior objective function improvement 
                 given a fixed computational budget.
@@ -790,10 +771,37 @@
 
 
 \begin{frame}
-    \frametitle{Proposed schedule \hfill}
-    \cite{Autor, 90}
+    \frametitle{Proposed schedule \hfill\scriptsize{contribution and schedule}}\small
+    \begin{dinglist}{228}
+        \barrow Completed\scriptsize
+        \begin{dinglist}{227}
+            \carrow Course work.\vspace{.08cm}
+            \carrow Formulation of twin model and its inference.\vspace{.08cm}
+            \carrow Development of twin model optimization framework.\vspace{.08cm}
+            \carrow Demonstration of optimization on a 1-D flow testcase.
+        \end{dinglist}\vspace{.15cm}\small
+        \barrow To be completed\scriptsize
+        \begin{dinglist}{227}
+            \carrow \textcolor{darkred}{May 15:} Setup an 2-D LES solver for the return bend testcase in OpenFoam.
+            \vspace{.08cm}
+            \carrow \textcolor{darkred}{Jun 15:} Setup a RANS solver with adaptive eddy viscosity in python.\vspace{.08cm}
+            \carrow \textcolor{darkred}{Jul-Oct 15:} Optimize return bend geometry.\vspace{.08cm}
+            \carrow \textcolor{darkred}{Aug 15:} Hold a committee meeting to report progress.\vspace{.08cm}
+            \carrow \textcolor{darkred}{Sep-Nov 15:} Write thesis.\vspace{.08cm}
+            \carrow \textcolor{darkred}{Jan 16:} Defense.
+        \end{dinglist}
+    \end{dinglist}
+
 \end{frame}
 
+
+\setcounter{framenumber}{22}
+\begin{frame}
+    \frametitle{$ $}
+    \begin{center}
+    Thank you!
+    \end{center}
+\end{frame}
 % ========================= References ============================
 \begin{frame}[t,allowframebreaks]
     \frametitle{References}
@@ -925,15 +933,19 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Discussion of optimization convergence\hfill \scriptsize{optimization}}
+    \frametitle{Discussion of optimization convergence\hfill \scriptsize{backup}}\small
 \end{frame}
 
 \begin{frame}
-    \frametitle{Exploit twin model more than its gradient?\hfill \scriptsize{optimization}}
+    \frametitle{Exploit twin model more than its gradient?\hfill \scriptsize{backup}}\small
 \end{frame}
 
 \begin{frame}
-    \frametitle{Extension to constraint optimization \hfill \scriptsize{optimization}}
+    \frametitle{Extension to constraint optimization \hfill \scriptsize{backup}}\small
+\end{frame}
+
+\begin{frame}
+    \frametitle{Major and minor programs of study\hfill \scriptsize{backup}}\small
 \end{frame}
 
 \end{document}
