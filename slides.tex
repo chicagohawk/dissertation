@@ -1,0 +1,939 @@
+\documentclass{beamer}
+\usepackage{movie15, graphicx}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{pifont, xcolor}
+\usepackage{transparent}
+\usepackage{biblatex}
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\mode<presentation>
+{
+    \usetheme{CambridgeUS}
+    \usecolortheme{default}
+    \setbeamercovered{transparent}
+}
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{fancybox}
+\usepackage{graphics}
+\usepackage{pgf, pgfarrows, pgfnodes}
+\usepackage{algorithmic, algorithm}
+
+\let\oldcite=\cite                                                              
+\renewcommand{\cite}[1]{\textcolor[rgb]{.4,.4,.85}{\oldcite{#1}}}
+
+\definecolor{OliveGreen}{rgb}{0.6,0.6,0}
+\definecolor{Purple}{rgb}{0.6,0,0.6}
+\definecolor{darkred}{rgb}{.58, .12, .12}
+\newcommand{\barrow}{\item[\color{darkred}\ding{228}]} 
+\newcommand{\carrow}{\item[\color{darkred}\ding{227}]} 
+\newcommand{\putat}[3]{\begin{picture}(0,0)(0,0)\put(#1,#2){#3}\end{picture}}
+
+\setbeamercolor{frametitle}{bg=darkred}
+\setbeamercolor{frametitle}{fg=white}
+\setbeamertemplate{frametitle}{
+    \begin{beamercolorbox}[sep=0.3cm,ht=1.8em,wd=\paperwidth]{frametitle}
+        \vbox{}\vskip-2ex
+        \strut\insertframetitle\strut
+        \vskip-0.8ex
+    \end{beamercolorbox}
+}
+\addtobeamertemplate{frametitle}{\vspace{-.8\baselineskip}}
+
+\logo{
+  \raisebox{0cm}{\includegraphics[width=15ex]{mit.png}}
+}
+
+\setbeamertemplate{footline}{
+\leavevmode
+\hbox{
+\begin{beamercolorbox}[wd=.85\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}
+    \usebeamerfont{title in head/foot}\tiny{\insertshorttitle}\hspace*{-2ex}
+\end{beamercolorbox}
+\begin{beamercolorbox}[wd=0.15\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}
+    \usebeamerfont{date in head/foot}
+    \insertframenumber{} \textcolor{white}{/ TotalFrame}\hspace*{2ex}
+\end{beamercolorbox}
+}
+}
+
+\title{An efficient optimization framework\\ for gray-box conservation law simulation}
+\subtitle{Thesis proposal defense}
+\author{\scriptsize
+   PhD candidate: Han Chen\\\vspace{0.5cm} Committee: Qiqi Wang (chair), Karen Willcox, Youssef Marzouk\\
+   External evaluator: Hector Klie}
+\institute{Massachusetts Institute of Technology}
+\date{\scriptsize May 5, 2015}
+
+
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\setcounter{framenumber}{0}
+\begin{frame}
+    \frametitle{Outline}\small
+    \begin{dinglist}{228}
+        \barrow \transparent{1.}Background.
+        \barrow Thesis objective.
+        \vspace{.35cm}
+        \barrow Estimate gradient by twin model.
+        \barrow Optimization framework.
+        \barrow Application to turbulent flow optimization.
+        \vspace{.35cm}
+        \barrow Expected contribution.
+        \barrow Proposed schedule.
+    \end{dinglist}
+\end{frame}
+
+% ======================= SECTION 1 ========================
+\setcounter{framenumber}{0}
+\begin{frame}
+    \frametitle{Outline}\small
+    \begin{dinglist}{228}
+        \barrow Background.
+        \barrow Thesis objective.
+        \vspace{.35cm}
+        \transparent{0.4}
+        \barrow Estimate gradient by twin model.
+        \barrow Optimization framework.
+        \barrow Application to turbulent flow optimization.
+        \vspace{.35cm}
+        \barrow Expected contribution.
+        \barrow Proposed schedule.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Research background \hfill \scriptsize{background and objective}}\small
+    \begin{dinglist}{228}
+        \barrow Interested in optimization constraint by conservation law simulation.
+        \barrow Conservation law simulation can be expensive.
+        \barrow The design space can be high-dimensional.
+        \barrow Efficient sensitivity (adjoint) analysis may not be available.
+    \end{dinglist}
+    \begin{columns}
+        \column{.33\textwidth}\centering
+            \includegraphics[width=4cm]{oil_field.png}
+        \column{.33\textwidth}\centering
+            \includegraphics[width=4cm]{ubend.png}
+        \column{.33\textwidth}\centering
+            \includegraphics[width=4cm]{ubend_cad.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Research scope\hfill \scriptsize{background and objective}}\small
+    \begin{dinglist}{228}
+        \barrow Gray-box conservation law simulation:
+        \begin{dinglist}{227}
+            \carrow adjoint not available.
+            \carrow governing PDE and its implementation not available.
+            \carrow can output space(-time) solutions.
+        \end{dinglist}
+    \vspace{.1cm}
+    \scriptsize
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+                   & PDE and implementation & {space(-time) solution} &
+                   Adjoint\\ \hline
+        Black-box  & \ding{56} & \ding{56}    & \ding{56}  \\ \hline
+        \textcolor{darkred}{Gray-box}   & \textcolor{darkred}{\ding{56}}
+                   & \textcolor{darkred}{\ding{52}}    & \textcolor{darkred}{\ding{56}}   \\ \hline
+        Open-box   & \ding{52}    &          &   \ding{52}      \\ \hline
+    \end{tabular}
+    \vspace{.1cm}
+    \small
+        \barrow High-dimensional design space.
+        \begin{dinglist}{227}
+            \carrow large number of parameters required to parameterize the space(-time) dependent design.
+        \end{dinglist}
+    \end{dinglist}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Review of optimization methods\hfill \scriptsize{background and objective}}\small
+    \begin{dinglist}{228}
+        \barrow If {black-box}, use \textcolor{darkred}{derivative-free optimization},\\
+                \scriptsize{
+                (pattern search methods \cite{Tarma03}, evolution based methods\cite{Eberhart 10, Davis 10})}
+                \small
+                \begin{dinglist}{227}
+                    \carrow not require derivative evaluation.
+                    \carrow not suitable for high-dimension optimization.
+                \end{dinglist}
+        \barrow If open-box, use \textcolor{darkred}{gradient-based optimization},\\
+                \scriptsize
+                (quasi-Newton methods \cite{John 77}: BFGS, L-BFGS, etc.)
+                \small
+                \begin{dinglist}{227}
+                    \carrow requires efficient gradient evaluation, generally using adjoint.
+                    \carrow suitable for high-dimension optimization.
+                \end{dinglist}
+        \barrow If gray-box,
+    \end{dinglist}
+    \begin{center}
+        \includegraphics[height=2.5cm]{treat.png}
+    \end{center}   
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Research objective \hfill \scriptsize{background and objective}}\small
+    \begin{dinglist}{228}
+        \barrow Develop a method to estimate the gradient by using the space(-time) solution
+                from the gray-box simulation.
+        \vspace{.1cm}
+        \barrow Formulate an optimization framework that uses the estimated gradient for efficient high-dimensional 
+                optimization.
+        \vspace{.1cm}
+        \barrow Given a fixed computational budget, assess how much design objective improvement 
+                can be achieved by using the proposed framework.
+    \end{dinglist}
+\end{frame}
+
+% ====================== SECTION 2 ======================
+\begin{frame}
+    \frametitle{Outline}\small
+    \begin{dinglist}{228}
+        \barrow \transparent{.4} Background.
+        \barrow Thesis objective.
+        \vspace{.35cm}
+        \transparent{1.}
+        \barrow Estimate gradient by twin model. \hfill        (objective 1)
+        \barrow \transparent{.4}
+                Optimization framework.\hfill(objective 2)
+        \barrow Application to turbulent flow optimization.\hfill(objective 3)\\
+        \vspace{.35cm}
+        \barrow Expected contribution.
+        \barrow Proposed schedule.
+    \end{dinglist}
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Leverage the space(-time) solution \hfill \scriptsize{twin model}}\small
+    Estimate the gradient:
+    \begin{dinglist}{228}
+        \barrow infer the conservation law from the space(-time) solution.
+        \barrow apply adjoint to estimate gradient.
+    \end{dinglist}
+    \vspace{.2cm}
+
+    Example: infer flux $F(u)$ from space-time solution.
+    \begin{columns}
+        \column{.5\textwidth}
+        \begin{equation*}\begin{split}
+            &\frac{\partial u}{\partial t}+ \frac{\partial \textcolor{darkred}{F(u)}}{\partial x} = c(x)\\
+            &u(t=0,x) = u_0(x)\\
+            &u(t,x=0) = u(t, x=1)
+        \end{split}\end{equation*}
+        \column{.5\textwidth}
+        \begin{center}
+            \includegraphics[width=4cm]{black_sol.png}
+        \end{center}
+    \end{columns}
+    \vspace{.15cm}
+    Propose to infer the flux or the source term that reproduce the space(-time) solution. The inferred
+    conservation law is called twin model.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Why is the PDE inferrable?\hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow The governing PDE is a conservation law. Flux and source terms are functionals.\\
+        \vspace{-.1cm}
+        \begin{center}
+            \includegraphics[height=.6cm]{two_eqn.png}
+        \end{center}
+        \vspace{-.1cm}
+        \barrow The flow quantities only depend on the flow quantities in an older time
+                inside a domain of dependence.\\
+        \vspace{-.1cm}
+        \begin{center}
+            \includegraphics[height=1.5cm]{locality.png}
+        \end{center}
+        \vspace{-.1cm}
+        \barrow Space-(time) solution can provide large number of samples.
+        \barrow The inference can be independent of the design space dimensionality.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Minimize space(-time) solution mismatch \hfill \scriptsize{twin model}}\small
+    The inference can boil down to an optimization problem.
+    \begin{columns}
+        \column{.5\textwidth}
+        \begin{equation*}\begin{split}
+            &\frac{\partial u}{\partial t}+ \frac{\partial \textcolor{darkred}{F(u)}}{\partial x} = c(x)\\
+            &u(t=0,x) = u_0(x)\\
+            &u(t,x=0) = u(t, x=1)
+        \end{split}\end{equation*}
+        \centering
+        \includegraphics[width=3.5cm]{leftcol.png} 
+        \column{.5\textwidth}
+        \begin{equation*}\begin{split}
+            &\frac{\partial \tilde{u}}{\partial t}+ \frac{\partial {\textcolor{blue}{\tilde{F}
+             (\tilde{u})}}}{\partial x} = c(x)\\
+            &\tilde{u}(t=0,x) = u_0(x)\\
+            &\tilde{u}(t,x=0) = \tilde{u}(t, x=1)
+        \end{split}\end{equation*}
+        \centering
+        \includegraphics[width=3.5cm]{rightcol.png}
+    \end{columns}
+    \begin{center}
+    $$
+        \min_{\tilde{F}}\left\{ L(\tilde{F}) \equiv \int_t\int_x \left\|u-\tilde{u}\right\|\; dt\,dx\right\}\,,
+    $$
+    \scriptsize
+    where $\|\cdot\|$ is a norm to be chosen.
+    \end{center}
+\end{frame}
+
+% ----------------- basis selection ---------------------
+\begin{frame}
+    \frametitle{Some technical details \hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow Parameterize the flux or source term \\\vspace{.05cm} \scriptsize polynomial, Fourier, wavelet, etc\\
+        \small
+        \vspace{-.3cm}
+        \begin{columns}
+            \column{.06\textwidth}
+            \column{.6\textwidth}
+            \begin{dinglist}{227}
+                \carrow we choose a family of sigmoid functions with various centers.\\\scriptsize
+                        $
+                            \tilde{F}(\cdot) = \sum_{i=1}^n \xi_i s(\cdot)
+                        $
+            \end{dinglist}
+            \small
+            \column{.34\textwidth}
+            \includegraphics[width=3.5cm]{sigmoid_empty.png}
+        \end{columns}
+        \barrow Basis selection\\\vspace{.05cm}
+            \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
+            regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
+            \small
+            \begin{dinglist}{227}
+                \carrow we choose Lasso regularization for basis selection.\scriptsize\\
+                $
+                    \min_{\tilde{F}} \left\{ L(\tilde{F})+\textcolor{darkred}{\lambda\sum_{i=1}^n\left| \xi_i \right|}\right\}
+                $
+            \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+
+\setcounter{framenumber}{9}
+
+\begin{frame}
+    \frametitle{Some technical details \hfill \scriptsize{twin model}}\small
+    \transduration{.1}
+    \begin{dinglist}{228}
+        \barrow Parameterize the flux or source term \\\vspace{.05cm} \scriptsize polynomial, Fourier, wavelet, etc\\
+        \small
+        \vspace{-.3cm}
+        \begin{columns}
+            \column{.06\textwidth}
+            \column{.6\textwidth}
+            \begin{dinglist}{227}
+                \carrow we choose a family of sigmoid functions with various centers.\\\scriptsize
+                        $
+                            \tilde{F}(\cdot) = \sum_{i=1}^n \xi_i s(\cdot)
+                        $
+            \end{dinglist}
+            \small
+            \column{.34\textwidth}
+            \includegraphics[width=3.5cm]{sigmoid_1.png}
+        \end{columns}
+        \barrow Basis selection\\\vspace{.05cm}
+            \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
+            regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
+            \small
+            \begin{dinglist}{227}
+                \carrow we choose Lasso regularization for basis selection.\scriptsize\\
+                $
+                    \min_{\tilde{F}} \left\{ L(\tilde{F})+\textcolor{darkred}{\lambda\sum_{i=1}^n\left| \xi_i \right|}\right\}
+                $
+            \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+
+\setcounter{framenumber}{9}
+
+\begin{frame}
+    \frametitle{Some technical details \hfill \scriptsize{twin model}}\small
+    \transduration{.1}
+    \begin{dinglist}{228}
+        \barrow Parameterize the flux or source term \\\vspace{.05cm} \scriptsize polynomial, Fourier, wavelet, etc\\
+        \small
+        \vspace{-.3cm}
+        \begin{columns}
+            \column{.06\textwidth}
+            \column{.6\textwidth}
+            \begin{dinglist}{227}
+                \carrow we choose a family of sigmoid functions with various centers.\\\scriptsize
+                        $
+                            \tilde{F}(\cdot) = \sum_{i=1}^n \xi_i s(\cdot)
+                        $
+            \end{dinglist}
+            \small
+            \column{.34\textwidth}
+            \includegraphics[width=3.5cm]{sigmoid_2.png}
+        \end{columns}
+        \barrow Basis selection\\\vspace{.05cm}
+            \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
+            regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
+            \small
+            \begin{dinglist}{227}
+                \carrow we choose Lasso regularization for basis selection.\scriptsize\\
+                $
+                    \min_{\tilde{F}} \left\{ L(\tilde{F})+\textcolor{darkred}{\lambda\sum_{i=1}^n\left| \xi_i \right|}\right\}
+                $
+            \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+
+\setcounter{framenumber}{9}
+
+\begin{frame}
+    \frametitle{Some technical details \hfill \scriptsize{twin model}}\small
+    \transduration{.1}
+    \begin{dinglist}{228}
+        \barrow Parameterize the flux or source term \\\vspace{.05cm} \scriptsize polynomial, Fourier, wavelet, etc\\
+        \small
+        \vspace{-.3cm}
+        \begin{columns}
+            \column{.06\textwidth}
+            \column{.6\textwidth}
+            \begin{dinglist}{227}
+                \carrow we choose a family of sigmoid functions with various centers.\\\scriptsize
+                        $
+                            \tilde{F}(\cdot) = \sum_{i=1}^n \xi_i s(\cdot)
+                        $
+            \end{dinglist}
+            \small
+            \column{.34\textwidth}
+            \includegraphics[width=3.5cm]{sigmoid_3.png}
+        \end{columns}
+        \barrow Basis selection\\\vspace{.05cm}
+            \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
+            regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
+            \small
+            \begin{dinglist}{227}
+                \carrow we choose Lasso regularization for basis selection.\scriptsize\\
+                $
+                    \min_{\tilde{F}} \left\{ L(\tilde{F})+\textcolor{darkred}{\lambda\sum_{i=1}^n\left| \xi_i \right|}\right\}
+                $
+            \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+
+\setcounter{framenumber}{9}
+
+\begin{frame}
+    \frametitle{Some technical details \hfill \scriptsize{twin model}}\small
+    \transduration{.1}
+    \begin{dinglist}{228}
+        \barrow Parameterize the flux or source term \\\vspace{.05cm} \scriptsize polynomial, Fourier, wavelet, etc\\
+        \small
+        \vspace{-.3cm}
+        \begin{columns}
+            \column{.06\textwidth}
+            \column{.6\textwidth}
+            \begin{dinglist}{227}
+                \carrow we choose a family of sigmoid functions with various centers.\\\scriptsize
+                        $
+                            \tilde{F}(\cdot) = \sum_{i=1}^n \xi_i s(\cdot)
+                        $
+            \end{dinglist}
+            \small
+            \column{.34\textwidth}
+            \includegraphics[width=3.5cm]{sigmoid_4.png}
+        \end{columns}
+        \barrow Basis selection\\\vspace{.05cm}
+            \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
+            regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
+            \small
+            \begin{dinglist}{227}
+                \carrow we choose Lasso regularization for basis selection.\scriptsize\\
+                $
+                    \min_{\tilde{F}} \left\{ L(\tilde{F})+\textcolor{darkred}{\lambda\sum_{i=1}^n\left| \xi_i \right|}\right\}
+                $
+            \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+\setcounter{framenumber}{9}
+
+\begin{frame}
+    \frametitle{Some technical details \hfill \scriptsize{twin model}}\small
+    \transduration{.1}
+    \begin{dinglist}{228}
+        \barrow Parameterize the flux or source term \\\vspace{.05cm} \scriptsize polynomial, Fourier, wavelet, etc\\
+        \small
+        \vspace{-.3cm}
+        \begin{columns}
+            \column{.06\textwidth}
+            \column{.6\textwidth}
+            \begin{dinglist}{227}
+                \carrow we choose a family of sigmoid functions with various centers.\\\scriptsize
+                        $
+                            \tilde{F}(\cdot) = \sum_{i=1}^n \xi_i s(\cdot)
+                        $
+            \end{dinglist}
+            \small
+            \column{.34\textwidth}
+            \includegraphics[width=3.5cm]{sigmoid_5.png}
+        \end{columns}
+        \barrow Basis selection\\\vspace{.05cm}
+            \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
+            regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
+            \small
+            \begin{dinglist}{227}
+                \carrow we choose Lasso regularization for basis selection.\scriptsize\\
+                $
+                    \min_{\tilde{F}} \left\{ L(\tilde{F})+\textcolor{darkred}{\lambda\sum_{i=1}^n\left| \xi_i \right|}\right\}
+                $
+            \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+
+\setcounter{framenumber}{9}
+
+\begin{frame}
+    \frametitle{Some technical details \hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow Parameterize the flux or source term \\\vspace{.05cm} \scriptsize polynomial, Fourier, wavelet, etc\\
+        \small
+        \vspace{-.3cm}
+        \begin{columns}
+            \column{.06\textwidth}
+            \column{.6\textwidth}
+            \begin{dinglist}{227}
+                \carrow we choose a family of sigmoid functions with various centers.\\\scriptsize
+                        $
+                            \tilde{F}(\cdot) = \sum_{i=1}^n \xi_i s(\cdot)
+                        $
+            \end{dinglist}
+            \small
+            \column{.34\textwidth}
+            \includegraphics[width=3.5cm]{sigmoid_3.png}
+        \end{columns}
+        \barrow Basis selection\\\vspace{.05cm}
+            \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
+            regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
+            \small
+            \begin{dinglist}{227}
+                \carrow we choose Lasso regularization for basis selection.\scriptsize\\
+                $
+                    \min_{\tilde{F}} \left\{ L(\tilde{F})+\textcolor{darkred}{\lambda\sum_{i=1}^n\left| \xi_i \right|}\right\}
+                $
+            \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+
+% -------------------- end basis selection ---------------------
+\begin{frame}
+    \frametitle{A demonstration of twin model \hfill \scriptsize{twin model}}\small
+    Consider an optimization objective: \scriptsize \cite{Kucuk 06}\vspace{-.2cm}\small
+    $$
+        \min_{c\in\mathbb{R}} \left\{ J(u) \equiv \int_{x=0}^1 \big|u(x,t=1;c) - u^*(x)\big|^2 \,\textrm{d}x\right\}
+    $$
+    constrained by Buckley-Leverett flow, where $c$ is a constant source term to be optimized.
+    $u^*$ is a given spatial profile.\\\vspace{.2cm}
+    \scriptsize
+    \begin{columns}
+        \column{.31\textwidth} \centering
+            \includegraphics[width=3.5cm]{leftcol.png}\\
+            Gray-box model solution
+        \column{.31\textwidth} \centering
+            \includegraphics[width=3.5cm]{Twin_sol_30.png}\\
+            Twin model solution
+        \column{.38\textwidth} \centering
+            \includegraphics[width=4.4cm]{J_twin_vs_primal.png}\\
+            $J$ calculated by the two models
+    \end{columns}
+\end{frame}
+
+
+% ====================== SECTION 3 ======================
+\begin{frame}
+    \frametitle{Outline}\small
+    \begin{dinglist}{228}
+        \barrow \transparent{.4} Background.
+        \barrow Thesis objective.
+        \vspace{.35cm}
+        \barrow Estimate gradient by twin model.\hfill(objective 1)
+                \transparent{1.}
+        \barrow Optimization framework.\hfill(objective 2)
+                \transparent{.4}
+        \barrow Application to turbulent flow optimization.\hfill(objective 3)
+        \vspace{.35cm}
+        \barrow Expected contribution.
+        \barrow Proposed schedule.
+    \end{dinglist}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Review of multi-fidelity optimization (MFO)\hfill \scriptsize{optimization}}
+    \vspace{-.4cm}
+    \begin{center}
+        \includegraphics[height=2.5cm]{mfo.png}
+    \end{center}
+    \vspace{-.4cm}
+    \begin{dinglist}{228}
+    \vspace{-.2cm}
+    \barrow MFO methods include\vspace{.1cm}
+               \begin{dinglist}{227}
+                   \carrow pattern search MFO \scriptsize \cite{Booker 99}. \vspace{0.1cm}
+                   \small
+                   \carrow trust-region MFO \scriptsize \cite{Wild 13, March 12, Robinson 06}.\vspace{.1cm}
+                   \small
+                   \carrow Bayesian MFO \scriptsize \cite{Kennedy 01, March 11}.
+               \end{dinglist}
+    \vspace{.12cm}
+    \barrow Choose Bayesian MFO as our optimization framework:\vspace{.1cm}
+               \begin{dinglist}{227}
+                   \small
+                   \carrow uses all high-fidelity model evaluation to find the next design.\vspace{.1cm}
+                   \small
+                   \carrow can fuse sampled data of different types: co-Kriging \scriptsize \cite{Chung 02}.\vspace{.1cm}
+                   \small
+                   \carrow the next candidate design is optimal under a Bayesian metric.\vspace{.1cm}
+               \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Model objective and gradient Bayesianly \hfill \scriptsize{optimization}}\small
+    \begin{dinglist}{228}
+        \barrow Gaussian process modeling:
+        \begin{dinglist}{227}
+            \carrow $J(c)$: the objective calculated by the gray-box model.\vspace{.15cm}
+            \carrow $\epsilon(c)$: the error in the objective's gradient calculated by the twin $\quad$model.
+        \end{dinglist}
+        \small
+        \vspace{.2cm}
+        \barrow Relates gray-box model's objective with twin model's gradient:
+        \begin{equation*}\left\{\begin{split}
+            &g(c) = \nabla J(c) + \mathbf{\epsilon}(c)\\
+            &\textrm{cov} \left[\nabla J(c_1), \mathbf{\epsilon}(c_2) \right] = 0\\
+            &\textrm{cov} \left[J(c_1), \mathbf{\epsilon}(c_2) \right] = 0
+        \end{split} \right.\qquad \textrm{for any } c, c_1, c_2\,,\end{equation*}
+        where $g(c)$ is the objective's gradient calculated by the twin model.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Perform Bayesian optimization \hfill \scriptsize{optimization}}\small
+    \begin{dinglist}{228}
+        \barrow Update $J(c)$ Bayesianly\\
+        \begin{center}
+            \includegraphics[width=6.5cm]{prior_posterior}
+        \end{center}
+        \barrow Find the next design to evaluate the gray-box model \scriptsize{\cite{Snoek 12}}
+        \small\vspace{.15cm}
+        \begin{dinglist}{227}
+            \carrow Define ``improvement'': \textcolor{darkred}{$\max\left\{J(c_{best})-J(c), 0\right\}$.}\vspace{.15cm}
+            \carrow Choose the next design as the maximizer of the expected improvement.
+        \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Optimization framework \hfill \scriptsize{optimization}}\small
+    \begin{center}
+        \includegraphics[width=11.8cm]{whole.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{A demonstration of optimization \hfill \scriptsize{optimization}}\small
+    \begin{dinglist}{228}
+        \barrow Source parameterized by 10 design variables.
+        \barrow Optimization problem:
+        $$
+            \min_{c\in\mathbb{R}^{10}} \left\{ J(u) \equiv \int_{x=0}^1 \big|u(x,t=1;c) - u^*(x)\big|^2 \,\textrm{d}x\right\}\,,
+        $$
+        where $u^*(x) = u^*(x,t=1;c^*)$, $u^*$ generated by gray-box model.
+    \end{dinglist}
+    \vspace{-.3cm}
+    \begin{center}
+        \includegraphics[width=4cm]{source_profiles.png}$\quad$
+        \includegraphics[width=5.8cm]{opt_demo.png}\\\scriptsize
+        github.com/septfleur/twinmodel.git
+    \end{center}
+\end{frame}
+
+% ======================== SECTION 4 =============================
+\begin{frame}
+    \frametitle{Outline}\small
+    \begin{dinglist}{228}
+        \barrow \transparent{.4} Background.
+        \barrow Thesis objective.
+        \vspace{.35cm}
+        \barrow Estimate gradient by twin model.\hfill(objective 1)
+                \transparent{.4}
+        \barrow Optimization framework.\hfill(objective 2)
+                \transparent{1.}
+        \barrow Application to turbulent flow optimization.\hfill(objective 3)
+        \vspace{.35cm}
+        \barrow Expected contribution.
+        \barrow Proposed schedule.
+    \end{dinglist}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Optimize return bend geometry \hfill \scriptsize{application}}\small
+    \begin{dinglist}{228}
+        \barrow Optimize the geometry of an internal cooling hole in turbine airfoil to minimize the 
+                \textcolor{darkred}{time averaged} pressure loss.
+        \scriptsize \cite{Coletti 13}\small
+        \barrow Model as a 2-D return bend problem.
+        \barrow Design space can be high-dimension.
+    \end{dinglist}
+    \begin{columns}
+        \column{.5\textwidth}
+            \centering
+            \includegraphics[height=4cm]{ubend.png}
+        \column{.5\textwidth}
+            \centering
+            \includegraphics[height=3.7cm]{overall_mesh.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Apply twin model optimization framework \hfill \scriptsize{application}}\small
+    \begin{dinglist}{228}
+        \barrow Flow is turbulent and incompressible, $Re\sim 40,000$, $Mach\sim 0.05$\vspace{.15cm}
+        \barrow Candidate simulation models: \vspace{.1cm}
+                \begin{dinglist}{227}
+                    \carrow Time averaged quantities: \\\scriptsize\vspace{.1cm}
+                    RANS models: Reynolds stress models, eddy viscosity models 
+                    (e.g. mixing length models, $k-\omega$ models), etc  \cite{Wilcox 98}
+                    \small \vspace{.15cm}
+                    \carrow Space-time dependent quantities:\\\scriptsize\vspace{.1cm}
+                    LES, DNS, etc
+                \end{dinglist}
+        \barrow Apply twin model optimization framework:
+                \begin{dinglist}{227}
+                    \carrow \textcolor{darkred}{Gray-box model}: time averaged quantities of LES simulation.
+                    \carrow \textcolor{darkred}{Twin model}: a RANS model with adaptive eddy viscosity modelling.
+                \end{dinglist}
+   \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Candidate models for turbulent flow \hfill \scriptsize{application}}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Review of RANS models \hfill \scriptsize{application}}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Optimization by twin model \hfill \scriptsize{application}}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Infer PDEs for eddy viscosity \hfill \scriptsize{application}}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Future work for turbulent flow optimization \hfill \scriptsize{application}}
+\end{frame}
+
+% ======================== SECTION 5 =============================
+\begin{frame}
+    \frametitle{Outline}\small
+    \begin{dinglist}{228}
+        \barrow \transparent{.4} Background.
+        \barrow Thesis objective.
+        \vspace{.35cm}
+        \barrow Estimate gradient by twin model.\hfill(objective 1)
+        \barrow Optimization framework.\hfill(objective 2)
+        \barrow Application to  turbulent flow optimization.\hfill(objective 3)
+        \vspace{.35cm}
+                \transparent{1.}
+        \barrow Expected contribution.
+        \barrow Proposed schedule.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Expected contributions \hfill}
+    \begin{dinglist}{228}
+        \barrow Develop an efficient method to estimate gradients when the governing PDE
+                is not available.
+        \barrow Provide an optimization framework based on gray-box conservation law
+                simulation in high-dimensional design problems.
+        \barrow A demonstration of the twin model optimization framework in a high-dimensional
+                turbulent flow optimization, showing superior objective function improvement 
+                given a fixed computational budget.
+    \end{dinglist}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Proposed schedule \hfill}
+    \cite{Autor, 90}
+\end{frame}
+
+% ========================= References ============================
+\begin{frame}[t,allowframebreaks]
+    \frametitle{References}
+    \begin{thebibliography}{10}    
+
+        \beamertemplatearticlebibitems
+        \bibitem{Eberhart 10}
+          RC.~Eberhart et al.
+          \newblock {\em Particle swarm optimization}.
+          \newblock Encyclopedia of machine learning, 2010.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Davis 10}
+          L.~Davis
+          \newblock {\em Handbook of genetic algorithms}.
+          \newblock New York: Van Nostrand Reinhold, 1991.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Tamara 03}
+          K.~Tamara et al.
+          \newblock {\em Optimization by direct search: new perspective on some
+                     classical and modern methods}.
+          \newblock SIAM review, 45.3:385-482, 2003.
+
+        \beamertemplatearticlebibitems
+        \bibitem{John 77}
+          D.~Dennis et al.
+          \newblock {\em Quasi-Newton methods, motivation and theory}.
+          \newblock SIAM review, 19.1:46-89, 1977.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Adler 96}
+          R.~Adler
+          \newblock {\em Comparison of basis selection methods}.
+          \newblock Signals, systems and computers, Thirtieth Asilomar Conference on. Vol. 1. IEEE, 1996.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Billing 07}
+          S.~Billing et al.
+          \newblock {\em Feature subset selection and ranking for data dimensionality reduction.}
+          \newblock Pattern analysis and machine intelligence, IEEE transactions on 29.1 (2007): 162-166.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Schwarz 78}
+          G.~Schwarz
+          \newblock {\em Estimating the dimension of a model.}
+          \newblock The annals of statistics 6.2 (1978): 461-464.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Stone 77}
+          M.~Stone
+          \newblock {\em An asymptotic equivalence of choice of model by cross-validation and Akaike's criterion.}
+          \newblock Journal of the royal statistical society. series B (methodological) (1977): 44-47.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Tibshirani 96}
+          R.~Tibshirani
+          \newblock {\em Regression shrinkage and selection via the lasso.}
+          \newblock Journal of the royal statistical society. series B (methodological) (1996): 267-288.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Kucuk 06}
+          I.~Kucuk
+          \newblock {\em An efficient computational method for the optimal control problem for the Burgers equation.}
+          \newblock Mathematical and computer modelling 44.11 (2006): 973-982.
+
+       \beamertemplatearticlebibitems
+        \bibitem{Booker 99}
+          A.~Booker
+          \newblock {\em A rigorous framework for optimization of expensive functions by surrogates.}
+          \newblock Structural optimization 17.1 (1999): 1-13.        
+
+        \beamertemplatearticlebibitems
+        \bibitem{Wild 13}
+          S.~Wild et al.
+          \newblock {\em Global convergence of radial basis function trust-region algorithms for derivative-free optimization.}
+          \newblock SIAM Review 55.2 (2013): 349-371.
+
+       \beamertemplatearticlebibitems
+        \bibitem{March 12}
+          A.~March
+          \newblock {\em Multifidelity methods for multidisciplinary system design}
+          \newblock Dissertation, Massachusetts Institute of Technology (2012)
+
+       \beamertemplatearticlebibitems
+        \bibitem{Robinson 06}
+          T.~Robinson
+          \newblock {\em Multifidelity optimization for variablecomplexity design.}
+          \newblock Proceedings of the 11th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference, Portsmouth, VA. 2006.
+
+       \beamertemplatearticlebibitems
+        \bibitem{Kennedy 01}
+          M.~Kennedy et al.
+          \newblock {\em Bayesian calibration of computer models}
+          \newblock Journal of the royal statistical society, series B (statistical methodology) 63.3 (2001): 425-464.
+ 
+       \beamertemplatearticlebibitems
+        \bibitem{March 11}
+          A.~March et al.
+          \newblock {\em Gradient-based multifidelity optimisation for aircraft design using Bayesian model calibration}
+          \newblock Aeronautical Journal, 115.1174 (2011): 729.
+ 
+       \beamertemplatearticlebibitems
+        \bibitem{Chung 02}
+          H.~Chung et al.
+          \newblock {\em Using gradients to construct cokriging approximation models for high-dimensional design optimization problems.}
+          \newblock AIAA paper 317 (2002): 14-17.
+
+       \beamertemplatearticlebibitems
+        \bibitem{Snoek 12}
+          J.~Snoek et al.
+          \newblock {\em Practical Bayesian optimization of machine learning algorithms.}
+          \newblock Advances in neural information processing systems, 2012.
+
+       \beamertemplatearticlebibitems
+        \bibitem{Coletti 13}
+          F.~Coletti et al.
+          \newblock {\em Optimization of a U-Bend for Minimal Pressure Loss in Internal Cooling Channels-Part II: Experimental Validation.}
+          \newblock Journal of Turbomachinery 135.5 (2013): 051016.
+
+       \beamertemplatearticlebibitems
+        \bibitem{Wilcox 98}
+          D.~Wilcox
+          \newblock {\em Turbulence modeling for CFD.}
+          \newblock Vol. 2. La Canada, CA: DCW industries, (1998)
+
+
+    \end{thebibliography}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Discussion of optimization convergence\hfill \scriptsize{optimization}}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Exploit twin model more than its gradient?\hfill \scriptsize{optimization}}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Extension to constraint optimization \hfill \scriptsize{optimization}}
+\end{frame}
+
+\end{document}

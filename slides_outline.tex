@@ -1,0 +1,240 @@
+\documentclass[a4paper,onecolumn]{article}
+\usepackage{amsmath, amsthm, graphicx, amssymb, wrapfig, fullpage, subfigure, array,float}
+\usepackage[]{algorithm2e}
+\usepackage[toc, page]{appendix}
+\usepackage{pdfpages, nomencl, pifont}
+\usepackage[nottoc, numbib]{tocbibind}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shadows,arrows}
+\usepackage[font=sl, labelfont={sf}, margin=1cm]{caption}
+\DeclareMathOperator{\e}{e}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remarker}{Remark}
+\makenomenclature
+
+\begin{document}
+\setcounter{page}{1}
+\hspace{.36\textwidth}
+\Large\textbf{Slides Outline}\\
+\normalsize
+
+\textbf{Sections}
+\begin{enumerate}
+    \item Research background.
+    \item Twin model.
+    \item Optimization with twin model.
+    \item Application to a turbulent flow optimization.
+\end{enumerate}
+
+\newpage
+\textbf{Research background}
+\begin{enumerate}
+    \item Motivation: 
+          \begin{itemize}
+              \item Optimization based on conservation law simulation. 
+              \item Design space is high dimensional.
+          \end{itemize}
+          Example: optimization of turbulent return bend geometry. (picture)
+    \item Many conservation law simulators are gray-box. What is gray-box / black-box / open-box. (table, merge PDE+implementation)
+    \item Research scope:
+          \begin{itemize}
+              \item conservation law.
+              \item gray-box simulation.
+              \item high-dimension design.
+          \end{itemize}
+    \item If open-box, review of gradient-based.
+    \item In reality, not open-box. Treat as black-box, review of gradient-free. Curse of dimensionality.
+          However, not take advantage of space-time solution.
+    \item When lower-fidelity models are available, can save overall computation time by multi-fidelity optimization.
+          High-fidelity model is the gray-box simulator; low-fidelity model can be constructed by surrogate methods.
+    \item Review of surrogate methods. 
+          \begin{itemize}
+              \item physics-based surrogates: use the physics of the underlying system, such as
+                    \begin{itemize}
+                        \item coarser discretization: \emph{require simulator's PDE.}
+                        \item reduced order model (POD, DEIM, balanced truncation): \emph{require simulator's PDE.}
+                        \item simplified physics (RANS, dual porosity, thin airfoil theory).
+                    \end{itemize}
+              \item functional surrogate: use the sample value of objective function, such as
+                    \begin{itemize}
+                        \item radial basis function approximation.
+                        \item polynomial approximation.
+                        \item neural network.
+                    \end{itemize}
+          \end{itemize}
+          Narrative: functional surrogate not suitable in my research scope because design space is high-dimensional. Focus on physics-based surrogate.
+    \item Physics-based surrogates can be adaptive.
+          \begin{itemize}
+              \item Adaptive discretization: \emph{require simulator's PDE.}
+              \item Goal oriented reduced order model: match observations, \emph{require simulator's PDE}
+          \end{itemize}
+    \item Research objective.
+          \begin{itemize}
+              \item Develop a method for inferring a surrogate conservation law from the space-time solution
+                    of an gray-box simulation.
+              \item Assess how much computation saving can be achieved using the proposed method in a return bend optimization problem.
+          \end{itemize}
+\end{enumerate}
+
+\newpage
+\textbf{Twin model}
+\begin{enumerate}
+    \item Adaptive physics-based surrogate that reproduces the space-time solution.
+          \begin{itemize}
+              \item does not require simulator's PDE, instead infer a convervation law PDE.
+              \item PDE is inferred by matching the gray-box simulation's space-time solution.
+          \end{itemize}
+          Example problem: infer Buckley-Leverett equation flux function.
+    \item Benefits of matching space-time solution
+          \begin{itemize}
+              \item Small domain of dependence (low dimensional inputs)
+              \item Large number of samples
+              \item Dimension independent of design
+          \end{itemize}
+          Time independent is a special case. Pseudo-time marching until convergence.
+    \item Functions can be parameterized. Infer twin model is an inverse problem.\\
+          Review of inverse problems, two viewpoints.
+          \begin{itemize}
+              \item Statistical estimation.
+              \item Parameter identification.
+          \end{itemize}
+          Twin model is an open-box, use adjoint for parameter identificaiton.
+    \item Formulation. Time dependent. General: not same grid, different weight.
+    \item Formulation. Time-independent. General.
+    \item Candidate basis (Questions)
+          \begin{itemize}
+              \item polynomial
+              \item Fourier
+              \item wavelet
+          \end{itemize}
+          How about adaptive basis selection (supervised: peceptron basis selection. unsupervised: e.g. vector quantization.)
+    \item Numerical example: twin model with fixed structure
+    \item Numerical example: prediction of objective functions about one training.
+    \item Basis selection: for time-dependent and time-independent twin models
+          \begin{itemize}
+              \item regularization-based methods
+              \item test-based methods
+          \end{itemize}
+    \item Basis selection: for time-dependent twin models.
+          Reduce to linear basis selection scheme by 
+          \begin{itemize}
+              \item Solve twin model with restart.
+              \item Finite difference approximation.
+          \end{itemize}
+          (picture: basis selection)
+\end{enumerate}
+
+\newpage
+\textbf{Optimization with twin model}
+\begin{enumerate}
+    \item General optimization statement.
+    \item Review of multi-fidelity optimization schemes. Provably convergent.
+          \begin{itemize}
+              \item pattern search
+              \item Trust region
+              \item Bayesian
+          \end{itemize}
+    \item Review of Bayesian MFO.
+          Include Bayesian optimization flowcharts.
+    \item Advantages of Bayesian MFO
+          \begin{itemize}
+              \item Uses all high-fidelity evaluations to choose the next design to evaluate.
+              \item Balances exploration and exploitation. Done by appropriate acquisition function of the posterior.
+                    Expected improvement formulation.
+          \end{itemize}
+    \item Propose to use twin model's gradient and gray-box simulation objective function in
+          Bayesian multifidelity framework.
+          (flowchart)
+    \item Model twin model gradient and gray-box objective function.
+          Posterior can be obtained by coKriging. Hyperparameters can be estimated by MLE.
+    \item Flowchart (full optimization procedure)
+    \item Demonstration: high-dimensional optimization with noisy gradient.
+    \item Discussion on convergence of non-constraint optimization. Proposed theorem.
+    \item Constraint optimization. Two types of constraints (their names in existing literatures?)
+          \begin{enumerate}
+              \item Type 1: require solution of PDE simulation.
+              \item Type 2: not require solution of PDE simulation.
+          \end{enumerate}
+          Only interested in type 1.
+    \item Constraint optimization. Constraint expected improvement formulation.
+\end{enumerate}
+
+\newpage
+\textbf{Application to a turbulent flow optimization}
+\begin{enumerate}
+    \item Problem description.
+          Optimize return bend geometry to minimize pressure drop. Low Mach number, incompressible.
+          (picture)
+          Interested in ensemble average quantities. 
+    \item Candidate PDE models for turbulent flows. Two categories:
+          \begin{itemize}
+              \item PDEs for ensemble average quantities. They satisfy a conservation law PDE.
+              But the PDE is not closure: modelling Reynolds stress is an open problem. RANS models.
+              Low-fidelity.
+              \item PDEs for instantaneous quantities. Such as LES, DNS. Costly to solve.
+              Generally no adjoint? High-fidelity.
+          \end{itemize}
+    \item Propose to construct a twin model for the ensemble average quantities. Train the twin model
+          by high fidelity simulation's time-averaged space-time solution.
+          (flowchart)
+    \item Review of RANS models.
+          \begin{itemize}
+              \item Models based on Boussinesq hypothesis: eddy viscosity.
+                    \begin{itemize}
+                        \item algebraic models.
+                        \item one-equation models. (transport equation)
+                        \item two-equation models. (transport equation)
+                    \end{itemize}
+              \item Reynolds stress modelling.
+          \end{itemize}
+          Focus on two-equation models for its ability to capture more complex turbulent phenomenons.
+    \item Twin model can be applied to infer PDE for eddy viscosity. For example $k-\omega$ models. The rhs of PDEs for
+          for $k$ and $\omega$ are adaptive.
+    \item Future work.
+          \begin{itemize}
+              \item Implement LES in OpenFoam, serving as gray-box simulation.
+              \item Implement a RANS model with adjoint.
+              \item Still an open problem how to parameterize the rhs of twin model.
+                    As a first step, consider the constants in the $k-\omega$ model as variables.
+              \item Assess computational savings, and optimal solution quality given limited computation budget.
+          \end{itemize}
+\end{enumerate}
+
+\newpage
+\textbf{Miscellaneous}
+\begin{enumerate}
+    \item Expected contributions
+          \begin{itemize}
+              \item Enable adjoint gradient computation even if the governing conservation law is not available.
+              \item Demonstrate that efficient gradient-based optimization is possible, even if the underlying simulator does not
+                    implement an adjoint.
+              \item Demonstrate my method's superiority in a high-fidelity turbulent flow optimization with a high-dimensional design space.
+          \end{itemize}
+    \item Proposed schedule
+          \begin{itemize}
+           \item   \textbf{Completed:}
+                   \begin{itemize}
+                       \item Course work.
+                       \item Formulation of twin model and its inference.
+                       \item Basis selection for time-dependent twin model.
+                       \item Optimization framework using twin model.
+                       \item Demonstration of twin model in a 1D example.
+                   \end{itemize}
+           \item   \textbf{To be complete:}
+                   \begin{itemize}
+                       \item \textbf{2015 Apr}: Write proposal defense slides. Wrap up the proof of theorem \ref{theorem: 2}.
+                       \item \textbf{2015 May}: Defend proposal. Demonstrate the complete algorithm on a the 1D Buckley-Leverett example.
+                       \item \textbf{2015 Jun}: Setup an LES solver for the return bend testcase in OpenFoam, write a RANS solver with adjoint for the return bend.
+                       \item \textbf{2015 Jul}: Hold a committee meeting for progress report.
+                       \item \textbf{2015 Jul-Oct}: Implement optimization on the return bend example.
+                       \item \textbf{2015 Aug-Nov}: Write thesis.
+                       \item \textbf{2016 Jan}: Defend thesis.
+                   \end{itemize}
+          \end{itemize} 
+    \item Major and minor programs of study, courseworks
+    \item References
+\end{enumerate}
+
+\end{document}
