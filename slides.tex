@@ -56,7 +56,7 @@
 \end{beamercolorbox}
 \begin{beamercolorbox}[wd=0.15\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}
     \usebeamerfont{date in head/foot}
-    \insertframenumber{} \textcolor{white}{/ 23}\hspace*{2ex}
+    \insertframenumber{} \textcolor{gray}{/ 23}\hspace*{2ex}
 \end{beamercolorbox}
 }
 }
@@ -115,15 +115,13 @@
         \barrow Interested in optimization constraint by conservation law simulation.
         \barrow Conservation law simulation can be expensive.
         \barrow The design space can be high-dimensional.
-        \barrow Efficient sensitivity (adjoint) analysis may not be available.
+        \barrow Efficient sensitivity (adjoint) analysis may be unavailable.
     \end{dinglist}
     \begin{columns}
-        \column{.33\textwidth}\centering
-            \includegraphics[width=4cm]{oil_field.png}
-        \column{.33\textwidth}\centering
-            \includegraphics[width=4cm]{ubend.png}
-        \column{.33\textwidth}\centering
-            \includegraphics[width=4cm]{ubend_cad.png}
+        \column{.5\textwidth}\centering
+            \includegraphics[height=5cm]{oil_forest_WTI.png}\\
+        \column{.5\textwidth}\centering
+            \includegraphics[height=5cm]{turbine.png}
     \end{columns}
 \end{frame}
 
@@ -162,7 +160,7 @@
     \begin{dinglist}{228}
         \barrow If {black-box}, use \textcolor{darkred}{derivative-free optimization},\\
                 \scriptsize{
-                (pattern search methods \cite{Tarma03}, evolution based methods\cite{Eberhart 10, Davis 10})}
+                pattern search methods \cite{Tarma03}, evolution based methods\cite{Eberhart 10, Davis 10}, etc}
                 \small
                 \begin{dinglist}{227}
                     \carrow not require derivative evaluation.
@@ -170,7 +168,7 @@
                 \end{dinglist}
         \barrow If open-box, use \textcolor{darkred}{gradient-based optimization},\\
                 \scriptsize
-                (quasi-Newton methods \cite{John 77}: BFGS, L-BFGS, etc.)
+                quasi-Newton methods \cite{John 77}: BFGS, L-BFGS, etc.
                 \small
                 \begin{dinglist}{227}
                     \carrow requires efficient gradient evaluation, generally using adjoint.
@@ -193,8 +191,8 @@
         \barrow Formulate an optimization framework that uses the estimated gradient for efficient high-dimensional 
                 optimization.
         \vspace{.1cm}
-        \barrow Given a fixed computational budget, assess how much design objective improvement 
-                can be achieved by using the proposed framework.
+        \barrow Given a fixed computational budget, assess the design objective improvement 
+                by using the proposed framework, in a return bend design problem.
     \end{dinglist}
 \end{frame}
 
@@ -248,7 +246,7 @@
 \begin{frame}
     \frametitle{Why is the PDE inferrable?\hfill \scriptsize{twin model}}\small
     \begin{dinglist}{228}
-        \barrow The governing PDE is a conservation law. Flux and source terms are functionals.\\
+        \barrow The governing PDE is a conservation law. Flux and source terms are functionals. For example,\\
         \vspace{-.1cm}
         \begin{center}
             \includegraphics[height=.6cm]{two_eqn.png}
@@ -335,7 +333,7 @@
 
 \begin{frame}
     \frametitle{Some technical details \hfill \scriptsize{twin model}}\small
-    \transduration{.1}
+    \transduration{.3}
     \begin{dinglist}{228}
         \barrow Parameterize the flux or source term \\\vspace{.05cm} \scriptsize polynomial, Fourier, wavelet, etc\\
         \small
@@ -371,7 +369,7 @@
 
 \begin{frame}
     \frametitle{Some technical details \hfill \scriptsize{twin model}}\small
-    \transduration{.1}
+    \transduration{.3}
     \begin{dinglist}{228}
         \barrow Parameterize the flux or source term \\\vspace{.05cm} \scriptsize polynomial, Fourier, wavelet, etc\\
         \small
@@ -407,7 +405,7 @@
 
 \begin{frame}
     \frametitle{Some technical details \hfill \scriptsize{twin model}}\small
-    \transduration{.1}
+    \transduration{.3}
     \begin{dinglist}{228}
         \barrow Parameterize the flux or source term \\\vspace{.05cm} \scriptsize polynomial, Fourier, wavelet, etc\\
         \small
@@ -443,7 +441,7 @@
 
 \begin{frame}
     \frametitle{Some technical details \hfill \scriptsize{twin model}}\small
-    \transduration{.1}
+    \transduration{.3}
     \begin{dinglist}{228}
         \barrow Parameterize the flux or source term \\\vspace{.05cm} \scriptsize polynomial, Fourier, wavelet, etc\\
         \small
@@ -478,7 +476,7 @@
 
 \begin{frame}
     \frametitle{Some technical details \hfill \scriptsize{twin model}}\small
-    \transduration{.1}
+    \transduration{.3}
     \begin{dinglist}{228}
         \barrow Parameterize the flux or source term \\\vspace{.05cm} \scriptsize polynomial, Fourier, wavelet, etc\\
         \small
@@ -762,7 +760,7 @@
     \frametitle{Expected contributions \hfill\scriptsize{contribution and schedule}}\small
     \begin{dinglist}{228}
         \barrow Develop an efficient method to estimate gradients when the governing PDE
-                is not available.\vspace{.2cm}
+                is unavailable.\vspace{.2cm}
         \barrow Provide an optimization framework based on gray-box conservation law
                 simulation for high-dimensional design problems.\vspace{.2cm}
         \barrow A demonstration of the twin model optimization framework in a high-dimensional
@@ -995,7 +993,8 @@
 \begin{frame}
     \frametitle{Dicussion of optimization convergence 2\hfill \scriptsize{backup}}\small
     \begin{dinglist}{228}
-        \barrow Mostly interested in improving the objective given a limited computational budget.\vspace{.15cm}
+        \barrow Mostly interested in improving the objective given a limited computational budget, when 
+                the design is far from optimal.\vspace{.15cm}
         \barrow Gray-box simulation can be so expensive that only a small number of evaluations are feasible.\vspace{.15cm}
         \barrow When the design is close to the optimal, the optimization framework degenerates to DFO.\vspace{.15cm}
         \barrow A converngence proof helps complete the theory, but may offer little practical value in realistic problems.
@@ -1096,7 +1095,7 @@
                     \carrow 2.25 advanced fluid dynamics
                     \carrow 16.920 numerical methods for PDE
                     \carrow 6.437 inference and information
-                    \carrow statistical estimation and control
+                    \carrow 16.322 statistical estimation and control
                     \carrow 18.335 introduction to numerical methods
                     \carrow 16.940 numerical methods for stochastic modeling
                     \carrow 6.438 algorithms for inference
@@ -1106,7 +1105,8 @@
                 \begin{dinglist}{227}
                     \carrow mas.665/15.375 development ventures
                     \carrow 15.450 analytics of finance
-                    \carrow 15.s26
+                    \carrow 15.s26 special seminar in management
+                    \carrow 15.401 finance theory I (P/D/F)
                 \end{dinglist}
     \end{dinglist}
 \end{frame}

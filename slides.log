@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  3 MAY 2015 08:53
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  3 MAY 2015 10:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1449,43 +1449,24 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [3
 
-] <oil_field.png, id=105, 1204.5pt x 949.5475pt>
-File: oil_field.png Graphic file (type png)
- <use oil_field.png>
-Package pdftex.def Info: oil_field.png used on input line 128.
-(pdftex.def)             Requested size: 113.81102pt x 89.71532pt.
-
-Overfull \hbox (0.85295pt too wide) in paragraph at lines 128--128
- [][] 
- []
-
+] <oil_forest_WTI.png, id=105, 722.7pt x 770.88pt>
+File: oil_forest_WTI.png Graphic file (type png)
+ <use oil_forest_WTI.png>
+Package pdftex.def Info: oil_forest_WTI.png used on input line 126.
+(pdftex.def)             Requested size: 133.36658pt x 142.26378pt.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 128.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 126.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 128.
-<ubend.png, id=107, 420.57124pt x 345.29pt>
-File: ubend.png Graphic file (type png)
- <use ubend.png>
-Package pdftex.def Info: ubend.png used on input line 128.
-(pdftex.def)             Requested size: 113.81102pt x 93.44028pt.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 126.
 
-Overfull \hbox (0.85295pt too wide) in paragraph at lines 128--128
- [][] 
- []
-
-<ubend_cad.png, id=108, 1037.8775pt x 829.0975pt>
-File: ubend_cad.png Graphic file (type png)
- <use ubend_cad.png>
-Package pdftex.def Info: ubend_cad.png used on input line 128.
-(pdftex.def)             Requested size: 113.81102pt x 90.91003pt.
-
-Overfull \hbox (0.85295pt too wide) in paragraph at lines 128--128
- [][] 
- []
-
+<turbine.png, id=107, 642.4pt x 803.0pt>
+File: turbine.png Graphic file (type png)
+ <use turbine.png>
+Package pdftex.def Info: turbine.png used on input line 126.
+(pdftex.def)             Requested size: 113.80379pt x 142.26378pt.
 File: mit.png Graphic file (type png)
-<use mit.png>
-Package pdftex.def Info: mit.png used on input line 128.
+ <use mit.png>
+Package pdftex.def Info: mit.png used on input line 126.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1494,10 +1475,10 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [4
 
- <./oil_field.png> <./ubend.png> <./ubend_cad.png>]
+ <./oil_forest_WTI.png> <./turbine.png>]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 158.
+Package pdftex.def Info: mit.png used on input line 156.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1508,27 +1489,27 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 ]
 
-LaTeX Warning: Citation 'Tarma03' on page 6 undefined on input line 184.
+LaTeX Warning: Citation 'Tarma03' on page 6 undefined on input line 182.
 
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <8> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 184.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 182.
 
-LaTeX Warning: Citation 'Eberhart 10' on page 6 undefined on input line 184.
-
-
-LaTeX Warning: Citation 'Davis 10' on page 6 undefined on input line 184.
+LaTeX Warning: Citation 'Eberhart 10' on page 6 undefined on input line 182.
 
 
-LaTeX Warning: Citation 'John 77' on page 6 undefined on input line 184.
+LaTeX Warning: Citation 'Davis 10' on page 6 undefined on input line 182.
 
-<treat.png, id=164, 424.7067pt x 126.4725pt>
+
+LaTeX Warning: Citation 'John 77' on page 6 undefined on input line 182.
+
+<treat.png, id=162, 424.7067pt x 126.4725pt>
 File: treat.png Graphic file (type png)
  <use treat.png>
-Package pdftex.def Info: treat.png used on input line 184.
+Package pdftex.def Info: treat.png used on input line 182.
 (pdftex.def)             Requested size: 238.87099pt x 71.13188pt.
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 184.
+Package pdftex.def Info: mit.png used on input line 182.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1540,7 +1521,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
  <./treat.png>]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 199.
+Package pdftex.def Info: mit.png used on input line 197.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1552,7 +1533,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 ]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 217.
+Package pdftex.def Info: mit.png used on input line 215.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1561,15 +1542,15 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [8
 
-] <black_sol.png, id=246, 586.8324pt x 442.2924pt>
+] <black_sol.png, id=244, 586.8324pt x 442.2924pt>
 File: black_sol.png Graphic file (type png)
  <use black_sol.png>
-Package pdftex.def Info: black_sol.png used on input line 246.
+Package pdftex.def Info: black_sol.png used on input line 244.
 (pdftex.def)             Requested size: 113.81102pt x 85.77762pt.
 File: mit.png Graphic file (type png)
 
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 246.
+Package pdftex.def Info: mit.png used on input line 244.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1578,21 +1559,21 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [9
 
- <./black_sol.png>] <two_eqn.png, id=277, 921.4425pt x 117.43875pt>
+ <./black_sol.png>] <two_eqn.png, id=275, 921.4425pt x 117.43875pt>
 File: two_eqn.png Graphic file (type png)
 
 <use two_eqn.png>
-Package pdftex.def Info: two_eqn.png used on input line 267.
+Package pdftex.def Info: two_eqn.png used on input line 265.
 (pdftex.def)             Requested size: 133.93614pt x 17.07182pt.
- <locality.png, id=278, 448.7967pt x 277.5168pt>
+ <locality.png, id=276, 448.7967pt x 277.5168pt>
 File: locality.png Graphic file (type png)
 
 <use locality.png>
-Package pdftex.def Info: locality.png used on input line 267.
+Package pdftex.def Info: locality.png used on input line 265.
 (pdftex.def)             Requested size: 69.01491pt x 42.67912pt.
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 267.
+Package pdftex.def Info: mit.png used on input line 265.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1602,24 +1583,24 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 [10
 
  <./two_eqn.png> <./locality.png>]
-<leftcol.png, id=306, 471.9231pt x 393.8715pt>
+<leftcol.png, id=304, 471.9231pt x 393.8715pt>
 File: leftcol.png Graphic file (type png)
  <use leftcol.png>
-Package pdftex.def Info: leftcol.png used on input line 298.
+Package pdftex.def Info: leftcol.png used on input line 296.
 (pdftex.def)             Requested size: 99.58464pt x 83.1121pt.
 
-<rightcol.png, id=307, 471.9231pt x 393.8715pt>
+<rightcol.png, id=305, 471.9231pt x 393.8715pt>
 File: rightcol.png Graphic file (type png)
  <use rightcol.png>
-Package pdftex.def Info: rightcol.png used on input line 298.
+Package pdftex.def Info: rightcol.png used on input line 296.
 (pdftex.def)             Requested size: 99.58464pt x 83.1121pt.
 
-Overfull \vbox (0.735pt too high) detected at line 298
+Overfull \vbox (0.735pt too high) detected at line 296
  []
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 298.
+Package pdftex.def Info: mit.png used on input line 296.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1629,31 +1610,31 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 [11
 
  <./leftcol.png> <./rightcol.png>]
-<sigmoid_empty.png, id=340, 586.8324pt x 442.2924pt>
+<sigmoid_empty.png, id=338, 586.8324pt x 442.2924pt>
 File: sigmoid_empty.png Graphic file (type png)
  <use sigmoid_empty.png>
-Package pdftex.def Info: sigmoid_empty.png used on input line 331.
+Package pdftex.def Info: sigmoid_empty.png used on input line 329.
 (pdftex.def)             Requested size: 99.58464pt x 75.05373pt.
 
 
-LaTeX Warning: Citation 'Adler 96' on page 12 undefined on input line 331.
+LaTeX Warning: Citation 'Adler 96' on page 12 undefined on input line 329.
 
 
-LaTeX Warning: Citation 'Billing07' on page 12 undefined on input line 331.
+LaTeX Warning: Citation 'Billing07' on page 12 undefined on input line 329.
 
 
-LaTeX Warning: Citation 'Stone 77' on page 12 undefined on input line 331.
+LaTeX Warning: Citation 'Stone 77' on page 12 undefined on input line 329.
 
 
-LaTeX Warning: Citation 'Schwarz 78' on page 12 undefined on input line 331.
+LaTeX Warning: Citation 'Schwarz 78' on page 12 undefined on input line 329.
 
 
-LaTeX Warning: Citation 'Tibshirani 96' on page 12 undefined on input line 331.
+LaTeX Warning: Citation 'Tibshirani 96' on page 12 undefined on input line 329.
 
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 331.
+Package pdftex.def Info: mit.png used on input line 329.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1662,32 +1643,32 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [12
 
- <./sigmoid_empty.png>] <sigmoid_1.png, id=369, 586.8324pt x 442.2924pt>
+ <./sigmoid_empty.png>] <sigmoid_1.png, id=367, 586.8324pt x 442.2924pt>
 File: sigmoid_1.png Graphic file (type png)
 
 <use sigmoid_1.png>
-Package pdftex.def Info: sigmoid_1.png used on input line 367.
+Package pdftex.def Info: sigmoid_1.png used on input line 365.
 (pdftex.def)             Requested size: 99.58464pt x 75.05373pt.
 
 
-LaTeX Warning: Citation 'Adler 96' on page 13 undefined on input line 367.
+LaTeX Warning: Citation 'Adler 96' on page 13 undefined on input line 365.
 
 
-LaTeX Warning: Citation 'Billing07' on page 13 undefined on input line 367.
+LaTeX Warning: Citation 'Billing07' on page 13 undefined on input line 365.
 
 
-LaTeX Warning: Citation 'Stone 77' on page 13 undefined on input line 367.
+LaTeX Warning: Citation 'Stone 77' on page 13 undefined on input line 365.
 
 
-LaTeX Warning: Citation 'Schwarz 78' on page 13 undefined on input line 367.
+LaTeX Warning: Citation 'Schwarz 78' on page 13 undefined on input line 365.
 
 
-LaTeX Warning: Citation 'Tibshirani 96' on page 13 undefined on input line 367.
+LaTeX Warning: Citation 'Tibshirani 96' on page 13 undefined on input line 365.
 
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 367.
+Package pdftex.def Info: mit.png used on input line 365.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1696,32 +1677,32 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [13
 
- <./sigmoid_1.png>] <sigmoid_2.png, id=398, 586.8324pt x 442.2924pt>
+ <./sigmoid_1.png>] <sigmoid_2.png, id=396, 586.8324pt x 442.2924pt>
 File: sigmoid_2.png Graphic file (type png)
 
 <use sigmoid_2.png>
-Package pdftex.def Info: sigmoid_2.png used on input line 403.
+Package pdftex.def Info: sigmoid_2.png used on input line 401.
 (pdftex.def)             Requested size: 99.58464pt x 75.05373pt.
 
 
-LaTeX Warning: Citation 'Adler 96' on page 14 undefined on input line 403.
+LaTeX Warning: Citation 'Adler 96' on page 14 undefined on input line 401.
 
 
-LaTeX Warning: Citation 'Billing07' on page 14 undefined on input line 403.
+LaTeX Warning: Citation 'Billing07' on page 14 undefined on input line 401.
 
 
-LaTeX Warning: Citation 'Stone 77' on page 14 undefined on input line 403.
+LaTeX Warning: Citation 'Stone 77' on page 14 undefined on input line 401.
 
 
-LaTeX Warning: Citation 'Schwarz 78' on page 14 undefined on input line 403.
+LaTeX Warning: Citation 'Schwarz 78' on page 14 undefined on input line 401.
 
 
-LaTeX Warning: Citation 'Tibshirani 96' on page 14 undefined on input line 403.
+LaTeX Warning: Citation 'Tibshirani 96' on page 14 undefined on input line 401.
 
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 403.
+Package pdftex.def Info: mit.png used on input line 401.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1730,32 +1711,32 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [14
 
- <./sigmoid_2.png>] <sigmoid_3.png, id=426, 586.8324pt x 442.2924pt>
+ <./sigmoid_2.png>] <sigmoid_3.png, id=424, 586.8324pt x 442.2924pt>
 File: sigmoid_3.png Graphic file (type png)
 
 <use sigmoid_3.png>
-Package pdftex.def Info: sigmoid_3.png used on input line 439.
+Package pdftex.def Info: sigmoid_3.png used on input line 437.
 (pdftex.def)             Requested size: 99.58464pt x 75.05373pt.
 
 
-LaTeX Warning: Citation 'Adler 96' on page 15 undefined on input line 439.
+LaTeX Warning: Citation 'Adler 96' on page 15 undefined on input line 437.
 
 
-LaTeX Warning: Citation 'Billing07' on page 15 undefined on input line 439.
+LaTeX Warning: Citation 'Billing07' on page 15 undefined on input line 437.
 
 
-LaTeX Warning: Citation 'Stone 77' on page 15 undefined on input line 439.
+LaTeX Warning: Citation 'Stone 77' on page 15 undefined on input line 437.
 
 
-LaTeX Warning: Citation 'Schwarz 78' on page 15 undefined on input line 439.
+LaTeX Warning: Citation 'Schwarz 78' on page 15 undefined on input line 437.
 
 
-LaTeX Warning: Citation 'Tibshirani 96' on page 15 undefined on input line 439.
+LaTeX Warning: Citation 'Tibshirani 96' on page 15 undefined on input line 437.
 
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 439.
+Package pdftex.def Info: mit.png used on input line 437.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1764,32 +1745,32 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [15
 
- <./sigmoid_3.png>] <sigmoid_4.png, id=454, 586.8324pt x 442.2924pt>
+ <./sigmoid_3.png>] <sigmoid_4.png, id=452, 586.8324pt x 442.2924pt>
 File: sigmoid_4.png Graphic file (type png)
 
 <use sigmoid_4.png>
-Package pdftex.def Info: sigmoid_4.png used on input line 475.
+Package pdftex.def Info: sigmoid_4.png used on input line 473.
 (pdftex.def)             Requested size: 99.58464pt x 75.05373pt.
 
 
-LaTeX Warning: Citation 'Adler 96' on page 16 undefined on input line 475.
+LaTeX Warning: Citation 'Adler 96' on page 16 undefined on input line 473.
 
 
-LaTeX Warning: Citation 'Billing07' on page 16 undefined on input line 475.
+LaTeX Warning: Citation 'Billing07' on page 16 undefined on input line 473.
 
 
-LaTeX Warning: Citation 'Stone 77' on page 16 undefined on input line 475.
+LaTeX Warning: Citation 'Stone 77' on page 16 undefined on input line 473.
 
 
-LaTeX Warning: Citation 'Schwarz 78' on page 16 undefined on input line 475.
+LaTeX Warning: Citation 'Schwarz 78' on page 16 undefined on input line 473.
 
 
-LaTeX Warning: Citation 'Tibshirani 96' on page 16 undefined on input line 475.
+LaTeX Warning: Citation 'Tibshirani 96' on page 16 undefined on input line 473.
 
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 475.
+Package pdftex.def Info: mit.png used on input line 473.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1798,32 +1779,32 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [16
 
- <./sigmoid_4.png>] <sigmoid_5.png, id=482, 586.8324pt x 442.2924pt>
+ <./sigmoid_4.png>] <sigmoid_5.png, id=480, 586.8324pt x 442.2924pt>
 File: sigmoid_5.png Graphic file (type png)
 
 <use sigmoid_5.png>
-Package pdftex.def Info: sigmoid_5.png used on input line 510.
+Package pdftex.def Info: sigmoid_5.png used on input line 508.
 (pdftex.def)             Requested size: 99.58464pt x 75.05373pt.
 
 
-LaTeX Warning: Citation 'Adler 96' on page 17 undefined on input line 510.
+LaTeX Warning: Citation 'Adler 96' on page 17 undefined on input line 508.
 
 
-LaTeX Warning: Citation 'Billing07' on page 17 undefined on input line 510.
+LaTeX Warning: Citation 'Billing07' on page 17 undefined on input line 508.
 
 
-LaTeX Warning: Citation 'Stone 77' on page 17 undefined on input line 510.
+LaTeX Warning: Citation 'Stone 77' on page 17 undefined on input line 508.
 
 
-LaTeX Warning: Citation 'Schwarz 78' on page 17 undefined on input line 510.
+LaTeX Warning: Citation 'Schwarz 78' on page 17 undefined on input line 508.
 
 
-LaTeX Warning: Citation 'Tibshirani 96' on page 17 undefined on input line 510.
+LaTeX Warning: Citation 'Tibshirani 96' on page 17 undefined on input line 508.
 
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 510.
+Package pdftex.def Info: mit.png used on input line 508.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1835,28 +1816,28 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
  <./sigmoid_5.png>]
 File: sigmoid_3.png Graphic file (type png)
  <use sigmoid_3.png>
-Package pdftex.def Info: sigmoid_3.png used on input line 545.
+Package pdftex.def Info: sigmoid_3.png used on input line 543.
 (pdftex.def)             Requested size: 99.58464pt x 75.05373pt.
 
 
-LaTeX Warning: Citation 'Adler 96' on page 18 undefined on input line 545.
+LaTeX Warning: Citation 'Adler 96' on page 18 undefined on input line 543.
 
 
-LaTeX Warning: Citation 'Billing07' on page 18 undefined on input line 545.
+LaTeX Warning: Citation 'Billing07' on page 18 undefined on input line 543.
 
 
-LaTeX Warning: Citation 'Stone 77' on page 18 undefined on input line 545.
+LaTeX Warning: Citation 'Stone 77' on page 18 undefined on input line 543.
 
 
-LaTeX Warning: Citation 'Schwarz 78' on page 18 undefined on input line 545.
+LaTeX Warning: Citation 'Schwarz 78' on page 18 undefined on input line 543.
 
 
-LaTeX Warning: Citation 'Tibshirani 96' on page 18 undefined on input line 545.
+LaTeX Warning: Citation 'Tibshirani 96' on page 18 undefined on input line 543.
 
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 545.
+Package pdftex.def Info: mit.png used on input line 543.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1867,32 +1848,32 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 ]
 
-LaTeX Warning: Citation 'Kucuk 06' on page 19 undefined on input line 569.
+LaTeX Warning: Citation 'Kucuk 06' on page 19 undefined on input line 567.
 
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 569.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 567.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
 File: leftcol.png Graphic file (type png)
  <use leftcol.png>
-Package pdftex.def Info: leftcol.png used on input line 569.
+Package pdftex.def Info: leftcol.png used on input line 567.
 (pdftex.def)             Requested size: 99.58464pt x 83.1121pt.
 
-<Twin_sol_30.png, id=536, 471.9231pt x 393.8715pt>
+<Twin_sol_30.png, id=534, 471.9231pt x 393.8715pt>
 File: Twin_sol_30.png Graphic file (type png)
  <use Twin_sol_30.png>
-Package pdftex.def Info: Twin_sol_30.png used on input line 569.
+Package pdftex.def Info: Twin_sol_30.png used on input line 567.
 (pdftex.def)             Requested size: 99.58464pt x 83.1121pt.
 
-<J_twin_vs_primal.png, id=537, 554.3109pt x 364.2408pt>
+<J_twin_vs_primal.png, id=535, 554.3109pt x 364.2408pt>
 File: J_twin_vs_primal.png Graphic file (type png)
 
 <use J_twin_vs_primal.png>
-Package pdftex.def Info: J_twin_vs_primal.png used on input line 569.
+Package pdftex.def Info: J_twin_vs_primal.png used on input line 567.
 (pdftex.def)             Requested size: 125.19194pt x 82.26187pt.
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 569.
+Package pdftex.def Info: mit.png used on input line 567.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1904,7 +1885,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
  <./Twin_sol_30.png> <./J_twin_vs_primal.png>]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 588.
+Package pdftex.def Info: mit.png used on input line 586.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1913,36 +1894,36 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [20
 
-] <mfo.png, id=596, 392.1852pt x 112.0185pt>
+] <mfo.png, id=594, 392.1852pt x 112.0185pt>
 File: mfo.png Graphic file (type png)
  <use mfo.png>
-Package pdftex.def Info: mfo.png used on input line 619.
+Package pdftex.def Info: mfo.png used on input line 617.
 (pdftex.def)             Requested size: 249.04082pt x 71.13188pt.
 
 
-LaTeX Warning: Citation 'Booker 99' on page 21 undefined on input line 619.
+LaTeX Warning: Citation 'Booker 99' on page 21 undefined on input line 617.
 
 
-LaTeX Warning: Citation 'Wild 13' on page 21 undefined on input line 619.
+LaTeX Warning: Citation 'Wild 13' on page 21 undefined on input line 617.
 
 
-LaTeX Warning: Citation 'March 12' on page 21 undefined on input line 619.
+LaTeX Warning: Citation 'March 12' on page 21 undefined on input line 617.
 
 
-LaTeX Warning: Citation 'Robinson 06' on page 21 undefined on input line 619.
+LaTeX Warning: Citation 'Robinson 06' on page 21 undefined on input line 617.
 
 
-LaTeX Warning: Citation 'Kennedy 01' on page 21 undefined on input line 619.
+LaTeX Warning: Citation 'Kennedy 01' on page 21 undefined on input line 617.
 
 
-LaTeX Warning: Citation 'March 11' on page 21 undefined on input line 619.
+LaTeX Warning: Citation 'March 11' on page 21 undefined on input line 617.
 
 
-LaTeX Warning: Citation 'Chung 02' on page 21 undefined on input line 619.
+LaTeX Warning: Citation 'Chung 02' on page 21 undefined on input line 617.
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 619.
+Package pdftex.def Info: mit.png used on input line 617.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1954,17 +1935,17 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
  <./mfo.png>]
 
 Package amsmath Warning: Cannot use `split' here;
-(amsmath)                trying to recover with `aligned' on input line 639.
+(amsmath)                trying to recover with `aligned' on input line 637.
 
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 639.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 637.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <7> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 639.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 637.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <5> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 639.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 637.
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 639.
+Package pdftex.def Info: mit.png used on input line 637.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1973,19 +1954,19 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [22
 
-] <prior_posterior.png, id=649, 299.1978pt x 82.3878pt>
+] <prior_posterior.png, id=647, 299.1978pt x 82.3878pt>
 File: prior_posterior.png Graphic file (type png)
 
 <use prior_posterior.png>
-Package pdftex.def Info: prior_posterior.png used on input line 655.
+Package pdftex.def Info: prior_posterior.png used on input line 653.
 (pdftex.def)             Requested size: 184.9429pt x 50.92776pt.
 
 
-LaTeX Warning: Citation 'Snoek 12' on page 23 undefined on input line 655.
+LaTeX Warning: Citation 'Snoek 12' on page 23 undefined on input line 653.
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 655.
+Package pdftex.def Info: mit.png used on input line 653.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -1994,15 +1975,15 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [23
 
- <./prior_posterior.png>] <whole.png, id=676, 543.2295pt x 236.082pt>
+ <./prior_posterior.png>] <whole.png, id=674, 543.2295pt x 236.082pt>
 File: whole.png Graphic file (type png)
 
 <use whole.png>
-Package pdftex.def Info: whole.png used on input line 662.
+Package pdftex.def Info: whole.png used on input line 660.
 (pdftex.def)             Requested size: 335.7426pt x 145.91182pt.
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 662.
+Package pdftex.def Info: mit.png used on input line 660.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2011,25 +1992,25 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [24
 
- <./whole.png>] <source_profiles.png, id=704, 586.8324pt x 442.2924pt>
+ <./whole.png>] <source_profiles.png, id=702, 586.8324pt x 442.2924pt>
 File: source_profiles.png Graphic file (type png)
 
 <use source_profiles.png>
-Package pdftex.def Info: source_profiles.png used on input line 681.
+Package pdftex.def Info: source_profiles.png used on input line 679.
 (pdftex.def)             Requested size: 113.81102pt x 85.77762pt.
- <opt_demo.png, id=705, 586.8324pt x 442.2924pt>
+ <opt_demo.png, id=703, 586.8324pt x 442.2924pt>
 File: opt_demo.png Graphic file (type png)
 
 <use opt_demo.png>
-Package pdftex.def Info: opt_demo.png used on input line 681.
+Package pdftex.def Info: opt_demo.png used on input line 679.
 (pdftex.def)             Requested size: 165.02606pt x 124.37418pt.
 
-Overfull \vbox (4.9587pt too high) detected at line 681
+Overfull \vbox (4.9587pt too high) detected at line 679
  []
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 681.
+Package pdftex.def Info: mit.png used on input line 679.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2041,7 +2022,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
  <./source_profiles.png> <./opt_demo.png>]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 700.
+Package pdftex.def Info: mit.png used on input line 698.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2052,21 +2033,23 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 ]
 
-LaTeX Warning: Citation 'Coletti 13' on page 27 undefined on input line 720.
+LaTeX Warning: Citation 'Coletti 13' on page 27 undefined on input line 718.
 
+<ubend.png, id=759, 420.57124pt x 345.29pt>
 File: ubend.png Graphic file (type png)
-<use ubend.png>
-Package pdftex.def Info: ubend.png used on input line 720.
+ <use ubend.png>
+Package pdftex.def Info: ubend.png used on input line 718.
 (pdftex.def)             Requested size: 138.62209pt x 113.81102pt.
- <overall_mesh.png, id=761, 216.81pt x 518.1759pt>
-File: overall_mesh.png Graphic file (type png)
 
-<use overall_mesh.png>
-Package pdftex.def Info: overall_mesh.png used on input line 720.
+<overall_mesh.png, id=760, 216.81pt x 518.1759pt>
+File: overall_mesh.png Graphic file (type png)
+ <use overall_mesh.png>
+Package pdftex.def Info: overall_mesh.png used on input line 718.
 (pdftex.def)             Requested size: 44.04604pt x 105.2751pt.
 File: mit.png Graphic file (type png)
- <use mit.png>
-Package pdftex.def Info: mit.png used on input line 720.
+
+<use mit.png>
+Package pdftex.def Info: mit.png used on input line 718.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2075,16 +2058,16 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [27
 
- <./overall_mesh.png>]
+ <./ubend.png> <./overall_mesh.png>]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <6> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 741.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 739.
 
 
-LaTeX Warning: Citation 'Wilcox 98' on page 28 undefined on input line 741.
+LaTeX Warning: Citation 'Wilcox 98' on page 28 undefined on input line 739.
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 741.
+Package pdftex.def Info: mit.png used on input line 739.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2096,7 +2079,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 ]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 758.
+Package pdftex.def Info: mit.png used on input line 756.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2108,7 +2091,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 ]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 772.
+Package pdftex.def Info: mit.png used on input line 770.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2120,7 +2103,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 ]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 797.
+Package pdftex.def Info: mit.png used on input line 795.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2131,12 +2114,12 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 806.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 804.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <14.4> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 806.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 804.
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 806.
+Package pdftex.def Info: mit.png used on input line 804.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2147,10 +2130,10 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10.95> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 940.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 938.
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 940.
+Package pdftex.def Info: mit.png used on input line 938.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2163,7 +2146,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 File: mit.png Graphic file (type png)
 
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 940.
+Package pdftex.def Info: mit.png used on input line 938.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2176,7 +2159,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 ]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 940.
+Package pdftex.def Info: mit.png used on input line 938.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2189,7 +2172,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 ]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 940.
+Package pdftex.def Info: mit.png used on input line 938.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2202,7 +2185,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 ]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 940.
+Package pdftex.def Info: mit.png used on input line 938.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2215,7 +2198,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 ]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 940.
+Package pdftex.def Info: mit.png used on input line 938.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2228,7 +2211,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 ]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 940.
+Package pdftex.def Info: mit.png used on input line 938.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2240,16 +2223,16 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <6> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 993.
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 991.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <6> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 993.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 991.
 
-Overfull \vbox (7.6891pt too high) detected at line 993
+Overfull \vbox (7.6891pt too high) detected at line 991
  []
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 993.
+Package pdftex.def Info: mit.png used on input line 991.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2261,7 +2244,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 ]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 1003.
+Package pdftex.def Info: mit.png used on input line 1002.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2273,7 +2256,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 ]
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 1021.
+Package pdftex.def Info: mit.png used on input line 1020.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2286,11 +2269,11 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 File: Bayconstraint.png Graphic file (type png)
 
 <use Bayconstraint.png>
-Package pdftex.def Info: Bayconstraint.png used on input line 1046.
+Package pdftex.def Info: Bayconstraint.png used on input line 1045.
 (pdftex.def)             Requested size: 113.81102pt x 162.36652pt.
 File: mit.png Graphic file (type png)
  <use mit.png>
-Package pdftex.def Info: mit.png used on input line 1046.
+Package pdftex.def Info: mit.png used on input line 1045.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2303,15 +2286,15 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 File: sketch2.png Graphic file (type png)
 
 <use sketch2.png>
-Package pdftex.def Info: sketch2.png used on input line 1089.
+Package pdftex.def Info: sketch2.png used on input line 1088.
 (pdftex.def)             Requested size: 128.0374pt x 86.44992pt.
 
-Overfull \vbox (16.52917pt too high) detected at line 1089
+Overfull \vbox (16.52917pt too high) detected at line 1088
  []
 
 File: mit.png Graphic file (type png)
 <use mit.png>
-Package pdftex.def Info: mit.png used on input line 1089.
+Package pdftex.def Info: mit.png used on input line 1088.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
 Overfull \hbox (5.0038pt too wide) has occurred while \output is active
@@ -2373,8 +2356,8 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1114.
  ) 
 Here is how much of TeX's memory you used:
  26984 strings out of 493308
- 513974 string characters out of 6140092
- 997893 words of memory out of 5000000
+ 513989 string characters out of 6140092
+ 997892 words of memory out of 5000000
  29680 multiletter control sequences out of 15000+600000
  75668 words of font info for 92 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -2400,7 +2383,7 @@ ype1/urw/helvetic/uhvbo8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/he
 lvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro
 8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on slides.pdf (45 pages, 2871075 bytes).
+Output written on slides.pdf (45 pages, 5678130 bytes).
 PDF statistics:
  1398 PDF objects out of 1440 (max. 8388607)
  115 named destinations out of 1000 (max. 500000)
