@@ -82,7 +82,7 @@
         \barrow \transparent{1.}Background.
         \barrow Thesis objective.
         \vspace{.35cm}
-        \barrow Estimate gradient by twin model.
+        \barrow Estimate gradient by using the space(-time) solution.
         \barrow Optimization framework.
         \barrow Application to turbulent flow optimization.
         \vspace{.35cm}
@@ -100,7 +100,7 @@
         \barrow Thesis objective.
         \vspace{.35cm}
         \transparent{0.4}
-        \barrow Estimate gradient by twin model.
+        \barrow Estimate gradient by using the space(-time) solution.
         \barrow Optimization framework.
         \barrow Application to turbulent flow optimization.
         \vspace{.35cm}
@@ -192,7 +192,7 @@
                 optimization.
         \vspace{.1cm}
         \barrow Given a fixed computational budget, assess the design objective improvement 
-                by using the proposed framework, in a return bend design problem.
+                by using the proposed framework, in a turbine airfoil cooling design problem.
     \end{dinglist}
 \end{frame}
 
@@ -204,7 +204,7 @@
         \barrow Thesis objective.
         \vspace{.35cm}
         \transparent{1.}
-        \barrow Estimate gradient by twin model. \hfill        (objective 1)
+        \barrow Estimate gradient by using the space(-time) solution. \hfill        (objective 1)
         \barrow \transparent{.4}
                 Optimization framework.\hfill(objective 2)
         \barrow Application to turbulent flow optimization.\hfill(objective 3)\\
@@ -235,12 +235,12 @@
         \end{split}\end{equation*}
         \column{.5\textwidth}
         \begin{center}
-            \includegraphics[width=4cm]{black_sol.png}
+            \includegraphics[width=4cm]{imag_1.png}
         \end{center}
     \end{columns}
     \vspace{.15cm}
     Propose to infer the flux or the source term that reproduce the space(-time) solution. The inferred
-    conservation law is called twin model.
+    conservation law is called \textcolor{darkred}{twin model}.
 \end{frame}
 
 \begin{frame}
@@ -249,7 +249,7 @@
         \barrow The governing PDE is a conservation law. Flux and source terms are functionals. For example,\\
         \vspace{-.1cm}
         \begin{center}
-            \includegraphics[height=.6cm]{two_eqn.png}
+            \includegraphics[height=.7cm]{two_eqn.png}
         \end{center}
         \vspace{-.1cm}
         \barrow The flow quantities only depend on the flow quantities in an older time
@@ -275,7 +275,7 @@
             &u(t,x=0) = u(t, x=1)
         \end{split}\end{equation*}
         \centering
-        \includegraphics[width=3.5cm]{leftcol.png} 
+        \includegraphics[width=3.5cm]{imag_1.png} 
         \column{.5\textwidth}
         \begin{equation*}\begin{split}
             &\frac{\partial \tilde{u}}{\partial t}+ \frac{\partial {\textcolor{blue}{\tilde{F}
@@ -284,7 +284,7 @@
             &\tilde{u}(t,x=0) = \tilde{u}(t, x=1)
         \end{split}\end{equation*}
         \centering
-        \includegraphics[width=3.5cm]{rightcol.png}
+        \includegraphics[width=3.5cm]{imag_2.png}
     \end{columns}
     \begin{center}
     $$
@@ -574,7 +574,7 @@
         \barrow \transparent{.4} Background.
         \barrow Thesis objective.
         \vspace{.35cm}
-        \barrow Estimate gradient by twin model.\hfill(objective 1)
+        \barrow Estimate gradient by using the space(-time) solution.\hfill(objective 1)
                 \transparent{1.}
         \barrow Optimization framework.\hfill(objective 2)
                 \transparent{.4}
@@ -685,7 +685,7 @@
         \barrow \transparent{.4} Background.
         \barrow Thesis objective.
         \vspace{.35cm}
-        \barrow Estimate gradient by twin model.\hfill(objective 1)
+        \barrow Estimate gradient by using the space(-time) solution.\hfill(objective 1)
                 \transparent{.4}
         \barrow Optimization framework.\hfill(objective 2)
                 \transparent{1.}

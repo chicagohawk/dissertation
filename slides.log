@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  3 MAY 2015 10:16
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  4 MAY 2015 15:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1542,11 +1542,11 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [8
 
-] <black_sol.png, id=244, 586.8324pt x 442.2924pt>
-File: black_sol.png Graphic file (type png)
- <use black_sol.png>
-Package pdftex.def Info: black_sol.png used on input line 244.
-(pdftex.def)             Requested size: 113.81102pt x 85.77762pt.
+] <imag_1.png, id=244, 465.4188pt x 396.0396pt>
+File: imag_1.png Graphic file (type png)
+ <use imag_1.png>
+Package pdftex.def Info: imag_1.png used on input line 244.
+(pdftex.def)             Requested size: 113.81102pt x 96.84018pt.
 File: mit.png Graphic file (type png)
 
 <use mit.png>
@@ -1559,12 +1559,12 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [9
 
- <./black_sol.png>] <two_eqn.png, id=275, 921.4425pt x 117.43875pt>
+ <./imag_1.png>] <two_eqn.png, id=275, 976.64874pt x 117.43875pt>
 File: two_eqn.png Graphic file (type png)
 
 <use two_eqn.png>
 Package pdftex.def Info: two_eqn.png used on input line 265.
-(pdftex.def)             Requested size: 133.93614pt x 17.07182pt.
+(pdftex.def)             Requested size: 165.62572pt x 19.91684pt.
  <locality.png, id=276, 448.7967pt x 277.5168pt>
 File: locality.png Graphic file (type png)
 
@@ -1583,19 +1583,18 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 [10
 
  <./two_eqn.png> <./locality.png>]
-<leftcol.png, id=304, 471.9231pt x 393.8715pt>
-File: leftcol.png Graphic file (type png)
- <use leftcol.png>
-Package pdftex.def Info: leftcol.png used on input line 296.
-(pdftex.def)             Requested size: 99.58464pt x 83.1121pt.
+File: imag_1.png Graphic file (type png)
+ <use imag_1.png>
+Package pdftex.def Info: imag_1.png used on input line 296.
+(pdftex.def)             Requested size: 99.58464pt x 84.73592pt.
 
-<rightcol.png, id=305, 471.9231pt x 393.8715pt>
-File: rightcol.png Graphic file (type png)
- <use rightcol.png>
-Package pdftex.def Info: rightcol.png used on input line 296.
-(pdftex.def)             Requested size: 99.58464pt x 83.1121pt.
+<imag_2.png, id=304, 465.4188pt x 396.0396pt>
+File: imag_2.png Graphic file (type png)
+ <use imag_2.png>
+Package pdftex.def Info: imag_2.png used on input line 296.
+(pdftex.def)             Requested size: 99.58464pt x 84.73592pt.
 
-Overfull \vbox (0.735pt too high) detected at line 296
+Overfull \vbox (2.35881pt too high) detected at line 296
  []
 
 File: mit.png Graphic file (type png)
@@ -1609,10 +1608,10 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [11
 
- <./leftcol.png> <./rightcol.png>]
-<sigmoid_empty.png, id=338, 586.8324pt x 442.2924pt>
+ <./imag_2.png>] <sigmoid_empty.png, id=336, 586.8324pt x 442.2924pt>
 File: sigmoid_empty.png Graphic file (type png)
- <use sigmoid_empty.png>
+
+<use sigmoid_empty.png>
 Package pdftex.def Info: sigmoid_empty.png used on input line 329.
 (pdftex.def)             Requested size: 99.58464pt x 75.05373pt.
 
@@ -1643,7 +1642,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [12
 
- <./sigmoid_empty.png>] <sigmoid_1.png, id=367, 586.8324pt x 442.2924pt>
+ <./sigmoid_empty.png>] <sigmoid_1.png, id=365, 586.8324pt x 442.2924pt>
 File: sigmoid_1.png Graphic file (type png)
 
 <use sigmoid_1.png>
@@ -1677,7 +1676,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [13
 
- <./sigmoid_1.png>] <sigmoid_2.png, id=396, 586.8324pt x 442.2924pt>
+ <./sigmoid_1.png>] <sigmoid_2.png, id=394, 586.8324pt x 442.2924pt>
 File: sigmoid_2.png Graphic file (type png)
 
 <use sigmoid_2.png>
@@ -1711,7 +1710,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [14
 
- <./sigmoid_2.png>] <sigmoid_3.png, id=424, 586.8324pt x 442.2924pt>
+ <./sigmoid_2.png>] <sigmoid_3.png, id=422, 586.8324pt x 442.2924pt>
 File: sigmoid_3.png Graphic file (type png)
 
 <use sigmoid_3.png>
@@ -1745,7 +1744,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [15
 
- <./sigmoid_3.png>] <sigmoid_4.png, id=452, 586.8324pt x 442.2924pt>
+ <./sigmoid_3.png>] <sigmoid_4.png, id=450, 586.8324pt x 442.2924pt>
 File: sigmoid_4.png Graphic file (type png)
 
 <use sigmoid_4.png>
@@ -1779,7 +1778,7 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [16
 
- <./sigmoid_4.png>] <sigmoid_5.png, id=480, 586.8324pt x 442.2924pt>
+ <./sigmoid_4.png>] <sigmoid_5.png, id=478, 586.8324pt x 442.2924pt>
 File: sigmoid_5.png Graphic file (type png)
 
 <use sigmoid_5.png>
@@ -1854,18 +1853,19 @@ LaTeX Font Info:    Try loading font information for T1+ptm on input line 567.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
+<leftcol.png, id=532, 471.9231pt x 393.8715pt>
 File: leftcol.png Graphic file (type png)
  <use leftcol.png>
 Package pdftex.def Info: leftcol.png used on input line 567.
 (pdftex.def)             Requested size: 99.58464pt x 83.1121pt.
 
-<Twin_sol_30.png, id=534, 471.9231pt x 393.8715pt>
+<Twin_sol_30.png, id=533, 471.9231pt x 393.8715pt>
 File: Twin_sol_30.png Graphic file (type png)
  <use Twin_sol_30.png>
 Package pdftex.def Info: Twin_sol_30.png used on input line 567.
 (pdftex.def)             Requested size: 99.58464pt x 83.1121pt.
 
-<J_twin_vs_primal.png, id=535, 554.3109pt x 364.2408pt>
+<J_twin_vs_primal.png, id=534, 554.3109pt x 364.2408pt>
 File: J_twin_vs_primal.png Graphic file (type png)
 
 <use J_twin_vs_primal.png>
@@ -1882,9 +1882,10 @@ Overfull \hbox (5.0038pt too wide) has occurred while \output is active
 
 [19
 
- <./Twin_sol_30.png> <./J_twin_vs_primal.png>]
+ <./leftcol.png> <./Twin_sol_30.png> <./J_twin_vs_primal.png>]
 File: mit.png Graphic file (type png)
- <use mit.png>
+
+<use mit.png>
 Package pdftex.def Info: mit.png used on input line 586.
 (pdftex.def)             Requested size: 31.3797pt x 31.37737pt.
 
@@ -2356,7 +2357,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1114.
  ) 
 Here is how much of TeX's memory you used:
  26984 strings out of 493308
- 513989 string characters out of 6140092
+ 513964 string characters out of 6140092
  997892 words of memory out of 5000000
  29680 multiletter control sequences out of 15000+600000
  75668 words of font info for 92 fonts, out of 8000000 for 9000
@@ -2383,7 +2384,7 @@ ype1/urw/helvetic/uhvbo8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/he
 lvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro
 8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on slides.pdf (45 pages, 5678130 bytes).
+Output written on slides.pdf (45 pages, 5744337 bytes).
 PDF statistics:
  1398 PDF objects out of 1440 (max. 8388607)
  115 named destinations out of 1000 (max. 500000)
