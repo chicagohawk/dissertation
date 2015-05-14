@@ -1,0 +1,32 @@
+\contentsline {section}{\numberline {1}Abstract}{1}
+\contentsline {section}{\numberline {2}Background}{3}
+\contentsline {subsection}{\numberline {2.1}Optimization based on gray-box conservation laws}{3}
+\contentsline {subsection}{\numberline {2.2}Prototypes for conservation laws and objective functions}{4}
+\contentsline {subsection}{\numberline {2.3}Gradient-free and gradient-based optimization}{5}
+\contentsline {subsection}{\numberline {2.4}Turbulent flow optimization}{6}
+\contentsline {section}{\numberline {3}Thesis objective, expected contribution, proposed schedule}{7}
+\contentsline {subsection}{\numberline {3.1}Thesis objective}{7}
+\contentsline {subsection}{\numberline {3.2}Expected contribution}{7}
+\contentsline {subsection}{\numberline {3.3}Proposed schedule}{7}
+\contentsline {section}{\numberline {4}Twin model}{8}
+\contentsline {subsection}{\numberline {4.1}Review of surrogate methods}{8}
+\contentsline {subsection}{\numberline {4.2}Infer physics-based surrogate by the space-time solution}{9}
+\contentsline {subsection}{\numberline {4.3}Twin model as an inverse problem}{10}
+\contentsline {subsection}{\numberline {4.4}Formulation of twin model's inference}{11}
+\contentsline {subsection}{\numberline {4.5}A candidate basis library for twin model}{12}
+\contentsline {subsection}{\numberline {4.6}Numerical example: twin model with fixed structure}{15}
+\contentsline {subsection}{\numberline {4.7}Twin model with adaptive structure}{18}
+\contentsline {subsection}{\numberline {4.8}Future work}{22}
+\contentsline {section}{\numberline {5}Optimization with twin model}{23}
+\contentsline {subsection}{\numberline {5.1}Motivation of the Bayesian approach}{23}
+\contentsline {subsection}{\numberline {5.2}Bayesian modeling of the primal and twin models}{26}
+\contentsline {subsection}{\numberline {5.3}Optimization using the posterior of the objective function}{27}
+\contentsline {subsection}{\numberline {5.4}Discussion of the convergence property}{30}
+\contentsline {subsection}{\numberline {5.5}Optimization constraints}{31}
+\contentsline {section}{\numberline {6}Application to a turbulent flow optimization}{34}
+\contentsline {subsection}{\numberline {6.1}Problem description}{34}
+\contentsline {subsection}{\numberline {6.2}Review of incompressible RANS models}{34}
+\contentsline {subsection}{\numberline {6.3}Future work}{35}
+\contentsline {section}{\numberline {7}Appendices}{37}
+\contentsline {subsection}{\numberline {7.1}Proof of theorem 1\hbox {}: global-local error}{37}
+\contentsline {section}{\numberline {8}References}{39}
