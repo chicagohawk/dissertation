@@ -15,58 +15,203 @@
 \makenomenclature
 
 \begin{document}
-\setcounter{page}{1}
-\includepdf[pages=-]{cover}
-$$ $$
-\newpage
-\hspace{.4\textwidth}
-\Large\textbf{Abstract}\\
-\normalsize
+\title{Adjoint-based optimization constrained by gray-box simulations of unknown conservation laws}
+\author{Han Chen, Qiqi Wang}
+\date{}
+\maketitle
+\section{Abstract}
 
-\noindent Gray-box simulations of conservation laws are
-present in many engineering applications. 
-We call a conservation law simulation \emph{gray-box} if it can output the space 
-(or space-time) solution of the flow-variables.
-My thesis is interested in the optimization based on gray-box conservation law simulations,
-which is a common task in the engineering community.
-In many scenarios such simulations do not have adjoint implemented,
-so we can not compute efficiently the gradients of 
-the optimization's objective function with respect to the design variables. 
-So conventional optimization practices generally treat the gray-box simulation
-as only a calculator for the objective function. 
-When the dimension of design space is high,
-such conventional practices may require large amount of simulations which can be 
-computationally prohibitive.\\
+\noindent Many engineering applications can be formulated as optimizations constrained by conservation laws.
+Such optimizations can be efficiently solved by the adjoint method which computes the gradient of
+the objective to the design variables. In many cases the adjoint is not implemented, and the analytical and
+numerical form of the conservation law is unknown; but the full solution of relevant flow quantities are available.
+Such conservation law simulations are called ``gray-box''. We proposed a method, ``twin model'' method,
+to estimate the adjoint-based gradient of the objective to the design variables. 
+Our method firstly infers the conservation law from its space-time solution, then
+applies adjoint method to the twin model estimate the gradient. In this paper, we provide an framework that
+uses the twin model's estimated gradient and the gray-box model's objective evaluations to optimize the gray-box model's 
+objective. Specifically we models the gray-box objective and the twin model gradient as correlated Gaussian processes,
+and uses the expected improvement algorithm to choose the next design point. 
+Under some technical assumptions, we prove the convergence of the proposed framework.
 
-\noindent My thesis proposes an efficient methodology for
-high-dimensional optimization problems by leveraging the limited insights
-and the space or space-time solution of the gray-box simulation. 
-My method constructs a PDE surrogate, 
-called twin model, to serve as a low-fidelity avatar of the gray-box simulation. 
-The innovation of my research is: the twin model mimics the gray-box simulation's space 
-or space-time solution, instead of mimicing just the objective function.
-The twin model first constructs a parameterized surrogate PDE, using the 
-fact the gray-box simulation simulates a conservation law. Then it tunes the parameters to match the 
-gray-box simulation's space or space-time solution.
-Generally the space or space-time solution contains much more information 
-about the gray-box simulation than the objective function.\\
+\section{Background}
+\label{background}
+\noindent Optimization problems is of great interest in the engineering community. We consider an optimization problem
+constrained by conservation laws.
+\begin{equation}\begin{split}
+    \min_{c\in\mathbb{R}^d} &\;\left\{ J(u,c)= \int_0^T\int_\Omega j(u,c) \; \textrm{d}t \textrm{d}\mathbf{x}\right\} \\
+    \textrm{where}\; u\; \textrm{satisfies}& \;\; \frac{\partial u}{\partial t} + \nabla \cdot 
+    F(u) =q(u,c)\,,\\
+\end{split}\label{general opt}
+\end{equation}
+where $c$ is the design variable to be optimized.
+If the simulation has the adjoint capability, the gradient of the objective to $c$ can be evaluated efficiently,
+enabling efficient optimization.
+However, in many cases, adjoint is not implemented in the simulator; and we are not able to implement
+adjoint when the governing PDE for the conservation law and its numerical implementation is unavailable. 
+Besides, the simulator can generally provide the full space-time solution of the conservation law. If the
+simulation solves for time-independent problems, it can gnerally provide the steady state solution. 
+We named such conservation law simulations ``gray-box''. We proposed a method to estimate the gradient
+of the objective to the design variables. We firstly infer a conservation law by using the space-time solution
+of the gray-box model, then we applies adjoint method to the simulator of the infered conservation law, i.e. twin model,
+to estimate the gradient. In this paper, we provide a framework that uses both the twin model's gradient and
+the gray-box model's objective evaluations to optimize the gray-box model's objective.\\
 
-\noindent Adjoint can be implemented in the twin model to 
-estimate the gradient of the objective function with respect to design variables efficiently.
-Optimization can be performed in a multi-fidelity framework using the low-fidelity
-twin model and the high-fidelity gray-box simulation.
-My thesis proposes a provably convergent Bayesian optimization scheme that combines
-the evaluations of the gray-box' objective function with the twin model's gradient.
-For completeness, we extend the optimization framework to constraint optimization.
+\noindent The optimization of the gray-box objective fits naturally into a multifidelity optimization (MFO) framework.
+MFO performs optimization with multiple models ranging from
+low-fidelity to high-fidelity. Conventionally, low-fidelity models are cheaper to solve, but yield
+results with less credibility; high-fidelity models are more credible, but more expensive
+to solve. MFO balances computation investments between high- and low-fidelity models
+in order to reach optimum with overall less computation cost.
+In our problem, the gray-box model can be viewed as a high-fidelity evaluator of the objective; while the twin model, trained
+by the space-time solution of the gray-box model, can be viewed as a low-fidelity evaluator of the objective's
+gradient.\\
+
+\noindent MFO methods can take various flavors.
+For example, an MFO method can be as simple as a two-stage optimization \cite{MFO: two stage}. 
+In the first stage it optimizes with the low-fidelity model only. In the second stage
+it optimizes with the high-fidelity model only, using the first stage optimum as the initial guess.
+However, we are only interested in \emph{provably convergent} MFO methods.
+Based on our literature review, there are three types of such methods:
+\emph{pattern search MFO}, \emph{trust region MFO}, and \emph{Bayesian MFO}.
+Each type can be viewed as 
+extensions to their \emph{single-fidelity} versions respectively,
+i.e. \emph{pattern search methods}, \emph{trust region methods}, and \emph{Bayesian 
+optimization methods}. In the following let's review these methods and 
+their corresponding MFO methods.\\
+
+\noindent In \emph{pattern search methods}, the objective function $J$ is evaluated at a set of
+trial points, called `mesh', adjacent to the current best $c$ in the design space. This
+step is called a `poll step'.
+If improvement in $J$ is obtained, the current best $c$ is updated; otherwise, the mesh size
+is shrinked. 
+These steps are iterated until convergence \cite{Pattern Search Convergence}.
+Pattern search methods can takes advantage of low-fidelity models to reduce computation cost,
+hereby \emph{pattern search MFO}.
+It searches for improved design 
+points using low-fidelity models before deciding whether to perform a poll step on
+the high-fidelity model \cite{Pattern Search Convergence MFO}.
+However, each poll step requires order $d$ high-fidelity model evaluations, which can
+be too expensive to afford in our problem settings.\\
+
+\noindent In \emph{trust region methods}, a functional surrogate is firstly constructed from
+evaluations of $J$, then the surrogate is minimized within a trust-region to generate
+a candidate design point. Depending on the availability of $\frac{\partial J}{\partial c}$,
+the functional surrogate can either use the gradient information \cite{inexactgradient1},
+or not use the gradient information \cite{jones1998, trustregionconn, trustregionwild}.
+When a low-fidelity model exists,
+the functional surrogate of $J$ can be replaced by the low-fidelity model, hereby
+\emph{trust region MFO} \cite{simplified physics, coarse discretization}.
+To improve MFO performance and guarantee convergence,
+researchers have proposed using functional surrogates to account for 
+the discrepancy $\Delta J = J_{high} - J_{low}$
+between high- and low- fidelity models within the trust region
+\cite{andrewras, andrew thesis}. However, there are two problems with trust region MFO.
+Firstly, the convergence proof of such methods requires
+a condition called \emph{fully-linearity} \cite{trustregionconn}. The fully-linearity
+condition bounds the deviation of $\frac{dJ}{dc}$ between the high- and low-
+fidelity models within the trust region. As mentioned in
+chapter \ref{intro}, it can be hard to obtain the gradient from the primal model.
+Therefore, it can be hard to certify fully-linearity and to support 
+the convergence proof.
+Secondly, at every iteration, only the model evaluations within or adjacent
+to a trust region is actually used \cite{andrew thesis}. In our problem settings,
+each high-fidelity model evaluation can be so expensive that we should use \emph{all}
+high-fidelity evaluations available.
+Therefore, trust region MFO is not suitable for our problem settings too.\\
+
+\noindent In \emph{Bayesian optimization methods}, $J$ as a function of $c$
+is assumed to be an unknown realization of a \emph{Gaussian process}. 
+Bayesian optimization starts from a prior distribution of $J$, and
+updates its posterior as new samples of $J(c)$ arrive. This procedure is also known as
+\emph{Kriging} \cite{Krigingold, kriging}.
+Then it constructs an \emph{acquisition function} $\rho: \mathcal{C}\mapsto \mathbb{R}\;
+,\; c\rightarrow \rho(c)$ from the posterior, which measures
+the expected utility of investing the next sample at $c$.
+Finally, we choose the next sample as the maximizer of the acquisition function.
+Bayesian optimization iterates over the posterior-update step and the 
+$\rho$-maximization step until convergence \cite{Mockus Bayesian opt, practicalBayesianopt}.
+There are two advantages of Bayesian optimization:
+Firstly, Bayesian optimization uses all available model evaluations
+to construct the posterior. Secondly, it balances \emph{exploration}
+with \emph{exploitation} elegantly.
+Given a set of samples $J(c)$, should we choose the next sample 
+in a sparsely sampled region (exploration),
+or in a region adjacent to the current best sample (exploitation).
+Bayesian optimization makes a trade-off between exploration and exploitation 
+via appropriate acquisition functions. This method is provably convergent
+to the global optimal under mild requirement of the objective function 
+\cite{Bayopt converge 2, convergenceBayesian}.
 \\
 
-\noindent We propose to demonstrate our method by a turbulent flow optimization in a turbine airfoil
-internal cooling problem. The gray-box
-simulation is performed by a large eddy simulation (LES). 
-The twin model is a Reynolds-averaged Navier-Stokes (RANS)
-model with an adaptive Reynold stress. We optimize a return bend
-geometry to minimize the pressure loss, and compare our result with state-of-art 
-optimal designs.
+\noindent When a low-fidelity model exists, Bayesian optimization methods
+can be extended to \emph{Bayesian MFO}.
+Let the high-fidelity model's objective function
+be $J(c)$, and the low-fidelity model's objective function be $\tilde{J}(c)$.
+Bayesian MFO assumes both $J(c)$ and $\tilde{J}(c)$ are unknown realizations
+of (possibly different) Gaussian processes.
+Loosely speaking, by connecting the high- and low-fidelity models using 
+a Bayesian framework, we can better predict the high-fidelity model using
+low-fidelity model evaluations.
+Bayesian MFO assumes a \emph{Markov property}
+between $J(c)$ and $\tilde{J}(c)$ \cite{KennedyOhagan2}:
+\begin{equation}
+    p\left[ J(c_0)\Big| \tilde{J}(c_0), \tilde{J}(c_1),\cdots, \tilde{J}(c_N)\right]
+    = p\left[ J(c_0)\Big| \tilde{J}(c_0)\right]
+    \,,\quad
+    N\in \mathbb{Z}^+\,,
+    \label{ohagan_assumption}
+\end{equation}
+where $p(\cdot|\cdot)$ indicates the posterior. In other words,
+if we want to predict $J$ at $c_0$ using $\tilde{J}$, then it suffices to 
+evaluate $\tilde{J}$ only at $c_0$; we will gain no further information on $J(c_0)$ 
+by observing $J$ at $c\neq c_0$. This assumption is intuitive, and proves to be
+very useful and convenient \cite{KennedyOhagan1, KennedyOhagan2}. 
+By furthur assuming the Gaussian processes to be stationary, we can obtain
+\begin{equation}
+    \tilde{J}(c) = \rho J(c) + \epsilon(c)\,,
+\end{equation}
+where $\rho$ is a constant and $\epsilon(\cdot)$ is a realization of a Gaussian 
+process. Assume we have evaluated $J$ at $\mathbf{c}=\{c_1,\cdots, c_{N_1}\}$,
+and $\tilde{J}$ at $\mathbf{\tilde{c}} = \{\tilde{c}_1,\cdots, \tilde{c}_{N_2}\}$,
+then the posterior of $J(c)$ can be constructed from the joint distribution
+\begin{equation}
+    p\left(J(c), J(\mathbf{c}), \tilde{J}(\mathbf{\tilde{c}})\right) 
+    = \mathcal{N}\left(
+    \begin{pmatrix}
+        m\\ \mathbf{m} \\ \mathbf{\tilde{m}}
+    \end{pmatrix},\,
+    \begin{pmatrix}
+        \textrm{var}(J(c)) &
+        \textrm{cov}(J(c), J(\mathbf{c}) ) &
+        \textrm{cov}(J(c), \tilde{J}(\mathbf{\tilde{c}}))\\
+        \textrm{cov}(J(\mathbf{c}), J(c) ) & 
+        \textrm{var}(J(\mathbf{c})) & 
+        \textrm{cov}(J(\mathbf{c}), \tilde{J}(\mathbf{\tilde{c}}))\\
+        \textrm{cov}(\tilde{J}(\mathbf{\tilde{c}}), J(c)) & 
+        \textrm{cov}( J(\mathbf{c}), \tilde{J}(\mathbf{\tilde{c}}) ) & 
+        \textrm{var}(\tilde{J}(\mathbf{\tilde{c}}))
+    \end{pmatrix}
+    \right)\,
+    \label{joint distribution}
+\end{equation}
+where $m$ is the mean of $J$, $\tilde{m}$ is the mean of $\tilde{J}$, $\mathbf{m} =
+m \mathbf{1}_{N_1}$, and $\mathbf{\tilde{m}} =\tilde{m}\mathbf{1}_{N_2}$.
+The variance-covariances, known as \emph{kernels}, have to be selected \emph{a} prior.
+However, these kernels are adaptive in that they have tunable parameters known as
+\emph{hyperparameters}, so realizations of the Gaussian processes
+can represent a wide class of functions \cite{RKHS aronszajn}. 
+The estimation of the hyperparameters and $\rho, m, \tilde{m}$ will be discussed below.
+The choice of kernels can be various, among the most popular ones are
+squared exponential kernel and Matern kernel \cite{practicalBayesianopt}.
+Because of the additional information of $\tilde{J}(\tilde{\mathbf{c}})$, 
+we can estimate
+$J(c)$ with less variance than using $J(\mathbf{c})$ alone.
+This procedure is also known as \emph{coKriging} \cite{cokriging}. 
+With the posterior obtained by the coKriging, Bayesian MFO maximizes the acquisition
+function to select the next design point $c$ to evaluate $J$.\\
+
+
 
 
 \newpage

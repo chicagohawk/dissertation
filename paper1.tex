@@ -33,58 +33,60 @@ However, adjoint is not available and is not easily implementable in many conser
 This article introduces a method to estimate the gradient by
 inferring the governing conservation law from the solution, and then solving the adjoint equation of
 the inferred conservation law.
-The method is demonstrated in a 1-D two-phase flow problem.
+The method is demonstrated in the sensitivity analysis of a 1-D flow problem.
 
 
 \section{Background}
 \label{background}
-
-Optimization problems is of great interest in the engineering community. We consider an
-objective function:
-$$
-    J: \mathcal{C} \in \mathbb{R}^d\times [0,T] \rightarrow \mathbb{R}, \qquad c(t) \rightarrow J(c)\,,
-$$
-where $c(t) \in \mathbb{R}^d$ for $\forall t$. $c(t)$ is the design variable to be optimized.
-In many cases, the objective function is an ouput of
-a PDE based spatial-time simulation of conservation laws of the form which have the following form 
+Optimization problems is of great interest in the engineering community. We consider an optimization problem
+constrained by conservation laws.
 \begin{equation}\begin{split}
-    &\frac{\partial u}{\partial t} + \nabla \cdot F(u, \kappa) = q(u,c)\\
-    &J = \int_0^T\int_\Omega j(u,c) \; \textrm{d}t \textrm{d}\mathbf{x}\,,
-\end{split}\end{equation}
-where $\kappa\in \mathbb{R}^n$ are some pre-defined model properties.
+    \min_{c\in\mathbb{R}^d} &\;\left\{ J(u,c)= \int_0^T\int_\Omega j(u,c) \; \textrm{d}t \textrm{d}\mathbf{x}\right\} \\
+    \textrm{where}\; u\; \textrm{satisfies}& \;\; \frac{\partial u}{\partial t} + \nabla \cdot 
+    F(u) =q(u,c)\,,\\
+\end{split}\label{general opt}
+\end{equation}
+where $c$ is the design variable to be optimized. $F$ can be a differential operator of $u$.
 For example, oil reservoir simulations may employ PDEs of the black-oil model, 
 in which gas, water, and oil phases satisfy a set of conservation laws 
 \cite{reservoir simulation book}. 
-We may optimize the well pressures to maximize the total oil production in a time window.
-Another example is from turbine airfoil cooling. Airfoils in turbine engine may operate at a very high temperature,
-potentially damaging their structure. Therefore holes can be drilled inside the airfoil to circulant coolants.
-The coolant flow satisfies Navier-Stokes equation, which is a conservation law. We are interested in
-optimizing the geometry of the cooling holes to minimize pressure loss 
-\cite{ubend rans opt 1, ubend rans opt 2}.
-Such optimizations are generally faciliated by computer simulation of conservation laws.\\
+We may optimize the well pressure to maximize the total oil production in a time window.
+Another example is from the turbine airfoil cooling. We are interested in optimizing the interior flow path
+of turbine airfoil cooling to minimize pressure loss
+\cite{ubend rans opt 1, ubend rans opt 2}.\\
 
 \noindent 
 In many cases, such simulations can be computational costly, potentially due to the complex computational models involved, and
 large scale time and space discretization. Besides, the design space can be high-dimensional. 
-For example, in oil reservoir simulations the well pressures can be controlled at each well
-individually, and they can vary in time. To parameterize the well pressures a large number of
-design variables may be employed. Similarly, in turbine airfoil cooling,
-the geometry of the cooling hole can also be parameterized by many variables.
+For example, in oil reservoir simulations the well pressure can be controlled at each well
+individually, and they can vary in time.
+To parameterize the well pressure, we require $Nm$ number of design variables, where $N$ is the number of wells,
+and $m$ is the number of parameters to describe the variation in time for each well.
+Similarly, in turbine airfoil cooling,
+the geometry of the internal flow path can also be parameterized by many variables.
 Optimizing a high-dimensional design
 can be challenging.
-A tool to unlock efficient high-dimensional optimization is adjoint sensitivity analysis
+A tool to enable efficient high-dimensional optimization is adjoint sensitivity analysis
 \cite{cont discretize adjoint}
-, which computes the optimal infinitesmal change of
-design efficiently for high-dimensional problems. However, many simulators do not have adjoint implemented, and to implement adjoint we require the simulation source code to be 
-be accessible.\\
+, which computes the gradient of the objective to the design variables efficiently. 
+Continuous adjoint method solves a continuous adjoint equation derived from the conservation law, which 
+requires the PDE of the conservation law.
+Discrete adjoint method solves a discrete adjoint equation derived 
+from the numerical implementation of the conservation law,
+which requires the simulator's numerical implementation.
+Adjoint automatic differentiation applies the chain rule to every elementary arithmetic operation of the simulator,
+which requires accessing and modifying the simulator's source code.\\
 
-\noindent We are interested in \emph{gray-box} simulations. By gray-box, we mean conservation law simulations without adjoint implemented. 
-Besides, we are not able to implement adjoint when the governing PDE for the conservation law and its numerical implementation is unavailable,
+
+\noindent We are interested in \emph{gray-box} simulations. By gray-box, we mean a conservation law simulation
+ without adjoint implemented. Besides, we are not able to implement adjoint 
+when the governing PDE for the conservation law and its numerical implementation is unavailable,
 for example when the source code is proprietary or legacy.
-Another defining property of gray-box simulation is that it can output the space-time solution of relevant flow quantities.
-If the simulation solves for time-independent problems, a gray-box simulation should be able to output the space dependent solution.
-In contrast, we define a simulator to be a black-box, if none of the adjoint or the space-time solution is available.
-The only duty of such simulations is to calculate the objective to be optimized.
+Another defining property of gray-box simulation is that it can provide the space-time solution of the conservation law.
+If the simulation solves for time-independent problems, a gray-box simulation should be able to 
+provide the steady state solution.
+In contrast, we define a simulator to be a black-box, if neither the adjoint nor the solution is available.
+The only output of such simulations is the value of the objective function to be optimized.
 If adjoint is implemented or is able to be implemented,
 we call such simulations \emph{open-box}.
 We summarize their differences in Table \ref{tab: boxes}.\\
@@ -98,21 +100,21 @@ We summarize their differences in Table \ref{tab: boxes}.\\
         Black-box  & \ding{56}       & \ding{56}    & \ding{56}  \\ \hline
         Gray-box   & \ding{56}
                    & \ding{52}    & \ding{56}   \\ \hline
-        Open-box   & \ding{52}    &          &   \ding{52}      \\ \hline
+        Open-box   & \ding{52}    &\ding{52}         &   \ding{52}      \\ \hline
     \end{tabular}
 \end{center}
 
 \noindent Depending on the type of simulations involved, we may choose different optimization methods.
 If the simulation is black-box, we may use gradient-free optimization.
 Gradient-free optimization methods require only the availability of objective function values but
-not derivative information\cite{gradfreereview}. Because of its mild requirement of the simulation, 
-gradient-free optimization methods enjoy a wide range of applicability. However, when the dimension of the design space 
+not derivative information\cite{gradfreereview}.
+Gradient-free optimization methods are popular because they are easy to use. However, when the dimension of the design space 
 increases, these methods generally suffer from the \textit{curse of dimensionality}.
 The term \textit{curse of dimensionality} refers to problems caused by the rapid increase in the search volume associated
-with adding extra dimension in the search space. It's not uncommon to encounter
-tens or hundreds of dimensions in real life engineering problems, 
-limiting the applicability of gradient-free optimization
-in these cases.\\
+with adding extra dimension in the search space. 
+The resulting increase of search volume increases the number of objective evaluation required. 
+It's not uncommon to encounter tens or hundreds of dimensions in real life engineering problems,
+making gradient-free optimization very expensive.\\
 
 \noindent If the simulation is open-box, we may use gradient-based optimization.
 Gradient-based optimizations use gradient information to locate a local optimum.
@@ -149,24 +151,25 @@ section \ref{numerical example} demonstrates the method on a 1D flow problem.
 
 \section {Prototypes of PDEs}
 \label{prototypes}
-\noindent When a simulation is gray-box, we do not have the adjoint capability to compute the gradient.
-Can we leverage the space-time solution to estimate the objective's gradient?\\
+\noindent When a simulation is gray-box, we can not apply adjoint to the gray-box conservation law to compute the gradient.
+Instead, we estimate the gradient by using the space-time solution of the gray-box model.\\
 
 \noindent We propose a two-step procedure to estimate the objective's gradient by using the 
 gray-box simulation's space-time solution. In the first step, we infer the conservation law 
 governing the simulation by using its space-time solution; in the second step, we apply
 adjoint method to the inferred conservation law to estimate the gradient.\\
 
-\noindent For time-dependent problems, the PDEs for conservation laws can be written as
+\noindent We use the fact that the governing PDE of the gray-box model is a conservation law. 
+For time-dependent problems, the PDE for conservation laws can be written as
 \begin{equation}
-    \frac{\partial}{\partial t}\left(\eta_i u_i\right) + \nabla \cdot 
-    F_i(\mathcal{D} u, \kappa) 
+    \frac{\partial}{\partial t}u_i + \nabla \cdot 
+    F_i(\mathcal{D} u) 
     = q_i(u,c)\,, \qquad i=1,\cdots, n\,,
     \label{first equation}
 \end{equation}
 where $t\in[0,T]$ is time;
 $x\in \Omega \subseteq \mathbb{R}^{n}$ is the spatial coordinate.
-$\Omega$ may depend on the design $c$.
+$\Omega$ may depend on the design variables $c$.
 $q_i$'s are the source terms that may also depend on $c$.
 $c$ is the design variable and may be space-time dependent.
 The boundary and initial conditions are known. $F_i$'s are the flux functions. 
@@ -176,8 +179,6 @@ $\mathcal{D} u = \left\{u_1, \nabla u_1 , \cdots, \nabla^{i_1} u_1; \cdots;
 u_n, \nabla u_n,\cdots, \nabla^{i_n} u_n\right\}$, where $\nabla^j$ indicates the $j$th
 order spatial derivative tensor. We assume $i_1,\cdots, i_n$, i.e. the maximum 
 order of derivatives, are known.
-$\eta_i=\eta_i(x), \,\kappa=\kappa(x)$ are 
-problem dependent spatial variables, and are assumed known. 
 The discretized space-time solution of Eqn\eqref{first equation} given by a gray-box simulation
 is written as $\hat{u}(t_i, \mathbf{x}_i; c)\,,\, i=1,\cdots,N$, where 
 $t=\left\{t_1,\cdots, t_N\right\}$ indicates the discretized time, and 
@@ -193,7 +194,7 @@ Notice $j$ can depend explicitly on c, while $u$ depends implicitly on $c$.\\
 \noindent Similarly, for time-independent conservation laws, the prototype is
 \begin{equation}
     \nabla \cdot 
-    F_i(\mathcal{D} u, \kappa) 
+    F_i(\mathcal{D} u) 
     = q_i(u,c)\,, \qquad i=1,\cdots, n\,,
     \label{first equation steady}
 \end{equation}
@@ -231,26 +232,28 @@ model the PDE.\\
 
 \noindent As an example, we may
 want to control the flow through $c$, such that the saturation at $t=T$ is close to 
-a target saturation $u^*(x)$. We may introduce a Tikhonov regularization into the objective function 
+a target saturation $u^*(x)$. 
+We parameterize $c(t,x)$ by a set of variables $c_i$, $i=1.\cdots, d$.
+We may introduce a Tikhonov regularization into the objective function 
 to model the control cost.
 Hereby the objective function
 \begin{equation}\begin{split}
-    J &= \int_x \left|u(T,x) - u^*(x)\right|^2 \textrm{d}x + \eta \int_t\int_x  c^2(t,x) \textrm{d}x\textrm{d}t\\
-      &= \int_t \int_x \left|u(t,x) - u^*(x)\right|^2 \delta_T(t) + \eta c^2(t,x) \textrm{d}x \textrm{d}t \,,
+    J &= \int_x \left|u(T,x) - u^*(x)\right|^2 \textrm{d}x + \eta \sum_i c_i^2\\
+      &= \int_t \int_x \left\{ \left|u(t,x) - u^*(x)\right|^2 \delta_T(t) + \frac{\eta}{T} \sum_i c_i^2 \right\}
+      \textrm{d}x \textrm{d}t \,,
 \end{split} \label{BL objective}
 \end{equation}
 where $\eta>0$ models the price of control, and $\delta_\cdot(\cdot)$ is the Direc delta function.
 Eqn\eqref{BL objective} can be modelled by Eqn\eqref{obj prototype}.
 The optimization problem is
 \begin{equation}
-    c^* = \arg\min_{c\in \mathcal{C}} J
+    c^* = \arg\min_{c\in \mathbb{R}^d} J
 \end{equation}
-where $\mathcal{C}$ can be the $L_2$-function Hilbert space.\\
 
 \section{Infer conservation laws by the space-time solution}
 \label{infer}
-\noindent Is it feasible to infer a
-physics-based surrogate? Consider a general dynamical system
+\noindent We first discuss the reason that infering the conservation law is feasible.
+Consider a general dynamical system
 \begin{equation}
     \dot{u} = \mathcal{L}(u)\,,
     \label{general equation}
@@ -265,7 +268,7 @@ Therefore, the problem of adapting the physics of the physics-based surrogate re
 problem of adjusting a set of functions $F_i$ or
 $q_i$, for $i=1,\cdots,n$. \\
 
-\noindent We \textbf{use the space-time solution} of the gray-box simulations 
+\noindent We use the space-time solution of the gray-box simulations 
 to infer these functions.
 There are several benefits to use the space-time solution \cite{hanmaster}.
 Firstly, in conservation law simulations, the flow quantities only depend on the flow
