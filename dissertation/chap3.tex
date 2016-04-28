@@ -634,7 +634,7 @@ into $200$ segments, each $I_{\texttt{inj}i}$ becomes a vector with a length of 
 Thus the optimization is one thousand dimensional. Clearly the Bayesian optimization 
 algorithm developed in Section \ref{sec: chap3 algo} is not long suitable, because the
 large dimensionality leads to a huge covariance matrix\footnote{As aforementioned, 
-the covariance matrix for evaluating the posterior is $N(d+1)$. 
+the covariance matrix for evaluating the posterior is $N(d+1)$-by-$N(d+1)$. 
 For example, after $100$ iterates, the matrix becomes $10^5$-by-$10^5$. 
 The optimization algorithm can dominate the computational cost instead of the
 conservation law simulation, which violates my assumptions in Chapter \ref{chap 1}.
