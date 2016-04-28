@@ -1,0 +1,706 @@
+%% This is an example first chapter.  You should put chapter/appendix that you
+%% write into a separate file, and add a line \include{yourfilename} to
+%% main.tex, where `yourfilename.tex' is the name of the chapter/appendix file.
+%% You can process specific files by typing their names in at the 
+%% \files=
+%% prompt when you run the file main.tex through LaTeX.
+\chapter{Leveraging the Twin Model for Bayesian Optimization}
+\label{chapter 3}
+This chapter develops a Bayesian optimization framework to solve \eqref{eqn: objective prototype}.
+The estimated gradient, provided by the twin model, is utilized 
+to improve the optimization performance. The goal is to reduce the number of gray-box 
+simulations required to achieve a desired objective evaluation, as well as
+to reduce the overall computational cost. The chapter is organized as follows.
+Section \ref{sec: chap3 cokriging} develops the probabilistic ingredients for the
+Bayesian optimization. These ingredients are applied to build an algorithm
+in Section \ref{sec: chap3 algo}. Its convergence properties are
+investigated in Section \ref{sec: chap3 convergence}. Finally, the algorithm is demonstrated 
+in Section \ref{sec: chap3 numerical} through several numerical examples.\\
+
+\section{Approach}
+\label{sec: chap3 approach}
+
+\subsection{Modeling the Objective and Gradient by Gaussian Processes}
+\label{sec: chap3 cokriging}
+Assume the gray-box simulator evaluates the objective function $\xi$ accurately.
+The adjoint gradient estimated by the twin model
+is not exactly the true gradient for several reasons. For example, 
+the discretized 
+gray-box solution can be under-resolved, thus limiting the accuracy of the inference of $F$.
+In addition, the simulators for the twin and gray-box models may use different
+numerical schemes, so the $\tilde{F}$ that yields the minimal solution mismatch may not
+be exactly $F$.
+It is difficult to identify the various sources of errors and unrealistic to quantify all the
+errors separately. Instead, my thesis treats the gradient error as a whole 
+as a model inadequacy. The model inadequacy is then calibrated using a Bayesian approach.\\
+
+Given a gray-box solution, the trained twin model is deterministic. 
+Assume the numerical schemes of the gray-box simulator to be deterministic too.
+Then the gradient error is deterministic. Besides, the gray-box solutions are
+generally correlated for different controls. Thus the twin models and their gradient 
+estimation errors are also correlated.
+The deterministic and correlated error can be treated as model inadequacy as discussed
+in Section \ref{sec: model calibration}. Let $\nabla\xi$ be the true gradient,
+$\xi_{\tilde{\nabla}}$ be the estimated gradient \footnote{
+$\tilde{\xi}(c)$ is the objective evaluation provided by a twin model 
+trained using the gray-box solution at $c$. $\xi_{\tilde{\nabla}}(c)$ is the adjoint
+gradient estimated by the twin model. If $\tilde{\xi}$ is differentiable, there
+is another gradient, $\nabla \tilde{\xi}$, which can be evaluated by finite difference. 
+Usually $\nabla \tilde{\xi}\neq \xi_{\tilde{\nabla}}$. Notice
+$\xi_{\tilde{\nabla}}$ may not be a conservative vector field.}, and
+$\xi_{\tilde{\nabla}i}$ be its $i$th component.
+The relationship between $\nabla \xi$ and $\xi_{\tilde{\nabla}}$
+is modeled by the model inadequacy formulation \eqref{eqn: model calibration},
+\begin{equation}
+    \left.\xi_{\tilde{\nabla}i}\right. 
+    = \left. \nabla \xi_i\right. + 
+      {{\epsilon}_i}\,,
+\label{eqn: gradient model inadequacy}
+\end{equation}
+for $i=1,\cdots, d$. \eqref{eqn: gradient model inadequacy} has
+the idiosyncratic noise term removed 
+because $\nabla \xi$ and $\xi_{\tilde{\nabla}}$ are deterministic. It also 
+sets the regression parameter, $\rho$ in \eqref{eqn: model calibration},
+to be $1$ for computational simplicity.\\
+
+Gaussian processes are adopted to model the terms in \eqref{eqn: gradient model inadequacy}. 
+In particular, I made the following assumptions.
+\begin{enumerate}
+     \item $\xi$ is a realization of a stationary Gaussian process with mean $\mu$,
+           and covariance kernel $K(\cdot, \cdot)$;
+     \item $\epsilon_1, \cdots, \epsilon_d$ are realizations of zero-mean stationary
+           Gaussian processes with covariances $G_1(\cdot, \cdot), \cdots, 
+           G_d(\cdot, \cdot)$, respectively;
+     \item The gradient errors, $\epsilon_i$'s, are independent with the objective,
+     \begin{equation}
+         \textrm{cov} \left[\xi(c_1), {\epsilon}_i(c_2) \right] = 0\,,
+     \end{equation}
+     for all $c_1, c_2 \in \mathbb{R}^d$, $i=1,\cdots, d$;
+     \item The components of the gradient error are pairwise independent,
+      $$
+         \textrm{cov} \left[\epsilon_i(c_1), \epsilon_j(c_2)\right] = 0\,,
+      $$
+      for all $c_1, c_2 \in \mathbb{R}^d$ and $i\neq j$;
+      \item The covariances are isotropic, i.e.
+      $K(c_1, c_2), \; G_1(c_1, c_2),\; \cdots\; G_d(c_1, c_2)$ only depend on
+      $\big\|c_1-c_2\big\|_{L_2}$.
+\end{enumerate}
+
+Suppose $\xi$ and
+$\xi_{\tilde{\nabla}}$ have been evaluated on $\underline{c}_n$ \footnote{
+The notations are consistent with Section \ref{section: bayes opt}. The objective
+and estimated gradient evaluations are assumed to be collocated, which will be revealed
+in Section \ref{sec: chap3 algo}. }.
+Based upon the assumptions above, 
+the joint distribution of $\xi(c)$, $\xi(\underline{c}_n)$, and $\xi_{\tilde{\nabla}}
+(\underline{c}_n)$ is multivariate normal, and is given by
+\begin{equation}
+    \begin{pmatrix}
+        \xi(c) \\ \xi(\underline{c}_n) \\ \xi_{\tilde{\nabla}}(\underline{c}_n)
+    \end{pmatrix}
+    \sim
+    \mathcal{N}\left(
+    \begin{pmatrix}
+        \mu\\
+        \boldsymbol{\mu}\\
+        \boldsymbol{0}
+    \end{pmatrix} ,
+    \begin{pmatrix}
+        K(c,c) & \boldsymbol{v} & \boldsymbol{w}\\
+        \boldsymbol{v}^T & \boldsymbol{D} & \boldsymbol{H}\\
+        \boldsymbol{w}^T & \boldsymbol{H}^T & \boldsymbol{E} +\overline{\boldsymbol{G}}
+    \end{pmatrix}
+    \right)\,,
+    \label{eqn: joint dis}
+\end{equation}
+where
+\begin{equation}
+    \boldsymbol{v} = \left(K(c, c_1), \cdots, K(c,c_N) \right)\,,
+\end{equation}
+\begin{equation}
+    \boldsymbol{w} = \left(\nabla_{c_1} K(c, c_1),\cdots, \nabla_{c_N} K(c, c_N) \right)\,,
+\end{equation}
+\begin{equation}
+    \boldsymbol{D} = \begin{pmatrix}
+        K(c_1, c_1) & \cdots & K(c_1, c_N) \\
+        \vdots & \ddots & \vdots \\
+        K(c_N, c_1) & \cdots & K(c_N, c_N)
+    \end{pmatrix}\,,
+\end{equation}
+\begin{equation}
+    \boldsymbol{H} = \begin{pmatrix}
+        \nabla_{c_1} K(c_1, c_1) & \cdots & \nabla_{c_N} K(c_1, c_N) \\
+        \vdots & \ddots & \vdots\\
+        \nabla_{c_1} K(c_N, c_1) & \cdots & \nabla_{c_N} K(c_N, c_N) 
+    \end{pmatrix}\,,
+    \label{eqn: joint H}
+\end{equation}
+\begin{equation}
+    \boldsymbol{E} =
+    \begin{pmatrix}
+        \nabla_{c_1} \nabla_{c_1^\prime} K(c_1, c_1^\prime) & \cdots &
+        \nabla_{c_1} \nabla_{c_N^\prime} K(c_1, c_N^\prime)\\
+        \vdots & \ddots & \vdots \\
+        \nabla_{c_1} \nabla_{c_N^\prime} K(c_N, c_1^\prime) & \cdots &
+        \nabla_{c_N} \nabla_{c_N^\prime} K(c_N, c_N^\prime)\\
+    \end{pmatrix}\,,
+    \label{eqn: joint E}
+\end{equation}
+\begin{equation}
+    \overline{\boldsymbol{G}} =
+    \begin{pmatrix}
+        \boldsymbol{G}(c_1, c_1) & \cdots & \boldsymbol{G}(c_1, c_N) \\
+        \vdots & \ddots & \vdots \\
+        \boldsymbol{G}(c_N, c_1) & \cdots & \boldsymbol{G}(c_N, c_N)
+    \end{pmatrix}\,,
+\end{equation}
+\begin{equation}
+    \boldsymbol{G}(c_i, c_j) = \textrm{diag}\big(G_1(c_i, c_j), \cdots, G_d(c_i, c_j)\big)\,,
+    \; i, \, j=1,\cdots, d.
+\end{equation}
+The derivation of \eqref{eqn: joint H} and \eqref{eqn: joint E} can be found in \cite{grad coKriging}.\\
+
+The Mat$\acute{\textrm{e}}$rn $5/2$ kernel is used for $K$ and $G_i$'s, in particular,
+\begin{equation}
+       K(c_1,c_2) = \sigma_\xi^2
+       \left(1+ \frac{\sqrt{5}\|c_1-c_2\|_{L_2}}{L_\xi}
+       + \frac{5\|c_1-c_2\|_{L_2}^2}{ 3{L_\xi}^2}\right)
+       \exp\left(-\frac{\sqrt{5}\|c_1-c_2\|_{L_2}}{{L_\xi}}\right) \,,
+\end{equation}
+\begin{equation}
+       G_i(c_1,c_2) = \sigma_{G_i}^2
+       \left(1+ \frac{\sqrt{5}\|c_1-c_2\|_{L_2}}{L_{G_i}}
+       + \frac{5\|c_1-c_2\|_{L_2}^2}{ 3{L_{G_i}}^2}\right)
+       \exp\left(-\frac{\sqrt{5}\|c_1-c_2\|_{L_2}}{{L_{G_i}}}\right) \,.
+\end{equation}
+
+Let $\theta$ denote the hyper parameters
+$L_\xi$, $\sigma_\xi$, $L_{G_i}$'s, $\sigma_{G_i}$'s, and $\mu$.
+$\theta$ can be estimated by log maximum likelihood. The likelihood of observing
+$\xi(\underline{c}_n)$ 
+and $\xi_{\tilde{\nabla}}(\underline{c}_n)$ is given by
+\begin{equation}\begin{split}
+    p\left(\xi(\underline{c}_n), \xi_{\tilde{\nabla}}(\underline{c}_n) |\theta \right) 
+    =& \int p\big(\xi(\underline{c}_n), \xi_{\tilde{\nabla}}(\underline{c}_n) ,
+              \nabla \xi(\underline{c}_n) | \theta\big) d\big(\nabla \xi(\underline{c}_n)\big)\\
+    =& \int p\big(\xi(\underline{c}_n),\nabla\xi(\underline{c}_n) | \theta\big) 
+      p\big( \xi_{\tilde{\nabla}}(\underline{c}_n) | \xi(\underline{c}_n),\nabla\xi(\underline{c}_n)
+      ;\theta \big)
+      d\big(\nabla \xi(\underline{c}_n)\big)\,,
+    \label{eqn: marginal likelihood}
+\end{split}\end{equation}
+which is marginalized over $\nabla \xi(\underline{c}_n)$. Because
+\begin{equation}\begin{split}
+    \xi(\underline{c}_n),\nabla \xi(\underline{c}_n) \Big| \theta \sim \mathcal{N}\left(
+        \begin{pmatrix}
+            \boldsymbol{\mu}\\
+            \boldsymbol{0}
+        \end{pmatrix},
+        \begin{pmatrix}
+            \boldsymbol{D} & \boldsymbol{H} \\
+            \boldsymbol{H}^T & \boldsymbol{E}
+        \end{pmatrix}
+    \right)
+\end{split}\,,
+\label{first term}
+\end{equation}
+and
+\begin{equation}
+    \xi_{\tilde{\nabla}}(\underline{c}_n) | \xi(\underline{c}_n),
+    \nabla \xi(\underline{c}_n); \theta
+    \sim 
+    \mathcal{N} 
+    \left(
+            \nabla \xi(\underline{c}_n)
+        ,
+            \overline{\boldsymbol{G}}
+    \right)\,,
+\label{second term}
+\end{equation}
+the log marginal likelihood has the closed form
+\begin{equation}\begin{split}
+    &\log p(\xi(\underline{c}_n), \xi_{\tilde{\nabla}}(\underline{c}_n) | \theta) \\ 
+    =&
+    - \frac{1}{2} 
+    \begin{pmatrix}
+        \xi(\underline{c}_n) - \boldsymbol{\mu}\\ \xi_{\tilde{\nabla}}(\underline{c}_n)
+    \end{pmatrix}^T
+    \begin{pmatrix}
+        \boldsymbol{D}& \boldsymbol{H}\\
+        \boldsymbol{H}^T & \boldsymbol{E}+\overline{\boldsymbol{G}}
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        \xi(\underline{c}_n) -\boldsymbol{\mu}\\ \xi_{\tilde{\nabla}}(\underline{c}_n)
+    \end{pmatrix}
+    - \frac{1}{2}
+    \log \left(\textrm{det}
+        \begin{pmatrix}
+            \boldsymbol{D}& \boldsymbol{H}\\
+            \boldsymbol{H}^T & \boldsymbol{E}+\overline{\boldsymbol{G}}
+        \end{pmatrix}       
+    \right) \\
+    &- \frac{N(d+1)}{2} \log(2\pi)\,,
+\end{split}\label{eqn: likelihood eqn}
+\end{equation}
+which can be optimized efficiently using GBO methods such as StoGo, 
+as discussed in Section \ref{section: GBO}. Given the joint distribution
+\eqref{eqn: joint dis}, the posterior of $\xi(c)$, for any $c\in \mathbb{R}^d$, 
+can be obtained by \eqref{eqn: posterior formulation}.\\
+
+Using the posterior, the acquisition function, $\rho(c)$, can be constructed and optimized
+to find the next evaluation point. My thesis will use the expected improvement acquisition function.
+See Section \ref{section: bayes opt} for the details.
+
+
+\subsection{Algorithm}
+\label{sec: chap3 algo}
+Based upon the review in Section \ref{section: bayes opt} and the
+developments in Section \ref{sec: chap3 cokriging}, I present a Bayesian optimization 
+algorithm with bound constraints $c_{\min}\le c\le c_{\max}$, Algorithm \ref{alg: bayes opt twin}. 
+The flowchart of the algorithm is sketched in Figure \ref{fig: opt flowchart}.\\
+
+\begin{algorithm}[htbp]
+\begin{algorithmic}[1]
+\REQUIRE{Initial guess $c$. Current best control $c^*_0$. Current best objective $\xi^*_0$.
+         Max iteration $n_{\max}$.\\
+         Expected improvement threshold $\texttt{EI}_{\min}$. $D_c=[\,]$, 
+         $D_{\xi} = [\,]$, $D_{\xi_{\tilde{\nabla}}}=[\,]$.}
+\FOR{$i=1$ \TO $n_{\max}$}
+    \STATE Simulate the gray-box model on $c$, obtain $\xi(c)$ and $\boldsymbol{u}(c)$.
+    \STATE Train a twin model using $\boldsymbol{u}(c)$, obtain $\xi_{\tilde{\nabla}}(c)$.
+    \STATE $D_c = [D_c, c]$, $D_{\xi} = [D_\xi, \xi(c)]$, $D_{\xi_{\tilde{\nabla}}} = 
+           [D_{\xi_{\tilde{\nabla}}}, \xi_{\tilde{\nabla}}(c)]$.
+    \IF {$\xi(c)> \xi^*_0$}
+        \STATE $c^*_0 \leftarrow c$
+    \ENDIF
+    \STATE Update hyper parameters by MLE.
+    \STATE $c \leftarrow \argmax_{c_{\min}\le c\le c_{\max}} \log(\rho_{\texttt{EI}}(c))$.
+    \IF {$\rho_{\texttt{EI}}(c) < \texttt{EI}_{\min}$}
+        \STATE \textbf{break}
+    \ENDIF
+\ENDFOR
+\ENSURE{$c^*_0$, $\xi^*_0$}
+\end{algorithmic}
+\caption{Bayesian optimization with twin model.}
+\label{alg: bayes opt twin}
+\end{algorithm}
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=12cm]{../opt_framework_2.png}
+        \caption{The flowchart of Algorithm \ref{alg: bayes opt twin}.}
+        \label{fig: opt flowchart}
+    \end{center}
+\end{figure}
+
+In line 3 of Algorithm \ref{alg: bayes opt twin}, 
+it is beneficial to reuse twin models, because the
+twin models that are trained on previous controls may be good initial guesses for 
+the current training. 
+If the gray-box solutions are similar, it is expected that the trained twin models 
+may be similar too.
+A rigorous investigation of the topic is a future work. Instead, I suggest a tentative
+procedure to reuse trained twin models as follows:
+1) When running Algoithm \ref{alg: bayes opt twin}, store 
+$\boldsymbol{u}(c)$ and the trained twin models
+at all iterates; 2) At each iterate, find a previously trained twin model whose solution is closest 
+to the current solution according to \eqref{eqn: solution mismatch};
+3) Loop over the backward step in Algorithm 
+\ref{alg: train twin} to prune all possible redundant bases of the twin model; and
+4) Apply Algorithm \ref{alg: train twin} to train the twin model as usual.\\
+
+
+\subsection{Convergence Properties Using True Hyper Parameters}
+\label{sec: chap3 convergence}
+This section investigates the convergence properties 
+of Algorithm \ref{alg: bayes opt twin}.
+For Bayesian optimization with only the 
+objective evaluation, the convergence properties have been explored in the past.
+M. Locatelli \cite{Locatelli} proved that Bayesian optimization with EI acquisition
+generates a dense search sequence 
+for the 1-D optimization problem 
+$c^*=\argmax_{c\in[0,1]} \xi(c)$, if $\xi$ is a realization of the Wienner process.
+E. Vazquez \cite{convergen EI} generalized the results by showing that the sequence is still dense
+for higher dimensional space and for more general classes of stochastic processes.
+Recently, A. Bull \cite{converge Bull} showed that Bayesian optimization with EI
+has a convergence rate at
+$\mathcal{O}(n^{-\nu/d})$,
+where $\nu>0$ is a constant parameter controlling the kernel smoothness. 
+Similar results have been given for UCB acquisition. 
+N. Srinivas \cite{GP bandit} bounded the convergence rate
+from above at $\mathcal{O}(n^{- \frac{\nu}{2\nu+d(d+1)}})$ for UCB, and also established the 
+relationship between the convergence rate and the information gain due to evaluating the objective.
+In this section, I analyze the convergence properties of Algorithm \ref{alg: bayes opt twin} when 
+the true hyper parameters are used. My contribution is to
+extend the convergence analysis to incorporate estimated gradient evaluations.
+Under the assumptions in Section \ref{sec: chap3 cokriging}, it is proven that
+the search sequence is indeed dense.
+The conclusion implies that the algorithm is able to find the optimal 
+as $n_{\max}\rightarrow \infty$, regardless
+of the gradient estimation quality.\\
+
+The true hyper parameters values are taken as known constants throughout the section.
+Without loss of generality, assume the objective function to be a realization of 
+zero-mean stationary Gaussian process.
+The assumptions aforementioned
+in Section \ref{sec: chap3 cokriging} are reiterated more formally as follows.
+$\xi$ 
+belongs to the reproducing kernel Hilbert space (RKHS) $\mathcal{H}_K$ generated by a
+semi-positive definite
+kernel $K: \mathcal{C}\times \mathcal{C} \rightarrow [0,\infty)$.
+Let $K$ be differentiable, then the gradients of all functions in $\mathcal{H}_K$
+form a reproducing kernel Hilbert space $\mathcal{H}_{K_\nabla}$ with
+the kernel $K_\nabla(c_1,c_2) \equiv \nabla_{c_1}\nabla_{c_2}K(c_1, c_2)$ 
+for all $c_1,c_2\in \mathcal{C}$ (theorem 1 in \cite{derivative RKHS}).
+Besides, $\epsilon_i$, for $i=1,\cdots, d$, belongs to the RKHS
+$\mathcal{H}_{G}^i$ generated by a semi-positive definite
+kernel $G_i: \mathcal{C}\times \mathcal{C} \rightarrow [0, \infty)$. $\epsilon_i$'s are pairwise
+independent. 
+Denote the tensor product of the RKHSs
+by $\mathcal{H}_G \equiv \mathcal{H}_{G}^1 \otimes \cdots \otimes \mathcal{H}_G^d$.\\
+
+Let the stochastic dependence of $\xi$ to be $\omega_\xi$, and the stochastic dependence of 
+$\epsilon_i$ to be $\omega_\epsilon^i$.
+Let $(\Omega_\xi, \Sigma_\xi, \mathbb{P}_\xi)$ be the probability space for $\omega_\xi$, and let
+ $(\Omega_\epsilon^i, \Sigma_\epsilon^i, \mathbb{P}_\epsilon^i)$ be the probability space for $\omega_\epsilon^i$. Then
+\begin{equation}\begin{split}
+    \xi\; : \; & \mathcal{C} \times \Omega_\xi \rightarrow \mathbb{R}\\
+               & (c, \omega_\xi) \rightarrow \xi(c; \omega_\xi)\,,
+\end{split}\end{equation}
+and
+\begin{equation}\left.\begin{split}
+    \epsilon \; :\; & \mathcal{C} \times \Omega_\epsilon^i \rightarrow \mathbb{R}^d \\
+                    & (c, \omega_\epsilon^i) \rightarrow \epsilon(c; \omega_\epsilon^i)
+\end{split}\right.\,,
+\end{equation}
+for $i=1,\cdots, d$.
+Let $\omega_\epsilon=(\omega_\epsilon^1,\cdots, \omega_\epsilon^d)$ and $\Omega_\epsilon =\Omega_\epsilon^1\otimes \cdots
+\otimes \Omega_\epsilon^d$.
+The true objective function is $\xi(c; \omega_\xi^*)$ for $\omega_\xi^*\in \Omega_\xi$, and
+the true estimated gradient error is $\epsilon(c;\omega_\epsilon^*)$ for $\omega_\epsilon^* \in \Omega_\epsilon$.
+In other words, $\xi(c;\omega_\xi^*) = \xi(c)$ and $\epsilon(c;\omega_\epsilon^*)=\epsilon(c)$ for all
+$c\in \mathcal{C}$.
+Conditioned on $\xi(\underline{c}_n)$ and $\xi_{\tilde{\nabla}}(\underline{c}_n)$, 
+Bayesian optimization generates the next search point deterministically.
+%We also denote the function value, the estimated gradient sample, the true gradient, 
+%and the gradient estimation error on $\underline{c}_n$ by
+%$\xi(\underline{c}_n)$, $\xi_{\tilde{\nabla}}(\underline{c}_n)$, $\xi_\nabla(\underline{c}_n)$,
+%and $\epsilon(\underline{c}_n)$.
+%Therefore,
+%the search sequence $\underline{c}_n$ can be seen as a mapping $\underline{C}$ from the 
+%power set $\mathbb{R}^\mathcal{C} \otimes (\mathbb{R}^{d})^\mathcal{C}$ to the power set
+%$\mathcal{C}^\mathbb{N}$,
+%where $\xi \in \mathbb{R}^\mathcal{C}$ and $\epsilon \in (\mathbb{R}^{d})^\mathcal{C}$.
+Given the initial control $c_{\textrm{init}}$, the search sequence can be seen as a mapping
+\begin{equation}
+     \underline{C}(\omega_\xi, \omega_\epsilon) = \left(C_1(\omega_\xi, \omega_\epsilon),
+     C_2(\omega_\xi, \omega_\epsilon), \cdots\right)\,,
+\end{equation}
+The search strategy $\underline{C}$ generates a random search sequence $C_1, C_2, \cdots$ 
+in $\mathcal{C}$,
+with the property that $C_{n+1}$ is $\mathcal{F}_n$-measurable, where 
+$\mathcal{F}_n$ is the $\sigma$-algebra generated by
+$\xi(\underline{c}_n)$ and $\xi_{\tilde{\nabla}}(\underline{c}_n)$.
+At the $n$-th search step, 
+the posterior mean and variance of $\xi(c)$ conditioned on 
+$\xi(\underline{c}_n)$ and $\xi_{\tilde{\nabla}}(\underline{c}_n)$ are written as
+\begin{equation} 
+    \hat{\xi}_n(c; \underline{c}_n) 
+    = \mathbb{E}_{\omega_\xi, \omega_\epsilon}\left[ \xi(c, \omega_\xi) \Big|
+                          \underline{c}_n, \xi(\underline{c}_n), 
+                          \xi_{\tilde{\nabla}}(\underline{c}_n) \right]\,,
+    \label{cond expectation}
+\end{equation}
+and
+\begin{equation}
+    \sigma_n^2(c;\underline{c}_n) = \mathbb{E}_{\omega_\xi, \omega_\epsilon}\left[\left(
+        \xi(c) - \hat{\xi}_n(c)\right)^2 \Big| \underline{c}_n,
+        \xi(\underline{c}_n), \xi_{\tilde{\nabla}}(\underline{c}_n)
+        \right]\,.
+\end{equation}
+Notice $\sigma_n^2(c;\underline{c}_n)$ only depends on $\underline{c}_n$, and is independent 
+of $\xi(\underline{c}_n), \xi_{\tilde{\nabla}}(\underline{c}_n)$ because of the Gaussian process
+assumption. \\
+
+The following theorem holds, which is proven in Appendix \ref{proof 3}.\\
+\begin{theorem}
+    Let $\Phi(c) \equiv K(c, 0)$ for all $c\in \mathcal{C}$, and let
+    $\hat{\Phi}$ be its Fourier transform.
+    If there exist $C\ge 0$ and $k \in\mathbb{N}^+$, such that
+    $(1+|\eta|^2)^k \big|\hat{\Phi}(\eta)\big|\ge C$ for all $\eta\in \mathbb{R}^d$, 
+    and if $n_{\max}\rightarrow \infty$ and $\texttt{EI}_{\min} = 0$, then
+    $\underline{c}_n$ is dense in $\mathcal{C}$
+    for all $c_{\textrm{init}}\in \mathcal{C}$, all $\xi\in \mathcal{H}_K$ and all $\epsilon_i \in
+    \mathcal{H}_G^i\,$, for $ i=1,\cdots, d$.
+    \label{theorem: 3}
+\end{theorem}
+
+In the limiting case
+of $n_{\max}\rightarrow \infty$ and $\texttt{EI}_{\min} = 0$, 
+the theorem implies that Algorithm \ref{alg: bayes opt twin} can find the maximum
+regardless of the accuracy of the gradient estimation if the true hyper parameters are
+known. It is a future work to extend the theory when the hyper parameters are estimated.\\
+
+
+\section{Numerical Results}
+\label{sec: chap3 numerical}
+This section demonstrates the optimization algorithm on several numerical examples.
+
+\subsection{Buckley-Leverett Equation}
+Consider the same problem setup as in Section \ref{sec: chap 2 BL}. 
+Represent the source term by 25 parameters
+\begin{equation}\begin{split}
+    &c(t,x) = \sum_{i=1}^5 \sum_{j=1}^5 c_{ij} \, B_{ij}(t,x)\\
+    &B_{ij} = \exp\left(-\frac{(t-t_i)^2}{L_t^2}\right)
+    \exp\left(-\frac{(x-x_j)^2}{L_x^2}\right)
+\end{split} \,, \end{equation}
+where $L_t=L_x=0.15$, and $(t_1, \cdots, t_5) =
+(x_1, \cdots, x_5) =\texttt{linspace(0,1,5)}$.
+Consider minimizing the objective
+\begin{equation}
+    \xi(c) = \int_{x=0}^1 \left| u(t=1,x) -  \frac{1}{2}\right|^2 + \frac{1}{100}\sum_{ij} c_{ij}^2
+    \,,
+    \label{eqn: chap 3 BL obj fun}
+\end{equation}
+with the bound constraints $-1 \le c_{ij}\le 1$ for $i,j=1,\cdots, 5$.\\
+
+Figure \ref{fig: opt BL source} shows the optimized source term.
+Figure \ref{fig: opt BL sol} shows the corresponding gray-box solution. 
+Notice the solution at $t=1$ is close to $\frac{1}{2}$ due to the optimized source.
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.49\textwidth}
+        \centering
+        \includegraphics[width=7cm]{../opt_source.png}
+        \caption{The optimized source term.}
+        \label{fig: opt BL source}
+    \end{subfigure}
+    \begin{subfigure}[t]{.49\textwidth}     
+        \centering
+        \includegraphics[width=7cm]{../LD_utx.png}
+        \caption{The optimized gray-box solution.}
+        \label{fig: opt BL sol}
+    \end{subfigure}
+    \caption{Optimized results for the Buckley-Leverett equation.}
+    \label{fig: opt BL results}
+\end{center}\end{figure}
+
+Constrained by a limited number of gray-box simulations,
+the optimized solution and objective are examined.
+Figure \ref{fig: u t=1 BL} 
+compares the optimized $u(t=1,x)$ obtained by either the twin-model Bayesian optimization 
+and the vanilla Bayesian optimization\footnote{The vanilla Bayesian optimization uses
+only the objective evaluation.}, after $20$ gray-box simulations. 
+Figure \ref{fig: current best BL} shows the current best (minimal) objective at
+each iterate. The use of twin model accelerates the optimization, especially when 
+the number of iterate is small.
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=8.2cm,height=6.3cm]{../finalutx.png}
+    \caption{A comparison of the optimized $u(t=1,x)$ after $20$ gray-box simulations.
+             The red line is obtained by the vanilla Bayesian optimization and the green line by the
+             twin-model Bayesian optimization. The cyan dashed line indicates the $u(t=1,x)$ 
+             obtained by setting the source term to zero.
+             }
+    \label{fig: u t=1 BL}
+\end{center}\end{figure}
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=8.2cm,height=6.3cm]{../opt_BL.png}
+    \caption{The current best objective at each iterate. The red line is obtained by the vanilla 
+             Bayesian optimization and the green line by the twin-model Bayesian optimization.
+             The black horizontal line indicates the true optimal.}
+    \label{fig: current best BL}
+\end{center}\end{figure}
+
+
+\subsection{Navier-Stokes Flow}
+Consider the same Navier-Stokes flow as in Section 
+\ref{sec: chap2 num example NS}.
+Let $S(c)$ be the area of the return bend, which is a function of the 
+control points' coordinates, $c$. Let $S_0$ be the area that corresponds to
+the initial guess of the control points. 
+The objective function is the steady-state mass flux with a penalty term representing the difference 
+of $S$ and $S_0$,
+\begin{equation}
+    \xi(c) = - \int_{\textrm{outlet}} \rho_\infty u_\infty \big|_{\textrm{outlet}} \; dy
+    - \lambda (S-S_0)^2\,,
+    \label{eqn: mass flux 2}
+\end{equation}
+where $\lambda>0$. The goal is to maximize $\xi(c)$ in a bounded domain
+$c_{\min}\le c\le c_{\max}$. 
+Because there are $4$ adjustable control points at each boundary, the
+control is $16$-dimensional.
+Figure \ref{fig: NS opt geo combined} shows
+the initial and the optimized geometries as well as the bound constraints.
+It also shows the pressure profiles at the interior and the exterior boundaries along
+the streamwise direction. The optimized geometry reduces the adverse pressure
+gradient at the flow separation, thus decreases the drag and increases the
+mass flux.\\
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=14.4cm]{../Ubend_combined_new.png}
+    \caption{The left plot shows the initial guess of control points (blue dots), 
+             the initial guess of the geometry (blue line),
+             the optimized control points (red dots), and the optimized
+             geometry (red line). The purple squares indicate the bound 
+             constraints for each control point. The right plot shows the 
+             pressure along the interior and the exterior boundaries for
+             the initial (blue) and the optimized (red) geometry.}
+    \label{fig: NS opt geo combined}
+\end{center}\end{figure}
+
+Figure \ref{fig: NS opt obj 2} shows the current best objective evaluation at each iterate.
+Twin model enables faster objective improvement than the vanilla Bayesian optimization.
+In particular, at the $8$th iterate, twin-model Bayesian optimization already achieves near optimality.
+Figure \ref{fig: NS opt wall clock} shows the wall clock time of the optimization
+against the number of iterates. Although twin model increases the per-iterate computational
+cost, the increased cost is offset by faster objective improvement. After around $80$
+minutes (8 twin-model optimization iterations), twin model achieves near optimality whereas the vanilla 
+Bayesian optimization is still far from optimal.\\
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=9cm]{../Ubend_combined_new_2.png}
+    \caption{The current best objective at each iterate for the ideal gas and the 
+             Redlich-Kwong gas. The green lines are
+             obtained by the twin-model Bayesian optimization. The red lines are
+             obtained by the vanilla Bayesian optimization. The black horizontal lines
+             indicate the true optimal.}
+    \label{fig: NS opt obj 2}
+\end{center}\end{figure}
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=9cm]{../NS_compute_time.png}
+    \caption{The cumulative and per-iterate wall clock time, in minutes.}
+    \label{fig: NS opt wall clock}
+\end{center}\end{figure}
+
+
+\subsection{Polymer Injection in Petroleum Reservoir}
+\label{sec: chap 3 reservoir}
+Consider a 2D horizontal reservoir governed by \eqref{eqn: two phase polymer}
+and \eqref{eqn: darcy law}. The permeability is heterogeneous, and is shown in
+Figure \ref{fig: chap 3 reservoir setup}. Five injectors 
+are placed along the southern boundary, and one producer is placed in the northeastern
+corner. The reservoir is simulated for $t\in[0,T=10]\,\texttt{day}$.\\
+
+Firstly, consider constant-in-time injection rates at the injectors.
+Define 
+\begin{equation}
+    \xi(t) = -\int_\Omega \rho_o(t) \phi S_o(t) d\boldsymbol{x}
+        - \lambda t \sum_{i=1}^5 I_{\texttt{inj} i}\,,
+    \label{eqn: chap 3 reservoir cum cost}
+\end{equation}
+which is the negative oil residual minus the water cost at time $t$.
+$\lambda = 0.4$ is the cost of water per unit volume. $I_{\texttt{inj}i}$ is the injection rate
+at the $i$th injector. 
+The goal is to maximize $\xi(T)$ with bound constraints on the injection rates
+$0\le I_{\texttt{inj}i} \le I_{\max}$.
+Since there are five injectors, the optimization is 5-dimensional.\\
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=6.cm,height=8cm]{../reservoir_perm.png}
+    \caption{The permeability of the reservoir, in 100 milli Darcy. The 5 injectors
+             are indicated by the black dots, and the producer is indicated by the green dot.}
+    \label{fig: chap 3 reservoir setup}
+\end{center}\end{figure}
+
+Figure \ref{fig: chap 3 reservoir objective} shows the current best objective evaluation
+against the number of iterates. 
+The black line indicates the true optimal\footnote{The true optimal
+is obtained by simulated annealing after running $192$ gray-box simulations.}.
+The twin model Bayesian optimization achieves
+near-optimality faster than the vanilla Bayesian optimization. 
+Figure \ref{fig: chap 3 reservoir profit t} shows $\xi(t)$ 
+for the initial and the optimized injection rates. The initial rates are
+set at $I_{\texttt{inj}i} = I_{\max}$ for all injectors, 
+which results in early water breakthrough and high water cut.
+Although the profit is high at smaller $t$, it deteriorates for larger $t$ due
+to the water being wasted.\\
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=7.5cm,height=5.7cm]{../reservoir_5d_obj.png}
+    \caption{The current best objective evaluation against the number of iterates.}
+    \label{fig: chap 3 reservoir objective}
+\end{center}\end{figure}
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=7.5cm,height=5.7cm]{../reservoir_profit_t.png}
+    \caption{$\xi(t)$ for the initial and the optimized injection rates.}
+    \label{fig: chap 3 reservoir profit t}
+\end{center}\end{figure}
+
+Secondly, consider time-dependent injection rates. If $[0,T]$ is discretized uniformly 
+into $200$ segments, each $I_{\texttt{inj}i}$ becomes a vector with a length of 200.
+Thus the optimization is one thousand dimensional. Clearly the Bayesian optimization 
+algorithm developed in Section \ref{sec: chap3 algo} is not long suitable, because the
+large dimensionality leads to a huge covariance matrix\footnote{As aforementioned, 
+the covariance matrix for evaluating the posterior is $N(d+1)$. 
+For example, after $100$ iterates, the matrix becomes $10^5$-by-$10^5$. 
+The optimization algorithm can dominate the computational cost instead of the
+conservation law simulation, which violates my assumptions in Chapter \ref{chap 1}.
+Such scaling problem is suffered by most non-parametric methods.}. Instead,
+the twin model is tested on a simple gradient descent method, the 
+backtracking-Armijo gradient descent method \cite{backtrack line search}.
+Clearly, such practice is theoretically flawed, because the gradient error
+can not be estimated or bounded, and the optimization may not converge at all.
+However, it is interesting to examine the practical utility of the twin model.\\
+
+Figure \ref{fig: chap 3 reservoir opt inj} shows the optimized injection rates.
+The 1st and 5th injectors, at the southeastern and southwestern corners, are turned on first.
+The rate at injector 5 is particularly large, possibly because the permeability is relatively low.
+Once water breaks through and a low-resistance water channel forms, the oil around the 
+injector 5 will be 
+harder to extract. Later, all injectors are turned on, and their rates gradually decrease
+when the water cut increases. Figure \ref{fig: chap 3 reservoir grad descent obj} shows the
+current best objective evaluation against the number of iterates. Using the 
+time-dependent control, the objective 
+evaluation gets more improvement than the constant-rate control.
+
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=7.5cm,height=5.7cm]{../optinj.png}
+    \caption{The optimized time-dependent injection rates.}
+    \label{fig: chap 3 reservoir opt inj}
+\end{center}\end{figure}
+
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=7.5cm,height=5.7cm]{../reservoir_obj_grad_descent.png}
+    \caption{The current best objective evaluation using the backtracking-Armijo gradient
+             descent method, where the gradient is provided by the twin model.}
+    \label{fig: chap 3 reservoir grad descent obj}
+\end{center}\end{figure}
+
+
+\section{Chapter Summary}
+Based upon previous research, this chapter develops a Bayesian framework
+for the optimization problems constrained by gray-box conservation law simulations.
+Gaussian process models are presented for the objective function, the true gradient,
+the estimated gradient, and the gradient error.
+Using the Gaussian process models, the formulation of the joint and the
+posterior distributions are given,
+where the hyper parameters are estimated by maximum likelihood.
+The developments are summarized in a Bayesian optimization algorithm 
+which leverages the twin-model gradient estimation.
+In addition, the convergence property of the algorithm is theoretically 
+studied. The algorithm is guaranteed to find the optimal regardless
+of the gradient estimation accuracy, if the true hyper parameters are used.
+It is a future work to extend the theory to estimated hyper parameters.\\
+
+The proposed optimization method is demonstrated on several numerical examples.
+The first example is the Buckley-Leverett equation whose flux is assumed unknown.
+The objective function is optimized by adjusting the source term represented by $25$ control variables.
+The second example is a Navier-Stokes flow in a return bend, where the state
+equation is unknown. The mass flux 
+with a penalty on the geometry is maximized by adjusting the flow boundaries
+which are controlled by $16$ variables. The third example is a petroleum reservoir
+with polymer injections, where the mobility factors are unknown. 
+The profit is maximized by adjusting the constant-time 
+injection rates at five injectors. In all three examples, the
+twin-model optimization achieves
+near-optimality with less iterations than the vanilla Bayesian optimization. 
+Finally, the time-dependent control is considered on the same petroleum reservoir example,
+which yields a $1000$-dimensional problem. Conventionally, 
+such high-dimensional optimization can be hard without the adjoint gradient. 
+The twin-model gradient is tested to work well using a gradient descent approach.\\
+

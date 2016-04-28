@@ -1,0 +1,376 @@
+\chapter{Proof of Theorems}
+
+\section{Theorem \ref{theorem: 1}}
+\label{proof 1}
+Proof: \\
+We prove false the contradiction of the theorem, which reads:\\
+\emph{For any $\delta>0$ and $T>0$, there exist $\epsilon > 0$, and 
+$F, \tilde{F}$ satisfying the conditions stated
+in theorem \ref{theorem: 1}, such that $\|\tilde{u} - u\|_{\infty} < \delta$ and 
+$\left\| \frac{d\tilde{F}}{du} - \frac{dF}{du} \right\|_\infty > \epsilon$ on $B_u$.}\\
+
+We show the following exception to the contradiction in order to prove it false.\\
+\emph{For any $\epsilon >0$ and any $F,\tilde{F}$ satisfying $\left\|\frac{d\tilde{F}}{du} - \frac{dF}{du}\right\|_{\infty} > \epsilon$
+on $B_u$, we can find $\delta >0$ and $T>0$ such that $\|\tilde{u} - u\|_\infty > \delta$.
+}\\
+
+The idea is to construct such an exception by the method of lines \cite{method of lines}.
+Firstly, assume there is no shock wave for \eqref{eqn: easy 1} and \eqref{eqn: easy 2} for $t\in[0,T]$. 
+Choose a segment in space, $[x_0-\Delta, x_0]$ with $0< \Delta< \frac{\epsilon}{L_{F} L_{u}}$, that satisfies 
+\begin{itemize}
+    \item $u_0(x) \in B_u$ for any $x\in [x_0-\Delta, x_0]$;
+    \item $\left| \frac{d\tilde{F}}{du}\big(u_0(x_0)\big) - \frac{dF}{du} \big(u_0(x_0)\big) \right| > \epsilon$;
+    \item $x_0 - \Delta + \frac{dF}{du}\big( u_0(x_0 - \Delta) \big) T = x_0 + \frac{d\tilde{F}}{du}\big( u_0 \big)T \equiv x^*$.
+\end{itemize}
+Without loss of generality, we assume $\frac{dF}{du} >0$ and $\frac{d\tilde{F}}{du}>0$ for $\big\{u \big|u=u_0(x)\,,\; x\in[x_0-\Delta, x_0]\big\}$.
+Using the method of lines, we have
+$$u\left(T\,,\; x_0-\Delta +\frac{dF}{du}\big( u_0(x_0-\Delta) \big)T  \right) = u_0(x_0 -\Delta)\,,$$ and
+$$\tilde{u}\left(T\,,\; x_0+\frac{d\tilde{F}}{du}\big( u_0(x_0) \big)T  \right) = u_0(x_0 )\,.$$
+Therefore
+$$
+    \left| \tilde{u}(x^*, T) - u(x^*, T) \right| = \left| u_0(x_0) - u_0(x_0-\Delta) \right| \ge \gamma \Delta \equiv \delta\,,
+$$
+by using the definition of $B_u$.\\
+
+Set 
+$T= \frac{\Delta}{\left| \frac{d\tilde{F}}{du}\big( u_0(x_0-\Delta)\big) - \frac{dF}{du}\big( u_0(x_0) \big) \right|}$, we have
+\begin{equation*}\begin{split}
+     & \left| \frac{d\tilde{F}}{du}\big( u_0(x_0-\Delta)\big) - \frac{dF}{du}\big( u_0(x_0) \big) \right| \\
+    = &\left| \frac{d{F}}{du}\big( u_0(x_0)\big) - \frac{d\tilde{F}}{du}\big( u_0(x_0) \big) + 
+           \frac{dF}{du} \big( u_0(x_0-\Delta) \big) - \frac{dF}{du}\big( u_0(x_0)\big) \right|\\
+    = &\left| \frac{d{F}}{du}\big( u_0(x_0)\big) - \frac{d\tilde{F}}{du}\big( u_0(x_0) \big) + 
+       \overline{\frac{d^2 F}{du^2}} \big( u_0(x_0-\Delta) - u_0(x_0) \big) \right|\\
+    \ge& \left| \frac{dF}{du}\big( u_0(x_0) \big) - \frac{d\tilde{F}}{du}\big( u_0(x_0) \big) \right| - L_uL_F \Delta \\
+    \ge& \epsilon - L_uL_F\Delta\equiv \epsilon_{F} > 0
+\end{split}\end{equation*}
+by using the mean value theorem. Therefore $T \le \frac{\Delta}{\epsilon_F} < \infty$.
+So we find a $\delta = \gamma \Delta$ and a $T < \infty$ that provides an exception
+to the contradiction of the theorem. 
+
+Secondly, if there is shock wave within $[0,T]$ for either \eqref{eqn: easy 1} or \eqref{eqn: easy 2}, we let
+$T^*$ be the time of the shock occurrence. Without loss of generality, assume the shock occurs for \eqref{eqn: easy 1} first.
+The shock implies the intersection of two characteristic lines. Choose a $\Delta>0$
+such that $\big| \frac{dF}{du}\big(u_0(x)\big) - \frac{dF}{du} \big( u_0(x-\Delta) \big) \big|T^* = \Delta$.
+Using the mean value theorem, we have
+$$
+    T^* = \frac{\Delta}{ \overline{\frac{d^2 F}{du^2}} \big( u_0(x) - u_0(x-\Delta) \big) } \ge \frac{1}{L_u L_F}
+$$
+Thus, if we choose
+$$
+    T = \min \left\{ 
+        \frac{1}{L_uL_K},\;\frac{\Delta}{\epsilon_\Delta}
+    \right\}\,,
+$$
+no shock occurs in $t\in[0,T]$. Since the theorem is already proven for the no-shock scenario, the proof completes.\hfill \qedsymbol
+
+
+\section{Theorem \ref{theorem: 2}}
+\label{proof 2}
+Proof: \\
+Let the one-step time marching of the gray-box simulator be
+\begin{equation*}
+    \mathcal{H}:\, \mathbb{R}^n\mapsto\mathbb{R}^n,\, 
+    \boldsymbol{u}_{i\cdot}
+    \rightarrow 
+    \boldsymbol{u}_{i+1\cdot} = \mathcal{H}_i\boldsymbol{u}_{i\cdot} \,,
+    \quad i=1,\cdots, M-1\,,
+\end{equation*}
+The integrated truncation error can be written as
+\begin{equation*}\begin{split}
+    \mathcal{T}(\tilde{F}) &= 
+        \sum_{i=1}^M \sum_{j=1}^N w_{j} \left(
+        \boldsymbol{u}_{i+1\, j} - (\mathcal{G}\boldsymbol{u}_{i\, \cdot})_j
+        \right)^2\\
+    &= \sum_{i=1}^M (u_{i+1\,\cdot} - \mathcal{G} u_{i\,\cdot})^T W
+                    (u_{i+1\,\cdot} - \mathcal{G} u_{i\,\cdot}) \\
+    &= \sum_{i=1}^M \left\|u_{i+1\,\cdot} - \mathcal{G} u_{i\,\cdot}\right\|^2_{W}\\
+    &= \sum_{i=1}^M \left\| \mathcal{H} u_{i\, \cdot} - \mathcal{G} u_{i\,\cdot} \right\|^2_{W}\\
+    &= \sum_{i=1}^M \left\| \left(\mathcal{H}^i - \mathcal{G} \mathcal{H}^{i-1}\right)
+       u_{0\,\cdot} \right\|^2_{W}\,.
+\end{split}\end{equation*}
+Similarly, the solution mismatch can be written as
+\begin{equation*}
+    \mathcal{M}(\tilde{F}) = \sum_{i=1}^M \left\| 
+    \left(\mathcal{H}^i - \mathcal{G}^i\right)
+    u_{0\,\cdot} \right\|^2_{W}
+\end{equation*}
+Fig \ref{fig:sketch} gives an explanation of $\mathcal{M}$ and $\mathcal{T}$ by viewing 
+the simulators as discrete-time dynamical systems.\\
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[height=7cm]{../sketch2.png}
+    \caption{The state-space trajectories of the gray-box model and the twin model. 
+             $\mathcal{M}$ measures the difference of the twin model trajectory (blue) with
+             the gray-box trajectory (red). $\mathcal{T}$ measures the difference of the
+             twin model trajectory with restarts (green) and the gray-box trajectory (red).}
+    \label{fig:sketch}
+\end{center}\end{figure}
+
+Using the equality
+\begin{equation*}
+    \mathcal{G}^i-\mathcal{H}^i = (\mathcal{G}^i-\mathcal{G}^{i-1}\mathcal{H}) + (\mathcal{G}^{i-1}
+    \mathcal{H} - \mathcal{G}^{i-2}\mathcal{H}^2) + \cdots + (\mathcal{G}\mathcal{H}^{i-1}-\mathcal{H}^i)\,,\quad
+    i\in \mathbb{N}\,,
+\end{equation*}
+and triangular inequality, we have 
+\footnotesize{
+\begin{equation*}
+    \mathcal{M} \le 
+    \left\{\begin{split}
+        \|(\mathcal{G}^{M-1} \mathcal{G} - \mathcal{G}^{M-1}\mathcal{H})u_{0\cdot}\|^2_{W} &+ \|(\mathcal{G}^{M-2}\mathcal{G}\mathcal{H} - \mathcal{G}^{M-2}\mathcal{H}^2)u_{0\cdot}\|^2_{W}&+\cdots
+        &+ \|(\mathcal{G}\mathcal{H}^{M-1} - \mathcal{H}^{M})u_{0\cdot}\|^2_{W}\\
+        &+\|(\mathcal{G}^{M-2} \mathcal{G} - \mathcal{G}^{M-2}\mathcal{H})u_{0\cdot}\|^2_{W} &+ \cdots 
+        &+ \|(\mathcal{G}\mathcal{H}^{M-2} - \mathcal{H}^{M-1})u_{0\cdot}\|^2_{W}\\
+        &\ddots&& \vdots\\
+        &&& + \|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_{W}
+    \end{split}
+    \right\}\,.
+    \label{expansion global error}
+\end{equation*}
+}
+\normalsize
+Therefore,
+\begin{equation*}
+    \mathcal{M} - \mathcal{T} \le \qquad\hspace{11cm}
+\end{equation*}
+\footnotesize
+\begin{equation*}
+    \left\{\begin{split}
+        \|(\mathcal{G}^{M-1} \mathcal{G} - \mathcal{G}^{M-1}\mathcal{H})u_{0\cdot}\|^2_{W} &+ \|(\mathcal{G}^{M-2}\mathcal{G}\mathcal{H} - \mathcal{G}^{M-2}\mathcal{H}^2)u_{0\cdot}\|^2_{W}&+\cdots
+        &+ \|(\mathcal{G}\mathcal{G}\mathcal{H}^{M-2} - \mathcal{G} \mathcal{H}^{M-1})u_{0\cdot}\|^2_{W}\\
+        &+\|(\mathcal{G}^{M-2} \mathcal{G} - \mathcal{G}^{M-2}\mathcal{H})u_{0\cdot}\|^2_{W} &+ \cdots 
+        &+ \|(\mathcal{G}\mathcal{G}\mathcal{H}^{M-3} - \mathcal{G} \mathcal{H}^{M-2})u_{0\cdot}\|^2_{W}\\
+        &\ddots&& \vdots\\
+        &&& + \|(\mathcal{G} \mathcal{G} - \mathcal{G} \mathcal{H})u_{0\cdot}\|^2_{W}
+    \end{split}
+    \right\}\,.
+    \label{error diff}
+\end{equation*}
+\normalsize
+Under the assumption
+\begin{equation*}
+    \left\| \mathcal{G}a - \mathcal{G}b \right\|^2_{W} \le \beta \|a-b\|^2_{W}\,,
+\end{equation*}
+and its implication
+\begin{equation*}
+    \left\|\mathcal{G}^i a - \mathcal{G}^i b\right\|^2_W \le \beta^i \|a-b\|_W^2\,, \quad i\in \mathbb{N}\,,
+\end{equation*}
+we have
+\begin{equation*}
+    \mathcal{M} - \mathcal{T} \le 
+    \left\{\begin{split}
+        \beta^{M-1}\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W &+ \beta^{M-2}\|(\mathcal{G}\mathcal{H} - \mathcal{H}^2)u_{0\cdot}\|^2_W&+\cdots
+        &+ \beta\|(\mathcal{G}\mathcal{H}^{M-2} - \mathcal{H}^{M-1})u_{0\cdot}\|^2_W\\
+        &+\beta^{M-2}\|( \mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_{M-1} &+ \cdots 
+        &+ \beta\|(\mathcal{G}\mathcal{H}^{n-3} - \mathcal{H}^{n-2})u_{0\cdot}\|^2_W\\
+        &\ddots&& \vdots\\
+        &&& + \beta\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W
+    \end{split}
+    \right\}\,.
+    \label{error diff}
+\end{equation*}
+Reorder the summation, we get
+\begin{equation*}
+    \mathcal{M} - \mathcal{T} \le 
+    \left\{\begin{split}
+        \beta^{M-1}\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W &+ \beta^{M-2}\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W&+\cdots
+        &+ \beta\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W\\
+        &+\beta^{M-2}\|( \mathcal{G}\mathcal{H} - \mathcal{H}^2)u_{0\cdot}\|^2_W &+ \cdots 
+        &+ \beta\|(\mathcal{G}\mathcal{H} - \mathcal{H}^{2})u_{0\cdot}\|^2_W\\
+        &\ddots&& \vdots\\
+        &&& + \beta\|(\mathcal{G}\mathcal{H}^{M-2} - \mathcal{H}^{M-1})u_{0\cdot}\|^2_W
+    \end{split}
+    \right\}\,.
+    \label{error diff 2}
+\end{equation*}
+Therefore,
+\begin{equation*}
+    \mathcal{M} - \mathcal{T} \le \left(\beta^{M-1} + \beta^{M-2} + \cdots + \beta \right)
+    \mathcal{T}
+\end{equation*}
+If $\beta$ is strictly less than $1$, then
+\begin{equation*}
+    \mathcal{M} \le \frac{1}{1-\beta} \mathcal{T}\,,
+\end{equation*}
+thus completes the proof.\hfill\qedsymbol
+
+
+\section{Theorem \ref{theorem: 3}}
+\label{proof 3}
+Proof: \\
+Firstly, we have the following lemma (Chapter 1, Theorem 4.1, \cite{RKHS book}).\\
+\textbf{lemma 1.}
+\emph{
+    Let $K_1, K_2$ be the reproducing kernels of functions on $\mathcal{C}$ with
+    norms $\|\cdot\|_{\mathcal{H}_1}$ and $\|\cdot\|_{\mathcal{H}_2}$ respectively. Then $K=K_1+K_2$ is
+    the reproducing kernel of the space 
+    $$
+        \mathcal{H} = \mathcal{H}_1\oplus \mathcal{H}_2 =
+        \left\{ 
+            f = f_1 + f_2, \; f_1\in \mathcal{H}_1, \; f_2\in\mathcal{H}_2
+        \right\}
+    $$
+    with norm $\|\cdot\|_\mathcal{H}$ defined by 
+    $$
+        \forall f\in \mathcal{H} \quad \|f\|_{\mathcal{H}}^2 
+        = \min_{
+                f=f_1+f_2,\; 
+                f_1\in \mathcal{H}_1, f_2\in \mathcal{H}_2
+        }
+        \left(\|f_1\|_{\mathcal{H}_1^2} + \|f_2\|_{\mathcal{H}_2}^2\right)
+    $$
+}
+
+Using lemma 1, we prove the following Cauchy-Schwarz inequality,\\
+{\textbf{lemma 2.}}
+\begin{equation*}\begin{split}
+  &\left|\xi(c,\omega_\xi) - \hat{\xi}(c;\underline{c}_n) \right|^2
+  \le \\ &\left(\left(1+\frac{4d}{3}\right)  \left\| \xi(c; \omega_\xi) \right\|_{\mathcal{H}_K}
+      + \frac{4d}{3} \left\| \nabla_c \xi(c;\omega_\xi)
+        \right\|_{\mathcal{H}_{K_\nabla}}
+      +\frac{4}{3}\sum_{i=1}^d  
+       \left\| \epsilon_i(c;\omega_\epsilon^i) \right\|_{\mathcal{H}_G^i} \right)
+      \sigma^2(c; \underline{c}_n)
+\end{split}\end{equation*}
+To prove lemma 2, we define a vector 
+\begin{equation*}
+    u = \left(u_1, \cdots, u_d\right)^T \in \mathcal{U}\,,
+\end{equation*}
+where
+$\mathcal{U} = [0,1]^d$.
+Define an auxiliary function
+\begin{equation*}
+    \mathcal{Y}
+    (c,u;\omega_\xi, \omega_\epsilon) = \left(1-\sum_{i=1}^d u_i\right) \xi(c, \omega_\xi) + u^T
+    \left[\nabla_c\xi(c,\omega_\xi) + \epsilon(c;\omega_\epsilon) \right]\,.
+\end{equation*}
+$u_1, \cdots, u_d$ are functions from
+the Sobolev space
+$W^{1,2}$ defined on $\mathcal{U}$, equipped with the inner product
+\begin{equation*}
+    \left< \phi, \psi \right>  = \int_{\mathcal{U}} \phi\psi + (\nabla\phi)^T (\nabla \psi)  \; du\,,
+\end{equation*}
+The Sobolev space is a RKHS with the kernel
+\begin{equation*}
+    K_u(\phi, \psi) = \frac{1}{2} \exp\left(- \left|\phi-\psi \right|\right)
+\end{equation*}
+on $\mathcal{U} = [0,1]$. 
+Given $\omega_\xi$ and $\omega_\epsilon$,
+$\mathcal{Y}(\cdot,\cdot;\omega_\xi,\omega_\epsilon)$ can be viewed as a realization from a RKHS
+$\mathcal{H}_{\mathcal{Y}}$, defined on $\mathcal{C}\times \mathcal{U}$. Let the kernel function of
+$\mathcal{H}_{\mathcal{Y}}$ be
+\begin{equation*}\begin{split}
+    K_{\mathcal{Y}}\;:\;  &  \mathcal{C}\times \mathcal{U}, \mathcal{C}\times \mathcal{U} \rightarrow \mathbb{R}\\
+              & (c_1, u_1), (c_2, u_2)\rightarrow K_{\mathcal{Y}}((c_1, u_1), (c_2, u_2))
+\end{split}\end{equation*}
+Notice 
+\begin{equation*}
+    \mathcal{Y}(c, \mathbf{0};\omega_\xi, \omega_\epsilon) = \xi(c, \omega_\xi)
+\end{equation*}
+is the objective function, and
+\begin{equation*}
+    \Big( \mathcal{Y}(c, e_1;\omega_\xi,\omega_\epsilon), \cdots, \mathcal{Y}(c, e_d;\omega_\xi, \omega_\epsilon)\Big) 
+    = \nabla_c\xi(c;\omega_\xi) + \epsilon(c;\omega_\epsilon)
+\end{equation*}
+is the estimated gradient,
+where $e_i, i=1,\cdots, d$ indicates the $i$th unit Cartesian basis vector in $\mathbb{R}^d$.
+Conditioned on the samplings $\xi(\underline{c}_n)$ and $\xi_{\tilde{\nabla}}(\underline{c}_n)$,
+we can bound the error of the estimation of $\mathcal{Y}(c,\mathbf{0};\omega_\xi,\omega_\epsilon)$ by
+the Cauchy-Scharz inequality \cite{RKHS book} in $\mathcal{H}_{\mathcal{Y}}$,
+\begin{equation*}
+    \left|\mathcal{Y}(c,\mathbf{0};\omega_\xi,\omega_\epsilon) - \hat{\mathcal{Y}}(c,\mathbf{0};\underline{c}_n)\right| =
+    \left|\xi(c;\omega_\xi) - \hat{\xi}_n(c;\underline{c}_n)\right| \le
+    \sigma(c;\underline{c}_n) \|\mathcal{Y}\|_{\mathcal{H}_{\mathcal{Y}}}
+\end{equation*}
+Besides,
+\begin{equation*}\begin{split}
+    \|\mathcal{Y}\|_{\mathcal{H}_{\mathcal{Y}}} &= \left\|
+        \left(1-\sum_{i=1}^d u_i\right) \xi(c; \omega_\xi) + u^T
+        \left[\nabla_c\xi(c;\omega_\xi) + \epsilon(c;\omega_\epsilon) \right]
+    \right\|_{\mathcal{H}_{\mathcal{Y}}}\\
+    &\le \left\| \xi(c; \omega_\xi) \right\|_{\mathcal{H}_K}
+      + \left(\sum_{i=d}^d \|u_i\|_{\mathcal{H}_u} \right)
+        \left\|\xi(c;\omega_\xi)\right\|_{\mathcal{H}_K}
+      + \left(\sum_{i=d}^d \|u_i\|_{\mathcal{H}_u} \right)
+        \left\|\nabla_c \xi(c;\omega_\xi)\right\|_{\mathcal{H}_{K_\nabla}}\\
+      &+ \sum_{i=1}^d \left\| u_i \epsilon_i(c;\omega_\epsilon^i)
+        \right\|_{\mathcal{H}_u\bigotimes \mathcal{H}_G^i}\\
+    &= \left\| \xi(c, \omega) \right\|_{\mathcal{H}_K}
+      + \frac{4d}{3} \left\|\xi(c,\omega)\right\|_{\mathcal{H}_K}
+      + \frac{4d}{3}\left\| \nabla_c \xi(c;\omega_\xi)
+        \right\|_{\mathcal{H}_{K_\nabla}}
+      + \frac{4}{3}\sum_{i=1}^d \left\| \epsilon_i(c;\omega_\epsilon^i) \right\|_{\mathcal{H}_G^i}\;,
+\end{split}\label{eqn: CS ineq}
+\end{equation*}
+where the inequality obtained by lemma 1. The proof for lemma 2 completes.\\
+
+Using lemma 2, we prove\\
+\textbf{lemma 3.}
+\emph{
+Let $(\underline{c}_n)_{n\ge 1}$ and $(\underline{a}_n)_{n\ge 1}$ be two sequences in $\mathcal{C}$.
+Assume that the sequence $(a_n)$ is convergent, and denote by $a^*$ its limit. Then each of the
+following conditions implies the next one:
+\begin{enumerate}
+    \item $a^*$ is an adherent point of $\underline{c}_n$ (there exists a subsequence in 
+          $\underline{c}_n$ that converges to $a^*$) ,
+    \item $\sigma^2(a_n;\underline{c}_n)\rightarrow 0$  when $n\rightarrow \infty$,
+    \item $\hat{\xi}(a_n; \underline{c}_n) \rightarrow \xi(a^*, \omega)$ when $n\rightarrow \infty$,
+          for all $\xi \in \mathcal{H}_K\,,\, \epsilon \in \mathcal{H}_G$.
+\end{enumerate}
+}
+The proof of lemma 3 is the similar as the proposition 8 in \cite{convergen EI}, 
+except that the Cauch-Schwarz inequality used in the paper is replaced
+by lemma 2. We do not repeat the proof but 
+refer to \cite{convergen EI} for the details.\\
+
+Next, we show the three conditions are equivalent in lemma 3. Using the assumption:\\
+\emph{
+There exist $C\ge 0$ and $k \in\mathbb{N}^+$, such that
+$(1+|\eta|^2)^k \big|\hat{\Phi}(\eta)\big|\ge C$ for all $\eta\in \mathbb{R}^d$,}\\
+we have,
+for any $\xi\in \mathcal{H}_K$ and its Fourier transform $\hat{\xi}$, 
+\begin{equation*}\begin{split}
+    \big\|\xi\big\|_{W^{k,2}} = 
+    \int (1+|\eta|^2)^k \big| \hat{\xi} \big|^2 \; d\eta 
+    \ge C \int \big|\hat{\Phi}(\eta)\big|^{-1} \big|\hat{\xi}(\eta)\big|^2 \; d\eta
+    = C \sqrt{(2\pi)^d} \big\|\xi\big\|_{\mathcal{H}_K}\,,
+\end{split}
+\label{space equal}
+\end{equation*}
+where $W^{k,2}$ is the Sobolev space whose weak derivatives up to order $k$ 
+have a finite $L^2$ norm
+\cite{converge Bull}. Therefore, $W^{k,2}\subseteq \mathcal{H}_K$.
+The result can be extended to $\xi \in \mathcal{H}_K(\mathcal{C})$ defined on the domain 
+$\mathcal{C}\in \mathbb{R}^d$, because $\mathcal{H}_K(\mathcal{C})$ embeds isometrically
+into $\mathcal{H}_K(\mathbb{R}^d)$ \cite{RKHS aronszajn}. Besides, we have that
+$C_c^\infty$ is dense in $W^{k,2}$ (Chapter 2, Lemma 5.1 \cite{Hilbert space Showalter Book}),
+where $C_c^\infty$ is the $C^\infty$ functions with compact support on $\mathcal{C}$.
+As a consequence, $\mathcal{C}^\infty_c\subseteq \mathcal{H}_K$ \cite{convergen EI}.
+If the condition 1 is false, 
+then there exist a neighborhood
+$U$ of $a^*$ that does not intersect $\underline{c}_n$. There exist $\xi\in \mathcal{H}_K$ 
+that is compactly supported in $U$,
+and $\epsilon = \textbf{0}$,
+such that $\hat{\xi}(a^*; \underline{c}_n) = 0$ whereas
+$\xi(a^*) \neq 0$, which violates the condition 3.
+%The argument can be extended to the case when both $\xi(\underline{c}_n)$ and 
+%$\xi_{\tilde{\nabla}}(\underline{c}_n)$ are
+%available: there exist $\xi = 0$ and $\epsilon = \textbf{0}$, such that 
+%$\hat{\xi}(a^*; \underline{c}_n) = 0$ whereas $\xi(a^*) \neq 0$.
+Therefore, the three conditions in lemma 3 are equivalent.\\
+
+Finally, we have:\\
+\textbf{lemma 4.} (E. Vazquez, Theorem 5 \cite{convergen EI})$\quad$ 
+\emph{If the three conditions in
+lemma 3 are equivalent, $n_{\max}\rightarrow \infty$, and $\texttt{EI}_{\min}=0$,
+then for all $c_{init}\in \mathcal{C}$ and all $\omega \in \mathcal{H}$, the sequence 
+$\underline{c}_n$ generated by the Bayesian optimization with expected improvement acquisition 
+is dense in $\mathcal{C}$.
+}\\
+We do not repeat the proof. See \cite{convergen EI} for the details. 
+To sum up, under the conditions in Theorem 
+\ref{theorem: 3}, $\underline{c}_n$ is dense in the search space.
+\hfill\qedsymbol
+
+
+

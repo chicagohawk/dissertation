@@ -1,0 +1,104 @@
+\relax 
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Leveraging the Twin Model for Bayesian Optimization}{69}}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\newlabel{chapter 3}{{3}{69}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Approach}{69}}
+\newlabel{sec: chap3 approach}{{3.1}{69}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}Modeling the Objective and Gradient by Gaussian Processes}{69}}
+\newlabel{sec: chap3 cokriging}{{3.1.1}{69}}
+\newlabel{eqn: gradient model inadequacy}{{3.1}{70}}
+\newlabel{eqn: joint dis}{{3.3}{71}}
+\newlabel{eqn: joint H}{{3.7}{71}}
+\citation{grad coKriging}
+\newlabel{eqn: joint E}{{3.8}{72}}
+\newlabel{eqn: marginal likelihood}{{3.13}{72}}
+\newlabel{first term}{{3.14}{72}}
+\newlabel{second term}{{3.15}{72}}
+\newlabel{eqn: likelihood eqn}{{3.16}{73}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}Algorithm}{73}}
+\newlabel{sec: chap3 algo}{{3.1.2}{73}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {3}{\ignorespaces Bayesian optimization with twin model.\relax }}{74}}
+\newlabel{alg: bayes opt twin}{{3}{74}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-1}{\ignorespaces The flowchart of Algorithm \ref  {alg: bayes opt twin}.\relax }}{74}}
+\newlabel{fig: opt flowchart}{{3-1}{74}}
+\citation{Locatelli}
+\citation{convergen EI}
+\citation{converge Bull}
+\citation{GP bandit}
+\citation{derivative RKHS}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}Convergence Properties Using True Hyper Parameters}{75}}
+\newlabel{sec: chap3 convergence}{{3.1.3}{75}}
+\newlabel{cond expectation}{{3.20}{76}}
+\newlabel{theorem: 3}{{3}{77}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Numerical Results}{77}}
+\newlabel{sec: chap3 numerical}{{3.2}{77}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Buckley-Leverett Equation}{77}}
+\newlabel{eqn: chap 3 BL obj fun}{{3.23}{78}}
+\newlabel{fig: opt BL source}{{3-2a}{78}}
+\newlabel{sub@fig: opt BL source}{{a}{78}}
+\newlabel{fig: opt BL sol}{{3-2b}{78}}
+\newlabel{sub@fig: opt BL sol}{{b}{78}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-2}{\ignorespaces Optimized results for the Buckley-Leverett equation.\relax }}{78}}
+\newlabel{fig: opt BL results}{{3-2}{78}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-3}{\ignorespaces A comparison of the optimized $u(t=1,x)$ after $20$ gray-box simulations. The red line is obtained by the vanilla Bayesian optimization and the green line by the twin-model Bayesian optimization. The cyan dashed line indicates the $u(t=1,x)$ obtained by setting the source term to zero. \relax }}{79}}
+\newlabel{fig: u t=1 BL}{{3-3}{79}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-4}{\ignorespaces The current best objective at each iterate. The red line is obtained by the vanilla Bayesian optimization and the green line by the twin-model Bayesian optimization. The black horizontal line indicates the true optimal.\relax }}{79}}
+\newlabel{fig: current best BL}{{3-4}{79}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Navier-Stokes Flow}{80}}
+\newlabel{eqn: mass flux 2}{{3.24}{80}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Polymer Injection in Petroleum Reservoir}{80}}
+\newlabel{sec: chap 3 reservoir}{{3.2.3}{80}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-5}{\ignorespaces The left plot shows the initial guess of control points (blue dots), the initial guess of the geometry (blue line), the optimized control points (red dots), and the optimized geometry (red line). The purple squares indicate the bound constraints for each control point. The right plot shows the pressure along the interior and the exterior boundaries for the initial (blue) and the optimized (red) geometry.\relax }}{81}}
+\newlabel{fig: NS opt geo combined}{{3-5}{81}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-6}{\ignorespaces The current best objective at each iterate for the ideal gas and the Redlich-Kwong gas. The green lines are obtained by the twin-model Bayesian optimization. The red lines are obtained by the vanilla Bayesian optimization. The black horizontal lines indicate the true optimal.\relax }}{81}}
+\newlabel{fig: NS opt obj 2}{{3-6}{81}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-7}{\ignorespaces The cumulative and per-iterate wall clock time, in minutes.\relax }}{82}}
+\newlabel{fig: NS opt wall clock}{{3-7}{82}}
+\newlabel{eqn: chap 3 reservoir cum cost}{{3.25}{82}}
+\citation{backtrack line search}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-8}{\ignorespaces The permeability of the reservoir, in 100 milli Darcy. The 5 injectors are indicated by the black dots, and the producer is indicated by the green dot.\relax }}{83}}
+\newlabel{fig: chap 3 reservoir setup}{{3-8}{83}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-9}{\ignorespaces The current best objective evaluation against the number of iterates.\relax }}{84}}
+\newlabel{fig: chap 3 reservoir objective}{{3-9}{84}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-10}{\ignorespaces $\xi (t)$ for the initial and the optimized injection rates.\relax }}{84}}
+\newlabel{fig: chap 3 reservoir profit t}{{3-10}{84}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-11}{\ignorespaces The optimized time-dependent injection rates.\relax }}{85}}
+\newlabel{fig: chap 3 reservoir opt inj}{{3-11}{85}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-12}{\ignorespaces The current best objective evaluation using the backtracking-Armijo gradient descent method, where the gradient is provided by the twin model.\relax }}{85}}
+\newlabel{fig: chap 3 reservoir grad descent obj}{{3-12}{85}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Chapter Summary}{86}}
+\@setckpt{chap3}{
+\setcounter{page}{87}
+\setcounter{equation}{25}
+\setcounter{enumi}{5}
+\setcounter{enumii}{0}
+\setcounter{enumiii}{0}
+\setcounter{enumiv}{0}
+\setcounter{footnote}{5}
+\setcounter{mpfootnote}{0}
+\setcounter{part}{0}
+\setcounter{chapter}{3}
+\setcounter{section}{3}
+\setcounter{subsection}{0}
+\setcounter{subsubsection}{0}
+\setcounter{paragraph}{0}
+\setcounter{subparagraph}{0}
+\setcounter{figure}{12}
+\setcounter{table}{0}
+\setcounter{savepage}{3}
+\setcounter{parentequation}{0}
+\setcounter{ContinuedFloat}{0}
+\setcounter{subfigure}{0}
+\setcounter{subtable}{0}
+\setcounter{theorem}{3}
+\setcounter{AlgoLine}{0}
+\setcounter{algocfline}{3}
+\setcounter{algocfproc}{3}
+\setcounter{algocf}{3}
+\setcounter{ALC@unique}{40}
+\setcounter{ALC@line}{13}
+\setcounter{ALC@rem}{0}
+\setcounter{ALC@depth}{0}
+}

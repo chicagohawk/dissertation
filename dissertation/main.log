@@ -1,0 +1,2253 @@
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  27 APR 2016 17:43
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**main
+(./main.tex
+LaTeX2e <2011/06/27>
+Babel <3.9h> and hyphenation patterns for 78 languages loaded.
+(./mitthesis.cls
+Document Class: mitthesis 1999/10/20
+\vithesis=\count79
+(/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@chapter=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+Thesis document copyright MIT unless otherwise (manually) specified
+\@titlesupervisor=\box26
+\@abstractsupervisor=\box27
+\@titlecommittee=\box28
+\c@savepage=\count89
+) (./lgrind.sty
+Package: lgrind 1997/01/30 v3.4 LGrind environment and supporting stuff
+\lc@unt=\count90
+\ln@xt=\count91
+\LGnuminterval=\count92
+\LGindent=\skip43
+\LGsloppy=\skip44
+\procbox=\box29
+\ls@far=\box30
+\tb@x=\box31
+\TBw@d=\dimen103
+\@ts=\dimen104
+) (/usr/share/texlive/texmf-dist/tex/latex/cmap/cmap.sty
+Package: cmap 2008/03/06 v1.0h CMap support: searchable PDF
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+)<<t1.cmap>>)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2013/01/14 v2.14 AMS math features
+\@mathmargin=\skip45
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks14
+\ex@=\dimen105
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen106
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count93
+LaTeX Info: Redefining \frac on input line 210.
+\uproot@=\count94
+\leftroot@=\count95
+LaTeX Info: Redefining \overline on input line 306.
+\classnum@=\count96
+\DOTSCASE@=\count97
+LaTeX Info: Redefining \ldots on input line 378.
+LaTeX Info: Redefining \dots on input line 381.
+LaTeX Info: Redefining \cdots on input line 466.
+\Mathstrutbox@=\box32
+\strutbox@=\box33
+\big@size=\dimen107
+LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
+\macc@depth=\count98
+\c@MaxMatrixCols=\count99
+\dotsspace@=\muskip10
+\c@parentequation=\count100
+\dspbrk@lvl=\count101
+\tag@help=\toks15
+\row@=\count102
+\column@=\count103
+\maxfields@=\count104
+\andhelp@=\toks16
+\eqnshift@=\dimen108
+\alignsep@=\dimen109
+\tagshift@=\dimen110
+\tagwidth@=\dimen111
+\totwidth@=\dimen112
+\lineht@=\dimen113
+\@envbody=\toks17
+\multlinegap=\skip46
+\multlinetaggap=\skip47
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2665.
+LaTeX Info: Redefining \] on input line 2666.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2004/08/06 v2.20
+\thm@style=\toks19
+\thm@bodyfont=\toks20
+\thm@headfont=\toks21
+\thm@notefont=\toks22
+\thm@headpunct=\toks23
+\thm@preskip=\skip48
+\thm@postskip=\skip49
+\thm@headsep=\skip50
+\dth@everypar=\toks24
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks25
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count105
+))
+\Gin@req@height=\dimen114
+\Gin@req@width=\dimen115
+)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/pifont.sty
+Package: pifont 2005/04/12 PSNFSS-v9.2a Pi font support (SPQR) 
+LaTeX Font Info:    Try loading font information for U+pzd on input line 63.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/upzd.fd
+File: upzd.fd 2001/06/04 font definitions for U/pzd.
+)
+LaTeX Font Info:    Try loading font information for U+psy on input line 64.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/upsy.fd
+File: upsy.fd 2001/06/04 font definitions for U/psy.
+))
+(/usr/share/texlive/texmf-dist/tex/latex/ms/ragged2e.sty
+Package: ragged2e 2009/05/21 v2.1 ragged2e Package (MS)
+
+(/usr/share/texlive/texmf-dist/tex/latex/ms/everysel.sty
+Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
+)
+\CenteringLeftskip=\skip51
+\RaggedLeftLeftskip=\skip52
+\RaggedRightLeftskip=\skip53
+\CenteringRightskip=\skip54
+\RaggedLeftRightskip=\skip55
+\RaggedRightRightskip=\skip56
+\CenteringParfillskip=\skip57
+\RaggedLeftParfillskip=\skip58
+\RaggedRightParfillskip=\skip59
+\JustifyingParfillskip=\skip60
+\CenteringParindent=\skip61
+\RaggedLeftParindent=\skip62
+\RaggedRightParindent=\skip63
+\JustifyingParindent=\skip64
+)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
+\captionmargin=\dimen116
+\captionmargin@=\dimen117
+\captionwidth=\dimen118
+\caption@tempdima=\dimen119
+\caption@indent=\dimen120
+\caption@parindent=\dimen121
+\caption@hangindent=\dimen122
+)
+\c@ContinuedFloat=\count106
+)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
+\c@subfigure=\count107
+\c@subtable=\count108
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2008/03/30 v1.1d Input encoding file
+\inpenc@prehook=\toks26
+\inpenc@posthook=\toks27
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
+Now handling font encoding OML ...
+... no UTF-8 mapping file for font encoding OML
+Now handling font encoding T1 ...
+... processing UTF-8 mapping file for font encoding T1
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu
+File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+   defining Unicode char U+00A1 (decimal 161)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00AB (decimal 171)
+   defining Unicode char U+00BB (decimal 187)
+   defining Unicode char U+00BF (decimal 191)
+   defining Unicode char U+00C0 (decimal 192)
+   defining Unicode char U+00C1 (decimal 193)
+   defining Unicode char U+00C2 (decimal 194)
+   defining Unicode char U+00C3 (decimal 195)
+   defining Unicode char U+00C4 (decimal 196)
+   defining Unicode char U+00C5 (decimal 197)
+   defining Unicode char U+00C6 (decimal 198)
+   defining Unicode char U+00C7 (decimal 199)
+   defining Unicode char U+00C8 (decimal 200)
+   defining Unicode char U+00C9 (decimal 201)
+   defining Unicode char U+00CA (decimal 202)
+   defining Unicode char U+00CB (decimal 203)
+   defining Unicode char U+00CC (decimal 204)
+   defining Unicode char U+00CD (decimal 205)
+   defining Unicode char U+00CE (decimal 206)
+   defining Unicode char U+00CF (decimal 207)
+   defining Unicode char U+00D0 (decimal 208)
+   defining Unicode char U+00D1 (decimal 209)
+   defining Unicode char U+00D2 (decimal 210)
+   defining Unicode char U+00D3 (decimal 211)
+   defining Unicode char U+00D4 (decimal 212)
+   defining Unicode char U+00D5 (decimal 213)
+   defining Unicode char U+00D6 (decimal 214)
+   defining Unicode char U+00D8 (decimal 216)
+   defining Unicode char U+00D9 (decimal 217)
+   defining Unicode char U+00DA (decimal 218)
+   defining Unicode char U+00DB (decimal 219)
+   defining Unicode char U+00DC (decimal 220)
+   defining Unicode char U+00DD (decimal 221)
+   defining Unicode char U+00DE (decimal 222)
+   defining Unicode char U+00DF (decimal 223)
+   defining Unicode char U+00E0 (decimal 224)
+   defining Unicode char U+00E1 (decimal 225)
+   defining Unicode char U+00E2 (decimal 226)
+   defining Unicode char U+00E3 (decimal 227)
+   defining Unicode char U+00E4 (decimal 228)
+   defining Unicode char U+00E5 (decimal 229)
+   defining Unicode char U+00E6 (decimal 230)
+   defining Unicode char U+00E7 (decimal 231)
+   defining Unicode char U+00E8 (decimal 232)
+   defining Unicode char U+00E9 (decimal 233)
+   defining Unicode char U+00EA (decimal 234)
+   defining Unicode char U+00EB (decimal 235)
+   defining Unicode char U+00EC (decimal 236)
+   defining Unicode char U+00ED (decimal 237)
+   defining Unicode char U+00EE (decimal 238)
+   defining Unicode char U+00EF (decimal 239)
+   defining Unicode char U+00F0 (decimal 240)
+   defining Unicode char U+00F1 (decimal 241)
+   defining Unicode char U+00F2 (decimal 242)
+   defining Unicode char U+00F3 (decimal 243)
+   defining Unicode char U+00F4 (decimal 244)
+   defining Unicode char U+00F5 (decimal 245)
+   defining Unicode char U+00F6 (decimal 246)
+   defining Unicode char U+00F8 (decimal 248)
+   defining Unicode char U+00F9 (decimal 249)
+   defining Unicode char U+00FA (decimal 250)
+   defining Unicode char U+00FB (decimal 251)
+   defining Unicode char U+00FC (decimal 252)
+   defining Unicode char U+00FD (decimal 253)
+   defining Unicode char U+00FE (decimal 254)
+   defining Unicode char U+00FF (decimal 255)
+   defining Unicode char U+0102 (decimal 258)
+   defining Unicode char U+0103 (decimal 259)
+   defining Unicode char U+0104 (decimal 260)
+   defining Unicode char U+0105 (decimal 261)
+   defining Unicode char U+0106 (decimal 262)
+   defining Unicode char U+0107 (decimal 263)
+   defining Unicode char U+010C (decimal 268)
+   defining Unicode char U+010D (decimal 269)
+   defining Unicode char U+010E (decimal 270)
+   defining Unicode char U+010F (decimal 271)
+   defining Unicode char U+0110 (decimal 272)
+   defining Unicode char U+0111 (decimal 273)
+   defining Unicode char U+0118 (decimal 280)
+   defining Unicode char U+0119 (decimal 281)
+   defining Unicode char U+011A (decimal 282)
+   defining Unicode char U+011B (decimal 283)
+   defining Unicode char U+011E (decimal 286)
+   defining Unicode char U+011F (decimal 287)
+   defining Unicode char U+0130 (decimal 304)
+   defining Unicode char U+0131 (decimal 305)
+   defining Unicode char U+0132 (decimal 306)
+   defining Unicode char U+0133 (decimal 307)
+   defining Unicode char U+0139 (decimal 313)
+   defining Unicode char U+013A (decimal 314)
+   defining Unicode char U+013D (decimal 317)
+   defining Unicode char U+013E (decimal 318)
+   defining Unicode char U+0141 (decimal 321)
+   defining Unicode char U+0142 (decimal 322)
+   defining Unicode char U+0143 (decimal 323)
+   defining Unicode char U+0144 (decimal 324)
+   defining Unicode char U+0147 (decimal 327)
+   defining Unicode char U+0148 (decimal 328)
+   defining Unicode char U+014A (decimal 330)
+   defining Unicode char U+014B (decimal 331)
+   defining Unicode char U+0150 (decimal 336)
+   defining Unicode char U+0151 (decimal 337)
+   defining Unicode char U+0152 (decimal 338)
+   defining Unicode char U+0153 (decimal 339)
+   defining Unicode char U+0154 (decimal 340)
+   defining Unicode char U+0155 (decimal 341)
+   defining Unicode char U+0158 (decimal 344)
+   defining Unicode char U+0159 (decimal 345)
+   defining Unicode char U+015A (decimal 346)
+   defining Unicode char U+015B (decimal 347)
+   defining Unicode char U+015E (decimal 350)
+   defining Unicode char U+015F (decimal 351)
+   defining Unicode char U+0160 (decimal 352)
+   defining Unicode char U+0161 (decimal 353)
+   defining Unicode char U+0162 (decimal 354)
+   defining Unicode char U+0163 (decimal 355)
+   defining Unicode char U+0164 (decimal 356)
+   defining Unicode char U+0165 (decimal 357)
+   defining Unicode char U+016E (decimal 366)
+   defining Unicode char U+016F (decimal 367)
+   defining Unicode char U+0170 (decimal 368)
+   defining Unicode char U+0171 (decimal 369)
+   defining Unicode char U+0178 (decimal 376)
+   defining Unicode char U+0179 (decimal 377)
+   defining Unicode char U+017A (decimal 378)
+   defining Unicode char U+017B (decimal 379)
+   defining Unicode char U+017C (decimal 380)
+   defining Unicode char U+017D (decimal 381)
+   defining Unicode char U+017E (decimal 382)
+   defining Unicode char U+200C (decimal 8204)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+2018 (decimal 8216)
+   defining Unicode char U+2019 (decimal 8217)
+   defining Unicode char U+201A (decimal 8218)
+   defining Unicode char U+201C (decimal 8220)
+   defining Unicode char U+201D (decimal 8221)
+   defining Unicode char U+201E (decimal 8222)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2031 (decimal 8241)
+   defining Unicode char U+2039 (decimal 8249)
+   defining Unicode char U+203A (decimal 8250)
+   defining Unicode char U+2423 (decimal 9251)
+)
+Now handling font encoding OT1 ...
+... processing UTF-8 mapping file for font encoding OT1
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu
+File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+   defining Unicode char U+00A1 (decimal 161)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00B8 (decimal 184)
+   defining Unicode char U+00BF (decimal 191)
+   defining Unicode char U+00C5 (decimal 197)
+   defining Unicode char U+00C6 (decimal 198)
+   defining Unicode char U+00D8 (decimal 216)
+   defining Unicode char U+00DF (decimal 223)
+   defining Unicode char U+00E6 (decimal 230)
+   defining Unicode char U+00EC (decimal 236)
+   defining Unicode char U+00ED (decimal 237)
+   defining Unicode char U+00EE (decimal 238)
+   defining Unicode char U+00EF (decimal 239)
+   defining Unicode char U+00F8 (decimal 248)
+   defining Unicode char U+0131 (decimal 305)
+   defining Unicode char U+0141 (decimal 321)
+   defining Unicode char U+0142 (decimal 322)
+   defining Unicode char U+0152 (decimal 338)
+   defining Unicode char U+0153 (decimal 339)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+2018 (decimal 8216)
+   defining Unicode char U+2019 (decimal 8217)
+   defining Unicode char U+201C (decimal 8220)
+   defining Unicode char U+201D (decimal 8221)
+)
+Now handling font encoding OMS ...
+... processing UTF-8 mapping file for font encoding OMS
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu
+File: omsenc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+   defining Unicode char U+00A7 (decimal 167)
+   defining Unicode char U+00B6 (decimal 182)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+2020 (decimal 8224)
+   defining Unicode char U+2021 (decimal 8225)
+   defining Unicode char U+2022 (decimal 8226)
+)
+Now handling font encoding OMX ...
+... no UTF-8 mapping file for font encoding OMX
+Now handling font encoding U ...
+... no UTF-8 mapping file for font encoding U
+   defining Unicode char U+00A9 (decimal 169)
+   defining Unicode char U+00AA (decimal 170)
+   defining Unicode char U+00AE (decimal 174)
+   defining Unicode char U+00BA (decimal 186)
+   defining Unicode char U+02C6 (decimal 710)
+   defining Unicode char U+02DC (decimal 732)
+   defining Unicode char U+200C (decimal 8204)
+   defining Unicode char U+2026 (decimal 8230)
+   defining Unicode char U+2122 (decimal 8482)
+   defining Unicode char U+2423 (decimal 9251)
+))
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2013/12/03 3.9h The Babel package
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel-english/english.ldf
+Language: english 2012/08/20 v3.3p English support from the babel system
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
+File: babel.def 2013/12/03 3.9h Babel common definitions
+\babel@savecnt=\count109
+\U@D=\dimen123
+)
+\l@canadian = a dialect from \language\l@american 
+\l@australian = a dialect from \language\l@british 
+\l@newzealand = a dialect from \language\l@british 
+))
+\c@theorem=\count110
+
+(/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
+Package: algorithm2e 2013/01/06 v5.00 algorithms environments
+\c@AlgoLine=\count111
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2009/10/20 v1.13 Space after command names (DPC,MH)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2013/03/29 ver 4.1
+)
+********************************************************
+Package `algorithm2e' Release 5.0 -- january 06 2013 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (cfiorio@um2.fr)
+********************************************************
+\skiptotal=\skip65
+\skiplinenumber=\skip66
+\skiprule=\skip67
+\skiphlne=\skip68
+\skiptext=\skip69
+\skiplength=\skip70
+\algomargin=\skip71
+\skipalgocfslide=\skip72
+\algowidth=\dimen124
+\inoutsize=\dimen125
+\inoutindent=\dimen126
+\interspacetitleruled=\dimen127
+\interspacealgoruled=\dimen128
+\interspacetitleboxruled=\dimen129
+\algocf@inoutbox=\box34
+\algocf@inputbox=\box35
+\AlCapSkip=\skip73
+\AlCapHSkip=\skip74
+\algoskipindent=\skip75
+\algocf@nlbox=\box36
+\algocf@hangingbox=\box37
+\algocf@untilbox=\box38
+\algocf@skipuntil=\skip76
+\algocf@capbox=\box39
+\algoheightruledefault=\skip77
+\algoheightrule=\skip78
+\algotitleheightruledefault=\skip79
+\algotitleheightrule=\skip80
+\c@algocfline=\count112
+\c@algocfproc=\count113
+\c@algocf=\count114
+\algocf@algoframe=\box40
+\algocf@algobox=\box41
+) (/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithmic.sty
+Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
+\c@ALC@unique=\count115
+\c@ALC@line=\count116
+\c@ALC@rem=\count117
+\c@ALC@depth=\count118
+\ALC@tlm=\skip81
+\algorithmicindent=\skip82
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen130
+\extrarowheight=\dimen131
+\NC@list=\toks28
+\extratabsurround=\skip83
+\backup@length=\skip84
+)
+Enter file names to process, (chap1,chap2 ...), or `all' to process all files:
+
+\files=all
+Including all files.
+(./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux
+
+LaTeX Warning: Label `fig: graysol Ubend' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig: graysol Ubend' multiply defined.
+
+
+LaTeX Warning: Label `fig: errsol Ubend' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig: errsol Ubend' multiply defined.
+
+
+LaTeX Warning: Label `fig: reservoir 3D untrained' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig: reservoir 3D untrained' multiply defined.
+
+
+LaTeX Warning: Label `fig: reservoir 3D untrained' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig: reservoir 3D untrained' multiply defined.
+
+) (./chap3.aux) (./chap4.aux) (./appa.aux
+
+LaTeX Warning: Label `error diff' multiply defined.
+
+) (./biblio.aux))
+\openout1 = `main.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 80.
+LaTeX Font Info:    ... okay on input line 80.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 80.
+LaTeX Font Info:    ... okay on input line 80.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 80.
+LaTeX Font Info:    ... okay on input line 80.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 80.
+LaTeX Font Info:    ... okay on input line 80.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 80.
+LaTeX Font Info:    ... okay on input line 80.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 80.
+LaTeX Font Info:    ... okay on input line 80.
+ (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count119
+\scratchdimen=\dimen132
+\scratchbox=\box42
+\nofMPsegments=\count120
+\nofMParguments=\count121
+\everyMPshowfont=\toks29
+\MPscratchCnt=\count122
+\MPscratchDim=\dimen133
+\MPnumerator=\count123
+\makeMPintoPDFobject=\count124
+\everyMPtoPDFconversion=\toks30
+) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+ABD: EverySelectfont initializing macros
+LaTeX Info: Redefining \selectfont on input line 80.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+\openout2 = `cover.aux'.
+
+ (./cover.tex
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 95.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <14.4> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 95.
+<<oms.cmap>> [1
+
+
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
+
+] (./abstract.tex
+Overfull \hbox (10.1562pt too wide) in paragraph at lines 15--16
+\T1/cmr/m/n/12 Many de-sign ap-pli-ca-tions can be for-mu-lated as op-ti-miza-t
+ion con-strained by con-ser-va-tion
+ []
+
+
+Overfull \hbox (9.76892pt too wide) in paragraph at lines 17--18
+[]\T1/cmr/m/n/12 We con-sider the case where the flux func-tion is un-known in 
+the gray-box con-ser-va-tion
+ []
+
+
+Overfull \hbox (7.4219pt too wide) in paragraph at lines 17--18
+\T1/cmr/m/n/12 the twin-model GPO, is pre-sented that ad-mits the es-ti-mated g
+ra-di-ent. The ef-fec-tive-ness
+ []
+
+) [3
+
+] [4
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 132--145
+
+ []
+
+) [5]
+\openout2 = `contents.aux'.
+
+ (./contents.tex [6
+
+
+
+] (./main.toc<<ot1.cmap>><<oml.cmap>><<omx.cmap>>
+LaTeX Font Info:    Try loading font information for U+msa on input line 3.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 3.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [7])
+\tf@toc=\write3
+\openout3 = `main.toc'.
+
+ [8] (./main.lof
+Overfull \hbox (2.19876pt too wide) in paragraph at lines 11--11
+ [][] []\T1/cmr/m/n/12 The first row shows the three dif-fer-ent ini-tial con-d
+i-tions used to gen-er-ate 
+ []
+
+
+Overfull \hbox (18.70573pt too wide) in paragraph at lines 12--12
+ [][] []\T1/cmr/m/n/12 An il-lus-tra-tion of the tu-ple rep-re-sen-ta-tion and 
+the cor-re-spond-ing uni-vari-ate 
+ []
+
+[9
+
+]
+Overfull \hbox (12.44481pt too wide) in paragraph at lines 19--19
+ [][] []\T1/cmr/m/n/12 The gray-box state equa-tion (right col-umn) and the tra
+ined state equa-tion 
+ []
+
+
+Overfull \hbox (17.8184pt too wide) in paragraph at lines 21--21
+ [][] []\T1/cmr/m/n/12 Water flood-ing in petroleum reser-voir en-gi-neer-ing (
+cour-tesy from PetroWiki). []  
+ []
+
+
+Overfull \hbox (2.56734pt too wide) in paragraph at lines 28--28
+ [][] []\T1/cmr/m/n/12 A com-par-i-son of the op-ti-mized $\OML/cmm/m/it/12 u\O
+T1/cmr/m/n/12 (\OML/cmm/m/it/12 t \OT1/cmr/m/n/12 = 1\OML/cmm/m/it/12 ; x\OT1/c
+mr/m/n/12 )$ \T1/cmr/m/n/12 af-ter $\OT1/cmr/m/n/12 20$ \T1/cmr/m/n/12 gray-box
+ sim-u-la-tions. 
+ []
+
+[10]
+Overfull \hbox (9.46022pt too wide) in paragraph at lines 31--31
+ \T1/cmr/m/n/12 Bayesian op-ti-miza-tion. The red lines are ob-tained by the va
+nilla Bayesian 
+ []
+
+)
+\tf@lof=\write4
+\openout4 = `main.lof'.
+
+ [11] [12
+
+] (./main.lot)
+\tf@lot=\write5
+\openout5 = `main.lot'.
+
+) [13] [14
+
+]
+\openout2 = `chap1.aux'.
+
+ (./chap1.tex
+Chapter 1.
+
+Overfull \hbox (4.04332pt too wide) in paragraph at lines 12--16
+\T1/cmr/m/n/12 and en-ergy. Math-e-mat-i-cally, a con-ser-va-tion law can be ex
+-pressed lo-cally as a con-ti-nu-ity
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 19--23
+
+ []
+
+
+Overfull \hbox (10.34337pt too wide) in paragraph at lines 24--37
+\T1/cmr/m/n/12 ap-pli-ca-tions. For ex-am-ple, in gas tur-bines, the ro-tor bla
+des can op-er-ate at a tem-per-a-ture
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--37
+
+ []
+
+
+Underfull \vbox (badness 1259) has occurred while \output is active []
+
+ [15
+
+
+]
+Overfull \hbox (22.04213pt too wide) in paragraph at lines 38--50
+[]\T1/cmr/m/n/12 Such op-ti-miza-tion is be-ing rev-o-lu-tion-ized by the nu-me
+r-i-cal sim-u-la-tion and op-ti-miza-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 38--50
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 51--66
+
+ []
+
+
+Underfull \vbox (badness 5652) has occurred while \output is active []
+
+ [16]
+Overfull \hbox (19.13602pt too wide) in paragraph at lines 67--88
+[]\T1/cmr/m/n/12 Despite their pro-pri-etary and legacy na-ture, most sim-u-la-
+tors for un-steady con-ser-va-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 67--88
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [17]
+Underfull \hbox (badness 10000) in paragraph at lines 122--128
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 134--144
+
+ []
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 145--153
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--168
+
+ []
+
+
+Underfull \vbox (badness 5652) has occurred while \output is active []
+
+ [19]
+Overfull \hbox (1.42981pt too wide) in paragraph at lines 180--188
+\T1/cmr/m/n/12 where $[]$ is the dis-cretized space-time so-lu-tion of a gray-b
+ox con-ser-va-tion law sim-u-la-tor.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 192--203
+
+ []
+
+
+Overfull \hbox (14.46765pt too wide) in paragraph at lines 204--213
+[]\T1/cmr/m/n/12 My the-sis fo-cuses on re-duc-ing the num-ber of gray-box sim-
+u-la-tions in the op-ti-miza-tion,
+ []
+
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 222--226
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 227--239
+
+ []
+
+[21]
+Underfull \hbox (badness 10000) in paragraph at lines 240--258
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--263
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 266--286
+
+ []
+
+[22]
+Overfull \hbox (1.28482pt too wide) in paragraph at lines 287--305
+\T1/cmr/m/n/12 based cuckoo search method [[]], can be viewed as gra-di-ent var
+i-a-tions of cor-re-spond-ing
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 287--305
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [23]
+Underfull \hbox (badness 10000) in paragraph at lines 306--315
+
+ []
+
+
+Overfull \hbox (3.10768pt too wide) in paragraph at lines 316--323
+\T1/cmr/m/n/12 it-er-a-tions than DFO meth-ods for prob-lems with many con-trol
+ vari-ables. GBO meth-ods
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [24]
+Underfull \hbox (badness 10000) in paragraph at lines 338--341
+
+ []
+
+
+Overfull \hbox (11.81711pt too wide) in paragraph at lines 342--345
+[]\T1/cmr/m/n/12 In con-trast, the ad-joint method eval-u-ates the gra-di-ent u
+s-ing only one PDE sim-u-la-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 362--366
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 367--379
+
+ []
+
+[25]
+Underfull \hbox (badness 10000) in paragraph at lines 380--385
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 408--418
+
+ []
+
+[26]
+Overfull \hbox (17.86145pt too wide) in paragraph at lines 419--434
+\T1/cmr/m/n/12 meth-ods that can de-ter-mine the in-signif-i-cant bases which r
+e-sult in a sparse rep-re-sen-ta-tion,
+ []
+
+
+Overfull \hbox (5.93594pt too wide) in paragraph at lines 419--434
+\T1/cmr/m/n/12 such as the Lasso reg-u-lar-iza-tion [[]] and the match-ing pur-
+suit [[]]. Lasso reg-u-lar-iza-tion
+ []
+
+
+Overfull \hbox (6.26245pt too wide) in paragraph at lines 419--434
+\T1/cmr/m/n/12 pa-ram-e-ter. It bal-ances the ap-prox-i-ma-tion er-ror and the 
+num-ber of non-zero co-ef-fi-cients.
+ []
+
+
+Overfull \hbox (11.59618pt too wide) in paragraph at lines 419--434
+\T1/cmr/m/n/12 se-lects a sig-nif-i-cant ba-sis one-at-a-time (for-ward se-lec-
+tion [[]]), or prunes an in-signif-i-cant
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 419--434
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 435--450
+
+ []
+
+
+Underfull \vbox (badness 5652) has occurred while \output is active []
+
+ [27]
+Underfull \hbox (badness 10000) in paragraph at lines 454--477
+
+ []
+
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 508--513
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 514--530
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [29]
+Underfull \hbox (badness 10000) in paragraph at lines 534--541
+
+ []
+
+
+Overfull \hbox (9.9646pt too wide) in paragraph at lines 542--546
+\T1/cmr/m/n/12 op-ti-miza-tion be-gins by as-sum-ing that the ob-jec-tive func-
+tion is sam-pled from a stochas-tic
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 550--557
+
+ []
+
+[30]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [31]
+Underfull \hbox (badness 10000) in paragraph at lines 609--619
+
+ []
+
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 629.
+
+Underfull \vbox (badness 2005) has occurred while \output is active []
+
+ [32]
+Underfull \hbox (badness 10000) in paragraph at lines 645--653
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 654--664
+
+ []
+
+[33] [34]
+Overfull \hbox (12.45134pt too wide) in paragraph at lines 721--724
+\T1/cmr/m/n/12 con-strained by gray-box con-ser-va-tion law sim-u-la-tions with
+ un-known flux func-tions,
+ []
+
+[35]) [36]
+\openout2 = `chap2.aux'.
+
+ (./chap2.tex
+Chapter 2.
+
+Underfull \vbox (badness 7722) has occurred while \output is active []
+
+ [37
+
+
+
+]
+Overfull \hbox (3.86882pt too wide) in paragraph at lines 44--51
+\T1/cmr/m/n/12 where $\OML/cmm/m/it/12 w[]$\T1/cmr/m/n/12 's are the quadra-tur
+e weights for the space-time in-te-gra-tion. $\OMS/cmsy/m/n/12 M$ \T1/cmr/m/n/1
+2 ap-prox-i-mates
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 54--59
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 60--76
+
+ []
+
+
+Underfull \vbox (badness 6348) has occurred while \output is active []
+
+ [38]
+<../locality.png, id=147, 448.7967pt x 277.5168pt>
+File: ../locality.png Graphic file (type png)
+ <use ../locality.png>
+Package pdftex.def Info: ../locality.png used on input line 78.
+(pdftex.def)             Requested size: 156.44432pt x 96.73918pt.
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 85.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
+File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+Overfull \hbox (7.47961pt too wide) in paragraph at lines 101--107
+\T1/cmr/m/it/12 with the same ini-tial con-di-tion $\OML/cmm/m/it/12 u\OT1/cmr/
+m/n/12 (0\OML/cmm/m/it/12 ; x\OT1/cmr/m/n/12 ) = \OML/cmm/m/it/12 u[]\OT1/cmr/m
+/n/12 (\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )$\T1/cmr/m/it/12 , and $\OML/cmm/m/it
+/12 x \OMS/cmsy/m/n/12 2 \U/msb/m/n/12 R$\T1/cmr/m/it/12 . $\OML/cmm/m/it/12 u[
+]$ \T1/cmr/m/it/12 is bounded, dif-fer-en-tiable,
+ []
+
+LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 118.
+[39 <../locality.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 124--134
+
+ []
+
+<../excitedDomain.png, id=153, 586.8324pt x 442.2924pt>
+File: ../excitedDomain.png Graphic file (type png)
+
+<use ../excitedDomain.png>
+Package pdftex.def Info: ../excitedDomain.png used on input line 137.
+(pdftex.def)             Requested size: 284.52756pt x 214.45082pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--158
+
+ []
+
+[40 <../excitedDomain.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 163--177
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [41]
+<../meyer_2.png, id=160, 203.159pt x 163.812pt>
+File: ../meyer_2.png Graphic file (type png)
+ <use ../meyer_2.png>
+Package pdftex.def Info: ../meyer_2.png used on input line 199.
+(pdftex.def)             Requested size: 142.26302pt x 113.81525pt.
+
+
+Package amsmath Warning: Cannot use `split' here;
+(amsmath)                trying to recover with `aligned' on input line 218.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [42 <../meyer_2.png>] <../basis_combined.png, id=166, 357.335pt x 282.656pt>
+File: ../basis_combined.png Graphic file (type png)
+
+<use ../basis_combined.png>
+Package pdftex.def Info: ../basis_combined.png used on input line 228.
+(pdftex.def)             Requested size: 142.2608pt x 113.81085pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--262
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [43 <../basis_combined.png (PNG copy)>]
+Overfull \hbox (2.62799pt too wide) in paragraph at lines 269--276
+\T1/cmr/m/n/12 with the ini-tial con-di-tion $\OML/cmm/m/it/12 u\OT1/cmr/m/n/12
+ (0\OML/cmm/m/it/12 ; x\OT1/cmr/m/n/12 ) = \OML/cmm/m/it/12 u[]\OT1/cmr/m/n/12 
+(\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )$ \T1/cmr/m/n/12 and the pe-ri-odic bound-a
+ry con-di-tion $\OML/cmm/m/it/12 u\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 t; \OT1/cmr
+/m/n/12 0) =
+ []
+
+<../fixed_basis_eg.png, id=172, 355.5684pt x 294.8616pt>
+File: ../fixed_basis_eg.png Graphic file (type png)
+
+<use ../fixed_basis_eg.png>
+Package pdftex.def Info: ../fixed_basis_eg.png used on input line 289.
+(pdftex.def)             Requested size: 142.26378pt x 117.97403pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 295--300
+
+ []
+
+<../leftcol.png, id=173, 510.9489pt x 443.0151pt>
+File: ../leftcol.png Graphic file (type png)
+ <use ../leftcol.png>
+Package pdftex.def Info: ../leftcol.png used on input line 304.
+(pdftex.def)             Requested size: 142.26378pt x 123.3471pt.
+
+<../rightcol.png, id=174, 508.0581pt x 440.1243pt>
+File: ../rightcol.png Graphic file (type png)
+ <use ../rightcol.png>
+Package pdftex.def Info: ../rightcol.png used on input line 310.
+(pdftex.def)             Requested size: 142.26378pt x 123.24068pt.
+
+[44 <../fixed_basis_eg.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 322--327
+
+ []
+
+<../J_twin_vs_primal.png, id=178, 554.3109pt x 377.9721pt>
+File: ../J_twin_vs_primal.png Graphic file (type png)
+
+<use ../J_twin_vs_primal.png>
+Package pdftex.def Info: ../J_twin_vs_primal.png used on input line 329.
+(pdftex.def)             Requested size: 184.9429pt x 126.10957pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 335--349
+
+ []
+
+[45 <../leftcol.png (PNG copy)> <../rightcol.png (PNG copy)> <../J_twin_vs_prim
+al.png>] <../combine_3_inits.png, id=185, 1647.0333pt x 848.4498pt>
+File: ../combine_3_inits.png Graphic file (type png)
+
+<use ../combine_3_inits.png>
+Package pdftex.def Info: ../combine_3_inits.png used on input line 352.
+(pdftex.def)             Requested size: 369.88582pt x 190.54341pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 366--376
+
+ []
+
+[46 <../combine_3_inits.png (PNG copy)>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [47]
+Underfull \hbox (badness 10000) in paragraph at lines 433--437
+
+ []
+
+<../basis_0.png, id=193, 731.3724pt x 297.7524pt>
+File: ../basis_0.png Graphic file (type png)
+ <use ../basis_0.png>
+Package pdftex.def Info: ../basis_0.png used on input line 453.
+(pdftex.def)             Requested size: 213.39566pt x 86.87755pt.
+
+Overfull \hbox (5.25992pt too wide) in paragraph at lines 453--454
+ [][] 
+ []
+
+<../basis_1.png, id=194, 731.3724pt x 297.7524pt>
+File: ../basis_1.png Graphic file (type png)
+ <use ../basis_1.png>
+Package pdftex.def Info: ../basis_1.png used on input line 459.
+(pdftex.def)             Requested size: 213.39566pt x 86.87755pt.
+
+Overfull \hbox (5.25992pt too wide) in paragraph at lines 459--460
+ [][] 
+ []
+
+<../basis_3.png, id=195, 731.3724pt x 297.7524pt>
+File: ../basis_3.png Graphic file (type png)
+ <use ../basis_3.png>
+Package pdftex.def Info: ../basis_3.png used on input line 465.
+(pdftex.def)             Requested size: 213.39566pt x 86.87755pt.
+
+Overfull \hbox (5.25992pt too wide) in paragraph at lines 465--466
+ [][] 
+ []
+
+<../basis_6.png, id=196, 731.3724pt x 297.7524pt>
+File: ../basis_6.png Graphic file (type png)
+ <use ../basis_6.png>
+Package pdftex.def Info: ../basis_6.png used on input line 471.
+(pdftex.def)             Requested size: 213.39566pt x 86.87755pt.
+
+Overfull \hbox (5.25992pt too wide) in paragraph at lines 471--472
+ [][] 
+ []
+
+
+Underfull \hbox (badness 2762) in paragraph at lines 475--475
+[]\T1/cmss/m/sl/12 Figure 2-9: |\T1/cmr/m/sl/12 An il-lus-tra-tion of the tu-pl
+e rep-re-sen-ta-tion and the
+ []
+
+[48 <../basis_0.png> <../basis_1.png> <../basis_3.png> <../basis_6.png>]
+Overfull \hbox (2.35335pt too wide) in paragraph at lines 520--520
+[] 
+ []
+
+<../basis_neighbor.png, id=207, 731.3724pt x 297.7524pt>
+File: ../basis_neighbor.png Graphic file (type png)
+
+<use ../basis_neighbor.png>
+Package pdftex.def Info: ../basis_neighbor.png used on input line 529.
+(pdftex.def)             Requested size: 284.52756pt x 115.83673pt.
+
+<../basis_neighbor_2.png, id=208, 731.3724pt x 297.7524pt>
+File: ../basis_neighbor_2.png Graphic file (type png)
+
+<use ../basis_neighbor_2.png>
+Package pdftex.def Info: ../basis_neighbor_2.png used on input line 535.
+(pdftex.def)             Requested size: 284.52756pt x 115.83673pt.
+
+Underfull \hbox (badness 1997) in paragraph at lines 545--545
+[]\T1/cmss/m/sl/12 Figure 2-10: |\T1/cmr/m/sl/12 Neigh-bor-hood for uni-vari-at
+e bases. $\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ \T1/cmr/m/sl/12
+ shows the
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 554--555
+
+ []
+
+<../shuffle_1.png, id=209, 374.39874pt x 597.23125pt>
+File: ../shuffle_1.png Graphic file (type png)
+ <use ../shuffle_1.png>
+Package pdftex.def Info: ../shuffle_1.png used on input line 568.
+(pdftex.def)             Requested size: 91.04872pt x 145.23393pt.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 585.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+Underfull \vbox (badness 4205) has occurred while \output is active []
+
+ [49]
+[50 <../basis_neighbor.png> <../basis_neighbor_2.png> <../shuffle_1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 600--606
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 609--611
+
+ []
+
+
+Overfull \hbox (17.62482pt too wide) detected at line 671
+[][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [51]
+Underfull \hbox (badness 10000) in paragraph at lines 674--696
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [52]
+Underfull \hbox (badness 10000) in paragraph at lines 697--704
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 707--718
+
+ []
+
+[53]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [54]
+Underfull \hbox (badness 10000) in paragraph at lines 761--769
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 770--773
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 806--813
+
+ []
+
+[55]
+Overfull \hbox (17.62482pt too wide) detected at line 834
+[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 836--843
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 853--862
+
+ []
+
+[56]
+Overfull \hbox (11.59625pt too wide) in paragraph at lines 863--868
+[]\T1/cmr/m/n/12 Figure 2-12[] shows the se-lected bases for the three so-lu-ti
+ons in Fig-ure 2-8[], re-spec-tively,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 863--868
+
+ []
+
+<../basis_pnt_1.png, id=241, 414.8298pt x 294.1389pt>
+File: ../basis_pnt_1.png Graphic file (type png)
+ <use ../basis_pnt_1.png>
+Package pdftex.def Info: ../basis_pnt_1.png used on input line 872.
+(pdftex.def)             Requested size: 128.0374pt x 90.78265pt.
+
+<../basis_pnt_2.png, id=242, 414.8298pt x 294.1389pt>
+File: ../basis_pnt_2.png Graphic file (type png)
+ <use ../basis_pnt_2.png>
+Package pdftex.def Info: ../basis_pnt_2.png used on input line 878.
+(pdftex.def)             Requested size: 128.0374pt x 90.78265pt.
+
+<../basis_pnt_3.png, id=243, 414.8298pt x 294.1389pt>
+File: ../basis_pnt_3.png Graphic file (type png)
+ <use ../basis_pnt_3.png>
+Package pdftex.def Info: ../basis_pnt_3.png used on input line 884.
+(pdftex.def)             Requested size: 128.0374pt x 90.78265pt.
+
+</home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err_mod.png, id=244, 
+578.16pt x 542.025pt>
+File: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err_mod.png Grap
+hic file (type png)
+
+<use /home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err_mod.png>
+Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_a
+dj_err_mod.png used on input line 899.
+(pdftex.def)             Requested size: 136.57338pt x 116.64888pt.
+
+</home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png, id=245, 578.
+16pt x 542.025pt>
+File: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png Graphic 
+file (type png)
+
+<use /home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png>
+Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_a
+dj_err.png used on input line 905.
+(pdftex.def)             Requested size: 136.57338pt x 116.64888pt.
+
+</home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err_mod.png, id=246, 
+578.16pt x 542.025pt>
+File: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err_mod.png Grap
+hic file (type png)
+
+<use /home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err_mod.png>
+Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_a
+dj_err_mod.png used on input line 911.
+(pdftex.def)             Requested size: 136.57338pt x 116.64888pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 919--924
+
+ []
+
+[57 <../basis_pnt_1.png (PNG copy)> <../basis_pnt_2.png> <../basis_pnt_3.png>]
+</home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/mesh/spline
+.png, id=253, 383.031pt x 265.2309pt>
+File: /home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/mesh/s
+pline.png Graphic file (type png)
+
+<use /home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/mesh/sp
+line.png>
+Package pdftex.def Info: /home/voila/Documents/2014GRAD/numpad/test/ns_cases_sp
+line/results/mesh/spline.png used on input line 950.
+(pdftex.def)             Requested size: 298.75394pt x 206.88734pt.
+ [58 </home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err_mod.png (PNG
+ copy)> </home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png> </ho
+me/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err_mod.png>]
+Underfull \vbox (badness 2809) has occurred while \output is active []
+
+ [59 </home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/mesh/s
+pline.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1008--1012
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1020--1022
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1033--1043
+
+ []
+
+<../graysol_Ubend.png, id=263, 349.0641pt x 428.5611pt>
+File: ../graysol_Ubend.png Graphic file (type png)
+
+<use ../graysol_Ubend.png>
+Package pdftex.def Info: ../graysol_Ubend.png used on input line 1047.
+(pdftex.def)             Requested size: 185.40256pt x 227.62204pt.
+ <../err_Ubend.png, id=264, 402.5439pt x 461.8053pt>
+File: ../err_Ubend.png Graphic file (type png)
+
+<use ../err_Ubend.png>
+Package pdftex.def Info: ../err_Ubend.png used on input line 1052.
+(pdftex.def)             Requested size: 198.41527pt x 227.62204pt.
+ <../state_eqn_vdw.png, id=265, 565.8741pt x 289.08pt>
+File: ../state_eqn_vdw.png Graphic file (type png)
+
+<use ../state_eqn_vdw.png>
+Package pdftex.def Info: ../state_eqn_vdw.png used on input line 1065.
+(pdftex.def)             Requested size: 278.48093pt x 142.26378pt.
+
+<../state_eqn_rk.png, id=266, 565.8741pt x 289.08pt>
+File: ../state_eqn_rk.png Graphic file (type png)
+ <use ../state_eqn_rk.png>
+Package pdftex.def Info: ../state_eqn_rk.png used on input line 1070.
+(pdftex.def)             Requested size: 278.48093pt x 142.26378pt.
+
+Underfull \vbox (badness 5147) has occurred while \output is active []
+
+ [60]
+</home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux_geo
+_grad/geo_grad_0_spline.png, id=270, 367.1316pt x 447.3513pt>
+File: /home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflu
+x_geo_grad/geo_grad_0_spline.png Graphic file (type png)
+
+<use /home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux
+_geo_grad/geo_grad_0_spline.png>
+Package pdftex.def Info: /home/voila/Documents/2014GRAD/numpad/test/ns_cases_sp
+line/results/outflux_geo_grad/geo_grad_0_spline.png used on input line 1089.
+(pdftex.def)             Requested size: 175.12877pt x 213.39566pt.
+
+</home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux_geo
+_grad/perturb_0.png, id=271, 371.4678pt x 442.2924pt>
+File: /home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflu
+x_geo_grad/perturb_0.png Graphic file (type png)
+
+<use /home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux
+_geo_grad/perturb_0.png>
+Package pdftex.def Info: /home/voila/Documents/2014GRAD/numpad/test/ns_cases_sp
+line/results/outflux_geo_grad/perturb_0.png used on input line 1101.
+(pdftex.def)             Requested size: 179.22643pt x 213.39566pt.
+
+Overfull \hbox (15.75891pt too wide) in paragraph at lines 1114--1149
+ [] 
+ []
+
+
+Overfull \hbox (7.15433pt too wide) in paragraph at lines 1156--1161
+\T1/cmr/m/n/12 Water flood-ing is a tech-nique to en-hance the sec-ondary re-co
+v-ery in petroleum reser-voirs,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1156--1161
+
+ []
+
+
+</home/voila/Documents/mrst-2015b/results/waterflooding.png, id=272, 401.5pt x 
+275.0275pt>
+File: /home/voila/Documents/mrst-2015b/results/waterflooding.png Graphic file (
+type png)
+ <use /home/voila/Documents/mrst-2015b/results/waterflooding.png>
+Package pdftex.def Info: /home/voila/Documents/mrst-2015b/results/waterflooding
+.png used on input line 1164.
+(pdftex.def)             Requested size: 170.71652pt x 116.94179pt.
+
+[61 <../graysol_Ubend.png (PNG copy)> <../err_Ubend.png (PNG copy)>] [62 <../st
+ate_eqn_vdw.png> <../state_eqn_rk.png>] [63 </home/voila/Documents/2014GRAD/num
+pad/test/ns_cases_spline/results/outflux_geo_grad/geo_grad_0_spline.png> </home
+/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux_geo_grad/
+perturb_0.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1187--1199
+
+ []
+
+
+Overfull \hbox (8.4206pt too wide) in paragraph at lines 1200--1206
+[]\T1/cmr/m/it/12 PSim\T1/cmr/m/n/12 , the sim-u-la-tor afore-men-tioned in Sec
+-tion 1.1[], is used as the gray-box sim-u-la-tor,
+ []
+
+
+Overfull \hbox (8.34099pt too wide) in paragraph at lines 1200--1206
+\T1/cmr/m/n/12 which uses the IM-PES time march-ing, i.e. im-plicit in pres-sur
+e and ex-plicit in sat-u-ra-tion,
+ []
+
+[64 </home/voila/Documents/mrst-2015b/results/waterflooding.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1211--1213
+
+ []
+
+
+Overfull \hbox (1.4329pt too wide) in paragraph at lines 1220--1228
+\T1/cmr/m/n/12 re-spec-tively. Af-ter the train-ing, the twin-model so-lu-tion 
+matches the gray-box so-lu-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1220--1228
+
+ []
+
+
+</home/voila/Documents/mrst-2015b/results/grid.png, id=291, 474.573pt x 307.549
+pt>
+File: /home/voila/Documents/mrst-2015b/results/grid.png Graphic file (type png)
+
+ <use /home/voila/Documents/mrst-2015b/results/grid.png>
+Package pdftex.def Info: /home/voila/Documents/mrst-2015b/results/grid.png used
+ on input line 1231.
+(pdftex.def)             Requested size: 219.52278pt x 142.26378pt.
+
+</home/voila/Documents/mrst-2015b/results/iso_sW_notrain_2D.png, id=292, 410.33
+3pt x 289.883pt>
+File: /home/voila/Documents/mrst-2015b/results/iso_sW_notrain_2D.png Graphic fi
+le (type png)
+
+<use /home/voila/Documents/mrst-2015b/results/iso_sW_notrain_2D.png>
+Package pdftex.def Info: /home/voila/Documents/mrst-2015b/results/iso_sW_notrai
+n_2D.png used on input line 1240.
+(pdftex.def)             Requested size: 201.37798pt x 142.26378pt.
+
+</home/voila/Documents/mrst-2015b/results/iso_sW_gray_2D.png, id=293, 419.166pt
+ x 290.686pt>
+File: /home/voila/Documents/mrst-2015b/results/iso_sW_gray_2D.png Graphic file 
+(type png)
+
+<use /home/voila/Documents/mrst-2015b/results/iso_sW_gray_2D.png>
+Package pdftex.def Info: /home/voila/Documents/mrst-2015b/results/iso_sW_gray_2
+D.png used on input line 1246.
+(pdftex.def)             Requested size: 205.15009pt x 142.26378pt.
+
+</home/voila/Documents/mrst-2015b/results/iso_sW_twin_2D.png, id=294, 412.742pt
+ x 293.095pt>
+File: /home/voila/Documents/mrst-2015b/results/iso_sW_twin_2D.png Graphic file 
+(type png)
+
+<use /home/voila/Documents/mrst-2015b/results/iso_sW_twin_2D.png>
+Package pdftex.def Info: /home/voila/Documents/mrst-2015b/results/iso_sW_twin_2
+D.png used on input line 1252.
+(pdftex.def)             Requested size: 200.33708pt x 142.26378pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1264--1275
+
+ []
+
+
+Underfull \vbox (badness 1107) has occurred while \output is active []
+
+ [65 </home/voila/Documents/mrst-2015b/results/grid.png>] [66 </home/voila/Docu
+ments/mrst-2015b/results/iso_sW_notrain_2D.png> </home/voila/Documents/mrst-201
+5b/results/iso_sW_gray_2D.png> </home/voila/Documents/mrst-2015b/results/iso_sW
+_twin_2D.png>]
+</home/voila/Documents/mrst-2015b/results/grad_2D.png, id=305, 499.466pt x 307.
+549pt>
+File: /home/voila/Documents/mrst-2015b/results/grad_2D.png Graphic file (type p
+ng)
+ <use /home/voila/Documents/mrst-2015b/results/grad_2D.png>
+Package pdftex.def Info: /home/voila/Documents/mrst-2015b/results/grad_2D.png u
+sed on input line 1278.
+(pdftex.def)             Requested size: 227.62204pt x 140.16026pt.
+
+Overfull \hbox (24.21349pt too wide) in paragraph at lines 1303--1317
+\T1/cmr/m/n/12 one di-men-sional space. To en-able the train-ing com-pu-ta-tion
+-ally, a sig-moid pa-ram-e-ter-i-za-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1303--1317
+
+ []
+
+
+Underfull \vbox (badness 6927) has occurred while \output is active []
+
+ [67 </home/voila/Documents/mrst-2015b/results/grad_2D.png (PNG copy)>]
+Overfull \hbox (1.87631pt too wide) in paragraph at lines 1318--1330
+[]\T1/cmr/m/n/12 The pro-posed twin model al-go-rithm has a wide ap-pli-ca-bil-
+ity, which is demon-strated
+ []
+
+
+Overfull \hbox (3.71718pt too wide) in paragraph at lines 1318--1330
+\T1/cmr/m/n/12 on a va-ri-ety of nu-mer-i-cal ex-am-ples. The first ex-am-ple i
+s the Buckley-Leverett equa-tion,
+ []
+
+
+Overfull \hbox (2.08981pt too wide) in paragraph at lines 1318--1330
+\T1/cmr/m/n/12 sur-face ge-om-e-try. The third ex-am-ple is the petroleum reser
+-voir with poly-mer in-jec-tion,
+ []
+
+) [68]
+\openout2 = `chap3.aux'.
+
+ (./chap3.tex
+Chapter 3.
+
+Overfull \hbox (3.6866pt too wide) in paragraph at lines 9--19
+\T1/cmr/m/n/12 This chap-ter de-vel-ops a Bayesian op-ti-miza-tion frame-work t
+o solve []. The es-ti-mated
+ []
+
+
+Overfull \hbox (17.92664pt too wide) in paragraph at lines 9--19
+\T1/cmr/m/n/12 gra-di-ent, pro-vided by the twin model, is uti-lized to im-prov
+e the op-ti-miza-tion per-for-mance.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 9--19
+
+ []
+
+
+Overfull \hbox (25.2596pt too wide) in paragraph at lines 23--23
+[]\T1/cmr/bx/n/14.4 Modeling the Ob-jec-tive and Gra-di-ent by Gaus-sian Pro-ce
+sses 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 25--36
+
+ []
+
+[69
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 59--65
+
+ []
+
+
+Overfull \hbox (28.06322pt too wide) in paragraph at lines 71--74
+[]$\OML/cmm/m/it/12 ^^O[]; []  ; ^^O[]$ \T1/cmr/m/n/12 are re-al-iza-tions of z
+ero-mean sta-tion-ary Gaus-sian pro-cesses with co-vari-ances
+ []
+
+[70] [71]
+Underfull \hbox (badness 10000) in paragraph at lines 160--162
+
+ []
+
+
+Overfull \hbox (15.12077pt too wide) in paragraph at lines 244--244
+[] 
+ []
+
+
+Underfull \vbox (badness 4060) has occurred while \output is active []
+
+ [72]
+Underfull \hbox (badness 10000) in paragraph at lines 244--249
+
+ []
+
+
+Overfull \hbox (6.33478pt too wide) in paragraph at lines 250--253
+[]\T1/cmr/m/n/12 Using the pos-te-rior, the ac-qui-si-tion func-tion, $\OML/cmm
+/m/it/12 ^^Z\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 c\OT1/cmr/m/n/12 )$\T1/cmr/m/n/12
+ , can be con-structed and op-ti-mized
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--261
+
+ []
+
+
+Overfull \hbox (17.62482pt too wide) detected at line 286
+[][] 
+ []
+
+<../opt_framework_2.png, id=327, 448.5558pt x 441.0879pt>
+File: ../opt_framework_2.png Graphic file (type png)
+
+<use ../opt_framework_2.png>
+Package pdftex.def Info: ../opt_framework_2.png used on input line 290.
+(pdftex.def)             Requested size: 341.43306pt x 335.762pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 296--311
+
+ []
+
+[73] [74 <../opt_framework_2.png (PNG copy)>]
+Overfull \hbox (25.18823pt too wide) in paragraph at lines 315--341
+\T1/cmr/m/n/12 con-ver-gence anal-y-sis to in-cor-po-rate es-ti-mated gra-di-en
+t eval-u-a-tions. Un-der the as-sump-tions
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 315--341
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 342--361
+
+ []
+
+[75]
+
+Package amsmath Warning: Cannot use `split' here;
+(amsmath)                trying to recover with `aligned' on input line 374.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 420--424
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [76]
+Underfull \hbox (badness 10000) in paragraph at lines 425--426
+
+ []
+
+
+Overfull \hbox (5.45757pt too wide) in paragraph at lines 438--443
+\T1/cmr/m/n/12 Al-go-rithm 3[] can find the max-i-mum re-gard-less of the ac-cu
+-racy of the gra-di-ent es-ti-ma-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 438--443
+
+ []
+
+
+Underfull \vbox (badness 1635) has occurred while \output is active []
+
+ [77]
+Underfull \hbox (badness 10000) in paragraph at lines 464--466
+
+ []
+
+<../opt_source.png, id=347, 534.798pt x 411.939pt>
+File: ../opt_source.png Graphic file (type png)
+ <use ../opt_source.png>
+Package pdftex.def Info: ../opt_source.png used on input line 473.
+(pdftex.def)             Requested size: 199.16928pt x 153.41446pt.
+
+<../LD_utx.png, id=348, 532.6299pt x 404.712pt>
+File: ../LD_utx.png Graphic file (type png)
+ <use ../LD_utx.png>
+Package pdftex.def Info: ../LD_utx.png used on input line 479.
+(pdftex.def)             Requested size: 199.16928pt x 151.33435pt.
+
+Overfull \hbox (4.59383pt too wide) in paragraph at lines 487--496
+\T1/cmr/m/n/12 by ei-ther the twin-model Bayesian op-ti-miza-tion and the vanil
+la Bayesian op-ti-miza-tion[],
+ []
+
+<../finalutx.png, id=349, 516.7305pt x 383.7537pt>
+File: ../finalutx.png Graphic file (type png)
+ <use ../finalutx.png>
+Package pdftex.def Info: ../finalutx.png used on input line 498.
+(pdftex.def)             Requested size: 233.31503pt x 179.2517pt.
+
+<../opt_BL.png, id=350, 465.4188pt x 279.6849pt>
+File: ../opt_BL.png Graphic file (type png)
+ <use ../opt_BL.png>
+Package pdftex.def Info: ../opt_BL.png used on input line 508.
+(pdftex.def)             Requested size: 233.31247pt x 179.25804pt.
+
+Underfull \vbox (badness 7030) has occurred while \output is active []
+
+ [78 <../opt_source.png> <../LD_utx.png (PNG copy)>] [79 <../finalutx.png (PNG 
+copy)> <../opt_BL.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 528--539
+
+ []
+
+<../Ubend_combined_new.png, id=360, 976.3677pt x 479.8728pt>
+File: ../Ubend_combined_new.png Graphic file (type png)
+
+<use ../Ubend_combined_new.png>
+Package pdftex.def Info: ../Ubend_combined_new.png used on input line 541.
+(pdftex.def)             Requested size: 409.7195pt x 201.36946pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 552--560
+
+ []
+
+<../Ubend_combined_new_2.png, id=361, 555.0336pt x 414.1071pt>
+File: ../Ubend_combined_new_2.png Graphic file (type png)
+
+<use ../Ubend_combined_new_2.png>
+Package pdftex.def Info: ../Ubend_combined_new_2.png used on input line 562.
+(pdftex.def)             Requested size: 256.0748pt x 191.05394pt.
+
+<../NS_compute_time.png, id=362, 541.3023pt x 413.3844pt>
+File: ../NS_compute_time.png Graphic file (type png)
+
+<use ../NS_compute_time.png>
+Package pdftex.def Info: ../NS_compute_time.png used on input line 572.
+(pdftex.def)             Requested size: 256.0748pt x 195.56485pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 580--585
+
+ []
+
+[80] [81 <../Ubend_combined_new.png (PNG copy)> <../Ubend_combined_new_2.png (P
+NG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 592--599
+
+ []
+
+<../reservoir_perm.png, id=369, 770.88pt x 770.077pt>
+File: ../reservoir_perm.png Graphic file (type png)
+
+<use ../reservoir_perm.png>
+Package pdftex.def Info: ../reservoir_perm.png used on input line 601.
+(pdftex.def)             Requested size: 170.71158pt x 227.61726pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 607--619
+
+ []
+
+
+Underfull \vbox (badness 1082) has occurred while \output is active []
+
+ [82 <../NS_compute_time.png (PNG copy)>]
+<../reservoir_5d_obj.png, id=373, 525.4029pt x 397.485pt>
+File: ../reservoir_5d_obj.png Graphic file (type png)
+
+<use ../reservoir_5d_obj.png>
+Package pdftex.def Info: ../reservoir_5d_obj.png used on input line 621.
+(pdftex.def)             Requested size: 213.3963pt x 162.18143pt.
+
+<../reservoir_profit_t.png, id=374, 586.8324pt x 442.2924pt>
+File: ../reservoir_profit_t.png Graphic file (type png)
+
+<use ../reservoir_profit_t.png>
+Package pdftex.def Info: ../reservoir_profit_t.png used on input line 627.
+(pdftex.def)             Requested size: 213.39063pt x 162.18112pt.
+
+Overfull \hbox (5.90536pt too wide) in paragraph at lines 632--647
+\T1/cmr/m/n/12 op-ti-miza-tion is one thou-sand di-men-sional. Clearly the Baye
+sian op-ti-miza-tion al-go-rithm
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 632--647
+
+ []
+
+[83 <../reservoir_perm.png>] [84 <../reservoir_5d_obj.png (PNG copy)> <../reser
+voir_profit_t.png>] <../optinj.png, id=383, 449.68pt x 337.26pt>
+File: ../optinj.png Graphic file (type png)
+
+<use ../optinj.png>
+Package pdftex.def Info: ../optinj.png used on input line 661.
+(pdftex.def)             Requested size: 213.39436pt x 162.18143pt.
+
+<../reservoir_obj_grad_descent.png, id=384, 586.8324pt x 442.2924pt>
+File: ../reservoir_obj_grad_descent.png Graphic file (type png)
+
+<use ../reservoir_obj_grad_descent.png>
+Package pdftex.def Info: ../reservoir_obj_grad_descent.png used on input line 6
+68.
+(pdftex.def)             Requested size: 213.39063pt x 162.18112pt.
+
+Overfull \hbox (5.04158pt too wide) in paragraph at lines 676--689
+\T1/cmr/m/n/12 op-ti-miza-tion prob-lems con-strained by gray-box con-ser-va-ti
+on law sim-u-la-tions. Gaus-sian
+ []
+
+
+Overfull \hbox (5.4618pt too wide) in paragraph at lines 676--689
+\T1/cmr/m/n/12 pro-cess mod-els are pre-sented for the ob-jec-tive func-tion, t
+he true gra-di-ent, the es-ti-mated
+ []
+
+
+Overfull \hbox (10.8306pt too wide) in paragraph at lines 676--689
+\T1/cmr/m/n/12 op-ti-miza-tion al-go-rithm which lever-ages the twin-model gra-
+di-ent es-ti-ma-tion. In ad-di-tion,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 676--689
+
+ []
+
+[85 <../optinj.png (PNG copy)> <../reservoir_obj_grad_descent.png (PNG copy)>]
+Overfull \hbox (2.0069pt too wide) in paragraph at lines 690--706
+[]\T1/cmr/m/n/12 The pro-posed op-ti-miza-tion method is demon-strated on sev-e
+ral nu-mer-i-cal ex-am-ples.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 690--706
+
+ []
+
+) [86]
+\openout2 = `chap4.aux'.
+
+ (./chap4.tex
+Chapter 4.
+
+Overfull \hbox (18.33992pt too wide) in paragraph at lines 8--15
+\T1/cmr/m/n/12 frame-work to fa-cil-i-ate a more ef-fi-cient op-ti-miza-tion. T
+o con-clude, this chap-ter sum-ma-rizes
+ []
+
+
+Overfull \hbox (3.38948pt too wide) in paragraph at lines 8--15
+\T1/cmr/m/n/12 the de-vel-op-ments and high-lights the con-tri-bu-tions of this
+ work. I close with sug-ges-tions
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 18--32
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 33--65
+
+ []
+
+[87
+
+
+
+]
+Overfull \hbox (21.56284pt too wide) in paragraph at lines 66--87
+\T1/cmr/m/n/12 hy-per pa-ram-e-ters are es-ti-mated by max-i-mum like-li-hood. 
+I present a Bayesian op-ti-miza-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 66--87
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [88]
+Overfull \hbox (4.8617pt too wide) in paragraph at lines 96--98
+[]\T1/cmr/m/n/12 a Gaus-sian pro-cess model of the twin-model gra-di-ent and a 
+Bayesian op-ti-miza-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--126
+
+ []
+
+[89]) [90]
+\openout2 = `appa.aux'.
+
+ (./appa.tex
+Appendix A.
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--11
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 12--16
+
+ []
+
+[91
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 32--34
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [92]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [93]
+Underfull \hbox (badness 10000) in paragraph at lines 96--99
+
+ []
+
+<../sketch2.png, id=416, 507.3354pt x 342.5598pt>
+File: ../sketch2.png Graphic file (type png)
+ <use ../sketch2.png>
+Package pdftex.def Info: ../sketch2.png used on input line 101.
+(pdftex.def)             Requested size: 294.9824pt x 199.16928pt.
+
+
+Package amsmath Warning: Cannot use `split' here;
+(amsmath)                trying to recover with `aligned' on input line 126.
+
+
+Overfull \hbox (35.5435pt too wide) detected at line 129
+\OMS/cmsy/m/n/10 M ^^T []  \OML/cmm/m/it/10 :[]
+ []
+
+[94 <../sketch2.png>]
+
+Package amsmath Warning: Cannot use `split' here;
+(amsmath)                trying to recover with `aligned' on input line 145.
+
+
+Overfull \hbox (23.28467pt too wide) detected at line 148
+[]  \OML/cmm/m/it/10 :[]
+ []
+
+
+Package amsmath Warning: Cannot use `split' here;
+(amsmath)                trying to recover with `aligned' on input line 168.
+
+
+Overfull \hbox (71.25493pt too wide) detected at line 171
+\OMS/cmsy/m/n/12 M ^^@ T ^^T []  \OML/cmm/m/it/12 :[]
+ []
+
+
+Package amsmath Warning: Cannot use `split' here;
+(amsmath)                trying to recover with `aligned' on input line 182.
+
+
+Overfull \hbox (71.25493pt too wide) detected at line 185
+\OMS/cmsy/m/n/12 M ^^@ T ^^T []  \OML/cmm/m/it/12 :[]
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [95]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [96]
+Overfull \hbox (8.11273pt too wide) in paragraph at lines 304--304
+[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [97]
+Underfull \hbox (badness 10000) in paragraph at lines 304--306
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 321--325
+
+ []
+
+
+Overfull \hbox (9.00336pt too wide) in paragraph at lines 326--332
+[]\T1/cmr/m/n/12 Next, we show the three con-di-tions are equiv-a-lent in lemma
+ 3. Us-ing the as-sump-tion: 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 339--361
+
+ []
+
+[98]) [99]
+\openout2 = `biblio.aux'.
+
+ (./biblio.tex (./main.bbl [100
+
+
+
+]
+Underfull \hbox (badness 1742) in paragraph at lines 78--81
+[]\T1/cmr/m/n/12 Friedman, J. H.   An Overview of Pre-dic-tive Learn-ing and Fu
+nc-tion
+ []
+
+[101]
+Underfull \hbox (badness 2460) in paragraph at lines 98--102
+[]\T1/cmr/m/n/12 Blatman, G., and Su-dret, B.  An Adap-tive Al-go-rithm to Buil
+d up
+ []
+
+
+Underfull \hbox (badness 3179) in paragraph at lines 136--139
+[]\T1/cmr/m/n/12 Nocedal, J.  Up-dat-ing Quasi-Newton Ma-tri-ces with Lim-ited 
+Stor-age.
+ []
+
+[102]
+Underfull \hbox (badness 1152) in paragraph at lines 168--171
+\T1/cmr/m/n/12 Trust-region Al-go-rithms for Derivative-free Op-ti-miza-tion.  
+\T1/cmr/m/it/12 SIAM Re-view\T1/cmr/m/n/12 ,
+ []
+
+[103]
+Underfull \hbox (badness 5519) in paragraph at lines 295--298
+[]\T1/cmr/m/n/12 Surjanovic, S. and Bing-ham, D.   Vir-tual Li-brary of Sim-u-l
+a-tion
+ []
+
+[104]
+Underfull \hbox (badness 1546) in paragraph at lines 315--318
+[]$[]$\T1/cmr/m/n/12 ilinskas, J.  Branch and Bound with Sim-pli-cial Par-ti-ti
+ons for Global
+ []
+
+[105])) [106] (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux)
+(./chap2.aux) (./chap3.aux) (./chap4.aux) (./appa.aux) (./biblio.aux))
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 7079 strings out of 493308
+ 104190 string characters out of 6140092
+ 192205 words of memory out of 5000000
+ 10164 multiletter control sequences out of 15000+600000
+ 35284 words of font info for 90 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 38i,27n,39p,890b,743s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+ib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmm
+ib6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmi
+b8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb><
+/usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fon
+ts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-s
+uper/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfit1200.pfb></
+usr/share/texmf/fonts/type1/public/cm-super/sfrm0700.pfb></usr/share/texmf/font
+s/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-su
+per/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></u
+sr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts
+/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf/fonts/type1/public/cm-sup
+er/sfsi1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsi1200.pfb></us
+r/share/texmf/fonts/type1/public/cm-super/sfsl1095.pfb></usr/share/texmf/fonts/
+type1/public/cm-super/sfsl1200.pfb></usr/share/texmf/fonts/type1/public/cm-supe
+r/sfti0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr
+/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/t
+ype1/public/cm-super/sftt1200.pfb>
+Output written on main.pdf (106 pages, 2845969 bytes).
+PDF statistics:
+ 589 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 266 words of extra memory for PDF output out of 10000 (max. 10000000)
+

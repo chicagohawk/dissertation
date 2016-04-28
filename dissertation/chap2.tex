@@ -1,0 +1,1330 @@
+%% This is an example first chapter.  You should put chapter/appendix that you
+%% write into a separate file, and add a line \include{yourfilename} to
+%% main.tex, where `yourfilename.tex' is the name of the chapter/appendix file.
+%% You can process specific files by typing their names in at the 
+%% \files=
+%% prompt when you run the file main.tex through LaTeX.
+\chapter{Estimate the Gradient by Using the Space-time Solution}
+\label{chapter 2}
+This chapter develops a method to estimate the gradient by using the space-time solution
+of gray-box conservation law simulations.
+An example, equation \eqref{eqn: conservation law}, has
+been given in Section \ref{sec: motivation} to illustrate why such estimation is possible
+when the conservation law involves only one equation and one dimensional space.
+In this example, the derivative of the flux can be first interpolated by using the
+discretized gray-box solution;
+then the adjoint method is applied to the inferred conservation law \eqref{eqn: 1D conceptual inferred}
+to estimate the gradient. This chapter develops a more general
+procedure suitable for systems of equations and for problems with a spatial dimension greater than one.
+
+\section{Approach}
+\label{infer}
+Consider a gray-box simulator that solves the PDE \eqref{eqn: govern PDE}, 
+a system of $k$ equations, for $u(t,x)$ with $t\in[0,T]$
+and $x\in\Omega$. The PDE has an unknown flux $F$, but known source term $q$, and
+known initial and boundary conditions.
+Let its discretized space-time solution be $\boldsymbol{u}$.
+My thesis introduces an open-box simulator solving another PDE, namely the twin model,
+\begin{equation}\begin{split}
+    \frac{\partial \tilde{u}}{\partial t}+ \nabla \cdot \big(D \tilde{F}(\tilde{u})\big) = q(\tilde{u},c)\,,
+\end{split}
+\label{eqn: govern twin model}
+\end{equation}
+which is a system of $k$ equations
+with the same source term and the same initial and boundary conditions. 
+Equation \eqref{eqn: govern twin model}
+differs from \eqref{eqn: govern PDE} in its flux. For simplicity, 
+let the open-box simulator use the same space-time
+discretization, and let its discretized solution be $\tilde{\boldsymbol{u}}$.
+Define the solution mismatch
+\begin{equation}
+    \mathcal{M}(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \big( \tilde{\boldsymbol{u}}_{ij}
+     -\boldsymbol{u}_{ij}\big)^2 \,,
+    \label{eqn: solution mismatch}
+\end{equation}
+where $w_{ij}$'s are the quadrature weights for the space-time integration.
+$\mathcal{M}$ approximates the space-time integration of the continous solutions' mismatch,\\
+$\mathcal{M} \approx \int_{0}^T\int_\Omega \big(\tilde{u}(t,x) - u(t,x)\big)^2 \, \textrm{d}x\,\textrm{d}t$.
+Given a set $\mathcal{S}_F$ consisted of all possible guesses for $F$,
+I propose to infer a flux $\tilde{F}$ such that the mismatch between
+$\boldsymbol{u}$ and $\tilde{\boldsymbol{u}}$ is minimized, i.e.
+\begin{equation}
+    \tilde{F}^* = \argmin_{\tilde{F} \in \mathcal{S}_F} \mathcal{M}\,,
+    \label{eqn: twin min mismatch}
+\end{equation}
+The choice for $\mathcal{S}_F$ will be discussed later in Section \ref{sec: flux param} and
+\ref{sec: adaptive basis}. Because the twin model is open-box, \eqref{eqn: twin min mismatch}
+can be solved by gradient-based methods. Once $\mathcal{M}$ is minimized, the adjoint
+method can be applied to the twin model to estimate the gradient.\\
+
+The key to inferring the flux is to leverage the gray-box space-time solution.
+Its inferrability can be 
+loosely explained by the following reasonings. Firstly,
+the conserved quantity $u$ in \eqref{eqn: govern PDE} depends on
+$u$ in a previous time only inside a domain of dependence, illustrated in Figure \ref{fig: locality}.
+Similarly, in discretized PDE simulation, the solution at any gridpoint only depends on a
+numerical domain of dependence.
+Besides, in a PDE simulation, a one-step time marching at any gridpoint can be viewed as
+a mapping whose input only involves the numerical domain of dependence.
+Because the number of state variables in the numerical domain of dependence can be small, 
+inference of the mapping is potentially feasible.
+Secondly, the space-time solution at every space-time gridpoint can be viewed
+as a sample for this mapping. 
+Because the scale of space-time discretization in a conservation law simulation is usually large,
+a large number of samples are available for the inference, thus
+making the inference potentially accurate.\\
+
+\begin{figure}[Htbp]\begin{center}
+    \includegraphics[height=3.4cm]{../locality.png}
+    \caption{Domain of dependence: 
+             $u(t,x)$
+             depends on $u$ at an earlier time within a
+             domain of dependence. The two planes in this figure indicates the spatial 
+             solution at two adjacent timesteps.
+             The domain of dependence can be much smaller
+             than $\Omega$, the entire spatial domain.}
+    \label{fig: locality}
+\end{center}\end{figure}
+
+The inferrability is difficult to prove.
+However, it can be partially justified by the following theorem
+for PDEs with $k=1$ and one dimensional space.
+\begin{theorem}
+    Consider two PDEs
+    \begin{equation}
+        \qquad\frac{\partial u}{\partial t} + \frac{\partial F(u)}{\partial x} = 0\,,\; \emph{and}
+        \label{eqn: easy 1}
+    \end{equation}
+    \begin{equation}
+        \frac{\partial \tilde{u}}{\partial t} + \frac{\partial \tilde{F}(\tilde{u})}{\partial x} = 0\,,
+        \label{eqn: easy 2}
+    \end{equation}
+    with the same initial condition $u(0,x) = u_0(x)$, and $x\in \mathbb{R}$. $u_0$ is bounded, differentiable, 
+    Lipschitz continuous with constant $L_u$, 
+    and has a finite support. $F$ and $\tilde{F}$ are both twice-differentiable and Lipschtiz 
+    continuous with constant $L_F$.
+    Let 
+    $$
+    B_u \equiv \left\{ u\left| u=u_0(x) \; \emph{that satisfies} 
+    \;\left|\frac{du_0}{dx}\right|\ge \gamma > 0
+    \,,\; \emph{for all} \; x\in \mathbb{R}\right.
+    \right\}
+    \subseteq \mathbb{R}\,.
+    $$
+    be a non-empty and measurable set.
+    We have:\\
+    For any $\epsilon >0$, there exist $\delta>0$ and $T>0$ such that 
+    \begin{itemize}
+        \item if $|\tilde{u}(t,x)-u(t,x)| < \delta$ for any $x\in \mathbb{R}$ and $t\in [0,T]$, then
+              $\left|\frac{d\tilde{F}}{du} - \frac{dF}{du}\right| < 
+               \epsilon $ for any $u\in B_u\,.$
+    \end{itemize}
+    \label{theorem: 1}
+\end{theorem}
+The proof is given in Appendix \ref{proof 1}.
+An illustration of $B_u$ is given in Figure \ref{fig: excitedDomain}.
+Several observations can be made from Theorem \ref{theorem: 1}.
+Firstly, if the solutions of \eqref{eqn: easy 1} and \eqref{eqn: easy 2} match closely, then
+the derivatives of their flux functions must match closely in $B_u$. 
+Secondly, the conclusion 
+can only be drawn for $u\in B_u$ where the initial condition has coverage and has large enough
+variation. For more general problems involving 1) systems of equations, 2) higher spatial dimensions, 
+and 3) discretization,
+the inferrability is difficult to show theoretically. Instead, it will be demonstrated numerically.\\
+
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=10cm]{../excitedDomain.png}
+        \caption{An illustration of $B_u$ defined in Theorem \ref{theorem: 1}. The blue line is $u_0$ 
+        and the green dashed line is $\frac{du_0}{dx}$. $B_u$ is the set of $u_0$ where the derivative 
+        $\frac{du_0}{dx}$ has an absolute value larger than $\gamma$.}
+        \label{fig: excitedDomain}
+    \end{center}
+\end{figure}
+
+The remainder of this chapter is organized as follows.
+Section \ref{sec: flux param} discusses the choices of $\mathcal{S}_F$ occurred
+in \eqref{eqn: twin min mismatch}.
+A suitable parameterization for $\tilde{F}$ will be chosen that takes into account the observations from
+Theorem \ref{theorem: 1}.
+Section \ref{sec: adaptive basis} develops a procedure that adaptively refines the
+parameterization. The procedure adopts a greedy search of the best refinement
+at every iterate and refrains from overfitting.
+Section \ref{sec: twin algo} summarizes the algorithm for training the twin model.
+Section \ref{sec: trunc error} presents a numerical shortcut for \eqref{eqn: twin min mismatch} 
+that is more computationally efficient.
+Section \ref{sec: twin numerical results} demonstrates the algorithm in several numerical examples.
+Finally, Section \ref{sec: chap 2 summary} summarizes the chapter.\\
+
+
+
+\subsection{Parameterization}
+\label{sec: flux param}
+Functions can be parameterized by a linear combination of basis functions.
+Firstly, consider the case when $\tilde{F}$ is univariate. 
+There are many types of basis
+functions to parameterize a univariate function, such as polynomial basis, Fourier basis, and
+wavelet basis. 
+Based on the observations from Theorem \ref{theorem: 1}, $\tilde{F}$ and $F$
+are expected to match only on a domain of $u$ 
+where the gray-box space-time solution exists and has large variation. Besides, $\tilde{F}$ may match 
+$F$ better on a domain where the gray-box discretized solution $\boldsymbol{u}$ are more densely sampled.
+Therefore, an ideal parameterization should 
+admit local refinements so $\tilde{F}$ can match $F$ better at some domain;
+similarly, it should allow local dropouts when bases are redundant at some domain. 
+This section presents a choice of the parameterization for $\tilde{F}$ that allows such 
+local refinements, while a procedure for basis refinement is given in the next section.\\
+
+A parameterization that allows local refinements and local dropouts is the wavelet.
+Wavelet is the basis developed for multi-resolution analysis (MRA) \cite{wavelet mallat}.
+MRA is an increasing sequence of closed function spaces $\{V_j\}_{j\in \mathbb{Z}}$,
+$$\cdots \subset V_{-1} \subset V_0 \subset V_1 \subset \cdots \,,$$
+which can approximate functions with increasing resolutions as $j$ increases.
+For univariate MRA, $V_j$'s satisfy the following properties known as
+self-similarity:
+\begin{equation*}\begin{split}
+    &f(u) \in V_j \Leftrightarrow f(2u) \in V_{j+1}, \; j\in \mathbb{Z}\\
+    &f(u) \in V_j \Leftrightarrow f(u-\frac{\eta}{2^j}) \in V_{j},
+                    \; j\in \mathbb{Z},\, \eta\in \mathbb{Z}
+\end{split}\end{equation*}
+The wavelet bases for $V_j$ are given by
+\begin{equation}
+    \hat{\phi}_{j,\eta}(u) = 2^{j/2} \hat{\phi}(2^j u-\eta) \,,\quad \eta \in \mathbb{Z}
+    \label{eqn: self similar wavelet}
+\end{equation}
+where $\hat{\phi}$ is called the mother wavelet satisfying 
+$\hat{\phi}(u) \rightarrow 0$ for $ u \rightarrow -\infty $ and $\infty$.
+An example mother wavelet, the Meyer wavelet, is shown in Figure \ref{fig: meyer}.
+\begin{figure}[Htbp]\begin{center}
+    \includegraphics[width=5cm, height=4cm]{../meyer_2.png}
+    \caption{An example of mother wavelet, the Meyer wavelet.}
+    \label{fig: meyer}
+\end{center}\end{figure}
+
+
+Because the gray-box model is unchanged by adding a constant to ${F}$,
+the derivative of $\tilde{F}$, instead of $\tilde{F}$ itself, should be approximated.
+Thereby, the bases for $\tilde{F}$ shall be chosen as the integrals of the wavelets, i.e.
+\begin{equation}
+    \phi_{j,\eta}(u) = \int_{-\infty}^u \hat{\phi}_{j,\eta}(u^\prime) du^\prime\,.
+    \label{eqn: integral wavelet}
+\end{equation}
+$\phi_{j,\eta}$'s are sigmoid functions which satisfy
+\begin{equation}
+    \phi_{j,\eta}(u) = \left\{
+        \begin{split}
+            0,&\; u\rightarrow -\infty\\
+            1,&\; u\rightarrow \infty
+        \end{split}\right.
+\end{equation}
+It's easy to show $\phi_{j,\eta}$ also satisfies self-similarity, and can be 
+represented by a mother sigmoid $\phi$,
+\begin{equation}
+    {\phi}_{j,\eta}(u) = {\phi}(2^j u-\eta) \,,\quad j\in \mathbb{Z} \,,\;\eta \in \mathbb{Z}
+    \label{eqn: self similar sigmoid}
+\end{equation}
+
+\begin{figure}[Htbp]\begin{center}
+    \includegraphics[width=5cm, height=4cm]{../basis_combined.png}
+    \caption{Red line: the integral \eqref{eqn: integral wavelet} of the Meyer wavelet.
+             Black line: the logistic sigmoid function.}
+    \label{fig: sigmoid}
+\end{center}\end{figure}
+
+
+There are many types of sigmoid functions.
+My thesis will use the logistic sigmoid function as the mother sigmoid,
+\begin{equation}
+    \phi(u) = \frac{1}{1+ e^{-u}}\,.
+    \label{eqn: logistic sigmoid}
+\end{equation}
+
+If $\tilde{F}$ is univariate, the logistic sigmoids $\phi_{j,\eta}$'s are used as the bases.
+If $\tilde{F}$ is multivariate, the basis can be formed by the tensor product 
+of univariate sigmoids,
+\begin{equation}
+    \phi_{\boldsymbol{j}, \boldsymbol{\eta}} (u_1, \cdots, u_k) = \phi_{j_1, \eta_1}(u_1)\cdots
+    \phi_{j_k, \eta_k}(u_k)\,,
+    \label{eqn: tensor basis}
+\end{equation}
+where $\boldsymbol{j}=(j_1, \cdots, j_k)\in \mathbb{Z}^k$, 
+$\boldsymbol{\eta} = (\eta_1, \cdots, \eta_k) \in \mathbb{Z}^k$. To sum up,
+\begin{equation}
+    \tilde{F}(\cdot) = \sum_{\boldsymbol{j}, \boldsymbol{\eta}} 
+                       \alpha_{\boldsymbol{j}, \boldsymbol{\eta}}
+                       \phi_{\boldsymbol{j}, \boldsymbol{\eta}} (\cdot)\,,
+    \label{eqn: linear expansion}
+\end{equation}
+where $\alpha$'s are the coefficients of the bases. A systematic procedure for choosing
+a set of $\{\boldsymbol{j}, \boldsymbol{\eta}\}$
+is presented in Section \ref{sec: adaptive basis}.
+\\
+
+For illustration, consider a numerical example where the gray-box model solves the 1-D Buckley-Leverett equation
+\cite{Buckley Leverett}
+\begin{equation}
+    \frac{\partial u}{\partial t} + \frac{\partial}{\partial x}\Big(\underbrace{
+    \frac{u^2}{1+ 2(1-u)^2}}_{F} \Big) = c\,,
+    \label{eqn: Buckley-Leverett}
+\end{equation}
+with the initial condition $u(0,x)=u_0(x)$ and the periodic boundary condition $u(t,0)=u(t,1)$. 
+Let $0 \le u_0(x) \le 1$ for all $x\in [0,1]$. This is because the 
+Buckley-Leverett equation models the two-phase porous media flow where $u$ stands for the
+saturation of a phase, and the saturation is always positive and no larger than one.
+$c\in \mathbb{R}$ is a constant-valued control. $F$ is assumed unknown and is inferred by a twin model.
+The twin model solves 
+\begin{equation}
+    \frac{\partial \tilde{u}}{\partial t} + \frac{\partial}{\partial x}\tilde{F}(\tilde{u})
+    = c\,,
+    \label{eqn: Buckley-Leverett twin}
+\end{equation}
+with the same $c$ and the same initial and boundary conditions. $\tilde{F}$ is parameterized by
+\eqref{eqn: linear expansion} where
+$j$'s and $\eta$'s are chosen ad hoc.
+Figure \ref{fig: sigmoid basis ad hoc} gives an example of the bases used in this section.
+To ensure the well-posedness of \eqref{eqn: twin min mismatch}, an 
+ad hoc $L_1$ regularization on $\alpha$ is used in minimizing $\mathcal{M}$.\\
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=5cm]{../fixed_basis_eg.png}
+        \caption{An ad hoc set of bases}
+        \label{fig: sigmoid basis ad hoc}
+    \end{center}
+\end{figure}
+
+Figure \ref{fig: leftcol} shows the discretized space-time solution of \eqref{eqn: Buckley-Leverett}
+for $x\in[0,1], \, t\in[0,1]$ and $c=0$. 
+The solution is used to train a twin model according to \eqref{eqn: twin min mismatch}.
+The discretized space-time solution of the trained twin model is shown in 
+Figure \ref{fig: rightcol}.\\
+
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.4\textwidth}
+        \centering
+        \includegraphics[width=5cm]{../leftcol.png}
+        \caption{Gray-box model.}
+        \label{fig: leftcol}
+    \end{subfigure}
+    \begin{subfigure}[t]{.4\textwidth}
+        \centering
+        \includegraphics[width=5cm]{../rightcol.png}
+        \caption{Trained twin model.}
+        \label{fig: rightcol}
+    \end{subfigure}
+    \caption{Space time solutions.}
+\end{center}\end{figure}
+
+Once a twin model is trained, its adjoint can be used for gradient estimation.
+Consider an objective function 
+\begin{equation}
+    \xi(c) \equiv \int_{x=0}^1 \big(u(1,x; c) - \frac{1}{2}\big)^2 \,\textrm{d}x\,.
+    \label{eqn: objective ad hoc}
+\end{equation}
+Its gradient $\frac{d\xi}{dc}$ can be estimated by the trained twin model.
+Figure \ref{fig: objective ad hoc} shows the objective function, evaluated using 
+the gray-box model and the trained twin model. It is observed that the gradients of $\xi$
+match closely at $c=0$, i.e. the control where the twin model is trained.\\
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=6.5cm]{../J_twin_vs_primal.png}
+    \caption{The objective function $\xi$ evaluated by either the gray-box model
+             or the trained twin model.}
+    \label{fig: objective ad hoc}
+\end{center}\end{figure}
+
+In addition to the gradient estimation, the inferred $\tilde{F}$ is examined.
+If different solutions are used in the training, it is expected
+that the trained twin model  will also be different.
+Figure \ref{fig: combine 3} shows the training results for three different initial conditions.
+Some observations can be made: 1) As expected, $\tilde{F}$ can differ from $F$ by a constant without
+affecting $\mathcal{M}$; 2) $\frac{d\tilde{F}}{du}$ matches $\frac{dF}{du}$ only in a
+domain of $u$ where the solution exists (indicated by the green area);
+3) Sometimes the bases seem redundant thus can be safely dropped out. The issue seems particularly 
+important in the third column, where most bases are suppressed;
+4) Sometime the bases seem too coarse thus may be refined in order to reduce the minimal $\mathcal{M}$. 
+The issue seems particularly important in the first column, where $\frac{d\tilde{F}}{du}$ exhibits
+a wavy deviation from $\frac{dF}{du}$. 
+Addressing these issues systematically is crucial to the rigorous development of
+the twin model method.\\
+
+\begin{figure}[htbp]
+\begin{center}
+    \includegraphics[width=13cm]{../combine_3_inits.png}
+    \caption{The first row shows the three different initial conditions used to generate
+             the gray-box space-time solution. The second row compares the trained $\tilde{F}$ 
+             (blue) and the Buckley-Leverett $F$ (red). The third row compares
+             the trained $\frac{d\tilde{F}}{du}$ (blue) and the Buckley-Leverett 
+             $\frac{dF}{du}$ (red). The green background highlights the domain of $u$ where
+             the gray-box space-time solution exists.}
+    \label{fig: combine 3}
+\end{center}
+\end{figure}
+
+
+\subsection{Elements for Adaptive Basis Construction}
+\label{sec: adaptive basis}
+This section develops several key 
+elements that lead to the adaptive basis construction for twin models.
+The heuristics for the adaptive basis construction, discussed in Section
+\ref{sec: adaptive basis review}, are applied to build up a basis dictionary consisted of
+only the significant candidates. The section is organized as follows:
+Firstly, a formulation is provided to efficiently assess the 
+significance of each candidate basis; Secondly, 
+the neighborhood of a sigmoid basis is defined;
+Thirdly, a metric is devised that determines when to add or remove a candidate basis.
+The three elements are then employed to build the twin model algorithm in Section \ref{sec: twin algo}.\\
+
+Given a basis dictionary $\boldsymbol{\phi}_\mathcal{A} = 
+\{\phi_i\}_{i\in \mathcal{A}}$, define the ``minimal mismatch''
+\begin{equation}
+    \mathcal{M}^*(\mathcal{A}) = \min_{\boldsymbol{\alpha}_\mathcal{A} \in \mathbb{R}^{|\mathcal{A}|}}
+    \mathcal{M}\left( \sum_{i\in \mathcal{A}}
+    {\alpha}_i {\phi}_i \right)\,,
+\end{equation}
+to be the minimal solution mismatch \eqref{eqn: solution mismatch} if $\tilde{F}$ were parameterized
+by $\boldsymbol{\phi}_\mathcal{A}$. $\mathcal{A}$ is a set containing $\{\boldsymbol{j},
+\boldsymbol{\eta}\}$'s.
+$\boldsymbol{\alpha}_{\mathcal{A}} = \{\alpha_i\}_{i\in \mathcal{A}}$ is the coefficient for 
+$\boldsymbol{\phi}_\mathcal{A}$. 
+Let $\boldsymbol{\alpha}_{\mathcal{A}}^* =\{\alpha_i^*\}_{i\in \mathcal{A}}$
+be the optimal coefficients, and let
+$\tilde{F}^*_\mathcal{A} = \sum_{i\in \mathcal{A}} \alpha^*_i \phi_i$.
+Consider appending $\boldsymbol{\phi}_{\mathcal{A}}$ 
+by an additional basis
+$\phi_l$, and let $\boldsymbol{\phi}_{\mathcal{A}^\prime} = \left\{
+\boldsymbol{\phi}_{\mathcal{A}}, \phi_l \right\}$,
+$\mathcal{A}^\prime = \left\{ \mathcal{A}, l \right\}$.
+The minimal mismatch for the appended basis dictionary
+$\boldsymbol{\phi}_{\mathcal{A}^\prime}$ is
+\begin{equation}
+    \mathcal{M}^*(\mathcal{A}^\prime) 
+    = \min_{\boldsymbol{\alpha}_{\mathcal{A}^\prime} \in \mathbb{R}^{|\mathcal{A}|+1}}
+    \mathcal{M}\left( \sum_{i\in \mathcal{A}^\prime}
+    {\alpha}_{i} {\phi}_{i} \right)\,,
+\end{equation}
+Clearly $\mathcal{M}^*(\mathcal{A}^\prime) \le \mathcal{M}^*(\mathcal{A})$.
+Define the ``mismatch improvement'' to be
+\begin{equation}
+    \Delta \mathcal{M}^*\left(\mathcal{A}, l\right) = \mathcal{M}^*(\mathcal{A}) - 
+    \mathcal{M}^*(\mathcal{A}^\prime)
+    \label{eqn: mismatch improvement}
+\end{equation} 
+Approximate \eqref{eqn: mismatch improvement} by Taylor expansion, we get
+\begin{equation}
+    \Delta\mathcal{M}^*\left(\mathcal{A}, l\right) 
+    \approx -\left(\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
+    \right|_{\tilde{F}_\mathcal{A}^*} \phi_l
+    \; \textrm{d} u \right) \alpha_l \,,
+    \label{eqn: taylor expansion}
+\end{equation}
+where $\frac{d\mathcal{M}}{d\tilde{F}}$ is the derivative of $\mathcal{M}(\tilde{F})$ 
+with respect to $\tilde{F}$, evaluated on $\tilde{F} = \tilde{F}^*_\mathcal{A}$.
+For a twin model consisted of a system of $k$ equations,
+$\tilde{F}$ is a function of $u\in\mathbb{R}^k$, thus 
+$\frac{d\mathcal{M}}{d\tilde{F}}$ is also a function of $u\in\mathbb{R}^k$.
+As discussed in the previous sections, $\frac{d \mathcal{M}}{d\tilde{F}}$ is non-zero only in a
+domain where there is solution. Thus \eqref{eqn: taylor expansion} 
+can be integrated by quadrature only over a bounded domain.
+The absolute value of the coefficient for $\alpha_l$,
+\begin{equation}
+    s_l(\mathcal{A}) \equiv \left|\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
+    \right|_{\tilde{F}_\mathcal{A}^*} \phi_l \; \textrm{d} u \right|\,,
+    \label{eqn: basis significance}
+\end{equation}
+estimates the significance of the basis $\phi_l$ \cite{weight selection}. 
+If there are multiple candidate bases, \eqref{eqn: basis significance} can be used to rank their 
+significance.\\
+
+In the sequel, a compact representation of the sigmoid bases is introduced.
+The univariate basis function, $\phi_{j,\eta}$ in
+\eqref{eqn: self similar sigmoid}, is represented by a tuple $(j, \frac{\eta}{2^j})$,
+where $j$ can be viewed as the ``resolution'', and $\frac{\eta}{2^j}$ is
+the center of the basis.
+Similarly, the $k$-variate basis function, $\phi_{\boldsymbol{j}, \boldsymbol{\eta}}$ in
+\eqref{eqn: tensor basis}, is represented by a tuple $\left(\boldsymbol{j}, \,
+\frac{\boldsymbol{\eta}}{2^{\boldsymbol{j}}}\right) 
+= \left(\{j_1,\cdots, j_k\}, \, \left\{\frac{\eta_1}{2^{j_1}}, \cdots, \frac{\eta_k}{2^{j_k}}\right\}\right)$.
+Thus, a sigmoid can be represented by a point in a $2k$-dimensional space.
+The representation is illustrated in Figure \ref{fig: basis 0} thru. \ref{fig: basis 3} 
+for the univariate case.
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.48\textwidth}
+        \centering
+        \includegraphics[width=7.5cm]{../basis_0.png}
+        \caption{$\left(0,\frac{0}{2^0}\right)$}
+        \label{fig: basis 0}
+    \end{subfigure}
+    \begin{subfigure}[t]{.48\textwidth}
+        \centering
+        \includegraphics[width=7.5cm]{../basis_1.png}
+        \caption{$\left(0, \frac{-1}{2^0}\right)$}
+        \label{fig: basis 1}
+    \end{subfigure}
+    \begin{subfigure}[t]{.48\textwidth}
+        \centering
+        \includegraphics[width=7.5cm]{../basis_3.png}
+        \caption{$\left(1, \frac{1}{2^0}\right)$}
+        \label{fig: basis 2}
+    \end{subfigure}
+    \begin{subfigure}[t]{.48\textwidth}
+        \centering
+        \includegraphics[width=7.5cm]{../basis_6.png}
+        \caption{$\left(1, \frac{1}{2^1}\right)$}
+        \label{fig: basis 3}
+    \end{subfigure}
+    \caption{An illustration of the tuple representation and the corresponding univariate sigmoid.}
+\end{center}\end{figure}
+
+Using this representation, define the ``neighborhood'' of a univariate sigmoid 
+$(j,\frac{\eta}{2^j})$ to be 
+\begin{equation}
+    \mathcal{N}\left[ \left(j,\frac{\eta}{2^j}\right) \right]
+    = \left\{ 
+        \left( j+1, \frac{\eta}{2^j} \right),\,
+        \left( j, \frac{\eta\pm 1}{2^j} \right)
+    \right\}\,.
+    \label{eqn: neighborhood 1D}
+\end{equation}
+The neighborhood contains 1) a basis 
+$\left( j+1, \frac{\eta}{2^j} \right)$ 
+with an increment of resolution; and
+2) two basis $\left( j, \frac{\eta\pm 1}{2^j} \right)$
+with the same resolution but a marginal shift of center.
+For illustration, the neighborhood of $\left(0,\frac{0}{2^0}\right)$
+is shown in Figure \ref{fig: basis neighbor}.
+Similarly, define the neighborhood of a multivariate sigmoid to be
+\begin{equation}\begin{split}
+    &\mathcal{N}
+    \left[
+         \left(
+               \boldsymbol{j}, \frac{\boldsymbol{\eta}}{2^{\boldsymbol{j}}}
+         \right)
+    \right] = 
+    \mathcal{N}\left[ \left(\{j_1, \cdots, j_k\} , \left\{
+    \frac{\eta_1}{2^{j_1}}, \cdots, \frac{\eta_k}{2^{j_k}} \right\} \right) \right]\\
+    = & \bigg\{
+            \left( \left\{ j_1+1,\cdots, j_k\right\},
+                   \left\{ \frac{\eta_1}{2^{j_1+1}}, \cdots, \frac{\eta_k}{2^{j_k}} \right\}
+            \right) \, \cdots \, ,
+            \left( \left\{ j_1,\cdots, j_k+1\right\},
+                   \left\{ \frac{\eta_1}{2^{j_1}}, \cdots, \frac{\eta_k}{2^{j_k+1}} \right\}
+            \right),\,   \\
+          & 
+            \left( \left\{ j_1,\cdots, j_k\right\},
+                   \left\{ \frac{\eta_1\pm 1}{2^{j_1}}, \cdots, \frac{\eta_k}{2^{j_k}} \right\}
+            \right) \, \cdots \, ,
+            \left( \left\{ j_1,\cdots, j_k\right\},
+                   \left\{ \frac{\eta_1}{2^{j_1}}, \cdots, \frac{\eta_k\pm 1}{2^{j_k}} \right\}
+            \right) \bigg\}\,,
+    \label{eqn: neighborhood kD}
+\end{split}\end{equation}
+which consists of $k$ bases with incremental resolution, and $2k$ bases with center shifts.
+It is easy to see that a basis $(\boldsymbol{j}_0, \frac{\boldsymbol{\eta}_0}{2^{\boldsymbol{j}_0}})$ 
+can be connected to any basis $(\boldsymbol{j}, \frac{\boldsymbol{\eta}}{2^{\boldsymbol{j}}})$ 
+with $\boldsymbol{j} \ge \boldsymbol{j}_0$ through a chain
+of neighborhoods.
+\begin{figure}[Htbp]\begin{center}
+    \begin{subfigure}[p]{1.\textwidth}
+        \centering
+        \includegraphics[width=10cm]{../basis_neighbor.png}
+        \caption{$\mathcal{N}\left[\left(0,\frac{0}{2^0}\right)\right]$}
+        \label{fig: basis neighbor}
+    \end{subfigure}
+    \begin{subfigure}[p]{1.\textwidth}
+        \centering
+        \includegraphics[width=10cm]{../basis_neighbor_2.png}
+        \caption{$\mathcal{N}\left[ \big(0, \frac{0}{2^0}\big), \big(1, \frac{-1}{2^1}\big)
+                 \right]$}
+        \label{fig: union neighbor}
+    \end{subfigure}
+    \caption{Neighborhood for univariate bases. 
+             $(a)$ shows the neighborhood (blue)
+             of a single basis (red).  $(b)$ shows the neighborhood (blue) 
+             of several bases (red). 
+             The left column represents the basis on the $\left(j, \frac{\eta}{2^j}\right)$ plane,
+             and the right column shows the actual basis $\phi_{j,\eta}$.}
+\end{center}\end{figure}
+In addition, define the neighborhood of multiple sigmoid functions to be the union
+of each individual's neighborhood, as illustrated by Figure \ref{fig: union neighbor}.
+\begin{equation}
+    \mathcal{N}\left[(\boldsymbol{j}_1, \frac{\boldsymbol{\eta}_1}{2^{\boldsymbol{j}_1}} ), \cdots, 
+    ( \boldsymbol{j}_n, \frac{\boldsymbol{\eta}_n}{2^{\boldsymbol{j}_n}}) \right]
+    = \mathcal{N}\left[(\boldsymbol{j}_1, \frac{\boldsymbol{\eta}_1}{2^{\boldsymbol{j}_1}})\right]\bigcup \cdots 
+      \bigcup \mathcal{N}\left[(\boldsymbol{j}_n, \frac{\boldsymbol{\eta}_n}{2^{\boldsymbol{j}_n}})\right]\,.
+\end{equation}\\
+
+Although the mismatch improvement, $\Delta \mathcal{M}^*\left(\mathcal{A}, l\right)$, is always
+non-negative, it is inadvisable to cram the basis dictionary with too many bases,
+otherwise a twin model can be overfitted.
+Therefore, a criterion is required to determine if a candidate basis shall be added to or 
+removed from the basis dictionary. This can be achieved by cross validation,
+in particular, $k$-fold cross validation \cite{cross validation}.
+Given a basis dictionary, the $k$-fold cross validation proceeds in the following three steps:
+Firstly, the gray-box solution $\boldsymbol{u}$ is shuffled randomly into $k$ disjoint sets
+$\left\{\boldsymbol{u}_1 , \boldsymbol{u}_2, \cdots, \boldsymbol{u}_k\right\}$.
+An illustration for $k=2$ is shown in Figure \ref{fig: shuffle}.
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=3.2cm]{../shuffle_1.png}
+        \caption{The discretized 
+                 gray-box solution is shuffled into $3$ sets, each indicated by a color.}
+        \label{fig: shuffle}
+    \end{center}
+\end{figure}
+
+Secondly, $k$ twin models who share the same basis dictionary 
+are trained so their space-time solutions match
+all but one sets, shown in \eqref{eqn: cross validation}.
+$T_i$ indicates the $i$th twin model.
+\begin{equation}\begin{split}
+T_1 &= \texttt{TrainTwinModel}(\boldsymbol{u}_2, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
+T_2 &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
+&\cdots\\
+T_k &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_2, \cdots, \boldsymbol{u}_{k-1})
+\label{eqn: cross validation}
+\end{split}\end{equation}
+Thirdly, each trained twin model is validated on the remaining set. In particular,
+the solution mismatch for the validation set is computed, as shown in 
+\eqref{eqn: cross validation mismatch}.
+\begin{equation}\begin{split}
+    \mathcal{M}_1 &= \texttt{MismatchValidation}\left( T_1 , \boldsymbol{u}_1\right)\\
+    \mathcal{M}_2 &= \texttt{MismatchValidation}\left( T_2 , \boldsymbol{u}_2\right)\\
+    &\cdots\\
+    \mathcal{M}_k &= \texttt{MismatchValidation}\left( T_k , \boldsymbol{u}_k\right)
+    \label{eqn: cross validation mismatch}
+\end{split}\end{equation}
+The mean value of validation errors,
+\begin{equation}
+    \overline{\mathcal{M}} = \frac{1}{k}\left(\mathcal{M}_1 + \mathcal{M}_2 + \cdots 
+    + \mathcal{M}_k\right)
+\end{equation}
+measures the performance of the basis dictionary. A basis shall be added to or removed from
+the dictionary only if such action reduces $\overline{\mathcal{M}}$. In practice, cross validation
+proliferates the computational cost. 
+Therefore, a small $k$ is preferrable if cost is a concern. 
+All the numerical examples in the thesis use $k=2$.\\
+
+\subsection{Algorithm}
+\label{sec: twin algo}
+Based upon the developments in the previous sections, a twin model algorithm 
+with adaptive basis construction is devised.\\
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\REQUIRE{Initial basis dictionary $\boldsymbol{\phi}_\mathcal{A}$, 
+        coefficients $\alpha_{\mathcal{A}}= \mathbf{0}$},
+        Validation error $\overline{\mathcal{M}}_0 = \infty$,
+        Gray-box solution $\boldsymbol{u}$.
+\STATE Minimize solution mismatch 
+       $
+           \alpha_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{M}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
+       $ 
+\LOOP 
+\STATE Find $\phi_{l}\in \mathcal{N}(\boldsymbol{\phi}_{\mathcal{A}}) \backslash 
+       \boldsymbol{\phi}_{\mathcal{A}}$ with the maximal $s_l(\mathcal{A})$ \\
+       $\mathcal{A} \leftarrow 
+       \mathcal{A} \bigcup \{l\}$, $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow 
+       \boldsymbol{\phi}_{\mathcal{A}}
+       \bigcup \{\phi_{l}\}$, $\alpha_l = 0$,
+       $\alpha_{\mathcal{A}} \leftarrow \{\alpha_{\mathcal{A}}, \alpha_l\}$
+\STATE Compute $\overline{\mathcal{M}}$ by $k$-fold cross validation.
+\IF {$\overline{\mathcal{M}} < \overline{\mathcal{M}}_0$} 
+    \STATE $\overline{\mathcal{M}}_0\leftarrow \overline{\mathcal{M}}$\\
+       $
+           \alpha_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{M}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
+       $
+\ELSE \STATE 
+       $\mathcal{A} \leftarrow 
+       \mathcal{A} \backslash \{l\}$, $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow 
+       \boldsymbol{\phi}_{\mathcal{A}}
+       \backslash \{\phi_{l}\}$, $\alpha_{\mathcal{A}} \leftarrow \alpha_{\mathcal{A}} \backslash 
+       \{\alpha_l\}$
+      \textbf{break}
+\ENDIF
+\STATE Find $\phi_{l^\prime}\in 
+       \boldsymbol{\phi}_{\mathcal{A}}$ with the least $s_{l^\prime}(\mathcal{A})$  \\
+\IF {${l^\prime} \neq {l}$}
+\STATE  
+       $\mathcal{A} \leftarrow 
+       \mathcal{A} \backslash \{l^\prime\}$,
+       $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow \boldsymbol{\phi}_{\mathcal{A}}
+        \backslash\{\phi_{l^\prime}\}$, 
+       $\alpha_{\mathcal{A}} \leftarrow \alpha_{\mathcal{A}}\backslash \{\alpha_{l^\prime}\}$
+\STATE Compute $\overline{\mathcal{M}}$ by $k$-fold cross validation.
+\IF{  $\overline{\mathcal{M}} < \overline{\mathcal{M}}_0$ }
+\STATE $\overline{\mathcal{M}}_0 \leftarrow \overline{\mathcal{M}}$\\
+       $
+           \alpha_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{M}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
+       $
+\ELSE \STATE
+       $\mathcal{A} \leftarrow \mathcal{A}\bigcup \{l^\prime\}$,
+       $\phi_{\mathcal{A}}\leftarrow \phi_{\mathcal{A}} 
+       \bigcup \{\phi_{l^\prime}\}$, $\alpha_{\mathcal{A}} \leftarrow 
+       \alpha_{\mathcal{A}}\bigcup \{\alpha_{l^\prime}\}$
+\ENDIF
+\ENDIF
+\ENDLOOP
+\ENSURE $\mathcal{A}$, $\phi_{\mathcal{A}}$, $\alpha_{\mathcal{A}}$.
+\end{algorithmic}
+\caption{Training twin model with adaptive basis construction.}
+\label{alg: train twin}
+\end{algorithm}
+
+
+Algorithm \ref{alg: train twin} adopts the heuristics of the forward-backward iteration
+discussed in Section \ref{sec: adaptive basis review}.
+The algorithm starts from training a twin model using 
+a simple basis dictionary. Usually the starting
+dictionary contains one basis for each dimension with very low resolution.
+Details of the choice are given in Section 
+\ref{sec: twin numerical results} along with numerical examples.
+The main part of the algorithm iterates over a forward step (line 3-9) and a backward step (line
+10-19). The forward step firstly finds the most promising candidate in the neighborhood of the current
+dictionary for addition, according to \eqref{eqn: basis significance}.
+If the addition indeed reduces the cross validation error, the candidate is appended
+to the dictionary; otherwise it is rejected. 
+If the basis is appended, the coefficients are updated by minimizing the solution mismatch, which can be
+implemented by the Broyden-Fletcher-Goldfarb-Shannon (BFGS) algorithm.
+The backward step finds the most promising
+candidate in the current dictionary for deletion. 
+If the deletion reduces the cross validation error, the candidate
+is removed from the dictionary. 
+If the basis is deleted, the coefficients are updated by BFGS again.
+The iteration exits when the most promising addition no longer 
+reduces the validation error. In the end, the algorithm provides the basis dictionary and its
+coefficients as the output.\\
+
+The algorithm requires to train multiple twin models at each iteration. For
+$k=2$, $6$ twin models are trained if both the forward and the backward step are acceptive.
+In practice, the trained coefficients at the last iterate usually provide good initial guess
+for the next iterate. Nonetheless, the algorithm can be costly if the dictionary turns out
+to have a high cardinality which results in a large number of iterates before the dictionary 
+construction completes. Therefore, a numerical shortcut is provided in Section 
+\ref{sec: trunc error} that significantly reduces the cost.\\
+
+\subsection{Minimizing the Truncation Error}
+\label{sec: trunc error}
+In the previous sections, a twin model is trained to minimize the solution mismatch.
+The training can be expensive. Because the minimization
+of the solution mismatch, coupled with the adaptive basis construction, can require
+a large number of solution mismatch evaluations, and each evaluation involves one
+twin model simulation. To reduce the computational cost, a ``pre-training'' step is proposed
+where an ``integrated truncation error'' is minimized. 
+A pre-trained twin model is then ``fine tuned'' to minimize the solution mismatch.
+The applicability of the pre-training is studied; in particular, I study
+under what condition can the solution mismatch be bounded by the integrated truncation error.
+Finally, a stochastic gradient descent approach is adopted that efficiently 
+minimizes the integrated truncation error.\\
+
+
+Define
+\begin{equation}
+    \tau = \frac{\partial u}{\partial t} 
+    + \nabla \cdot \big(D \tilde{F}(u)\big) - q(u,c)\,,
+    \label{eqn: residual}
+\end{equation}
+which is the residual if the gray-box PDE's solution is plugged in the twin-model PDE 
+\eqref{eqn: govern twin model}. Let its discretization be $\boldsymbol{\tau}$.
+For simplicity, assume the gray-box simulator and its twin model use the same space-time 
+discretization. 
+$\boldsymbol{\tau}$ can be obtained by plugging the discretized gray-box solution in the
+twin model simulator.
+Define the integrated truncation error to be
+\begin{equation}
+    \mathcal{T}(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \boldsymbol{\tau}_{ij}^2 \,,
+    \label{eqn: truncation error}
+\end{equation}
+where $w_{ij}$ are the same quadrature weights as in \eqref{eqn: solution mismatch}. 
+$i,j$ are the indices for time and space discretization as in the previous sections.
+I propose to pre-train a twin model using Algorithm \ref{alg: train twin} with $\mathcal{M}$
+replaced by $\mathcal{T}$. In other words, in the pre-training step, the coefficients are determined by
+\begin{equation}
+    \alpha_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}}
+    \alpha_i \phi_i\right)\,.
+    \label{eqn: minimize truncation error}
+\end{equation}
+Besides, the estimator for the significance of a candidate basis, $s_l(\mathcal{A})$, is replaced by 
+\begin{equation}
+    s_l^t(\mathcal{A}) \equiv \left|\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{T}}{d \tilde{F}}
+    \right|_{\tilde{F}_\mathcal{A}^*} \phi_l \; \textrm{d} u \right|\,.
+    \label{eqn: basis significance 2}
+\end{equation}
+Finally, the validation error, $\overline{\mathcal{M}}$, is replaced by
+\begin{equation}
+    \overline{\mathcal{T}} = \frac{1}{k}\left( \mathcal{T}_1 + \mathcal{T}_2 + \cdots + 
+    \mathcal{T}_k\right)\,,
+    \label{eqn: pre train validation error}
+\end{equation}
+where
+\begin{equation}
+    \mathcal{T}_i = \texttt{IntegratedTruncationError}(T_i, \boldsymbol{u}_i)\,.
+\end{equation}
+for $i=1, \cdots, k$.
+Using the pre-trained basis dictionary $\phi^t_{\mathcal{A}}$,
+the twin model is then fine tuned by minimizing the 
+solution mismatch, where $\alpha^t_{\mathcal{A}}$ is used as the initial guess and is adjusted 
+according to \eqref{eqn: twin min mismatch}. 
+For a simulation with implicit schemes, the residual and the integrated truncation error 
+are cheaper to evaluate than the solution mismatch, thereby the benefit of the pre-train. \\
+
+However, $\mathcal{M}$ may not be bounded by
+$\mathcal{T}$. A sufficient condition under which the bound exists is provided
+by Theorem \ref{theorem: 2}.\\
+
+\begin{theorem}
+    Consider a twin model simulator whose one-step time marching is
+    \begin{equation}
+        \mathcal{G}_i:\, \mathbb{R}^N\mapsto\mathbb{R}^N,\, \tilde{\boldsymbol{u}}_{i\cdot}\rightarrow 
+        \tilde{\boldsymbol{u}}_{i+1\cdot}=\mathcal{G}_i
+        \tilde{\boldsymbol{u}}_{i\cdot} \,,\quad i=1,\cdots, M-1\,.
+    \end{equation}
+    Assume the quadrature weights are time-independent, i.e.
+    $w_{ij} = w_{j}$ for all $i,j$.
+    If $\mathcal{G}_i$ satisfies
+    \begin{equation}
+        \|\mathcal{G}_ia-\mathcal{G}_ib\|^2_{W} \le \beta \|a-b\|^2_{W} \,,
+        \label{eqn: contractive}
+    \end{equation}
+    with $\beta<1$,
+    for any $a, b \in \mathbb{R}^N$ and for all $i$,
+    then 
+    \begin{equation}
+        \mathcal{M} \le \frac{1}{1-\beta} \mathcal{T}\,,
+    \end{equation}
+    where
+    \begin{equation}
+        \|v\|^2_{W} \equiv v^T 
+            \begin{pmatrix}
+                {w_{1}} && \\
+                & \ddots & \\
+                && {w_{N}}
+            \end{pmatrix} v
+    \end{equation}
+    for any $v\in \mathbb{R}^N$.
+    \label{theorem: 2}
+\end{theorem}
+The proof is given in Appendix \ref{proof 2}. If the twin model is a contractive dynamical 
+system \cite{contractive system}, as given by \eqref{eqn: contractive}, then the
+solution mismatch can be bounded by the integrated truncation error. In contrast, 
+the bound may not exist for non-contractive dynamical systems, for example for systems 
+that exhibit bifurcation. It is a future work to further investigate the applicability of the pre-training
+theoretically, in particular, to investigate the necessary and sufficient condition for the bound. 
+My thesis will explore the usefulness of the pre-training by several numerical test cases.\\
+
+Because the residual $\boldsymbol{\tau}$ can be evaluated explicitly given the gray-box
+solution, 
+the evaluation can be decoupled for different space-time grid points $\{i,j\}$. By viewing
+the truncation error at each $\{i,j\}$ as a stochastic sample, \eqref{eqn: minimize truncation error}
+can be solved by stochastic gradient descent, Algorithm \ref{alg: 2}.\\
+\begin{algorithm}[htbp]
+\begin{algorithmic}[1]
+    \REQUIRE $\alpha = \alpha_0$
+    \FOR{$(i,j)=(1,1)$ \TO $(M,N)$ }
+         \IF {not converged}
+             \STATE $\alpha \leftarrow \alpha -\lambda w_{ij}\left.\frac{\partial }{\partial \alpha} 
+             \boldsymbol{\tau_{ij}} \right.$
+         \ELSE
+             \STATE \textbf{break}
+         \ENDIF
+    \ENDFOR
+    \ENSURE $\alpha$
+\end{algorithmic}
+\caption{Minimizing the integrated truncation error by stochastic gradient descent.}
+\label{alg: 2}
+\end{algorithm}
+
+$\lambda>0$ is a tunable step size. Usually $\lambda$ is tuned by experience to increase
+convergence speed while avoiding divergence.
+In practice, it is beneficial to
+compute the gradient
+against more than one grid points (called a ``mini-batch'') at each iterate. This is because
+the code can take advantage of vectorization libraries rather than computing the residual 
+at each grid point separately.\\
+
+
+\section{Numerical Results}
+\label{sec: twin numerical results}
+This section demonstrates the twin model on the estimation of the gradients for
+several numerical examples.
+
+
+\subsection{Buckley-Leverett Equation}
+\label{sec: chap 2 BL}
+Section \ref{sec: flux param} has applied a sigmoid parameterization to the gray-box model
+governed by the Buckley-Leverett equation \eqref{eqn: Buckley-Leverett}.
+In this section, the same problem is studied but using the adaptive basis construction developed 
+in Section \ref{sec: twin algo} and \ref{sec: trunc error}. 
+The initial dictionary, $\boldsymbol{\phi}_{\mathcal{A}}$, is selected to contain a single basis
+$\left(0, \frac{0}{2^0}\right)$. Clearly the choice is not unique. 
+As long as the
+initial basis has a low resolution and is centered around $\left[u_{\min}, u_{\max}\right]$,
+Algorithm \ref{alg: train twin} shall build the dictionary adaptively.\\
+
+Figure \ref{fig: basis pnt} shows the selected bases
+for the three solutions in Figure \ref{fig: combine 3}, respectively, by using
+the pre-train step.
+As $\left[u_{\min}, u_{\max}\right]$ shrinks, the dictionary's cardinality reduces and
+the resolution increases. \\
+
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[width=4.5cm]{../basis_pnt_1.png}
+        \caption{Solution 1}
+        \label{fig: basis pnt 1}
+    \end{subfigure}
+    \begin{subfigure}[t]{.32\textwidth}     
+        \centering
+        \includegraphics[width=4.5cm]{../basis_pnt_2.png}
+        \caption{Solution 2}
+        \label{fig: basis pnt 2}
+    \end{subfigure}
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[width=4.5cm]{../basis_pnt_3.png}
+        \caption{Solution 3}
+        \label{fig: basis pnt 3}
+    \end{subfigure}
+    \caption{The basis dictionary for the three solutions in Figure \ref{fig: combine 3}.}
+    \label{fig: basis pnt}
+\end{center}\end{figure}
+
+Consider a time-space-dependent control $c=c(t,x)$ in \eqref{eqn: Buckley-Leverett} and 
+\eqref{eqn: Buckley-Leverett twin}. The gradient of $\xi$, \eqref{eqn: objective ad hoc}, is
+estimated using the trained twin model. The estimated gradients are compared with the true adjoint
+gradients of the gray-box model, and the errors are shown in Figure \ref{fig: adap basis grad err BL}.\\
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[width=4.8cm, height=4.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err_mod.png}
+        \caption{Solution 1}
+        \label{fig: grad BL 1}
+    \end{subfigure}
+    \begin{subfigure}[t]{.32\textwidth}     
+        \centering
+        \includegraphics[width=4.8cm, height=4.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png}
+        \caption{Solution 2}
+        \label{fig: grad BL 2}
+    \end{subfigure}
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[width=4.8cm, height=4.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err_mod.png}
+        \caption{Solution 3}
+        \label{fig: grad BL 3}
+    \end{subfigure}
+    \caption{The errors of estimated gradients for the three solutions.}
+    \label{fig: adap basis grad err BL}
+\end{center}\end{figure}
+
+The adaptive basis construction improves the accuracy of the gradient estimation.
+Table \ref{table: BL grad error} shows the integrated gradient error 
+\footnote{The gradient error is integrated using the same quadrature rule as in 
+\eqref{eqn: solution mismatch}.} by using either the
+ad hoc bases in Figure \ref{fig: sigmoid basis ad hoc} or by using the bases constructed adaptively.\\
+\begin{center}
+    \begin{tabular}{|c|c|c|c|}
+       \hline\hline
+         & Solution 1 & Solution 2 & Solution 3\\
+       \hline
+       Ad hoc basis & $2.5\times 10^{-3}$& $6.6\times 10^{-4}$ & $7.3\times 10^{-5}$ \\
+       \hline
+       Adaptive basis & $4.2\times 10^{-6}$& $1.5\times 10^{-6}$ & $8.9\times 10^{-7}$ \\
+       \hline\hline
+    \end{tabular}
+    \captionof{table}{The integrated errors of the estimated gradients for the three solutions.}
+    \label{table: BL grad error}
+\end{center}
+
+
+\subsection{Navier-Stokes Flow}
+\label{sec: chap2 num example NS}
+Consider
+a compressible internal flow in a 2-D return bend channel 
+driven by the pressure difference between the inlet and the outlet.
+The return bend is bounded by 
+no-slip walls. The inlet static pressure and the outlet pressure are fixed.
+The geometry of the return bend is given in Figure \ref{fig: NS mesh}.
+The inner and outer boundaries of the bending section are each generated by 6 control points
+using quadratic B-spline.\\
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=10.5cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/mesh/spline.png}
+    \caption{The return bend geometry and the mesh for the simulation.}
+    \label{fig: NS mesh}
+\end{center}\end{figure}
+
+The flow is governed by Navier-Stokes equations.
+Let $\rho$, $u$, $v$, $E$, and $p$ denote the density, Cartesian velocity components, 
+total energy, and pressure.
+The steady-state Navier-Stokes equation is
+\begin{equation}
+    \frac{\partial}{\partial x} 
+    \begin{pmatrix}
+        \rho u\\
+        \rho u^2 + p - \sigma_{xx}\\
+        \rho uv - \sigma_{xy}\\
+        u(E\rho+p) - \sigma_{xx} u - \sigma_{xy} v
+    \end{pmatrix}
+    + \frac{\partial}{\partial y}
+    \begin{pmatrix}
+        \rho v\\
+        \rho uv-\sigma_{xy}\\
+        \rho v^2+p-\sigma_{yy}\\
+        v(E\rho+p) - \sigma_{xy} u -\sigma_{yy}v
+    \end{pmatrix} 
+    = \boldsymbol{0}\,,
+    \label{NSeqn}
+\end{equation}
+where
+\begin{equation}\begin{split}
+    \sigma_{xx} &= \mu \left(2 \frac{\partial u}{\partial x} - \frac{2}{3} \left(\frac{\partial u}{\partial x} 
+    + \frac{\partial v}{\partial y}\right)\right)\\
+    \sigma_{yy} &= \mu \left(2 \frac{\partial v}{\partial y} - \frac{2}{3} \left(\frac{\partial u}{\partial x} 
+    + \frac{\partial v}{\partial y}\right)\right)\\
+    \sigma_{xy}&=\mu\left(\frac{\partial u}{\partial y} + \frac{\partial v}{\partial x}\right)
+\end{split}\,.\end{equation}
+The Navier-Stokes equation requires an additional equation, the state equation, for closure.
+The state equation has the form
+\begin{equation}
+    p = p(U, \rho)\,,
+    \label{state equation}
+\end{equation}
+where $U$ denotes the internal energy per unit volume,
+\begin{equation}
+    U = \rho\left(E-\frac{1}{2}(u^2+v^2)\right)\,.
+\end{equation}
+
+Many models have been developed for the state equation, such as the ideal gas equation, the
+van der Waals equation, and the Redlich-Kwong equation \cite{state eqns}.
+In the sequel, the true state equation in the gray-box simulator is assumed unknown and
+will be inferred from the gray-box solution. 
+Let $\rho_\infty$ be the steady state density,
+$\boldsymbol{u}_\infty = (u_\infty, v_\infty)$ be the steady state Cartesian velocity,
+and $E_\infty$ be the steady state energy density.
+The steady state mass flux is
+\begin{equation}
+    \xi = - \int_{\textrm{outlet}} \rho_\infty u_\infty \big|_{\textrm{outlet}} \; dy=
+    \int_{\textrm{inlet}} \rho_\infty u_\infty\big|_{\textrm{inlet}} \; dy
+    \label{eqn: mass flux}
+\end{equation}
+The goal is to estimate the gradient of $\xi$
+to the red control points' coordinates.
+\\
+
+Two state equations are tested: the ideal gas equation and the Redlich-Kwong equation, 
+given by
+\begin{equation}\begin{split}
+    p_{ig} &= (\gamma-1) U\\
+    p_{rk} &= \frac{(\gamma-1)U}{1-b_{rk}\rho} - 
+    \frac{a_{rk}\rho^{5/2}}{((\gamma-1)U)^{1/2}(1+b_{rk}\rho)}
+\end{split}\label{NS state equations}
+\end{equation}
+where $a_{rk}=10^7$ and $b_{rk}=0.1$.\\
+
+The solution mismatch, \eqref{eqn: solution mismatch}, is given by
+\begin{equation*}\begin{split}
+    \mathcal{M} = &w_\rho \int_\Omega \left|\tilde{\rho}_{\infty} - \rho_{\infty}\right|^2 d\boldsymbol{x}
+                + w_u
+                \int_\Omega \left|\tilde{u}_{\infty}- u_{\infty}\right|^2 d\boldsymbol{x} \\
+                + &w_v
+                \int_\Omega \left| \tilde{v}_{\infty}- v_{\infty}\right|^2 d\boldsymbol{x}
+                + w_E
+                \int_\Omega \left|\tilde{E}_{\infty} - E_\infty\right|^2 d\boldsymbol{x}\,,
+    \label{NS mismatch}
+\end{split}\end{equation*}
+where $w_\rho$, $w_u$, $w_v$, and $w_E$ are non-dimensionalization constants.
+Figure \ref{fig: grayErrSol Ubend} shows the gray-box solution and the solution mismatch
+after training the twin model \footnote{Both the solution and the mismatch are normalized.}.
+Figure \ref{fig: state err Ubend} compares the true state equation and the corresponding trained 
+state equation, where the convex hull of $({U}_\infty, \rho_\infty)$, the internal energy
+and the density of the gray-box solution,
+is shown by the dashed red line.
+Because the state equation is expected to be inferrable only inside the domain of the gray-box 
+solution, large deviation is expected outside the convex hull.\\
+
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.49\textwidth}
+        \centering
+        \includegraphics[height=8cm]{../graysol_Ubend.png}
+        \label{fig: graysol Ubend}
+    \end{subfigure}
+    \begin{subfigure}[t]{.49\textwidth}
+        \centering
+        \includegraphics[height=8cm]{../err_Ubend.png}
+        \label{fig: errsol Ubend}
+    \end{subfigure}
+    \caption{Left column: an example gray-box solution for a given geometry. Right column:
+             the solution mismatch after training a twin model.}
+    \label{fig: grayErrSol Ubend}
+\end{center}\end{figure}
+
+
+
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.99\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{../state_eqn_vdw.png}
+        \label{fig: graysol Ubend}
+    \end{subfigure}\\
+    \begin{subfigure}[t]{.99\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{../state_eqn_rk.png}
+        \label{fig: errsol Ubend}
+    \end{subfigure}
+    \caption{The gray-box state equation (right column) and the trained state equation 
+             (left column). The gray-box model uses either the ideal gas equation
+             (first row) or the Reclich-Kwong equation (second row). The convex hull 
+             of the gray-box solution is shown by the dashed red line.}
+    \label{fig: state err Ubend}
+\end{center}\end{figure}
+
+The trained twin model enables the adjoint gradient estimation.
+Figure \ref{fig: geo grad all} shows the
+estimated gradient of $\xi$ with respect to the control points coordinates. It also
+compares the estimated gradient with the true gradient. The two gradients are indistinguishable,
+and the error is given in Table \ref{tab: idea gas gradient}.
+
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.45\textwidth}
+        \centering
+        \includegraphics[height=7.5cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux_geo_grad/geo_grad_0_spline.png}
+        \caption{
+        The gradient of $\xi$ to the control points for the 
+        Redlich-Kwong gas. 
+        The wide gray arrow is the gradient evaluated by the gray-box model, while
+        the thin black arrow is the gradient evaluated by the twin model using finite difference.
+        }
+        \label{fig: geo grad}
+    \end{subfigure}
+    \hspace{.5cm}
+    \begin{subfigure}[t]{.45\textwidth}
+        \centering
+        \includegraphics[height=7.5cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux_geo_grad/perturb_0.png}
+        \caption{
+        The boundary perturbed according to the gradient. 
+        The blue dashed line is computed by finite difference of the gray-box model, while the
+        red dashed line is computed by the twin model's gradient.
+        }
+        \label{fig: geo grad perturb}
+    \end{subfigure}
+    \caption{A comparison of the estimated gradient and the true gradient.}
+    \label{fig: geo grad all}
+\end{center}\end{figure}
+
+\begin{center}
+\begin{tabular}{|c|c|C{12mm}|C{12mm}|C{12mm}|C{12mm}|C{12mm}|C{12mm}|C{12mm}|C{12mm}|}
+\hline\hline
+{Gas}&\multicolumn{4}{c|}{Interior control points}&\multicolumn{4}{c|}{Exterior control points}\\
+\cline{1-9}
+Ideal &0.13 & 0.04 & 0.05 & 0.32 &0.16 & 0.15 & 0.07 & 0.02\\
+\cline{1-9}
+Redlich-Kwong& 0.32 & 0.03 & 0.07 & 0.50 & 0.40 & 0.12 & 0.06 & 0.05\\
+\hline\hline
+%y&Graybox&-0.971&-2.852&1.792&1.472&1.190&0.596&-1.854&-3.097\\
+%\cline{2-10}
+%&Twin model&-0.972&-2.849&1.792&1.473&1.189&0.595&-1.853&-3.094\\
+%\hline\hline
+
+%\multicolumn{2}{|c|}{VDW gas}&\multicolumn{4}{c|}{gradient at inner boundary}&\multicolumn{4}{c|}{gradient at outer boundary}\\
+%\cline{1-10}
+%x&Graybox&-2.389&-9.091&-7.736&-2.073&0.660&6.003&7.756&1.846\\
+%\cline{2-10}
+%&Twin model&-2.392&-9.085&-7.739&-2.078&0.659&6.006&7.759&1.846\\
+%\hline
+%y&Graybox&-0.942&-2.848&1.785&1.443&1.192&0.593&-1.858&-3.105\\
+%\cline{2-10}
+%&Twin model&-0.948&-2.846&1.789&1.452&1.188&0.593&-1.858&-3.104\\
+%\hline\hline
+%
+%\multicolumn{2}{|c|}{RK gas}&\multicolumn{4}{c|}{gradient at inner boundary}&\multicolumn{4}{c|}{gradient at outer boundary}\\
+%\cline{1-10}
+%x&Graybox&-2.429&-9.064&-7.749&-2.122&0.663&6.045&7.773&1.837\\
+%\cline{2-10}
+%&Twin model&-2.412&-9.039&-7.702&-2.092&0.660&6.000&7.731&1.832\\
+%\hline
+%y&Graybox&-1.010&-2.848&1.820&1.536&1.183&0.603&-1.851&-3.081\\
+%\cline{2-10}
+%&Twin model&-0.995&-2.844&1.812&1.519&1.190&0.596&-1.845&-3.076\\
+%\hline\hline
+\end{tabular}
+\captionof{table}{The error of the gradient estimation, in percentage.}
+\label{tab: idea gas gradient}
+\end{center}
+
+
+\subsection{Polymer Injection in Petroleum Reservoir}
+\label{sec: chap 2 reservoir}
+Water flooding is a technique to enhance the secondary recovery in petroleum reservoirs, as illustrated
+in Figure \ref{fig: polymer sketch}. 
+Injecting pure water can be cost-inefficient due to low water viscosity
+and high water cut. Therefore, water-solvent polymer can be utilized to increase the water-phase
+viscosity and to reduce the residual oil.\\
+
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=6cm]{/home/voila/Documents/mrst-2015b/results/waterflooding.png}
+        \caption{Water flooding in petroleum reservoir engineering (courtesy
+        from PetroWiki).}
+        \label{fig: polymer sketch}
+    \end{center}
+\end{figure}
+
+Consider a reservoir governed by the two-phase porous media flow equations
+\begin{equation}\begin{split}
+    \frac{\partial }{\partial t} \left(\rho_\alpha \phi S_\alpha \right) + \nabla \cdot
+    \left( \rho_\alpha \vec{v}_{\alpha} \right) &= 0\,, \quad \alpha \in \{w,o\}\\
+    \frac{\partial}{\partial t}\left( \rho_w \phi S_w c \right) + \nabla \cdot
+    \left( c \rho \vec{v}_{wp}\right) &= 0        
+    \end{split}\,,
+    \label{eqn: two phase polymer}
+\end{equation}
+for $x\in \Omega$ and $t\in [0,T]$,
+where the phase velocities are given by the Darcy's law
+\begin{equation}\begin{split}
+    \vec{v}_\alpha &= - {M_\alpha} k_{r\alpha} \boldsymbol{K} \cdot (\nabla p - \rho_w g \nabla z), \, \quad \alpha \in \{w,o\}\\
+    \vec{v}_{wp} &= -{M_{wp}} k_{rw} \boldsymbol{K} \cdot (\nabla p - \rho_{w} g \nabla z)
+\end{split}\,.
+\label{eqn: darcy law}
+\end{equation}
+$w, o$ indicate the water and oil phases.
+$\rho$ is the phase density. $\phi$ is the porosity. $S$ is the phase saturation where
+$S_w+S_o=1$.
+$c$ is the polymer concentration in the water phase. $v_{w}$, $v_{o}$, 
+$v_{wp}$ are the componentwise velocities of water, oil, and polymer. 
+$\boldsymbol{K}$
+is the permeability tensor. $k_{r}$ is the relative permeability. $p$ is the pressure. $z$ is the depth.
+$g$ is the gravity constant. The mobility factors, $M_o, M_w, M_{wp}$, 
+model the modification of the componentwise mobility due to the presence of polymer.
+In the sequel, the models for the mobility factors are unknown. The only 
+knowledge about the mobility factors is that they depend on $S_w, p$, and $c$.\\
+
+\emph{PSim}, the simulator aforementioned in Section \ref{sec: motivation}, is
+used as the gray-box simulator, which uses the IMPES time marching, i.e. implicit in pressure
+and explicit in saturation, as well as the upwind scheme.
+Its solution, $S_w$, $c$, and $p$ can be used to train the 
+twin model. The twin model uses fully implicit time marching and the upwind scheme.
+The solution mismatch is defined by
+\begin{equation}
+    \mathcal{M} = w_{S_w}\int_0^T\int_\Omega |S_w-\tilde{S}_w|^2 d\boldsymbol{x} dt
+                + w_{c}\int_0^T\int_\Omega |c-\tilde{c}|^2 d\boldsymbol{x} dt 
+                + w_{p}\int_{0}^T\int_\Omega |p-\tilde{p}|^2 d\boldsymbol{x} dt\,,
+    \label{eqn: polymer sol mismatch}
+\end{equation}
+where $w_{S_w}$, $w_c$, and $w_p$ are non-dimensionalization constants.\\
+
+%\begin{center}
+%    \includegraphics[height=2.1cm]{/home/voila/Documents/mrst-2015b/results/grid1D.png}
+%\end{center}
+%\includegraphics[width=5.2cm]{/home/voila/Documents/mrst-2015b/results/sW_1D.png}
+%\includegraphics[width=5.2cm]{/home/voila/Documents/mrst-2015b/results/c_1D.png}
+
+Consider a reservoir setup shown in Figure \ref{fig: reservoir 3D mesh}, which
+is a 3D block with two injectors and one producer. The permeability
+is 100 milli Darcy, and the porosity is 0.3. A constant injection rate of $10^6 
+\texttt{ft}^3/\texttt{day}$ is used at both the injectors.
+The reservoir is simulated for $t\in [0,50] \texttt{day}$.
+The solution of $S_w$ is illustrated in Figure \ref{fig: reservoir 3D solutions} for the untrained 
+twin model, the gray-box model, and the trained twin model, respectively. 
+After the training, the twin-model solution matches the gray-box solution closely.\\
+
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[height=5.cm]{/home/voila/Documents/mrst-2015b/results/grid.png}
+        \caption{The geometry of the petroleum reservoir.}
+        \label{fig: reservoir 3D mesh}
+    \end{center}
+\end{figure}
+
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.99\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{/home/voila/Documents/mrst-2015b/results/iso_sW_notrain_2D.png}
+        \label{fig: reservoir 3D untrained}
+        \caption{Untrained twin model.}
+    \end{subfigure}\\
+    \begin{subfigure}[t]{.99\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{/home/voila/Documents/mrst-2015b/results/iso_sW_gray_2D.png}
+        \label{fig: reservoir 3D untrained}
+        \caption{PSim.}
+    \end{subfigure}\\
+    \begin{subfigure}[t]{.99\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{/home/voila/Documents/mrst-2015b/results/iso_sW_twin_2D.png}
+        \label{fig: reservoir 3D untrained}
+        \caption{Trained twin model.}
+    \end{subfigure}
+    \caption{The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. }
+    \label{fig: reservoir 3D solutions}
+\end{center}\end{figure}
+
+Let the objective function be the residual oil at $T=50 \, \texttt{day}$,
+\begin{equation}
+    \xi = \int_\Omega \rho_o(T) \phi S_o(T) \,\textrm{d} \boldsymbol{x} \,.
+    \label{eqn: chap2 reservoir xi day 50}
+\end{equation}
+The gradient of $\xi$ with respect to the time-dependent injection rate is computed.
+The gradient estimated by the twin model is shown in Figure \ref{fig: reservoir 3D gradient},
+where the red and blue lines indicate the gradient for the two injectors. In comparison, 
+the star markers show the true gradient at day $2$, $16$, $30$, and $44$, evaluated by finite difference.
+Clearly, a rate increase at the injector 1 leads to more residual oil reduction than the injector 2.
+This is because the injector 2 is closer to the producer, where a larger rate accelerates the 
+water breakthrough that impedes further oil production.
+It is observed that the estimated gradient closely matches the true gradient, although
+the error slightly increases for smaller $t$, possibly because of the different numerical schemes
+used in the twin and gray-box models. The error is given in Table \ref{tab: reservoir 3D grad error}.\\
+
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=8cm]{/home/voila/Documents/mrst-2015b/results/grad_2D.png}
+        \caption{The gradient of $\xi$ with respect to rates at the two injectors.
+                 The lines indicate the gradients estimated by the twin model, while
+                 the stars indicate the true gradient evaluated by finite difference.}
+        \label{fig: reservoir 3D gradient}
+    \end{center}
+\end{figure}
+
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+       \hline\hline
+         Error & $t=0.04$ & $t=0.32$ & $t=0.6$ & $t=0.88$\\
+       \hline
+       Inj 1 & 1.7  & 1.0 & 0.6 & 0.2 \\
+       \hline
+       Inj 2 & 2.2 &  1.9 & 0.7 & 0.2 \\
+       \hline\hline
+    \end{tabular}
+    \captionof{table}{The error of estimated gradient at day $2$, $16$, $30$, and $44$, in percentage.}
+    \label{tab: reservoir 3D grad error}
+\end{center}
+
+
+\section{Chapter Summary}
+\label{sec: chap 2 summary}
+This chapter develops a method for gradient estimation by using the space-time solution of
+gray-box conservation law simulations. In particular, an adjoint-enabled twin model 
+is trained to minimize the solution mismatch metric.
+The inferrability of the twin model is studied theoretically for a simple PDE with only one equation
+and one dimensional space. 
+To enable the training computationally, a sigmoid parameterization
+is presented. However, an ad hoc choice for the bases
+does not fully exploit the information contained in the
+gray-box solution. To address this issue,
+an adaptive basis construction procedure is presented. The adaptive 
+procedure  builds upon three key elements: the approximated basis significance,
+the basis neighborhood, and the cross validation. The algorithm for training the twin model
+is summarized. To alleviate the training cost, a pre-train step is suggested
+that minimizes the integrated truncation error instead of the solution mismatch.\\
+
+The proposed twin model algorithm has a wide applicability, which is demonstrated on 
+a variety of numerical examples. The first example is the Buckley-Leverett equation,
+whose flux function is inferred. The trained twin model accurately estimates 
+the gradient of an objective to the source term. 
+The second example is the steady-state Navier-Stokes equation in a return bend,
+whose state equation is inferred. The inferred state equation allows 
+estimating the gradient of mass flux to the control surface geometry.
+The third example is the petroleum reservoir with polymer injection, where
+the mobility factors are inferred. The gradient of the residual oil to
+the injection rate is estimated.
+With the aid of the estimated gradient, the objective can be optimized more efficiently,
+which will be discussed in the next chapter.
+

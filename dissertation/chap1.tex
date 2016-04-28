@@ -1,0 +1,743 @@
+%% This is an example first chapter.  You should put chapter/appendix that you
+%% write into a separate file, and add a line \include{yourfilename} to
+%% main.tex, where `yourfilename.tex' is the name of the chapter/appendix file.
+%% You can process specific files by typing their names in at the 
+%% \files=
+%% prompt when you run the file main.tex through LaTeX.
+\chapter{Background}
+\label{chap 1}
+
+\section{Motivation}
+\label{sec: motivation}
+A conservation law states that a particular property of a physical system does not
+change as the system evolves over time, such as the conservation of mass, momentum, and energy. 
+Mathematically, a conservation law can be expressed locally as a continuity equation
+\eqref{eqn: conservation law},
+\begin{equation}
+    \frac{\partial u}{\partial t} + \nabla \cdot F = q\,,
+    \label{eqn: conservation law}
+\end{equation}
+where $u$ is the conserved physical quantity, $t$ is time, $F$ is the flux of $u$, and $q$
+is the source for $u$. Many equations fundamental to the physical world, such as the Navier-Stokes equation,
+the Maxwell equation, and the porous medium transport equation, can be described by \eqref{eqn: conservation law}.\\
+
+Optimization constrained by conservation laws are present in many engineering applications.
+For example, in gas turbines, the rotor blades can operate at a temperature close to 2000K 
+\cite{ubend rans opt 1, ubend rans opt 2}.
+To prevent material failure due to overheating, channels can be drilled inside the rotor blades
+to circulate coolant air whose dynamics are governed by the Navier-Stokes equation. The pressure
+used to drive the coolant flow is provided by the compressor, resulting in a penalty on the 
+turbine's thermo-dynamic efficiency. Engineers are thereby interested in optimizing the coolant
+channel geometry in order to suppress the pressure loss. Another example is the field control of petroleum
+reservoir. In petroleum reservoir, the fluid flow of various phases and chemical components 
+is dictated by porous medium transport equations. The flow can be passively and actively controlled by a variety of techniques \cite{first reservoir opt},
+such as the wellbore pressure control, the polymer injection, the hydrolic fracturing, and the steam heating.
+Driven by economic interests, petroleum producers are 
+devoted to optimizing the controls for enhanced recovery and reduced cost.\\
+
+Such optimization is being revolutionized by the numerical simulation and optimization
+algorithms. On one hand, conservation law simulation can provide an evaluation of a candidate control
+that is cheaper, faster, and more scalable than conducting physical experiments. 
+On the other hand, advanced optimization algorithms can guide 
+the control towards the optimal with reduced number of simulation.
+However, optimization based on conservation law simulation can still be overwhelmingly costly. 
+The cost is two-folded: Firstly, each simulation for a given control may run for hours or days even on a high-end
+computer. This is mainly because of the high-fidelity physical models, the complex numerical schemes, and the large scale space-time 
+discretization employed in the simulation. Secondly, optimization algorithms generally take many iterations of simulation on
+various controls. The number of iterations required to achieve near-optimality usually 
+increases with the control's degree of freedom. The two costs are multiplicative.
+The multiplicative effect compromises the impact of computational efforts among field engineers.\\
+
+Fortunately, the cost due to iteration can be alleviated by adopting gradient-based optimization algorithms.
+A gradient-based algorithm requires significantly less iterations than a derivative-free algorithm for problems with many control
+variables. Gradient-based algorithms require the gradient of the optimization objective to the control variables, which is efficiently 
+computable through the adjoint method \cite{adjoint}. The adjoint method propogates the gradient from the objective 
+backward to the control variables through the path of time integration \cite{adjoint} or through the chain of numerical operations \cite{AD review}. 
+To keep track of the back propogation, the simulator source code needs to be modified.
+In real-world industrial simulators, adjoint is scarcely available because most source codes are proprietary and/or legacy.
+For example, \textit{PSim}, a reservoir simulator developed and owned by \textit{ConocoPhillips}, 
+is a multi-million-line Fortran-77 code that traces its birth back to the 1980's. 
+Implementing adjoint directly into the source code is unpreferable because it can take tremendous amount of brain hours.
+Besides, the source code and its physical models are only accessible and modifiable by the computational team inside the company. 
+For the sake of gradient computation, \textit{PSim} has been superceded by adjoint-enabled simulators, but it is
+difficult to be replaced due to its legacy use and cost concerns.
+The proprietary and legacy nature of many industrial simulators hinders the prevalence of the adjoint method 
+and gradient-based algorithms in many real-world problems with high-dimensional control.\\
+
+Despite their proprietary and legacy nature, most simulators for unsteady conservation laws are able to 
+provide the discretized space-time solution of relevant flow quantities. 
+For example, \textit{PSim} provides the space-time solution of pressure, saturation, and concentration for multi-phase flow.
+Similarly, most steady state simulators are able 
+to provide the spatial solution. the discussion will focus on the unsteady case, 
+since a steady state simulator can be viewed as a special case of the unsteady
+one where the solution remains the same at every timestep.\\
+%In addition, the functional form of the 
+%conservation law is usually well-known. For example, in petroleum reservoir with polymer injection, the flow can be governed by a two-phase transport equation
+%\begin{equation*}\begin{split}
+%    \frac{\partial }{\partial t} \left(\rho_\alpha \phi S_\alpha \right) + \nabla \cdot
+%    \left( \rho_\alpha \vec{v}_{\alpha} \right) &= 0\,, \quad \alpha \in \{w,o\}\\
+%    \frac{\partial}{\partial t}\left( \rho_w \phi S_w c \right) + \nabla \cdot
+%    \left( c \rho \vec{v}_{wp}\right) &= 0        
+%\end{split}\end{equation*}
+%The subscripts $o,w$ indicate the oil and water phases. $\rho, S, \vec{v}$ indicates
+%density, saturation, and velocity for corresponding phases. $\phi$ indicates porosity.
+%$c$ is the polymer saturation in the water phase, and $\vec{v}_{wp}$ is the polymer velocity.
+%The fluid velocity is governed by the infamous Darcy's law. 
+%The presence of affects the phase
+%viscosity
+
+I argue that the adjoint gradient computation may be enabled by leveraging the space-time solution.
+The discretized space-time solution provides invaluable information about the conservation law
+hardwired in the simulator. For illustration, consider a code which simulates
+\begin{equation}\begin{split}
+    &\frac{\partial u}{\partial t} + \frac{\partial F(u)}{\partial x} = c\,,\quad
+    x \in [0,1] \;, \;\; t\in[0,1]
+    \label{eqn: 1D conceptual}
+\end{split}\end{equation}
+with proper intial and boundary conditions and $F$ being differentiable. 
+$c$ indicates the control that acts as a source for $u$.
+If the expression of $F(u)$ in the simulator is not accessible by the user, 
+adjoint can not be implemented directly. However, $F$ may be partially inferred from 
+a discretized space-time solution of $u$ for a given $c$.
+To see this, let the discretized solution be $\boldsymbol{u}\equiv \{u(t_i, x_j)\}_{i=1,\cdots,M\,,\; j=1,\cdots, N}$,
+where $0\le t_1 < t_2 < \cdots < t_M \le 1$ and $0 \le x_1 < x_2 < \cdots < x_N \le 1$ indicate the time and space discretization. 
+Given $\boldsymbol{u}$, the $\frac{\partial u}{\partial t}$ and $\frac{\partial u}{\partial x}$ can be sampled by finite difference.
+Because \eqref{eqn: 1D conceptual} can be written as
+\begin{equation}
+    \frac{\partial u}{\partial t} + \frac{d F}{du} \frac{\partial u}{\partial x} = c\,,\quad
+    x \in [0,1] \;, \;\; t\in[0,1]
+    \label{eqn: 1D conceptual no shock}
+\end{equation}
+away from the shock wave, the samples of $\frac{\partial u}{\partial t}$ and $\frac{\partial u}{\partial x}$
+can be plugged into \eqref{eqn: 1D conceptual no shock} to obtain samples of $\frac{dF}{du}$.
+The reasoning remains intact at the shock wave, where $\frac{dF}{du}$ in \eqref{eqn: 1D conceptual no shock} is 
+replaced by the finite difference form $\frac{\Delta F}{\Delta u}$ according to the Rankine-Hugoniot condition.
+Based upon the sampled $\frac{dF}{du}$ and $\frac{\Delta F}{\Delta u}$, the unknown flux function $F$
+can be approximated up to a constant by indefinite integral. Let $\tilde{F}$ be the approximation for $F$.
+An alternative conservation law can be proposed
+\begin{equation}
+    \frac{\partial \tilde{u}}{\partial t} + \frac{\partial \tilde{F}(\tilde{u})}{\partial \tilde{u}} = c\,,\quad
+    x \in [0,1] \;, \;\; t\in[0,1]\,,
+    \label{eqn: 1D conceptual inferred}
+\end{equation}
+that approximates the true but unknown conservation law \eqref{eqn: 1D conceptual}, where
+$\tilde{u}$ is the solution associated with $\tilde{F}$.
+Thereby, the adjoint method can be applied to \eqref{eqn: 1D conceptual inferred} to efficiently compute the gradient, which estimates the true gradient.
+A simulator for the approximated conservation law is named \textbf{twin model}, since it behaves as an adjoint-enabled
+twin of the original simulator.\\
+
+A simulator is defined to be \textbf{gray-box} if the following two conditions are met:
+\begin{enumerate}
+    \item the adjoint is unavailable, and is infeasible to implement into the source code.
+    \item the full space-time solution of relevant flow quantities is available.
+\end{enumerate}
+Many industrial simulators, such as \textit{PSim}, satisfy both conditions.
+In contrast, a simulator is named \textbf{open-box} if condition 1 is violated.
+For example, \textit{OpenFOAM} is an open-source fluid simulator where adjoint can be implemented directly
+into its source code, so it is open-box by definition. Open-box simulators enjoy the
+benifit of efficient gradient computation brought by adjoint, thereby are not within the research
+scope of my thesis. If condition 1 is met but 2 is violated, a simulator
+is named \textbf{black-box}. For example, \textit{Aspen}, an industrial chemical reactor simulator, provides neither
+the adjoint nor the full space-time solution. Black-box simulators are simply calculators
+for the objective function. Due to the lack of space-time solution, adjoint can not be enabled
+using the twin model. My thesis will only investigate gray-box simulators.\\
+
+My thesis aims at reducing the number of expensive iterations in the optimization constrained by
+gray-box simulators. 
+Motivated by the adjoint gradient computation, a mathematical procedure will be developed to estimate the
+adjoint gradient by leveraging the full space-time solution. In addition,
+my thesis will investigate how the estimated gradient can faciliate a suitable 
+optimization algorithm to reduce the number of iterations. 
+Finally, the iteration reduction achieved by my approach will be assessed, especially 
+for problems with many control parameters.\\
+
+Instead of discussing gray-box simulators in general, my thesis only focuses on
+simulators with (partially) unknown flux function, while their boundary condition,
+initial condition, and the source term are known. This assumption is valid for some applications,
+such as simulating a petroleum reservoir with polymer injection.
+The flow in such reservoir is governed by multi-phase multi-component porous medium transport 
+equations. The initial condition is usually given at the equilibrium state, the boundary
+is usually described by a no-flux condition, and the source term can be modeled as controls
+with given flow rate or wellbore pressure.
+Although it's public knowledge that the flux satisfies the Darcy's law, 
+the mechanism that modifies the rock permeability and flow viscosity due to the injected
+polymer can be unavailable. Thereby the flux is partially unknown.
+The specific form of PDE considered in my thesis is given in Section \ref{sec: formulation}.
+It is a future work to extend my research to more general gray-box settings where
+the initial condition, boundary condition, source term, and the flux are jointly unknown.\\
+
+
+
+\section{Problem Formulation}
+\label{sec: formulation}
+Consider the optimization problem
+\begin{equation}\begin{split}
+    c^* &= \argmax_{c_{\min}\le  c \le c_{\max}}\; \xi(\boldsymbol{u},c) \\
+    \xi(\boldsymbol{u},c) &= \sum_{i=1}^M \sum_{j=1}^N w_{ij} f(\boldsymbol{u}_{ij},c)
+    \approx \int_0^T \int_\Omega f(u,c) d\boldsymbol{x} d t%\\
+    %\textrm{s.t.} \; &\; c_{\min}\le  c \le c_{\max}\,,
+    \label{eqn: objective prototype}
+\end{split}\end{equation}
+where $\boldsymbol{u}$ is the discretized space-time solution of a gray-box conservation law
+simulator. The spatial coordinate is $x \in \Omega$ and the time is $t\in[0,T]$.
+$i=1,\cdots, M$ and $j=1,\cdots, N$ indicate the indices for the time and space discretization.
+$w_{ij}$'s are given quadrature weights for the space-time integration.
+$c\in\mathbb{R}^d$ indicates the control variable. 
+$c_{\min}$ and $c_{\max}$ are elementwise bound constraints.
+The gray-box simulator solves the partial differential equation (PDE)
+\begin{equation}\begin{split}
+    \frac{\partial u}{\partial t}+ \nabla \cdot \big( D F(u) \big) = q(u,c)\,,
+\end{split}
+\label{eqn: govern PDE}
+\end{equation}
+which is a system of $k$ equation. 
+The initial and boundary conditions are known.
+$D$ is a known differential operator that may depend on $u$, and
+$F$ is an unknown function that depends on $u$.
+$q$ is a known source term that depends on $u$ and $c$.
+Notice \eqref{eqn: govern PDE} degenerates to \eqref{eqn: conservation law} when $D$ equals 1.
+The simulator does not have the adjoint capability,
+and it is infeasible to implement the adjoint method into its source code. But the full space-time solution 
+$\boldsymbol{u}$ is provided. The steady-state conservation law is a special case
+of the unsteady one, so it will not be discussed separately.\\
+
+My thesis focuses on reducing the number of gray-box simulations in the optimization,
+especially for problems where $d$, the dimensionality of the control variable,
+is large. We assume that the computational cost
+is dominated by the repeated gray-box simulation, while the cost of optimization algorithm 
+is relatively small. Chapter 2 develops a mathematical procedure, called the twin model method, 
+that enables adjoint gradient computation by leveraging the full space-time solution.
+Based upon previous research, Chapter 3 develops an optimization algorithm that takes 
+advantage of the estimated gradient to achieve iteration reduction. The utility of
+the estimated gradient for optimization is analyzed both numerically and theoretically.
+
+\section{Literature Review}
+\label{section: literature}
+
+Given the background, I review the literature on derivative-free optimization and gradient-based optimization. In addition,
+I review the adjoint method since it is an essential ingredient for Chapter 2. Finally, I review model calibration and Bayesian optimization methods, which serve as the framework for the developments in Chapter 3.
+
+\subsection{Derivative-free Optimization}
+\label{section: DFO}
+Derivative-free optimization (DFO) requires only the availability of objective
+function values but no gradient information, thus is useful when the gradient
+is unavailable, unreliable, or too expensive to obtain \cite{gradfreereview}. 
+Such methods are suitable for problems constrained by black-box simulators.\\
+
+Depending on whether the searched optimum is local or global,
+DFO methods can be categorized into local methods and global methods.
+Local methods seek a local optimum which is also the global optimum for convex problems. 
+An important local method is the
+trust-region method. Trust-region method introduces a surrogate model that is
+cheap to evaluate and presumably accurate within a trust region: an adaptive neighborhood around the current iterate. 
+At each iterate, the surrogate is optimized in a domain bounded by the trust region to generate
+candidte steps for additional objective evaluations.
+The surrogates can be constructed either by interpolating the objective evaluations \cite{linear trust region, trustregionwild}, or by running a low-fidelity simulation \cite{MFO trust region}.
+Convergence to the objective function's optimum is guaranteed by ensuring the surrogate have the
+same value and gradient as the objective function when the size of the trust region shrinks to zero
+\cite{trustregionconn, trustregionwild}.\\
+
+Global methods seek the global optimum. 
+Example methods include the branch-and-bound search, evolution methods, and Bayesian methods. 
+The branch-and-bound search sequentially partitions the entire control space into a tree structure, and
+determines lower and upper bounds for the optimum
+\cite{Branch and Bound}. Partitions that are inferior are eliminated 
+in the course of the search. The bounds are usually obtained through the assumption of the
+Lipschitz continuity or statistical bounds for the objective function. 
+Evolution methods maintain a population
+of candidate controls, which adapts and mutates in a way that resembles natural phenomenons
+such as the natural selection \cite{genetic algo, cuckoo} 
+and the swarm intelligence \cite{particle swarm}.
+Bayesian methods model the objective function as a random member function from a stochastic process.
+At each iterate, the statistics of the stochastic process are calculated 
+and the posterior, a probability measure, of the objective 
+is updated using Bayesian metrics \cite{practical Bayesian, review EI}. 
+The posterior is used to pick the next candidate step
+that best balances the exploration of unsampled regions and the exploitation around the sampled
+optimum \cite{Locatelli, jones1998, GP bandit}. Details of Bayesian optimization methods are discussed in section \ref{section: bayes opt}.\\
+
+Because many real-world problems are non-convex, global methods are preferred to local methods
+if the global optimum is desired. Besides, it's important to notice that some DFO methods 
+can be modified to admit gradient information if available. The details are discussed in section
+\ref{section: GBO}.\\
+
+\subsection{Gradient-based Optimization}
+\label{section: GBO}
+Gradient-based optimization (GBO) requires the availability of the gradient values. 
+A gradient value, if exists,
+provides the optimal infinitesimal change of control variables at each iterate,
+thus is useful in searching for a better control.
+Similar to DFO, GBO can also be categorized into local methods and global methods.
+Examples of local GBO methods include the gradient descent method, the (nonlinear) conjugate gradient 
+methods, and the quasi-Newton methods. The gradient descent method and
+the (nonlinear) conjugate gradient methods
+choose the search step in the direction of either the gradient or a conjugate gradient
+\cite{linear conjugate gradient, nonlinear conjugate gradient}.
+The quasi-Newton methods, such as the Broyden-Fletcher-Goldfarb-Shannon (BFGS) method
+\cite{quasiNewton},
+approximate the Hessian matrix using the gradient values. The approximated Hessian allows
+a local quadratic approximation to the objective function which determines the search step 
+by the Newton's method. 
+Notice that some local DFO methods can be modified to admit gradient information. For instance,
+in trust-region methods, the construction of local surrogates can incorporate 
+gradient values if available \cite{trust region global, trust region inexact grad}.
+The usage of gradient usually improves the surrogate's accuracy thus enhances the quality
+of the search step. \\
+
+Global GBO methods search for the global optimum using gradient values.
+Many global GBO methods can trace their development to corresponding DFO methods. 
+For example, the stochastic gradient-based global optimization method (StoGo) 
+\cite{stogo 1, stogo 2} works by partitioning the control space and bounding the optimum in the same way 
+as the branch-and-bound method. But the search in each partition is performed
+by gradient-based algorithms such as BFGS. Similarly, some gradient-based evolution methods,
+such as the gradient-based particle swarm method \cite{grad particle swarm} 
+and the gradient-based cuckoo search method \cite{grad cuckoo},
+can be viewed as gradient variations of corresponding derivative-free counterparts.
+My thesis is particularly interested in the gradient-based Bayesian optimization method.
+In this method, the posterior of the objective function assimilates both the gradient 
+and function values in a CoKriging framework \cite{derivative RKHS, coKriging}.
+The details of my treatment is discussed in Section \ref{section: bayes opt} and
+Chapter \ref{chapter 3}.
+I expect that the inclusion of gradient values results in more accurate posterior mean and 
+reduced posterior uncertainty, which in turn reduces the number of iterations required to
+achieve near-optimality. The effect of iteration reduction 
+is analyzed numerically in Chapter \ref{chapter 3}.\\
+
+A property of the Bayesian method is that the search step can be determined using all 
+available objective and gradient values. In addition, the search step is optimal 
+under the Bayesian metric. The advantage of such properties can be justified
+when the objective and gradient evaluations
+are dominantly more expensive than running the optimization algorithm. Besides, the
+Baysian optimization method is provably convergent even if the gradient values are estimated
+inexactly. Under some assumptions of the objective and the inexact gradient, the convergence 
+can be proven regardless of the accuracy of the gradient estimation. Details of the proof
+are given in Section \ref{sec: chap3 convergence}.\\
+
+\indent To achieve a desired objective value, 
+GBO methods generally require much less iterations than DFO methods for problems with many 
+control variables. GBO methods can be efficiently applied to 
+optimization constrained by open-box simulators, because the gradient is efficiently computable by
+the adjoint method.
+My thesis extends GBO to optimization constrained by gray-box simulators by estimating 
+the gradient using the full space-time solution.
+
+\subsection{The Adjoint Method}
+Consider a differentiable objective function constrained by a PDE modeling the conservation law.
+Using the same notation of previous sections, 
+let the objective function be $\xi(u,c)$, $c\in \mathbb{R}^d$, 
+and let the PDE \eqref{eqn: govern PDE} be abstracted
+as $F(u,c) = 0$. The gradient $\frac{d\xi}{dc}$ can be estimated trivially by finite difference. The
+$i$th component of the gradient is given by
+\begin{equation}
+    \left(\frac{d\xi}{dc}\right)_i \approx \frac{1}{\delta} \big( 
+    \xi(u+ \Delta u_i, c+\delta e_i) - \xi(u, c) \big)\,,
+\end{equation}
+where
+\begin{equation}\begin{split}
+    F(u,c)=0\,, \quad F(u+\Delta u_i, c+ \delta e_i) = 0\,.
+\end{split}\end{equation}
+$e_i$ indicates the $i$th unit Cartesian basis vector in $\mathbb{R}^d$, and $\delta>0$ indicates
+a small perturbation. Thereby $d+1$ PDE simulations are required to evaluate the gradient.\\
+
+In contrast, the adjoint method evaluates the gradient using only one PDE simulation
+\cite{adjoint}.
+To see this, linearize $F(u,c)=0$ into a variational form
+\begin{equation}
+    \delta F = \frac{\partial F}{\partial u} \delta u + \frac{\partial F}{\partial c} \delta c = 0\,,
+\end{equation}
+which gives
+\begin{equation}
+    \frac{du}{dc} = - \left(\frac{\partial F}{\partial u}\right)^{-1} \frac{\partial F}{\partial c}
+    \label{eqn: variational PDE}
+\end{equation}
+Using \eqref{eqn: variational PDE}, $\frac{d\xi}{dc}$ can be expressed by
+\begin{equation}
+    \frac{d\xi}{dc} = - \lambda^T \frac{\partial F}{\partial c} + \frac{\partial \xi}{\partial c}\,,
+    \label{eqn: dxidc adjoint}
+\end{equation}
+where $\lambda$, the adjoint state, is given by the adjoint equation
+\begin{equation}
+    \left(\frac{\partial F}{\partial u}\right)^T \lambda = \frac{\partial \xi}{\partial u}
+    \label{eqn: adjoint}
+\end{equation}
+Therefore, the gradient can be evaluated by \eqref{eqn: dxidc adjoint}
+using one simulation of $F(u,c)=0$ and one simulation of \eqref{eqn: adjoint} that 
+solves for $\lambda$. \\
+
+Adjoint methods can be categorized into continuous adjoint and discrete adjoint methods,
+depending on whether the linearization or the discretization is excuted first.
+The continous adjoint method linearizes the continuous PDE $F(u,c) = 0$ first,
+then discretizes the adjoint equation \eqref{eqn: adjoint}. The discrete adjoint method 
+discretizes $F(u,c)=0$ first, then linearizes the discretized adjoint equation.
+The discrete adjoint method can be implemented by automatic differentiation (AD) 
+\cite{AD review}.
+AD exploits the fact that a PDE simulation, no matter how complicated, executes a sequence
+of elementary arithmetic operations (e.g. addition, multiplication) and elementary functions
+(e.g. $\exp$, $\sin$). By storing the operations in addition to their output values, 
+$\frac{d\xi}{d c}$ can be computed using the chain rule that propogates the gradient 
+from $\xi$ to $c$. \\
+
+The adjoint method has seen proliferated applications in many areas, including the aerodynamic design
+\cite{adjoint aerodynamics} and the petroleum reservoir control
+\cite{adjoint reservoir optimal control}. Conventionally, the adjoint method is not applicable
+to gray-box simulations. To break this limitation, Chapter \ref{chapter 2} develops the twin model 
+that enables the adjoint gradient computation for gray-box simulations.\\
+
+\subsection{Adaptive Basis Construction}
+\label{sec: adaptive basis review}
+Square-integrable functions
+can be represented by the parameterization 
+\begin{equation}
+    \tilde{F}(\cdot) = \sum_{i\in \mathbb{N}} {\alpha_i} \phi_i(\cdot)\,,
+    \label{eqn: linear param general}
+\end{equation}
+where $\phi_i$'s are the basis functions, $\alpha_i$'s are the coefficients, and $i$
+indices the basis. For example, 
+a bivariate function can be represented by monomials
+\begin{equation*}
+    1,\,  u_1,\, u_1^2,\,
+    u_2,\, u_1 u_2,\,  u_1^2 u_2, \,
+    u_2^2,\,  u_1 u_2^2,\,  u_1^2 u_2^2,\, \cdots\,,
+\end{equation*}
+although orthonormal bases, such as the Hermite polynomials, are preferable in most applications.
+Let $\mathcal{A}$ be a non-empty finite subset of $\mathbb{N}$,
+$\tilde{F}$ can be approximated using a subset of the bases, 
+\begin{equation}
+    \tilde{F}(\cdot) \approx \sum_{i\in \mathcal{A}} {\alpha_i} \phi_i(\cdot)\,,
+    \label{eqn: linear param truncate}
+\end{equation}
+where $\{\phi_i\}_{i\in \mathcal{A}}$ is called a basis dictionary. 
+For example, in polynomial approximations, the basis dictionary usually consists of
+the basis whose total polynomial degree does not exceed $p\in \mathbb{N}$.
+Given a basis dictionary, the coefficients can be determined by projection \cite{PCE}
+or by least squares, such that the error between approximations
+and function evaluations is minimized. My thesis parameterizes the twin-model flux $\tilde{F}$ and
+optimizes the coefficients,
+so the twin model serves as a proxy of the gray-box model. Details are discussed in 
+Section \ref{sec: flux param}.\\
+
+The cardinality of $\mathcal{A}$ can increase drastically as the number of variables increases, and
+as the basis complexity (e.g. the total degree $p$ of the polynomial basis) increases.
+Fortunately, in many applications, 
+many bases are insignificant so their coefficients can set to zero without affecting the approximation 
+performance. There are several methods that can determine the insignificant bases which result 
+in a sparse representation, such as the Lasso regularization 
+\cite{Lasso variable selection} and the matching 
+pursuit \cite{match pursuit}. Lasso regularization adds a penalty $\lambda
+\sum_{i\in\mathcal{A}}|\alpha_i|$
+to the approximation error, where $\lambda>0$ is a tunable parameter. 
+It balances the approximation error and the number of non-zero
+coefficients. Matching pursuit adopts a greedy, stepwise approach to construct a basis. 
+It either selects a significant basis one-at-a-time (forward selection \cite{forward selection}),
+or prunes an insignificant basis one-at-a-time (backward pruning \cite{backward prune}).
+Matching pursuit will be used in my thesis because it requires no tunable parameters. \\
+
+In conventional matching pursuit, the basis dictionary needs to
+be pre-determined, with the belief that the dictionary is a superset of the significant basis. 
+This can be problematic because the significant ones are unknown a prior.
+To address this issue, adaptive methods have been devised 
+\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
+Although different in details, such methods share the same heuristics: Starting from a trivial
+basis (e.g. 1), a dictionary is built up progressively 
+by iterating over a forward step and a backward step.
+The forward step searches over a candidate set of bases, and appends the significant ones 
+to the dictionary. The backward step searches over the current dictionary, and removes the 
+insignificant ones from the dictionary. 
+The iteration stops when no alternation is made to the dictionary or a targeted approximation
+performance is met.
+Such heuristics are adopted in my thesis to build up 
+a sparse representation of $\tilde{F}$. Details are discussed in Section \ref{sec: adaptive basis}.\\
+
+
+\subsection{Model Calibration}
+\label{sec: model calibration}
+Model is not reality.
+A computer simulation may not reproduce experimental results 
+exactly due to several sources of uncertainties,
+including parameter uncertainty, model inadequacy, code uncertainty,
+and observation error \cite{KennedyOhagan2}.
+Parameter uncertainty refers to uncertain parameters of a model.
+Consider an example in the polymer-injected petroleum reservoir. The parameters in the permeability
+models and viscosity models, measured in laboratory conditions, may not equal the
+true parameters in reservoir conditions. Parameter uncertainty can be eliminated if 
+the true parameters are known and specified in a simulation. 
+Model inadequacy relates to the fact that no model is perfect.
+The model output differs from experimental results due to underlying
+missing physics and numerical approximations, even if the model's parameter uncertainty 
+is eliminated. For example, in the same petroleum reservoir simulation, model inadequacy would 
+exist if the compressibility is neglected, or if the flux is approximated by numerical schemes
+like upwinding.  Code uncertainty refers to the unknown output of a computer simulation given any 
+particular control variables and model parameters until the code is run. 
+In theory, code uncertainty disappears if the model is simulated densely
+over its entire input domain. In practice, however, the simulation output can only be interpolated
+on a limited number of simulated results since the code can be expensive to run.
+Observation error is the uncertainty associated with experimental
+measurements. This error represents the variability in the experimental response if
+the experiment were repeated multiple times under the exact same settings.\\
+
+Model calibration addresses the problem of adjusting the model parameters and 
+quantifying the uncertainties. 
+An important approach for model calibration, proposed by Kennedy and O'Hagan,
+adopts a Bayesian modeling for the observation, the code output, and 
+the uncertainties \cite{KennedyOhagan2,
+model calibrate field data}.
+Represent the observation by $z$ and the code output by $y$. 
+$y$ not only depends on the input control variables $c$ but also on the model parameters
+$\theta$. The relationship between the observation and the code output is modeled 
+by
+\begin{equation}
+    z_i = \rho y(c_i,\theta) + \epsilon (c_i) + \delta_i \,,
+    \label{eqn: model calibration}
+\end{equation}
+where $z_i$ is the $i$th observation, $\rho$ is an unknown regression parameter, 
+$\epsilon(\cdot)$ is the model inadequacy that depends on $c$, and $\delta_i$ is the observation
+error for the $i$th observation. $\delta_i$'s are assumed to be i.i.d. Gaussian distributed,
+which models the idiosyncratic observation error for individual experiments. $\epsilon(\cdot)$ accounts
+for the model inadequacy, which is assumed to be an unknown member of a Gaussian process. 
+The Gaussian process model expresses
+a belief in the smoothness of underlying function, and offers the flexibility in adjusting
+the smoothness by tuning hyperparameters like the correlation length. To incorporate the code
+uncertainty, $y(\cdot, \cdot)$ is modeled by a joint Gaussian process that distributes 
+on $c$ and $\theta$.
+Usually, $y(\cdot, \cdot)$ is assumed to be independent of $\epsilon(\cdot)$.
+We refer to the reference \cite{markov property} for a justification of the independence assumption.
+The parameter uncertainty is accounted for by assuming a prior distribution on $\theta$.
+Denote the hyperparameters in these Gaussian processes by $\phi$. A joint posterior distribution
+\begin{equation}
+    p(\theta, \rho, \phi\big| \mathcal{D}) \propto p(\theta,\rho, \phi) p(\mathcal{D}\big| \theta, \rho,\phi)
+\end{equation}
+can be obtained, given the prior $p(\theta,\rho,\phi)$ and 
+a set of observations $\mathcal{D} = \left(c_i, z_i\right)_{i=1}^N$. Thereby, the model is calibrated
+by the posterior distribution of $\theta$, $\rho$, and $\delta$, as well as the posterior Gaussian
+processes of $y$ and $\epsilon$.\\
+
+The model calibration method is applicable not only when $z_i$'s are observed experimentally, 
+but also when $z_i$'s are simulated by another computer model \cite{KennedyOhagan1}.
+A goal in my thesis is to estimate the true gradient by the twin model's
+adjoint gradient, as well as to quantify the uncertainty in such estimation.
+The goal can be achieved by model calibration, where $z$ and $y$ in \eqref{eqn: model calibration}
+indicate the true gradient and the estimated gradient.
+My thesis calibrates the twin model by using the space-time solution of deterministic
+gray-box simulations. Deterministic simulations have no observation error; therefore
+this error is not considered in my thesis. Besides, instead of jointly calibrating
+the parameters and uncertainties using a Bayesian approach, 
+the model parameters are calibrated by the twin model method 
+developed in Chapter \ref{chapter 2}. The twin model
+method provides a point estimate of the model parameters. 
+Once the point estimate is determined, the model inadequacy and the code uncertainty 
+are calibrated in the next step while fixing the model parameters as known constants.
+It is a future work to extend the developments to joint calibration.\\
+
+
+\subsection{Bayesian Optimization}
+\label{section: bayes opt}
+Similar to other kinds of optimization, Bayesian optimization aims at finding the maximum
+of a function $\xi(\cdot)$ in a bounded set $\mathcal{C}\subset \mathbb{R}^d$. However,
+Bayesian optimization distinguishes from other methods by maintaining a probabilistic
+model for $\xi$. The probabilistic model is exploited to 
+make decisions about where to invest the next function evaluation in $\mathcal{C}$.
+In addition, it uses all information of available evaluations, not just local evaluations,
+to direct the search step.\\
+
+Consider the case when the objective function evaluation is available.
+Bayesian optimization begins by assuming that the objective function is sampled
+from a stochastic process. 
+A stochastic process is a function
+\begin{equation}\begin{split}
+    f \; :\; & \mathcal{C} \times \Omega \rightarrow \mathbb{R}\\
+         & (c, \omega) \rightarrow f(c,\omega)
+\end{split}\,,\label{stochastic process}
+\end{equation}
+where for any $c\in \mathcal{C}$, $f(c, \cdot)$ is a random variable defined 
+on the probability space $(\Omega, \Sigma, \mathbb{P})$. 
+The objective function $\xi$ is assumed to be a sample function from the stochastic process
+$\xi(\cdot) = f(\cdot, \omega^*)$ with an unknown $\omega^* \in \Omega$.
+My thesis will use the notations $\xi(\cdot)$, $f(\cdot, \omega)$, and $f(\cdot, \omega^*)$ 
+interchangeably when the context is clear.\\
+
+Stationary Gaussian process is a stochastic process that is used ubiquitously in Bayesian optimization.
+For any given $\omega$ and any finite set of $N$ points $\{c_i\in \mathcal{C}\}_{i=1}^N$, 
+a stationary Gaussian process $f(\cdot, \cdot)$ 
+has the property that $\left\{ f(c_i, \cdot) \right\}_{i=1}^N$ 
+are multivariate Gaussian distributed; in addition, the distribution remains unchanged if 
+$c_i$'s are all added by the same constant in $\mathcal{C}$.
+The Gaussian process is solely determined by its mean 
+function $m(c)$ and its covariance function $K(c,c^\prime)$
+\begin{equation}\begin{split}
+    m(c) &= \mathbb{E}_\omega\big[f(c, \omega)\big]\\
+    K(c, c^\prime) &= \mathbb{E}_\omega\Big[\big(f(c,\omega)-m(c)\big)\big(f(c^\prime,\omega)
+                    -m(c^\prime)\big)\Big]\,,
+\end{split}\end{equation}
+for any $c, c^\prime \in \mathcal{C}$, which is denoted by $f \sim\mathcal{N}(m, K)$.
+Conditioned on a set of samples $\left\{\xi(c_1), \cdots, \xi(c_N)\right\}$, 
+the posterior is also a Gaussian process with the mean and covariance
+\begin{equation}\begin{split}
+    \tilde{m}(c) & 
+    = m(c) + K(c,\underline{c}_n)K(\underline{c}_n,\underline{c}_n)^{-1}
+    \left(\xi(\underline{c}_n) - m(\underline{c}_n)\right)\\
+    \tilde{K}(c, c^\prime)&=
+    K(c,c^\prime) - K(c,\underline{c}_n) K(\underline{c}_n, \underline{c}_n)^{-1} K(\underline{c}_n,c^\prime)
+\end{split}\,,
+\label{eqn: posterior formulation}
+\end{equation}
+where $\underline{c}_n = \left( c_1, \cdots, c_N\right)$,
+$\xi(\underline{c}_n) = \left( \xi(c_1), \cdots, \xi(c_N)\right)^T$, 
+$m(\underline{c}_n) = \left( m(c_1), \cdots, m(c_N)\right)^T$,
+$K(c, \underline{c}_n) = K(\underline{c}_n, c)^T = \left(
+K(c, c_1), \cdots, K(c, c_N)\right)$, and
+\begin{equation*}
+    K(\underline{c}_n, \underline{c}_n) = \begin{pmatrix} 
+        K(c_1, c_1) & \cdots & K(c_1, c_N)\\
+        \vdots      & \ddots & \vdots\\
+        K(c_N, c_1) & \cdots & K(c_N, c_N)
+    \end{pmatrix}\,.
+\end{equation*}
+Without prior knowledge about the underlying function,
+$m(\cdot)$ is usually modeled as a constant independent of $c$.
+In many cases, the covariance are assumed isotropic, indicating that $K(c,c^\prime)$ only depends
+on the $L_2$ norm $\|c-c^\prime\|$.
+There are many choices for $K$, such as the exponential kernel, the squared
+exponential kernel, and the Mat$\acute{\textrm{e}}$rn kernels, each embeds 
+different degrees of smoothness (differentiability) for the underlying function. For a survey of
+various covariance functions, we refer to the Chapter 4 in \cite{GP book}.
+Among such choices, the Mat$\acute{\textrm{e}}$rn $5/2$ kernel 
+\begin{equation}
+    K(c, c^\prime) = 
+    \sigma^2 \left(1+\frac{\sqrt{5} \|c-c^\prime\|}{L}
+    + \frac{5\|c-c^\prime\|^2}{3 L^2}\right) \exp\left(-\frac{\sqrt{5}\|c-c^\prime\|}{L}\right)\,,
+    \label{eqn: Matern kernel}
+\end{equation}
+has been recommended because it results in functions that are
+twice differentiable, an assumption made by, e.g. quasi-Newton methods, but without further
+smoothness. My thesis will focus on using the Mat$\acute{\textrm{e}}$rn $5/2$ kernel. 
+Notice the parameters $L$ and $\sigma$, known as the hyperparametes, are yet to be determined. 
+They can be determined by the posterior maximum likelihood estimation (MLE) or by a
+fully-Bayesian approach. We refer to the reference \cite{practical Bayesian} for the details 
+and a comparison of these treatments. 
+My thesis will focus on MLE due to its simpler numerical implementation.
+\\
+
+Based on the posterior and the current best evaluation 
+$c_{\textrm{best}} = \argmax_{c\in \underline{c}_n}\xi(c)$, 
+Bayesian optimization introduces an acquisition function,
+$a:\mathcal{C} \rightarrow \mathbb{R}^+$, that evaluates the expected utility of
+investing the next sample at $c\in \mathcal{C}$. The location of the next sample is 
+determined by an optimization $c_{N+1} = \argmax_{c\in\mathcal{C}} a(c)$.
+In most cases, a greedy acquisition function is used, which evaluates the one-step-lookahead utility.
+There are several choices for the acquisition function, such as
+\begin{itemize}
+    \item the probability of improvement (PI) \cite{prob of improve}, 
+        \begin{equation}
+            a_{\textrm{PI}}(c) = \Phi(\gamma(c))\,,
+        \end{equation}
+    \item the expected improvement (EI) \cite{review EI, Locatelli}, 
+        \begin{equation}
+            a_{\textrm{EI}}(c) = \sigma(c) \big(\gamma(c)\Phi(\gamma(c))
+            + \mathcal{N}(\gamma(c))\big)\,,
+            \label{eqn: EI}
+        \end{equation}
+    \item and the upper confidence bound (UCB) \cite{GP bandit},
+        \begin{equation}
+            a_{\textrm{UCB}} (c) = \mu(c) + \kappa \sigma(c)\,,
+        \end{equation}
+        with a tunable parameter $\kappa>0$,
+\end{itemize}
+where $\mu, \sigma$ are the posterior mean and variance, 
+$\gamma(c) = \sigma^{-1}(c)\big(\mu(c) - \xi(c_{\textrm{best}})\big)$,
+and $\Phi, \mathcal{N}$ indicate the cumulative and
+density functions for the standard normal distribution.
+My thesis will focus on the EI acquisition function, as it behaves better 
+than the PI, and requires no extra tunable parameters.
+Because \eqref{eqn: EI} has a closed-form gradient, the acquisition function
+can be maximized by a global GBO method, e.g. StoGo, to obtain its global maximum.\\
+
+Although my thesis only focuses on bound constraints as shown in \eqref{eqn: objective prototype}, 
+Bayesian optimization can accommodate more general inequality and equality 
+constraints. The constraints can be enforced by modifying the objective, such as
+the penalty method \cite{penalty method}, the augmented Lagrangian method
+\cite{augmented lagrangian method}, and the barrier function method \cite{barrier method}.
+They can also be enforced by modifying the acquisition function, such as the
+recently developed expected improvement with constraints (EIC) method \cite{EIC},
+and the integrated expected conditional improvement (IECI) method \cite{IECI}.
+See Chapter 2 of \cite{PhD review constraint} 
+for a detailed review of constrained Bayesian optimization.\\
+
+In addition to function evaluations $\xi(\underline{c}_n)$, Bayesian optimization
+admits gradient information \cite{derivative RKHS, grad coKriging}. Besides, such
+evaluations can be inexact, possibly corrupted by model inadequacy and observation error.
+These properties are important because my thesis 
+will use both the exact function evaluation and the inexact twin-model gradient 
+for the optimization. 
+Details of this topic will be discussed in Section
+\ref{sec: chap3 approach}.
+
+\section{Notations}
+The general notations are declared here.
+\begin{itemize}
+    \item $t\in [0,T]$: the time,
+    \item $\{t_i\}_{i=1}^M$: the time discretization,
+    \item $x\in \Omega$: the space,
+    \item $\{x_j\}_{j=1}^N$: the space discretization,
+    \item $u$: the space-time solution of gray-box conservation law,
+    \item $\tilde{u}$: the space-time solution of twin-model conservation law,
+    \item $\boldsymbol{u}$: the discretized space-time solution of gray-box simulator,
+    \item $\tilde{\boldsymbol{u}}$: the discretized space-time solution of twin-model simulator,
+    \item $k$: 1) the number of equations of the conservation law; or 2) the number of folds in 
+               cross validation.
+    \item $D$: a differential operator,
+    \item $F$: the unknown function of the gray-box model,
+    \item $\tilde{F}$: the inferred $F$,
+    \item $q$: the source term,
+    \item $c$: the control variables,
+    \item $\underline{c}_n=(c_1, \cdots, c_n)$: a sequence of $n$ control variables,
+    \item $w$: the quadrature weights in the numerical space-time integration,
+    \item $\xi$: the objective function,
+    \item $c_{\min}, \, c_{\max}$: bound constraints,
+    \item $\xi_{\tilde{\nabla}}$: the estimated gradient of $\xi$ with respect to $c$,
+    \item $d$: the number of control variables,
+    \item $\mathcal{C}\subset \mathbb{R}^d$: the control space,
+    \item $K,\, G$: the covariance functions,
+    \item $a$: the acquisition function,
+    \item $\mathcal{M}$: the solution mismatch,
+    \item $\overline{\mathcal{M}}$: the mean solution mismatch in cross validation,
+    \item $\phi$: the basis functions for $\tilde{F}$,
+    \item $\alpha$: the coefficients for $\phi$,
+    \item $\mathcal{A}$: the index set for a basis dictionary,
+    \item $T$: twin model,
+    \item $\tau$: residual,
+    \item $\boldsymbol{\tau}$: discretized residual,
+    \item $\mathcal{T}$: integrated truncation error.
+\end{itemize}
+
+
+
+\section{Thesis Objectives}
+Based the motiviation and literature review, we find a need to enable adjoint
+gradient computation for gray-box conservation law simulations. We also need to 
+exploit the estimated gradient to optimize more efficiently, 
+especially for problems with many control variables. 
+To summarize, the objectives of my thesis are
+\begin{enumerate}
+    \item to develop an adjoint approach that estimates the gradient of objective functions
+          constrained by gray-box conservation law simulations with unknown flux functions,
+          by leveraging the space-time solution;
+    \item to assess the utility of the estimated gradient in a suitable 
+          gradient-based optimization method; and
+    \item to demonstrate the effectiveness of the developed procedure in several numerical examples,
+          given a limited computational budget.
+\end{enumerate}
+
+
+\section{Outline}
+In Chapter \ref{chapter 2}, a solution mismatch metric is presented. The metric
+is used for the training of twin models.  In addition, an adaptive basis construction scheme 
+is developed. By summarizing the developments, a twin model algorithm is presented. Furthermore,
+a truncation error metric and a pre-train step is developed in order to reduce the computational cost.
+Finally, the twin model algorithm is demonstrated in several numerical examples.
+In Chapter \ref{chapter 3}, the twin-model gradient is modeled stochastically by the Gaussian process.
+Based on the Gaussian process model, 
+a Bayesian optimization algorithm is devised that leverages the twin-model gradient.
+Its convergence properties are studied. Finally, the twin-model Bayesian optimization algorithm
+is demonstrated in several numerical examples. Chapter \ref{chapter 3} summarizes the thesis and
+my contributions, and proposes several interesting future works.
+

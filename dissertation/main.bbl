@@ -1,0 +1,398 @@
+\newcommand{\noopsort}[1]{} \newcommand{\printfirst}[2]{#1}
+  \newcommand{\singleletter}[1]{#1} \newcommand{\switchargs}[2]{#2#1}
+\begin{thebibliography}{10}
+
+% Reservoir control =========================================
+\bibitem{first reservoir opt}
+Ramirez, W.F.
+\newblock Application of Optimal Control Theory to Enhanced Oil Recovery.
+\newblock vol. 21, {\em Elsevier}, 1987.
+
+% adjoint reservoir optimization
+\bibitem{adjoint reservoir optimal control}
+Ramirez, W. F., Fathi, Z., and Cagnol, J. L. 
+\newblock Optimal Injection Policies for Enhanced Oil Recovery: Part 1 Theory and Computational Strategies. 
+\newblock {\em Society of Petroleum Engineers Journal}, 24(03): 328-332, 1984.
+
+% Buckley
+\bibitem{Buckley Leverett}
+Buckley, S. E., and Leverett, M. 
+\newblock Mechanism of Fluid Displacement in Sands. 
+\newblock {\em Transactions of the AIME}, 146(01): 107-116, 1942.
+
+% Aerodynamic control ====================================
+% return bend optimization
+\bibitem{ubend rans opt 1}
+Verstraete, T., Coletti, F., Bulle, J., Vanderwielen, T., and Arts, T.  
+\newblock Optimization of a U-Bend for Minimal Pressure Loss in Internal Cooling Channels - Part I: Numerical Method. 
+\newblock{ \em Journal of Turbomachinery}, 135(5):051015, 2013.
+
+\bibitem{ubend rans opt 2}
+Coletti, F., Verstraete, T., Bulle, J., Van der Wielen, T., Van den Berge, N., and Arts, T. 
+\newblock Optimization of a U-Bend for Minimal Pressure Loss in Internal Cooling Channels - Part II: Experimental Validation. 
+\newblock {\em Journal of Turbomachinery}, 135(5):051016, 2013.
+
+% gas state equations
+\bibitem{Redlich Kwong}
+Redlich, O., and Kwong, J. N. 
+\newblock On the Thermodynamics of Solutions. V. An Equation of State. Fugacities of Gaseous Solutions. 
+\newblock {\em Chemical Reviews}, 44(1):233-244, 1949.
+
+
+% Adjoint =============================================
+% adjoint original
+\bibitem{adjoint}
+Lions, J.L.
+\newblock Optimal Control of Systems Governed by Partial Differential Equations,
+\newblock vol. 170, {\em Springer-Verlag}, 1971.
+
+% adjoint aerodynamics
+\bibitem{adjoint aerodynamics}
+Jameson, A.
+\newblock Aerodynamic Design via Control Theory,
+\newblock {\em Journal of Scientific Computing},
+3(3):233-260, 1988.
+
+\bibitem{AD review}
+Corliss, G. 
+\newblock Automatic Differentiation of Algorithms: From Simulation to Optimization.
+\newblock {\em Springer Science and Business Media}, vol.1, 2002.
+
+% Adaptive Basis ========================================
+\bibitem{PCE}
+Ghanem, R. G., and Spanos, P. D. 
+\newblock {Stochastic Finite Elements: a Spectral Approach.}
+\newblock{\em Courier Corporation}, 2003.
+
+\bibitem{global sensitivity analysis}
+Saltelli, A., Chan, K., and Scott, E. M. 
+\newblock {Sensitivity analysis}
+\newblock{ vol. 1, New York, Wiley}, 2000.
+
+\bibitem{match pursuit}
+Mallat, S. G., and Zhang, Z. 
+\newblock{ Matching Pursuits with Time-Frequency Dictionaries.}
+\newblock{\em Signal Processing, IEEE Transactions on}, 41(12):3397-3415, 1993.
+
+\bibitem{forward selection}
+Friedman, J. H. 
+\newblock { An Overview of Predictive Learning and Function Approximation.}
+\newblock {\em Springer Berlin Heidelberg}, pp. 1-61, 1994.
+
+\bibitem{backward prune}
+Reed, R. 
+\newblock {Pruning Algorithms - a Survey.}
+\newblock{\em Neural Networks, IEEE Transactions on}, 4(5):740-747, 1993.
+
+\bibitem{adaptive basis 1}
+Jekabsons, G. 
+\newblock Adaptive Basis Function Construction: an Approach for Adaptive Building of Sparse Polynomial Regression Models. 
+\newblock {\em INTECH Open Access Publisher}, 2010.
+
+\bibitem{adaptive basis 2}
+Blatman, G., and Sudret, B. 
+\newblock Sparse Polynomial Chaos Expansions and Adaptive Stochastic Finite Elements Using a Regression Approach. 
+\newblock {\em Comptes Rendus M$\check{\textrm{e}}$canique}, 336(6):518-523, 2008.
+
+\bibitem{adaptive basis 3}
+Blatman, G., and Sudret, B. 
+\newblock An Adaptive Algorithm to Build up Sparse Polynomial Chaos Expansions for Stochastic Finite 
+Element Analysis.
+\newblock {\em Probabilistic Engineering Mechanics}, 25(2):183-197, 2010.
+
+\bibitem{weight selection}
+Miller, A. 
+\newblock {Subset Selection in Regression.}
+\newblock{\em London: Chapmen and Hall Press}, 1990.
+
+\bibitem{cross validation}
+Geisser, S. 
+\newblock {Predictive inference},
+\newblock {\em CRC press}, vol. 55, 1993.
+
+\bibitem{contractive system}
+Lohmiller, W., and Slotine, J. J. E.
+\newblock On Contraction Analysis for Non-linear Systems. 
+\newblock {\em Automatica}, 34(6):683-696, 1998.
+
+
+% Optimization ==========================================
+% quasi-Newton methods
+\bibitem{quasiNewton}
+Dennis, Jr, John E., and Jorge J. Mor$\acute{\textrm{e}}$.
+\newblock Quasi-Newton Methods, Motivation and Theory.
+\newblock{ \em SIAM Review},
+19(1):46-89, 1977.
+
+% DFO review
+\bibitem{gradfreereview}
+Rios, L. M., and Sahinidis, N. V. 
+\newblock Derivative-free Optimization: A Review of Algorithms and Comparison of Software Implementations. 
+\newblock {\em Journal of Global Optimization}, 
+56(3):1247-1293, 2013.
+
+% LBFGS
+\bibitem{LBFGS}
+Nocedal, J. 
+\newblock Updating Quasi-Newton Matrices with Limited Storage. 
+\newblock {\em Mathematics of computation}, 35(151):773-782, 1980.
+
+% Lasso
+\bibitem{Lasso variable selection}
+Tibshirani, R. 
+\newblock Regression Shrinkage and Selection via the Lasso. 
+\newblock {\em Journal of the Royal Statistical Society}, Series B (Methodological):267-288, 1996.
+
+\bibitem{Pattern Search Convergence}
+Torczon, V. 
+\newblock On the Convergence of Pattern Search Algorithms. 
+\newblock {\em SIAM Journal on optimization}, 7(1):1-25, 1997.
+
+\bibitem{linear trust region}
+Powell, M.J.
+\newblock A Direct Search Optimization Method that Models the Objective and Constraint Functions
+by Linear Interpolation.
+\newblock{\em Advances in Optimization and Numerical Analysis}, pp. 51-67, Springer Netherlands, 1994.
+
+\bibitem{MFO trust region}
+Alexandrov, N.M., Lewis, R.M., Gumbert, C.R., Green, L.L, and Newman, P.A.
+\newblock Approximation and Model Management in Aerodynamic Optimization with Variable Fidelity Models.
+\newblock{\em AIAA Journal of Aircraft}, 38(6):1093–1101, 2001.
+
+\bibitem{trustregionconn}
+Conn, A. R., Scheinberg, K., and Vicente, L. N. 
+\newblock Global Convergence of General Derivative-free Trust-region Algorithms to First-and Second-order Critical Points. 
+\newblock{ \em SIAM Journal on Optimization}, 20(1):387-415, 2009
+
+\bibitem{trustregionwild}
+Wild, S. M., and Shoemaker, C. 
+\newblock Global Convergence of Radial Basis Function Trust-region Algorithms for Derivative-free Optimization. 
+\newblock {\em SIAM Review}, 55(2):349-371, 2013
+
+\bibitem{Branch and Bound}
+Pint$\acute{\textrm{e}}$r, J.D.
+\newblock Global Optimization in Action: Continuous and Lipschitz Optimization. Algorithms, Implementations and Applications. 
+\newblock {\em Nonconvex Optimization and its Applications}, vol. 6, 1996.
+
+\bibitem{genetic algo}
+Holland, J.H.
+\newblock Adaptation in Natural and Artificial Systems.
+\newblock {\em The University of Michigan Press}, Ann Arbor, 1975.
+
+\bibitem{particle swarm}
+Banks, A., Vincent, J., and Anyakoha, C.
+\newblock A Review of Particle Swarm Optimization. Part I: Background and Development. 
+\newblock {\em Natural Computing}, 6(4):467-484, 2007.
+
+\bibitem{cuckoo}
+Yang, X. S., and Deb, S. 
+\newblock Engineering Optimisation by Cuckoo Search. 
+\newblock {\em International Journal of Mathematical Modelling and Numerical Optimisation}, 
+1(4):330-343, 2010.
+
+\bibitem{Alexandrov trust region}
+Alexandrov, N. M., Dennis Jr, J. E., Lewis, R. M., and Torczon, V. 
+\newblock A Trust-region Framework for Managing the Use of Approximation Models in Optimization. 
+\newblock {\em Structural Optimization}, 15(1):16-23, 1998.
+
+\bibitem{trust region global}
+Carter, R. G. 
+\newblock On the Global Convergence of Trust Region Algorithms Using Inexact Gradient Information. 
+\newblock {\em SIAM Journal on Numerical Analysis}, 28(1):251-265, 1991.
+
+\bibitem{trust region inexact grad}
+Carter, R. G. 
+\newblock Numerical Experience with a Class of Algorithms for Nonlinear Optimization Using Inexact Function and Gradient Information. 
+\newblock {\em SIAM Journal on Scientific Computing}, 14(2):368-388, 1993.
+
+% Bayesian calibration and optimization ===================================
+\bibitem{derivative RKHS}
+Zhou, D. X. 
+\newblock Derivative Reproducing Properties for Kernel Methods in Learning Theory. 
+\newblock {\em Journal of computational and Applied Mathematics}, 220(1):456-463, 2008
+
+\bibitem{convergen EI}
+Vazquez, E., and Bect, J. 
+\newblock Convergence Properties of the Expected Improvement Algorithm with Fixed Mean and Covariance Functions. 
+\newblock {\em Journal of Statistical Planning and inference}, 140(11):3088-3095, 2010.
+
+\bibitem{converge Bull}
+Bull, A. D. 
+\newblock Convergence Rates of Efficient Global Optimization Algorithms. 
+\newblock {\em The Journal of Machine Learning Research} 12:2879-2904, 2011.
+
+\bibitem{GP bandit}
+Srinivas, N., Krause, A., Kakade, S. M., and Seeger, M. 
+\newblock Gaussian Process Optimization in the Bandit Setting: No Regret and Experimental Design. 
+\newblock {\em arXiv preprint} arXiv:0912.3995, 2009
+
+\bibitem{RKHS book}
+Berlinet, A., and Thomas-Agnan, C. 
+\newblock Reproducing Kernel Hilbert Spaces in Probability and Statistics. 
+\newblock {\em Springer Science and Business Media}, 2011.
+
+\bibitem{practical Bayesian}
+Snoek, J., Larochelle, H., and Adams, R. P. 
+\newblock Practical Bayesian Optimization of Machine Learning Algorithms. 
+\newblock {\em Advances in Neural Information Processing Systems.} pp.2951-2959, 2012
+
+\bibitem{review EI}
+Mo$\check{\textrm{c}}$kus, J., Tiesis, V., and Zilinskas, A. 
+\newblock The Application of Bayesian Methods for Seeking the Extremum.
+\newblock {\em Towards Global Optimization} 2(117-129), 1978.
+
+\bibitem{Locatelli}
+Locatelli, M. 
+\newblock Bayesian Algorithms for One-dimensional Global Optimization. 
+\newblock {\em Journal of Global Optimization}, 10(1):57-76, 1997.
+
+\bibitem{grad coKriging}
+Chung, H. S., and Alonso, J. J. 
+\newblock Using Gradients to Construct CoKriging Approximation Models for High-dimensional Design Optimization Problems. 
+\newblock {\em American Institute of Aeronautics and Astronautics paper}, 992, 2001.
+
+\bibitem{coKriging}
+Vauclin, M., Vieira, S. R., Vachaud, G., and Nielsen, D. R. 
+\newblock The Use of CoKriging with Limited Field Soil Observations. 
+\newblock {\em Soil Science Society of America Journal}, 47(2):175-184, 1983
+
+\bibitem{KennedyOhagan1}
+Kennedy, M. C., and O'Hagan, A. 
+\newblock Predicting the Output from a Complex Computer Code when Fast Approximations are Available. 
+\newblock{ \em Biometrika}, 87(1):1-13, 2000.
+
+\bibitem{KennedyOhagan2}
+Kennedy, M. C., and O'Hagan, A. 
+\newblock Bayesian Calibration of Computer Models. 
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical Methodology)}, 63(3):425-464, 2001.
+
+\bibitem{model calibrate field data}
+Higdon, D., Kennedy, M., Cavendish, J. C., Cafeo, J. A., and Ryne, R. D.
+\newblock Combining Field Data and Computer Simulations for Calibration and Prediction. 
+\newblock {\em SIAM Journal on Scientific Computing}, 26(2):448-466, 2004.
+
+\bibitem{markov property}
+O’Hagan, A. 
+\newblock A Markov Property for Covariance Structures. 
+\newblock {\em Statistics Research Report}, 98(13), 1998.
+
+\bibitem{RKHS aronszajn}
+Aronszajn, N. 
+\newblock Theory of Reproducing Kernels. 
+\newblock {\em Transactions of the American Mathematical Society}, 68(3):337-404, 1950.
+
+\bibitem{Hilbert space Showalter Book}
+Showalter, R. E. 
+\newblock Hilbert Space Methods for Partial Differential Equations. 
+\newblock {\em Dover Publications}, Mineola, New York, 2010
+
+\bibitem{jones1998}
+Jones, D. R., Schonlau, M., and Welch, W. J.  
+\newblock Efficient Global Optimization of Expensive Black-box Functions. 
+\newblock {\em Journal of Global Optimization}, 13(4):455-492, 1998.
+
+\bibitem{test functions for optimization}
+Surjanovic, S. and Bingham, D. 
+\newblock{ Virtual Library of Simulation Experiments: Test Functions and Datasets.}
+\newblock{ Retrieved March 28, 2016, from \em {http://www.sfu.ca/~ssurjano}},  2013.
+
+\bibitem{linear conjugate gradient}
+Fletcher, R., and Reeves, C. M. 
+\newblock Function Minimization by Conjugate Gradients. 
+\newblock {\em The Computer Journal}, 7(2):149-154, 1964.
+
+\bibitem{nonlinear conjugate gradient}
+Dai, Y. H., and Yuan, Y. 
+\newblock A Nonlinear Conjugate Gradient Method with a Strong Global Convergence Property. 
+\newblock {\em SIAM Journal on Optimization}, 10(1):177-182, 1999.
+
+\bibitem{stogo 1}
+Gudmundsson, S.
+\newblock Parallel Global Optimization.
+\newblock {\em Master Thesis}, IMM, Technical University of Denmark, 1998. 
+
+\bibitem{stogo 2}
+$\check{\textrm{Z}}$ilinskas, J. 
+\newblock Branch and Bound with Simplicial Partitions for Global Optimization. 
+\newblock {\em Mathematical Modelling and Analysis}, 13(1):145-159, 2008.
+
+\bibitem{grad particle swarm}
+Noel, M. M. 
+\newblock A New Gradient Based Particle Swarm Optimization Algorithm for Accurate Computation of Global Minimum. 
+\newblock {\em Applied Soft Computing}, 12(1):353-359, 2012.
+
+\bibitem{grad cuckoo}
+Yang, X. S., and Deb, S. 
+\newblock {Cuckoo Search: Recent Advances and Applications.} 
+\newblock {Neural Computing and Applications}, 24(1):169-174, 2014.
+
+\bibitem{GP book}
+Rasmussen, C. E. 
+\newblock Gaussian Processes in Machine Learning. 
+\newblock in {\em Advanced Lectures on Machine Learning}, Springer Berlin Heidelberg, pp.63-71, 2004.
+
+\bibitem{prob of improve}
+Kushner, H. J. 
+\newblock A New Method of Locating the Maximum Point of an Arbitrary Multipeak Curve in the Presence of Noise. 
+\newblock {\em Journal of Basic Engineering}, 86(1):97-106, 1964.
+
+% Constraints =============================================
+\bibitem{penalty method}
+Homaifar, A., Qi, C. X., and Lai, S. H. 
+\newblock Constrained Optimization via Genetic Algorithms. 
+\newblock{\em Simulation}, 62(4):242-253, 1994.
+
+\bibitem{augmented lagrangian method}
+Conn, A. R., Gould, N. I., and Toint, P. 
+\newblock A globally Convergent Augmented Lagrangian Algorithm for Optimization with General Constraints and Simple Bounds. 
+\newblock {\em SIAM Journal on Numerical Analysis}, 28(2):545-572, 1991.
+
+\bibitem{barrier method}
+Conn, A., Gould, N., and Toint, P. 
+\newblock {A Globally Convergent Lagrangian Barrier Algorithm for Optimization with General Inequality Constraints and Simple Bounds. }
+\newblock {\em Mathematics of Computation of the American Mathematical Society}, 66(217):261-288, 1997.
+
+\bibitem{EIC}
+Gardner, J. R., Kusner, M. J., Xu, Z. E., Weinberger, K. Q., and Cunningham, J. 
+\newblock Bayesian Optimization with Inequality Constraints.  
+\newblock {\em International Conference on Machine Learning}, pp. 937-945, 2014.
+
+\bibitem{IECI}
+Gramacy, R. B., and Lee, H. K. 
+\newblock { Optimization Under Unknown Constraints}.
+\newblock {\em arXiv preprint arXiv:1004.4027}, 2010.
+
+\bibitem{PhD review constraint}
+Gelbart, M. A. 
+\newblock {Constrained Bayesian Optimization and Applications}. 
+\newblock {\em Doctoral Dissertation}, Harvard University, 2015.
+
+% Others ===================================================
+% BSIM
+\bibitem{hanmaster} 
+Chen, H. 
+\newblock{ Black-box Stencil Interpolation Method for Model Reduction.}
+\newblock {\em Master thesis}, Department of Aeronautics and Astronautics, Massachusetts Institute of Technology, 2012.
+
+\bibitem{method of lines}
+Schiesser, W. E. 
+\newblock {The Numerical Methods of Lines.} 
+\newblock {\em Academic Press}, 1991.
+
+\bibitem{wavelet mallat}
+Mallat, S. G. 
+\newblock A Theory for Multiresolution Signal Decomposition: the Wavelet Representation. 
+\newblock {\em Pattern Analysis and Machine Intelligence, IEEE Transactions on}, 11(7):674-693, 1989.
+
+\bibitem{state eqns}
+Murdock, J. W.
+\newblock Fundamental Fluid Mechanics for the Practicing Engineer,  
+\newblock {\em CRC Press}, 1993.
+
+\bibitem{backtrack line search}
+Armijo, L. 
+\newblock Minimization of Functions Having Lipschitz Continuous First Partial Derivatives.
+\newblock {\em Pacific Journal of Mathematics}, 16(1):1-3, 1966.
+
+
+\end{thebibliography}

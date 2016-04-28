@@ -1,0 +1,40 @@
+\select@language {english}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2-1}{\ignorespaces Domain of dependence: $u(t,x)$ depends on $u$ at an earlier time within a domain of dependence. The two planes in this figure indicates the spatial solution at two adjacent timesteps. The domain of dependence can be much smaller than $\Omega $, the entire spatial domain.\relax }}{39}
+\contentsline {figure}{\numberline {2-2}{\ignorespaces An illustration of $B_u$ defined in Theorem \ref {theorem: 1}. The blue line is $u_0$ and the green dashed line is $\frac {du_0}{dx}$. $B_u$ is the set of $u_0$ where the derivative $\frac {du_0}{dx}$ has an absolute value larger than $\gamma $.\relax }}{40}
+\contentsline {figure}{\numberline {2-3}{\ignorespaces An example of mother wavelet, the Meyer wavelet.\relax }}{42}
+\contentsline {figure}{\numberline {2-4}{\ignorespaces Red line: the integral \textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {eqn: integral wavelet}\unskip \@@italiccorr )}} of the Meyer wavelet. Black line: the logistic sigmoid function.\relax }}{43}
+\contentsline {figure}{\numberline {2-5}{\ignorespaces An ad hoc set of bases\relax }}{44}
+\contentsline {figure}{\numberline {2-6}{\ignorespaces Space time solutions.\relax }}{45}
+\contentsline {figure}{\numberline {2-7}{\ignorespaces The objective function $\xi $ evaluated by either the gray-box model or the trained twin model.\relax }}{45}
+\contentsline {figure}{\numberline {2-8}{\ignorespaces The first row shows the three different initial conditions used to generate the gray-box space-time solution. The second row compares the trained $\mathaccentV {tilde}07E{F}$ (blue) and the Buckley-Leverett $F$ (red). The third row compares the trained $\frac {d\mathaccentV {tilde}07E{F}}{du}$ (blue) and the Buckley-Leverett $\frac {dF}{du}$ (red). The green background highlights the domain of $u$ where the gray-box space-time solution exists.\relax }}{46}
+\contentsline {figure}{\numberline {2-9}{\ignorespaces An illustration of the tuple representation and the corresponding univariate sigmoid.\relax }}{48}
+\contentsline {figure}{\numberline {2-10}{\ignorespaces Neighborhood for univariate bases. $(a)$ shows the neighborhood (blue) of a single basis (red). $(b)$ shows the neighborhood (blue) of several bases (red). The left column represents the basis on the $\left (j, \frac {\eta }{2^j}\right )$ plane, and the right column shows the actual basis $\phi _{j,\eta }$.\relax }}{50}
+\contentsline {figure}{\numberline {2-11}{\ignorespaces The discretized gray-box solution is shuffled into $3$ sets, each indicated by a color.\relax }}{50}
+\contentsline {figure}{\numberline {2-12}{\ignorespaces The basis dictionary for the three solutions in Figure \ref {fig: combine 3}.\relax }}{57}
+\contentsline {figure}{\numberline {2-13}{\ignorespaces The errors of estimated gradients for the three solutions.\relax }}{58}
+\contentsline {figure}{\numberline {2-14}{\ignorespaces The return bend geometry and the mesh for the simulation.\relax }}{59}
+\contentsline {figure}{\numberline {2-15}{\ignorespaces Left column: an example gray-box solution for a given geometry. Right column: the solution mismatch after training a twin model.\relax }}{61}
+\contentsline {figure}{\numberline {2-16}{\ignorespaces The gray-box state equation (right column) and the trained state equation (left column). The gray-box model uses either the ideal gas equation (first row) or the Reclich-Kwong equation (second row). The convex hull of the gray-box solution is shown by the dashed red line.\relax }}{62}
+\contentsline {figure}{\numberline {2-17}{\ignorespaces A comparison of the estimated gradient and the true gradient.\relax }}{63}
+\contentsline {figure}{\numberline {2-18}{\ignorespaces Water flooding in petroleum reservoir engineering (courtesy from PetroWiki).\relax }}{64}
+\contentsline {figure}{\numberline {2-19}{\ignorespaces The geometry of the petroleum reservoir.\relax }}{65}
+\contentsline {figure}{\numberline {2-20}{\ignorespaces The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. \relax }}{66}
+\contentsline {figure}{\numberline {2-21}{\ignorespaces The gradient of $\xi $ with respect to rates at the two injectors. The lines indicate the gradients estimated by the twin model, while the stars indicate the true gradient evaluated by finite difference.\relax }}{67}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3-1}{\ignorespaces The flowchart of Algorithm \ref {alg: bayes opt twin}.\relax }}{74}
+\contentsline {figure}{\numberline {3-2}{\ignorespaces Optimized results for the Buckley-Leverett equation.\relax }}{78}
+\contentsline {figure}{\numberline {3-3}{\ignorespaces A comparison of the optimized $u(t=1,x)$ after $20$ gray-box simulations. The red line is obtained by the vanilla Bayesian optimization and the green line by the twin-model Bayesian optimization. The cyan dashed line indicates the $u(t=1,x)$ obtained by setting the source term to zero. \relax }}{79}
+\contentsline {figure}{\numberline {3-4}{\ignorespaces The current best objective at each iterate. The red line is obtained by the vanilla Bayesian optimization and the green line by the twin-model Bayesian optimization. The black horizontal line indicates the true optimal.\relax }}{79}
+\contentsline {figure}{\numberline {3-5}{\ignorespaces The left plot shows the initial guess of control points (blue dots), the initial guess of the geometry (blue line), the optimized control points (red dots), and the optimized geometry (red line). The purple squares indicate the bound constraints for each control point. The right plot shows the pressure along the interior and the exterior boundaries for the initial (blue) and the optimized (red) geometry.\relax }}{81}
+\contentsline {figure}{\numberline {3-6}{\ignorespaces The current best objective at each iterate for the ideal gas and the Redlich-Kwong gas. The green lines are obtained by the twin-model Bayesian optimization. The red lines are obtained by the vanilla Bayesian optimization. The black horizontal lines indicate the true optimal.\relax }}{81}
+\contentsline {figure}{\numberline {3-7}{\ignorespaces The cumulative and per-iterate wall clock time, in minutes.\relax }}{82}
+\contentsline {figure}{\numberline {3-8}{\ignorespaces The permeability of the reservoir, in 100 milli Darcy. The 5 injectors are indicated by the black dots, and the producer is indicated by the green dot.\relax }}{83}
+\contentsline {figure}{\numberline {3-9}{\ignorespaces The current best objective evaluation against the number of iterates.\relax }}{84}
+\contentsline {figure}{\numberline {3-10}{\ignorespaces $\xi (t)$ for the initial and the optimized injection rates.\relax }}{84}
+\contentsline {figure}{\numberline {3-11}{\ignorespaces The optimized time-dependent injection rates.\relax }}{85}
+\contentsline {figure}{\numberline {3-12}{\ignorespaces The current best objective evaluation using the backtracking-Armijo gradient descent method, where the gradient is provided by the twin model.\relax }}{85}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {A-1}{\ignorespaces The state-space trajectories of the gray-box model and the twin model. $\mathcal {M}$ measures the difference of the twin model trajectory (blue) with the gray-box trajectory (red). $\mathcal {T}$ measures the difference of the twin model trajectory with restarts (green) and the gray-box trajectory (red).\relax }}{94}
