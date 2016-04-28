@@ -1,98 +1,110 @@
 \relax 
-\citation{reservoir simulation book}
+\citation{adjoint well placement}
+\citation{water flooding control}
+\citation{first reservoir opt}
 \citation{ubend rans opt 1}
 \citation{ubend rans opt 2}
-\citation{cont discretize adjoint}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Abstract}{1}}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Background}{1}}
 \newlabel{background}{{2}{1}}
-\newlabel{general opt}{{1}{1}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Comparison of black-box, gray-box, and open-box simulations\relax }}{2}}
 \citation{gradfreereview}
 \citation{quasiNewton}
-\citation{cont discretize adjoint}
-\citation{automaticdiff}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Comparison of black-box, gray-box, and open-box simulations\relax }}{2}}
-\newlabel{tab: boxes}{{1}{2}}
+\newlabel{tab: boxes}{{1}{3}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Optimization constrained by gray-box conservation laws}{4}}
+\newlabel{prototypes}{{3}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Problem definition}{4}}
+\newlabel{first equation}{{1}{4}}
 \citation{Buckley Leverett}
-\citation{Reservoir Simulation Book}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Prototypes of PDEs}{3}}
-\newlabel{prototypes}{{3}{3}}
-\newlabel{first equation}{{2}{3}}
-\newlabel{obj prototype}{{3}{3}}
-\newlabel{first equation steady}{{4}{3}}
-\newlabel{Buck-Lev eqn}{{6}{3}}
+\newlabel{first equation steady}{{2}{5}}
+\newlabel{obj prototype}{{3}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Examples of optimization constrained by gray-box simulation}{5}}
 \citation{hanmaster}
-\newlabel{BL objective}{{7}{4}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Infer conservation laws by the space-time solution}{4}}
-\newlabel{infer}{{4}{4}}
-\newlabel{general equation}{{9}{4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Domain of dependence: in conservation law simulations, the flow quantities at a given location depends on the flow quantities at an older time only within its domain of dependence $\omega $. The domain of dependence can be much smaller then the overall spatial domain $\Omega $ when the timestep is reasonably small.\relax }}{5}}
+\citation{ecmor}
+\newlabel{NSeqn}{{6}{6}}
+\newlabel{state equation}{{8}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Infer conservation laws by the space-time solution}{6}}
+\newlabel{infer}{{4}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Domain of dependence: in conservation law simulations, the flow quantities at a given location depend on the flow quantities at an older time only within its domain of dependence. The two planes in this figure indicates the spatial solution at two adjacent timesteps. The domain of dependence can be much smaller than the overall spatial domain when the timestep is reasonably small.\relax }}{7}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{locality}{{1}{5}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Twin model as an optimization problem}{5}}
-\newlabel{inverse}{{5}{5}}
-\newlabel{minimizer twin model}{{10}{5}}
-\newlabel{minimizer twin model discrete}{{11}{5}}
-\newlabel{minimizer twin model discrete mapping}{{12}{6}}
-\newlabel{objective twin model}{{13}{6}}
-\newlabel{first equation 2}{{14}{6}}
-\newlabel{objective twin model steady}{{15}{6}}
-\newlabel{first equation 2 steady}{{16}{6}}
+\newlabel{locality}{{1}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Twin model inference as an optimization problem}{8}}
+\newlabel{inverse}{{5}{8}}
+\newlabel{minimizer twin model discrete}{{10}{8}}
+\newlabel{minimizer twin model discrete mapping}{{11}{8}}
+\citation{Lasso variable selection}
+\newlabel{objective twin model}{{12}{9}}
+\newlabel{first equation 2}{{13}{9}}
+\newlabel{minimizer twin model discrete steady}{{14}{9}}
+\newlabel{objective twin model steady}{{15}{9}}
+\newlabel{first equation 2 steady}{{16}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Selecting the flux basis}{10}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces Progressive optimization procedure\relax }}{10}}
+\newlabel{progressive algo}{{1}{10}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Excited domain and basis selection}{11}}
+\newlabel{adaptive}{{6}{11}}
+\newlabel{twin equation def}{{17}{11}}
 \citation{Lasso variable selection}
 \citation{Critical review of variable selection}
-\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces Progressive optimization procedure\relax }}{7}}
-\newlabel{progressive algo}{{1}{7}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Excited domain and basis selection}{7}}
-\newlabel{adaptive}{{6}{7}}
-\newlabel{twin equation def}{{17}{7}}
 \citation{Buckley Leverett}
-\citation{numpad}
-\citation{Quasi-Newton Review}
-\citation{nlopt}
+\newlabel{Lasso mismatch}{{18}{12}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Numerical examples}{12}}
+\newlabel{numerical example}{{7}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Gradient estimation for a 1-D porous media flow}{12}}
+\newlabel{BL eqn}{{19}{12}}
 \citation{LBFGS}
-\citation{nlopt}
-\newlabel{Lasso mismatch}{{18}{8}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Numerical example}{8}}
-\newlabel{numerical example}{{7}{8}}
-\newlabel{BL eqn}{{19}{8}}
-\newlabel{BL flux}{{22}{8}}
-\newlabel{twin model 3}{{23}{8}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Initial condition $u_0(x)$\relax }}{9}}
-\newlabel{fig:initial condition}{{2}{9}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 634}}{9}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 641}}{9}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 648}}{9}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 655}}{10}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 662}}{10}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 669}}{10}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 676}}{10}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 683}}{10}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Left: ompare $F^\prime $ (red line) with $\mathaccentV {tilde}07E{F}^\prime $ (blue line). Middle: the space-time solutions of the gray-box model. Right: $\left |u-\mathaccentV {tilde}07E{u}\right |$.\relax }}{10}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Compare $J(c)$ (red line) with $\mathaccentV {tilde}07E{J}(c)$ (blue dashed line) for the 8 cases. The black vertical line indicates $c=0$ where the twin models are trained.\relax }}{11}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 725}}{11}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 732}}{11}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 739}}{11}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 746}}{12}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 753}}{12}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 760}}{12}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 767}}{12}}
-\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 774}}{12}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Left: $\frac  {dJ}{dc}$, evaluated by the gray-box model. Middle: $\frac  {d\mathaccentV {tilde}07E{J}}{dc}$, evaluated by the trained twin model. Right: $\left |\frac  {dJ}{dc} - \frac  {d\mathaccentV {tilde}07E{J}}{dc}\right |$.\relax }}{12}}
-\bibcite{hanmaster}{1}
-\bibcite{gradfreereview}{2}
-\bibcite{quasiNewton}{3}
-\bibcite{cont discretize adjoint}{4}
-\bibcite{automaticdiff}{5}
-\bibcite{reservoir simulation book}{6}
-\bibcite{Buckley Leverett}{7}
-\bibcite{Reservoir Simulation Book}{8}
-\bibcite{numpad}{9}
-\bibcite{nlopt}{10}
-\bibcite{Quasi-Newton Review}{11}
-\bibcite{LBFGS}{12}
-\bibcite{Lasso variable selection}{13}
-\bibcite{Critical review of variable selection}{14}
-\bibcite{ubend rans opt 1}{15}
-\bibcite{ubend rans opt 2}{16}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{13}}
-\@writefile{toc}{\contentsline {section}{\numberline {9}References}{13}}
+\newlabel{BL flux}{{22}{13}}
+\newlabel{twin model 3}{{23}{13}}
+\newlabel{sigmoids}{{24}{13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces An example of the flux basis functions $g_k(\mathaccentV {tilde}07E{u})$. These basis functions are distinguished by different colors.\relax }}{13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Initial condition $u_0(x)$. We choose a diverse set of initial conditions to test the twin model method.\relax }}{14}}
+\newlabel{fig:initial condition}{{3}{14}}
+\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 699}}{15}}
+\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 706}}{15}}
+\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 713}}{15}}
+\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 720}}{15}}
+\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 727}}{15}}
+\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 734}}{16}}
+\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 741}}{16}}
+\newlabel{fig: sol compare}{{\caption@xref {fig: sol compare}{ on input line 748}}{16}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The left column shows the gradient of $F$ (red line) with the gradient of $\mathaccentV {tilde}07E{F}$ (blue line). The middle column shows the space-time solutions of the gray-box model. The right column shows the solution mismatch $\left |u-\mathaccentV {tilde}07E{u}\right |$. Each row corresponds to an initial condition. The excited domain, $[u_{\qopname  \relax m{min}}, u_{\qopname  \relax m{max}}]$, is indicated by the green region in the left column. When the excited domain is large, the twin model's flux approximates the gray-box model's flux in a large range of $u$, but the solution mismatch tends to be less accurate in the exicted domain. When the excited domain is small, the twin model's flux approximates the gray-box model's flux in a small range of $u$, but the flux approximation tends to be more accurate in the excited domain.\relax }}{16}}
+\citation{state eqns}
+\newlabel{fig:sol compare}{{\caption@xref {fig:sol compare}{ on input line 846}}{19}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces The left column shows $\frac  {dJ}{dc}$ which is evaluated by the gray-box model. The middle column shows $\frac  {d\mathaccentV {tilde}07E{J}}{dc}$ which is evaluated by the trained twin model. The right column shows $\left |\frac  {dJ}{dc} - \frac  {d\mathaccentV {tilde}07E{J}}{dc}\right |$. We observe that the gradient is more accurate when the excited domain is smaller.\relax }}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Gradient estimation of Navier-Stokes flows}{19}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces The return bend geometry and the mesh for simulation. The return bend is bounded by no-slip walls. The values of pressure are fixed at the inlet and at the outlet. The inner and outer boundaries of the bend are generated by the control points using quadratic B-spline. We estimate the gradient of the steady state mass flux to the red control points' coordinates.\relax }}{20}}
+\newlabel{NS mesh}{{6}{20}}
+\newlabel{mass flux}{{27}{20}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces An example of the steady state velocity, energy, and density provided by the gray-box simulation. In the velocity subplot, the magnitude of the velocity is overlayed with the velocity vectors.\relax }}{21}}
+\newlabel{gray sol}{{7}{21}}
+\newlabel{parameterization}{{28}{21}}
+\newlabel{NS mismatch}{{31}{22}}
+\newlabel{NS optimize}{{32}{22}}
+\newlabel{NS weights}{{33}{22}}
+\newlabel{NS state equations}{{34}{22}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces The solution mismatch between the twin model's solution and the graybox solution for the ideal gas equation, the van der Waals equation, and the Redlich-Kwong equation. The first group of images is for the ideal gas, the second group of images is for the van der Waals gas, and the third group of images is for the Redlich-Kwong gas. For each gas, we show the solution mismatch of velocity, energy, and density. For all three test cases, the relative error of the velocity, energy, and density is small.\relax }}{24}}
+\newlabel{fig:NS sol err}{{8}{24}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces The inferred state equation and the gray-box state equation for the three gases. The left column shows the inferred state equation, and the right column shows the gray-box state equation. In all the three test cases, the inferred state equation approximates the gray-box state equation accurately inside $H(\rho , U)$ indicated by the dashed line.\relax }}{26}}
+\newlabel{fig:NS state eqn}{{9}{26}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces The left column shows the gradient of the outflux to the control points for the ideal gas. The wide gray arrow is the gradient evaluated by the gray-box model, while the thin black arrow is the gradient evaluated by the twin model. The right column shows a perturbed boundary according to the gradient. The blue dashed line is computed by the gray-box model's gradient, while the red dashed line is computed by the twin model's gradient.\relax }}{27}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces The gradient of the mass flux to the control points' coordinates\relax }}{27}}
+\newlabel{tab: idea gas gradient}{{2}{27}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{28}}
+\bibcite{water flooding control}{1}
+\bibcite{first reservoir opt}{2}
+\bibcite{adjoint well placement}{3}
+\bibcite{ubend rans opt 1}{4}
+\bibcite{ubend rans opt 2}{5}
+\bibcite{Buckley Leverett}{6}
+\bibcite{hanmaster}{7}
+\bibcite{ecmor}{8}
+\bibcite{adjoint}{9}
+\bibcite{adjoint aerodynamics}{10}
+\bibcite{adjoint history matching}{11}
+\bibcite{adjoint reservoir optimal control}{12}
+\bibcite{quasiNewton}{13}
+\@writefile{toc}{\contentsline {section}{\numberline {9}References}{30}}
+\bibcite{gradfreereview}{14}
+\bibcite{LBFGS}{15}
+\bibcite{Lasso variable selection}{16}
+\bibcite{state eqns}{17}

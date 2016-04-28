@@ -1,0 +1,259 @@
+\documentclass[a4paper,onecolumn]{article}
+\usepackage{amsmath, amsthm, graphicx, amssymb, wrapfig, fullpage, subfigure, array}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shadows,arrows}
+\usepackage[font=sl, labelfont={sf}, margin=1cm]{caption}
+\DeclareMathOperator{\e}{e}
+\newtheorem{mydef}{Definition}
+\theoremstyle{remark}
+\newtheorem{remarker}{Remark}
+
+\begin{document}
+\setcounter{page}{1}
+
+\title{Efficient Optimization with Gray-box simulations}
+\maketitle
+Explain:
+\begin{enumerate}
+    \item What is the goal? Optimizatin, twin model advantage of cheap gradient, reuse samples
+    \item Why not sample $g$
+    \item What am I going to show? Why $x^3$.
+\end{enumerate}
+\section{Posterior with fixed covariance parameters}
+\noindent The unknown true model
+$$
+    f(x)
+$$
+The gradient of the twin model is
+\begin{equation}
+    \nabla g(x) = \nabla f(x) + \epsilon(x)\,,
+\end{equation}
+where $\epsilon(x)$ is an unkown realization of Gaussian process
+$\mathcal{N}(0, cov_2(\cdot,\cdot))$.
+\begin{equation}
+    E: \quad cov_2(\epsilon(x_1), \epsilon(x_2)) = \xi_2^2 \boldsymbol{I}\exp\left\{-\frac{(x_1-x_2)^2}{2\sigma_2^2}\right\}
+\end{equation}
+The true model is modeled as a realization of
+\begin{equation}
+    f\sim \mathcal{N}\left(\bar{f}_D, cov_1(\cdot,\cdot)\right)\,,
+\end{equation}
+where
+\begin{equation}
+    A_{11}: \quad cov_1(f(x_1), f(x_2)) = \xi_1^2 \exp\left\{ -\frac{(x_1-x_2)^2}{2\sigma_1^2} \right\}
+\end{equation}
+and
+$\bar{f}_D$ is the sample mean.
+Assume
+\begin{equation}\begin{split}
+    cov(\nabla f, \epsilon) &= 0\\
+    cov(f, \epsilon) &= 0
+\end{split}\end{equation}
+Thus
+\begin{equation}
+    A_{13}: \quad cov(f, \nabla g) = cov(f, \nabla f)
+\end{equation}
+\noindent Therefore
+\begin{equation}
+    A_{12} = A_{13}: \quad cov(f(x_1), \nabla f(x_2)) = \frac{\xi_1^2}{\sigma_1^2} (x_1-x_2) \exp\left\{
+    -\frac{(x_1-x_2)^2}{2\sigma_1^2}
+    \right\}
+\end{equation}
+\begin{equation}
+    A_{22}: \quad cov(\nabla f(x_1), \nabla f(x_2)) = \frac{\xi_1^2}{\sigma_1^2}\exp\left\{
+    -\frac{(x_1-x_2)^2}{2\sigma_1^2} \right\} \left(  \boldsymbol{I} -\frac{1}{\sigma_1^2}(x_1-x_2)(x_1-x_2)^T\right)
+\end{equation}
+\begin{equation}
+    A_{23} = A_{22}: \quad cov(\nabla f, \nabla g) = cov(\nabla f, \nabla f)
+\end{equation}
+\begin{equation}
+    A_{33}: \quad cov(\nabla g, \nabla g) = cov(\nabla f, \nabla f) + cov(\epsilon, \epsilon)
+\end{equation}
+We have
+\begin{equation}
+    \begin{pmatrix}
+        f\\ \nabla f\\ \nabla g
+    \end{pmatrix}
+    =
+    \mathcal{N}\left(
+    \begin{pmatrix}
+        \boldsymbol{\bar{f}_D}\\
+        \boldsymbol{0}\\
+        \boldsymbol{0}
+    \end{pmatrix} ,
+    \Sigma = 
+    \begin{pmatrix}
+        A_{11} & A_{12} & A_{12}\\
+        A_{12}^T & A_{22} & A_{22}\\
+        A_{12}^T & A_{22} & A_{22}+E
+    \end{pmatrix}
+    \right)
+\end{equation}
+The Gaussian processes are discretized at $X$. Denote $X_{D}$ as the sampled points where
+$f$ and $\nabla g$ are available. 
+Define $d = \left( f(X_D), \nabla g(X_D) \right)$.
+Permute the rows and columns such that $\Sigma_D$ is the matrix
+corresponding to $f(X_D)$ and $\nabla g(X_D)$. The permuted covariance matrix is
+\begin{equation}
+    \begin{pmatrix}
+        \Sigma_{\setminus D} & \Sigma_{\setminus D D}\\
+        \Sigma_{\setminus D D}^T & \Sigma_{D}
+    \end{pmatrix}
+\end{equation}
+Then
+\begin{equation}\begin{split}
+    \mu_{\setminus D|D} &= \mu_{\setminus D} + \Sigma_{\setminus D D} \Sigma_{D}^{-1} \left(d-\mu_{D}\right)\\
+    \Sigma_{\setminus D|D} &= \Sigma_{\setminus D} - \Sigma_{\setminus D D} \Sigma^{-1}_{D} \Sigma_{\setminus D D}^T
+\end{split}\end{equation}
+Compare the posterior $f$ between using approximate gradient and without using approximate gradient.
+Compare the posterior $\nabla f$ between using approximate gradient and without using approximate gradient.
+
+\section{Estimating covariance parameters}
+\section{Acquisition Function}
+\subsection{Probability of Improvement}
+\subsection{Expected Improvement}
+\subsection{Lower Confidence Bound}
+Minimize $f(x)$. Consider minimizing the acquisition function
+\begin{equation}
+    \min \mu(x) - \kappa \sigma(x)
+\end{equation}
+The minimizer dictates the next point to sample.
+Suppose the trust-region is $[-2,2]$.\\
+
+
+\section{Trust-region Optimization}
+When the dimension is high, expressing the GP, computing its posterior, and maximizing the acquisition function 
+in this high-dimensional ball is expensive.
+I am thinking of construct the mesh for GP according to a cone around the approximate gradient.
+Switch between gradient-free, gradient-driven based on quality of twin model's gradient.\\
+
+\noindent
+Trying to show: modeling posterior of true model and use Bayesian optimization provide a natural switch.
+Next step: prove if gradient approximation is good enough, then the probability that Bayesian optimization approach
+dictates the next sample point the same as gradient-driven methods (which one? BFGS, grad-descent, ...?) goes to 1 
+(clearly the convergence rate depends on the trust region size and Hessian). In the other extreme, the probability
+of dictate a point the same as with just the sampling the function value using Bayesian optimization goes to 1.
+
+\section{Finding the next sample point}
+Denote $x$ as the point to sample, $D$ as the sampled data points. We have
+\begin{equation}
+    \begin{pmatrix}
+        f_x\\
+        \boldsymbol{f_D}\\
+        \boldsymbol{\nabla g_D}
+    \end{pmatrix}
+    \sim
+    \mathcal{N}\left\{
+    \begin{pmatrix}
+        \bar{f}_D\\
+        \boldsymbol{\bar{f}_D}\\
+        \boldsymbol{0}
+    \end{pmatrix}
+    \,,
+    \begin{pmatrix}
+        cov_1\left(f(x), f(x)\right) & cov_1(f(x), f(x_D)) & cov_1(f(x), \nabla f(x_D))\\
+        cov_1(f(x), f(x_D))^T & A_{11} & A_{12}\\
+        cov_1(f(x), \nabla f(x_D))^T & A_{12}^T & A_{22}+E
+    \end{pmatrix}
+    \right\}
+\end{equation}
+Therefore,
+\begin{equation}
+    \mu_{x}|_D = \bar{f}_D +
+    \begin{pmatrix}
+        cov_1(f_x, f_D) , cov_1(f_x, \nabla f_D)
+    \end{pmatrix}
+    \begin{pmatrix}
+        A_{11} & A_{12}\\
+        A_{12}^T & A_{22} + E
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        d_{f_D} - \bar{f}_D\\
+        d_{\nabla g_D}
+    \end{pmatrix}
+\end{equation}
+
+\begin{equation}
+    \sigma_{x}^2|_D = cov_1(f_x, f_x) -
+    \begin{pmatrix}
+        cov_1(f_x, f_D) , cov_1(f_x, \nabla f_D)
+    \end{pmatrix}
+    \begin{pmatrix}
+        A_{11} & A_{12}\\
+        A_{12}^T & A_{22} + E
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        cov_1(f_x, f_D) \\ cov_1(f_x, \nabla f_D)
+    \end{pmatrix}
+\end{equation}
+
+Therefore,
+\begin{equation}
+    \frac{\partial \mu_x|_D}{\partial x} = 
+    \begin{pmatrix}
+        cov_1(\nabla f_x, f_D) , cov_1(\nabla f_x, \nabla f_D)
+    \end{pmatrix}
+    \begin{pmatrix}
+        A_{11} & A_{12}\\
+        A_{12}^T & A_{22} + E
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        d_{f_D} - \bar{f}_D\\
+        d_{\nabla g_D}
+    \end{pmatrix}
+\end{equation}
+
+\begin{equation}
+    \frac{\partial \sigma^2_x|_D}{\partial x} = cov_1(\nabla f_x, f_x)
+    - 2 
+    \begin{pmatrix}
+        cov_1(\nabla f_x, f_D) , cov_1(\nabla f_x, \nabla f_D)
+    \end{pmatrix}
+    \begin{pmatrix}
+        A_{11} & A_{12}\\
+        A_{12}^T & A_{22} + E
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        cov_1(f_x, f_D) \\ cov_1(f_x, \nabla f_D)
+    \end{pmatrix}
+\end{equation}
+
+\begin{equation}
+    \frac{\partial \sigma_x|_D}{\partial x}
+    = \frac{1}{2\sqrt{\sigma^2_x|_D + \delta^2}} \frac{\partial \sigma^2_x|_D}{\partial x}
+\end{equation}
+
+\subsection{Expected Improvement}
+If we use the expected improvement
+\begin{equation}
+    I(x) = \mathbb{E}\left\{ \max\left(0, f(x)-f(x^+)\right)\right\}
+\end{equation}
+Then
+\begin{equation}
+    \mathbb{E} I = \sigma(x) \left\{ \frac{\mu(x)-f(x^+)}{\sigma(x)} \right\}
+    \Phi\left( \frac{\mu(x)-f(x^+)}{\sigma(x)} \right) + \phi\left(\frac{\mu(x)-f(x^+)}{\sigma(x)}\right)
+\end{equation}
+where $\phi$ is the PDF, $\Phi$ is the CDF of standard normal distribution.
+
+\subsection{Rosenbrock function}
+$$
+    f(\mathbf{x}) = \sum_{i=0}^{N-2} 100 (x_{i+1} - x_i^2)^2 + (1-x_i)^2
+$$
+$$
+    \frac{\partial f}{\partial x_j} = 200 (x_j-x_{j-1}^2) - 400 x_j (x_{j+1}-x_j^2) + 2(x_j-1)\,
+    \quad \textrm{for}\; j=1,\cdots, N-2
+$$
+$$
+    \frac{\partial f}{\partial x_0} = -400 x_0 (x_1-x_0^2) +2(x_0-1)
+$$
+$$
+    \frac{\partial f}{\partial x_{N-1}} = 200 (x_{N-1}-x_{N-2}^2)
+$$
+\end{document}
+
+
+
+
+
+
+
+

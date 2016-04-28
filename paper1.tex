@@ -12,279 +12,315 @@
 \theoremstyle{remark}
 \newtheorem{theorem}{Theorem}
 \newtheorem{remarker}{Remark}
+\newcommand{\doublerightharpoonup}{%
+  \rightharpoonup\mkern-10mu\rightharpoonup%
+}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
 \makenomenclature
+\hyphenpenalty=10000
+\linespread{2}
+\setlength\parindent{20pt}
 
 \begin{document}
-\title{Adjoint-based gradient estimation for gray-box solutions of unknown conservation laws}
+\title{Adjoint-based gradient estimation for gray-box solutions \\
+       of unknown conservation laws}
 \author{Han Chen, Qiqi Wang}
 \date{}
 \maketitle
 \section{Abstract}
 
-\noindent
+\indent
 Many engineering applications can be formulated as optimizations constrained by conservation laws.
-Such optimizations can be efficiently solved by the adjoint method which computes the gradient of
+Such optimizations can be efficiently solved by the adjoint method, which computes the gradient of
 the objective to the design variables.
-However, traditionally, adjoint can not be implemented in many ``gray-box'' conservation law 
-simulators. In gray-box simulators, the adjoint is not implemented, and the analytical and numerical
-form of the conservation law is unknown; but the full solution of relevant flow quantities are
+Traditionally, the adjoint method has not been able to be
+implemented in many ``gray-box'' conservation law 
+simulators. In gray-box simulators, the analytical and numerical
+form of the conservation law is unknown, but the full solution of relevant flow quantities is
 available.
-However, adjoint is not available and is not easily implementable in many conservation law simulators.
+In this paper, we consider the case where the flux function is unknown.
 This article introduces a method to estimate the gradient by
-inferring the governing conservation law from the solution, and then solving the adjoint equation of
+inferring the flux function from the solution, and then solving the adjoint equation of
 the inferred conservation law.
-The method is demonstrated in the sensitivity analysis of a 1-D flow problem.
+This method is demonstrated in the sensitivity analysis of two flow problems.
 
 
 \section{Background}
 \label{background}
-Optimization problems is of great interest in the engineering community. We consider an optimization problem
+\noindent Optimization problems are of great interest in the engineering community. We consider an 
+optimization problem to be
 constrained by conservation laws.
-\begin{equation}\begin{split}
-    \min_{c\in\mathbb{R}^d} &\;\left\{ J(u,c)= \int_0^T\int_\Omega j(u,c) \; \textrm{d}t \textrm{d}\mathbf{x}\right\} \\
-    \textrm{where}\; u\; \textrm{satisfies}& \;\; \frac{\partial u}{\partial t} + \nabla \cdot 
-    F(u) =q(u,c)\,,\\
-\end{split}\label{general opt}
-\end{equation}
-where $c$ is the design variable to be optimized. $F$ can be a differential operator of $u$.
-For example, oil reservoir simulations may employ PDEs of the black-oil model, 
-in which gas, water, and oil phases satisfy a set of conservation laws 
-\cite{reservoir simulation book}. 
-We may optimize the well pressure to maximize the total oil production in a time window.
-Another example is from the turbine airfoil cooling. We are interested in optimizing the interior flow path
+For example, oil reservoir simulations may employ PDEs of various flow models, 
+in which different fluid phases and components satisfy a set of conservation laws.
+Such simulations can be used to facilitate the oil reservoir management,
+including optimal well placement \cite{adjoint well placement} 
+and optimal production control \cite{water flooding control,first reservoir opt}.
+Another example is the cooling of turbine airfoils. 
+We are interested in optimizing the interior flow path
 of turbine airfoil cooling to minimize pressure loss
 \cite{ubend rans opt 1, ubend rans opt 2}.\\
 
-\noindent 
-In many cases, such simulations can be computational costly, potentially due to the complex computational models involved, and
-large scale time and space discretization. Besides, the design space can be high-dimensional. 
-For example, in oil reservoir simulations the well pressure can be controlled at each well
+\indent 
+In many cases, such simulations can be computationally costly, potentially 
+due to the complex computational models involved, and
+large-scale time and space discretization. Furthermore, 
+the dimensionality of the design space, $d$, can be high. 
+For example, in oil reservoir simulations, the well pressure can be controlled at each well
 individually, and they can vary in time.
 To parameterize the well pressure, we require $Nm$ number of design variables, where $N$ is the number of wells,
-and $m$ is the number of parameters to describe the variation in time for each well.
+and $m$ is the number of parameters, to describe the variation in time for each well.
 Similarly, in turbine airfoil cooling,
 the geometry of the internal flow path can also be parameterized by many variables.
-Optimizing a high-dimensional design
+Optimizing a high-dimensional design, $c$,
 can be challenging.
 A tool to enable efficient high-dimensional optimization is adjoint sensitivity analysis
-\cite{cont discretize adjoint}
-, which computes the gradient of the objective to the design variables efficiently. 
-Continuous adjoint method solves a continuous adjoint equation derived from the conservation law, which 
+[8-11]
+, which efficiently computes the gradient of the objective to the design variables. 
+The continuous adjoint method solves 
+a continuous adjoint equation derived from the conservation law, which 
 requires the PDE of the conservation law.
-Discrete adjoint method solves a discrete adjoint equation derived 
+The discrete adjoint method solves a discrete adjoint equation derived 
 from the numerical implementation of the conservation law,
 which requires the simulator's numerical implementation.
 Adjoint automatic differentiation applies the chain rule to every elementary arithmetic operation of the simulator,
 which requires accessing and modifying the simulator's source code.\\
 
 
-\noindent We are interested in \emph{gray-box} simulations. By gray-box, we mean a conservation law simulation
- without adjoint implemented. Besides, we are not able to implement adjoint 
-when the governing PDE for the conservation law and its numerical implementation is unavailable,
-for example when the source code is proprietary or legacy.
+\indent We are interested in gray-box simulations. By gray-box, we mean a conservation law simulation
+ without the adjoint method implemented. Furthermore, we are not able to implement the adjoint method
+when the governing PDE for the conservation law and its numerical implementation is unavailable:
+for example, when the source code is proprietary or legacy.
 Another defining property of gray-box simulation is that it can provide the space-time solution of the conservation law.
 If the simulation solves for time-independent problems, a gray-box simulation should be able to 
 provide the steady state solution.
-In contrast, we define a simulator to be a black-box, if neither the adjoint nor the solution is available.
+In contrast, we define a simulator to be a blackbox, if neither the adjoint nor the solution is available.
 The only output of such simulations is the value of the objective function to be optimized.
-If adjoint is implemented or is able to be implemented,
-we call such simulations \emph{open-box}.
+If the adjoint method is implemented or is able to be implemented,
+we call such simulations open-box.
 We summarize their differences in Table \ref{tab: boxes}.\\
+
+\renewcommand{\arraystretch}{0.7}
 \begin{center}
     \captionof{table}{Comparison of black-box, gray-box, and open-box simulations}
     \label{tab: boxes}
+    {\setlength{\extrarowheight}{5pt}
     \begin{tabular}{|c|c|c|c|c|}
         \hline
-                   & PDE       and Implementation & {Space (or space-time) solution} & 
-                   Adjoint\\ \hline
+                   & PDE and implementation & {Space (or space-time) solution} & 
+                   Adjoint\\[5pt] \hline
         Black-box  & \ding{56}       & \ding{56}    & \ding{56}  \\ \hline
         Gray-box   & \ding{56}
                    & \ding{52}    & \ding{56}   \\ \hline
         Open-box   & \ding{52}    &\ding{52}         &   \ding{52}      \\ \hline
-    \end{tabular}
+    \end{tabular}}
 \end{center}
 
-\noindent Depending on the type of simulations involved, we may choose different optimization methods.
-If the simulation is black-box, we may use gradient-free optimization.
-Gradient-free optimization methods require only the availability of objective function values but
-not derivative information\cite{gradfreereview}.
-Gradient-free optimization methods are popular because they are easy to use. However, when the dimension of the design space 
-increases, these methods generally suffer from the \textit{curse of dimensionality}.
-The term \textit{curse of dimensionality} refers to problems caused by the rapid increase in the search volume associated
-with adding extra dimension in the search space. 
+\indent Depending on the type of simulation involved, we may choose different optimization methods.
+If the simulation is black-box, we may use derivative-free optimization methods.
+Derivative-free methods require only the availability of the objective function value, but
+not the derivative information \cite{gradfreereview}.
+Such methods are popular because they are easy to use. However, when the dimension of the design space 
+increases, derivative-free methods may suffer from the curse of dimensionality.
+The curse of dimensionality refers to problems caused by the rapid increase in the search 
+volume associated
+with adding an extra dimension in the search space. 
 The resulting increase of search volume increases the number of objective evaluation required. 
-It's not uncommon to encounter tens or hundreds of dimensions in real life engineering problems,
-making gradient-free optimization very expensive.\\
+It is not uncommon to encounter tens or hundreds of dimensions in real life engineering problems,
+making derivative-free methods computationally expensive.\\
 
-\noindent If the simulation is open-box, we may use gradient-based optimization.
-Gradient-based optimizations use gradient information to locate a local optimum.
-A well-known example is the quasi Newton's methods \cite{quasiNewton}. 
-Generally gradient-based methods require less number of simulations 
-to converge than gradient-free methods, and are more efficient at finding local optimum for high-dimensional problems.
-In addition of requiring $J(c)$ from the simulation,
-these methods also require $\frac{\partial J}{\partial c}$, the sensitivity.
-Adjoint methods are efficient methods for sensitivity analysis\cite{cont discretize adjoint}
-for open-box models.
-Continuous adjoint method develops the continuous adjoint equations from the continuous PDE of the simulation through 
-Lagrange multiplier; and it requires the PDE of the simulation. 
-Discrete adjoint method applies variational analysis directly to the discretized PDE; and it requires the
-discretized PDE (i.e. the numerical implementation) of the simulation.
-Another popular method to compute sensitivity is automatic differentiation (AD)\cite{automaticdiff}.
-AD exploits the fact that every computer program can be broken down into a sequence of elementary arithmetic operations
-and elementary functions. By applying the chain rule repeatedly to these operations, 
-derivatives can be computed automatically. Because adjoint methods require
-the accessibility of the PDE, and/or its implementation details, 
-it can not be used to compute the sensitivity of a gray-box simulation either.\\
+\indent If the simulation is open-box, we may use gradient-based optimization methods.
+Such methods use the gradient information to locate a local optimum.
+A well-known example is the quasi-Newton method \cite{quasiNewton}. 
+When the design space is high-dimensional, gradient-based methods can require fewer
+objective evaluations to converge than derivative-free methods.
+Let $c$ be the design variables, $u$ be the flow solution, and $J$ be the objective value.
+Gradient-based optimization methods require $\frac{d J}{d c} = \frac{\partial J}{\partial c} + \frac{\partial J}{\partial u}
+\frac{d u}{d c}$, the total derivative of the objective to the design variables. 
+The term $\frac{dJ}{dc}$ can be evaluated efficiently by using adjoint methods.
+The continuous adjoint method derives the continuous adjoint equation from the PDE of the simulation through the
+method of the Lagrange multiplier; therefore, it requires knowing the PDE of the simulator. 
+The discrete adjoint method applies variational analysis to the discretized PDE, and it requires knowing the
+discretized PDE of the simulator.
+The discrete adjoint method can be implemented by using automatic differentiation (AD).
+AD decomposes the simulation into elementary arithmetic operations and functions, and
+then applies the chain
+rule to compute the gradient.
+Because adjoint methods require access to the PDE and its discretization, they cannot be directly
+applied to gray-box simulations.\\
 
-\noindent If the simulation is gray-box, the gradient is not able to be computed by adjoint. 
-Most current research practices treat the simulation as
-black-box, and perform gradient free optimization. The gray-box simulation is viewed
-as a calculator for the objective, while its space-time solution is neglected.\\
-
-\noindent In the remainder of the paper, section \ref{prototypes} introduces the prototype
-partial differential equations of conservation laws; section \ref{infer} discusses the feasibility
-inferring the unknown conservation laws by using the space-time solution of flow quantities;
-section \ref{inverse} discusses the formulation of the inference; section \ref{adaptive}
-introduces the concept of excited domain and discuss a basis selection scheme for the inference;
-section \ref{numerical example} demonstrates the method on a 1D flow problem.
+\indent If the simulation is gray-box, we cannot apply the adjoint method to the gray-box conservation law
+to compute the gradient. In current practice, gray-box simulations are often treated as black-box simulations, to which 
+adjoint-based optimization is not applicable.
+The gray-box simulation is viewed as a calculator for the objective, while its space-time solution is neglected.
+This paper introduces a method to enable adjoint-based optimization on gray-box simulations. We propose
+a two-step procedure to estimate the objective's gradient by using the gray-box simulation's space-time solution.
+In the first step, we infer the conservation law governing the simulation by using its space-time solution. In
+the second step, we apply the adjoint method to the inferred conservation law to estimate the gradient.\\
 
 
-\section {Prototypes of PDEs}
+\indent In the remainder of the paper, Section \ref{prototypes} defines the particular type of
+gray-box models considered in this paper. Section \ref{infer} explains why it can be feasible to
+infer the governing PDE from the output of the gray-box model, i.e. the space-time solution.
+Section \ref{inverse} describes how the PDE can be inferred. 
+Section \ref{numerical example} demonstrates that our method works on a 1-D porous media flow problem and
+a 2-D Navier-Stokes flow problem.
+
+
+\section {Optimization constrained by gray-box conservation laws}
 \label{prototypes}
-\noindent When a simulation is gray-box, we can not apply adjoint to the gray-box conservation law to compute the gradient.
-Instead, we estimate the gradient by using the space-time solution of the gray-box model.\\
 
-\noindent We propose a two-step procedure to estimate the objective's gradient by using the 
-gray-box simulation's space-time solution. In the first step, we infer the conservation law 
-governing the simulation by using its space-time solution; in the second step, we apply
-adjoint method to the inferred conservation law to estimate the gradient.\\
-
-\noindent We use the fact that the governing PDE of the gray-box model is a conservation law. 
-For time-dependent problems, the PDE for conservation laws can be written as
+\subsection{Problem definition}
+\indent We consider the optimization problems which are constrained by the solution of two types of
+conservation laws.
+The first type of problems is the space-time solution of conservation laws
 \begin{equation}
-    \frac{\partial}{\partial t}u_i + \nabla \cdot 
-    F_i(\mathcal{D} u) 
-    = q_i(u,c)\,, \qquad i=1,\cdots, n\,,
+    \dot{\boldsymbol{u}} + \nabla \cdot {\boldsymbol{F}}
+    (\boldsymbol{u})
+    = \boldsymbol{q}(\boldsymbol{u},c)
     \label{first equation}
 \end{equation}
-where $t\in[0,T]$ is time;
-$x\in \Omega \subseteq \mathbb{R}^{n}$ is the spatial coordinate.
-$\Omega$ may depend on the design variables $c$.
-$q_i$'s are the source terms that may also depend on $c$.
-$c$ is the design variable and may be space-time dependent.
-The boundary and initial conditions are known. $F_i$'s are the flux functions. 
-The flow variables are 
-$u = \{u_1, \cdots, u_n\}$.
-$\mathcal{D} u = \left\{u_1, \nabla u_1 , \cdots, \nabla^{i_1} u_1; \cdots;
-u_n, \nabla u_n,\cdots, \nabla^{i_n} u_n\right\}$, where $\nabla^j$ indicates the $j$th
-order spatial derivative tensor. We assume $i_1,\cdots, i_n$, i.e. the maximum 
-order of derivatives, are known.
-The discretized space-time solution of Eqn\eqref{first equation} given by a gray-box simulation
-is written as $\hat{u}(t_i, \mathbf{x}_i; c)\,,\, i=1,\cdots,N$, where 
+where $\boldsymbol{u}$ is a vector representing flow quantities,
+$\dot{\boldsymbol{u}}$ is the derivative of $\boldsymbol{u}$ with respect to time,
+$c$ represents the design variables,
+$t\in[0,T]$ is time;
+and $x\in \Omega \subseteq \mathbb{R}^{n}$ is the spatial coordinate.
+$\Omega$ may depend on the design variables, $c$.
+${\boldsymbol{F}}$ is the flux tensor.
+$\boldsymbol{q}$ is a source vector that may also depend on $c$.
+The boundary and initial conditions are known.
+The discretized space-time solution of Eqn.\eqref{first equation} given by a gray-box simulation
+is written as $\hat{u}(t_i, \mathbf{x}_i; c)\,, i=1,\cdots,N$, where
 $t=\left\{t_1,\cdots, t_N\right\}$ indicates the discretized time, and 
 $\mathbf{x}_i$ indicates the spatial discretization at time $t_i$.\\
 
-\noindent The objective function is defined by
-\begin{equation}
-    J = \int_0^T \int_\Omega j(u,c) \textrm{d}\mathbf{x}\textrm{d}t
-    \label{obj prototype}
-\end{equation}
-Notice $j$ can depend explicitly on c, while $u$ depends implicitly on $c$.\\
-
-\noindent Similarly, for time-independent conservation laws, the prototype is
+\indent The second type is the steady state solution of conservation laws
 \begin{equation}
     \nabla \cdot 
-    F_i(\mathcal{D} u) 
-    = q_i(u,c)\,, \qquad i=1,\cdots, n\,,
+    {\boldsymbol{F}}(\boldsymbol{u}_{\infty}) 
+    = \boldsymbol{q}_i(\boldsymbol{u}_{\infty},c)
     \label{first equation steady}
 \end{equation}
-and the objective function is defined by
+where $\boldsymbol{u}_{\infty}$ is the converged solution of 
+of Eqn.\eqref{first equation} at $t\rightarrow \infty$.\\
+
+\indent For both types of solutions, we assume $\boldsymbol{F}$ in Eqns.\eqref{first equation} or \eqref{first equation steady} are unknown, so the simulations that generate the solutions are gray-box. 
+
+\indent We are interested in estimating the gradient of
 \begin{equation}
-    J = \int_\Omega j(u,c) \textrm{d}\mathbf{x}
+    J = \int_0^T \int_\Omega j(\boldsymbol{u},c) \textrm{d}\mathbf{x}\textrm{d}t
+    \label{obj prototype}
 \end{equation}
-
-\noindent Notice the time-independent prototype can be seens as a special case 
-of the time-dependent prototype. In many cases, the solution of time-independent PDEs
-can be seens as the converged solution of time-dependent PDEs. If we can evolve 
-Eqn\eqref{first equation} until $\frac{\partial u_i}{\partial t}\rightarrow 0$,
-the converged solution is a solution of Eqn\eqref{first equation steady}.
-In numerical implementations, this corresponds to the pseudo time marching scheme
-for solve time-independent PDEs. Therefore, we will mostly consider the time-dependent 
-prototype.\\
-
-\noindent For illustration purposes, 
-consider an example for the time-dependent prototype. Consider 
-a simulator modeling two phase flow in porous media.
-One of the simplest yet classical model for two-phase porous media flow is the Buckley-Leverett model \cite{Buckley Leverett, Reservoir Simulation Book}. 
-It models the displacement process of two-phase flow due to capillary pressure and Darcy's law.
-The PDE, Buckley-Leverett equation, is
+and
 \begin{equation}
-    \frac{\partial u}{\partial t} + \frac{\partial}{\partial x} \left(\frac{u^2}{1+A(1-u)^2}\right) = c\,,
-    \label{Buck-Lev eqn}
+    J = \int_\Omega j(\boldsymbol{u}_{\infty},c) \textrm{d}\mathbf{x}
+\end{equation}
+with respect to the control $c$, 
+using the time-dependent and the steady state solutions respectively.
+Notice that $j$ can depend explicitly on c, while $u$ depends implicitly on $c$.
+
+\subsection{Examples of optimization constrained by gray-box simulation}
+We provide two examples to illustrate conservation laws with unknown fluxes. 
+The first example is a 1-D two-phase flow in porous media \cite{Buckley Leverett}. 
+The governing equation can be written as
+\begin{equation}
+    \frac{\partial u}{\partial t} + \frac{\partial }{\partial x} F(u) = c
 \end{equation}
 where $x\in[0,1]$ is the space domain;
 $u = u(t,x)$, $0\le u\le 1$, is the saturation of phase I (e.g. water), 
 and $1-u$ is the saturation of phase II (e.g. oil);
-$A>0$ is a parameter dependent on the physical property of the two phases;
-$c=c(t,x)$ is the design variable. $c>0$ models the injection of phase I replacing phase II; and $c<0$ vice versa.
-Suppose $A$ is an unknown, we can use the prototype Eqn\eqref{first equation} to 
-model the PDE.\\
+$c=c(t,x)$ is the design variable. $c>0$ models the injection of phase I replacing phase II; and $c<0$
+represents the opposite.
+$F$ is an unknown flux that depends on the properties of the porous media and the fluids.\\
 
-\noindent As an example, we may
-want to control the flow through $c$, such that the saturation at $t=T$ is close to 
-a target saturation $u^*(x)$. 
-We parameterize $c(t,x)$ by a set of variables $c_i$, $i=1.\cdots, d$.
-We may introduce a Tikhonov regularization into the objective function 
-to model the control cost.
-Hereby the objective function
-\begin{equation}\begin{split}
-    J &= \int_x \left|u(T,x) - u^*(x)\right|^2 \textrm{d}x + \eta \sum_i c_i^2\\
-      &= \int_t \int_x \left\{ \left|u(t,x) - u^*(x)\right|^2 \delta_T(t) + \frac{\eta}{T} \sum_i c_i^2 \right\}
-      \textrm{d}x \textrm{d}t \,,
-\end{split} \label{BL objective}
-\end{equation}
-where $\eta>0$ models the price of control, and $\delta_\cdot(\cdot)$ is the Direc delta function.
-Eqn\eqref{BL objective} can be modelled by Eqn\eqref{obj prototype}.
-The optimization problem is
+\indent The second example is a 2-D Navier-Stokes flow for a fluid with an unknown state equation. 
+Let $\rho$, $u$, $v$, $E$, and $p$ denote the density, Cartesian velocity components, 
+total energy, and pressure.
+The governing equation is
 \begin{equation}
-    c^* = \arg\min_{c\in \mathbb{R}^d} J
+    \frac{\partial}{\partial t}
+    \begin{pmatrix}
+        \rho \\ \rho u \\ \rho v\\ \rho E
+    \end{pmatrix}
+    + \frac{\partial}{\partial x} 
+    \begin{pmatrix}
+        \rho u\\
+        \rho u^2 + p - \sigma_{xx}\\
+        \rho uv - \sigma_{xy}\\
+        u(E\rho+p) - \sigma_{xx} u - \sigma_{xy} v
+    \end{pmatrix}
+    + \frac{\partial}{\partial y}
+    \begin{pmatrix}
+        \rho v\\
+        \rho uv-\sigma_{xy}\\
+        \rho v^2+p-\sigma_{yy}\\
+        v(E\rho+p) - \sigma_{xy} u -\sigma_{yy}v
+    \end{pmatrix} 
+    = \boldsymbol{0}
+    \label{NSeqn}
 \end{equation}
+where
+\begin{equation}\begin{split}
+    \sigma_{xx} &= \mu \left(2 \frac{\partial u}{\partial x} - \frac{2}{3} \left(\frac{\partial u}{\partial x} 
+    + \frac{\partial v}{\partial y}\right)\right)\\
+    \sigma_{yy} &= \mu \left(2 \frac{\partial v}{\partial y} - \frac{2}{3} \left(\frac{\partial u}{\partial x} 
+    + \frac{\partial v}{\partial y}\right)\right)\\
+    \sigma_{xy}&=\mu\left(\frac{\partial u}{\partial y} + \frac{\partial v}{\partial x}\right)
+\end{split}\end{equation}
+The pressure is governed by an unknown state equation
+\begin{equation}
+    p = p(U, \rho)
+    \label{state equation}
+\end{equation}
+where $U$ denotes the internal energy per volume,
+\begin{equation}
+    U = \rho\left(E-\frac{1}{2}(u^2+v^2)\right)\,.
+\end{equation}
+The state equation depends on the property of the fluid.\\
 
 \section{Infer conservation laws by the space-time solution}
 \label{infer}
-\noindent We first discuss the reason that infering the conservation law is feasible.
-Consider a general dynamical system
-\begin{equation}
-    \dot{u} = \mathcal{L}(u)\,,
-    \label{general equation}
-\end{equation}
-where $u=\{u_1,\cdots, u_n\}$, $u_i = u_i(t,x)$, $i=1,\cdots,n$, $x\in \mathbb{R}^n$.
-$\mathcal{L}$ is a differential operator known as the Hamiltonian of the system.
-Inferring the differential operator can be difficult, however it is not necessary.
-The flow quantities satisfy a conservation law, and their PDEs 
-can be written as prototypes Eqn\eqref{first equation}
-or Eqn\eqref{first equation steady}.
-Therefore, the problem of adapting the physics of the physics-based surrogate reduces to the
-problem of adjusting a set of functions $F_i$ or
-$q_i$, for $i=1,\cdots,n$. \\
+\indent Because Eqns. \eqref{first equation} or \eqref{first equation steady}
+haves an unknown flux, the adjoint method cannot be applied to evaluate 
+$\frac{dJ}{dc}$. To enable the adjoint method in such a scenario, we will infer
+the unknown flux.\\
+%\indent We first discuss the reason that infering the conservation law is feasible.
+%Consider a general dynamical system
+%\begin{equation}
+%    \dot{u} = \mathcal{L}(u)\,,
+%    \label{general equation}
+%\end{equation}
+%where $u=\{u_1,\cdots, u_n\}$, $u_i = u_i(t,x)$, $i=1,\cdots,n$, $x\in \mathbb{R}^n$.
+%$\mathcal{L}$ is a differential operator known as the Hamiltonian of the system.
+%Inferring the differential operator can be difficult, however it is not necessary.
+%The flow quantities satisfy a conservation law, and their PDEs 
+%can be written as prototypes Eqn\eqref{first equation}
+%or Eqn\eqref{first equation steady}.
+%Therefore, the problem of adapting the physics of the physics-based surrogate reduces to the
+%problem of adjusting a set of functions $F_i$ or
+%$q_i$, for $i=1,\cdots,n$. \\
 
-\noindent We use the space-time solution of the gray-box simulations 
-to infer these functions.
-There are several benefits to use the space-time solution \cite{hanmaster}.
+\indent We use the space-time solution of the gray-box simulations 
+to infer the flux.
+There are several benefits by using the space-time solution \cite{hanmaster, ecmor}.
 Firstly, in conservation law simulations, the flow quantities only depend on the flow
-quantities in an older time inside a \emph{domain of dependence}.
+quantities in a previous time inside a domain of dependence.
 When the timestep is small,
-the domain of dependence can be small too. For example, for scalar conservation laws 
+the domain of dependence can be small, as well. For example, for scalar conservation laws 
 without exogenous control,
-we can view solving the conservation law for one timestep $\Delta t$ as a mapping 
+we can view solving the conservation law for one timestep $\Delta t$ at a spatial location
+as a mapping 
 $\mathbb{R}^{\omega_{\Delta t}} \rightarrow \mathbb{R}$, where $\omega_{\Delta t}\in \Omega$ 
 is the domain of dependence. 
-Loosely speaking, by applying such mapping repeatedly to all $x\in \Omega$ and $t\in[0,T]$
+By applying such mapping repeatedly to all $x\in \Omega$ and $t\in[0,T]$
 (in addition to the boundary and initial conditions), we perform 
 a space-time simulation of the conservation law. 
 Generally, the size of $\omega_{\Delta t}$ is small.
 Therefore, in the discretized simulation of conservation laws,
-the number of discretized flow variables involved in $\omega_{\Delta t}$ is small too,
+the number of discretized flow variables involved in $\omega_{\Delta t}$ is small, as well,
 making it feasible to infer the mapping.
 \\
 
@@ -292,33 +328,36 @@ making it feasible to infer the mapping.
     \includegraphics[height=5cm]{locality.png}
     \caption{Domain of dependence: in conservation law simulations,
              the flow quantities at a given location
-             depends on the flow quantities at an older time only within its
-             domain of dependence $\omega$. The domain of dependence can be much smaller
-             then the overall spatial domain $\Omega$ when the timestep is reasonably small.}
+             depend on the flow quantities at an older time only within its
+             domain of dependence. The two planes in this figure indicates the spatial 
+             solution at two adjacent timesteps.
+             The domain of dependence can be much smaller
+             than the overall spatial domain when the timestep is reasonably small.}
     \label{locality}
 \end{center}\end{figure}
 
-\noindent Secondly, the space-time solution at almost \emph{every} space-time grid point can be viewed
+\indent Secondly, the space-time solution at almost {every} space-time grid point can be viewed
 as a sample for the mapping $\mathbb{R}^\omega \rightarrow \mathbb{R}$. 
 Because the number of space-time grid points in gray-box simulations is generally large,
 we have a large number of samples to infer the mapping. 
-In the prototype PDEs Eqn\eqref{first equation} and Eqn\eqref{first equation steady},
-such a mapping is determined by the functions $F_i$'s or $q_i$'s.
-Therefore, we will have a large number of samples to infer the functions,
-making the inference potentially accurrate.\\
+In Eqn.\eqref{first equation} and \eqref{first equation steady},
+such a mapping is determined by the flux.
+Therefore, we will have a large number of samples to infer the flux,
+making the inference potentially accurate.\\
 
-\noindent Thirdly, in many optimization problems, the design space is high only because
-the design is space and/or time dependent. In order to parameterize the space-time dependent
+\indent Thirdly, in many optimization problems, the design space is high dimensional only because
+the design is space- and/or time-dependent. In order to parameterize the space-time dependent
 design, a large number of design variables will be employed. However, 
 the flow quantities only depend on the design variables in the domain of dependence.
 Therefore, even if the overall number of design variables is high, the number of design variables
 involved in the mapping is limited, making the inference problem potentially
 immune to the design space dimensionality.\\
 
-\noindent Therefore, we propose to infer a new type of surrogate using 
-the prototype equations Eqn\eqref{first equation} or
-Eqn\eqref{first equation steady} and the space-time solution of the gray-box simulation.
-The proposed surrogate is called \emph{twin model}.
+\indent Therefore, we propose to infer the flux in Eqn.\eqref{first equation} or
+\eqref{first equation steady}. The inferred
+PDE should yield a solution, $\tilde{\boldsymbol{u}}$, that matches 
+the solution of the gray-box simulation, $\boldsymbol{u}$.
+A simulator of the inferred PDE is called the {twin model}.
 
 %In the mean time, the \emph{physics} of the physics-based surrogate is still fixed offline
 %before the optimization. Can we use primal model samplings to
@@ -326,122 +365,127 @@ The proposed surrogate is called \emph{twin model}.
 %we propose \emph{twin model}: a physics-based surrogate model with flexible physics.\\
 
 
-\section{Twin model as an optimization problem}
+\section{Twin model inference as an optimization problem}
 \label{inverse}
-\noindent 
+\indent 
 Conventionally, we have a given PDE, and want to compute
-its space-time solution. However, in twin model we want to infer the governing PDE
+its space-time solution. However, in a twin model, we want to infer the PDE
 to match a given space-time solution.
-Such a problem can boil down to an optimization problem.
-Finding a suitable prototype equation can be viewed
+Finding a suitable PDE, specifically a suitable flux function, can be viewed
 as an inverse problem, which can be solved by optimization.
 We define a metric for the mismatch of the space-time solutions.
-Given the same inputs (design variables, initial conditions, boundary conditions, and exogenous 
-inputs), an ideal twin model should give a space-time solution $\tilde{u}$ such that
+Given the same inputs (design variables, initial conditions, and boundary conditions), 
+a twin model should yield a space-time solution $\tilde{\boldsymbol{u}}$ such that 
+$\tilde{\boldsymbol{u}}$ is close to $\boldsymbol{u}$. 
+Let the space-time solution to the gray-box PDE and twin model PDE be
+$u$ and $\tilde{u}$.
+Suppose that the twin model and the 
+primal model use the same discretization; we use the following expression to quantify
+the mismatch:
 \begin{equation}
+    \mathcal{M} = \frac{1}{T} \int_0^T \int_\Omega (\tilde{u} - u)^2\; d\Omega
+    \approx
     \frac{1}{T}
-    \int_{t=0}^T\int_{\mathbf{x}\in\Omega} w^2(t,\mathbf{x}, u,\tilde{u}) (\tilde{u} - 
-    u)^2 \, dtd\mathbf{x}\,,
-    \label{minimizer twin model}
-\end{equation}
-is minimized,
-where $w^2>0$ is a weight possibly depending on $t$, $\mathbf{x}$, $u$, and $\tilde{u}$.
-We assume $w\equiv 1$ for simplicity.
-Notice the square on $\tilde{u}-u$: it is a differentiable expression
-whose derivative is smooth.\\
-
-\noindent The space-time solution is discretized rather than continuous. 
-If the twin model and the 
-primal model use the same space-time grid, then Eqn\eqref{minimizer twin model} can be
-approximated by
-\begin{equation}
-    \frac{1}{T}
-    \sum_{i=1}^{N}\sum_{k=1}^{T} \left(\tilde{u}_{ik} - u_{ik}\right)^2 \Delta t_k
-    \left| \Delta \mathbf{x}_i \right|\,,
+    \sum_{i=1}^{N}\sum_{k=1}^{M} \left(\tilde{\boldsymbol{u}}_{ik} 
+    - \boldsymbol{u}_{ik}\right)^2 \Delta t_k
+    \left| \Delta \mathbf{x}_i \right|
     \label{minimizer twin model discrete}
 \end{equation}
-where $\left| \Delta \mathbf{x}_i \right|$ indicates the size of the grid.
-If the grids are different, then a mapping $P$ from $u$ to $\tilde{u}$ is required.
-In this case, Eqn\eqref{minimizer twin model discrete} would translate to
+where $\left| \Delta \mathbf{x}_i \right|$ indicates the lengths (1-D), areas (2-D), or volumes (3-D) 
+of the grid.
+If the space- and/or time-grids are different, then a mapping $P$ from $u$ to $\tilde{u}$ is required.
+In this case, the mismatch can be approximated by
 \begin{equation}
+    \mathcal{M} \approx
     \frac{1}{T}
-    \sum_{i=1}^{N}\sum_{k=1}^{T} \left(\tilde{u}_{ik} - P(u)_{ik}\right)^2 \Delta t_k
-    \left| \Delta \mathbf{x}_i \right|\,,
+    \sum_{i=1}^{N}\sum_{k=1}^{M} \left(\tilde{\boldsymbol{u}}_{ik} - P(\boldsymbol{u})_{ik}\right)^2 
+    \Delta t_k
+    \left| \Delta \mathbf{x}_i \right|
     \label{minimizer twin model discrete mapping}
 \end{equation}
-Right now, we assume the grids are the same for simplicity.\\
+For the present examples, we assume that the grids are the same for the purpose of simplicity.\\
 
-\noindent 
-In the following we assume $F_i$'s are unknown in the prototype equations
-(the extension to problems with unknown $q_i$'s
-is straightforward). By parameterizing the functions using a set of basis,
-the problem of constructing a twin model
-is converted to the following problem. Notice we added a Tikhonov regularization
-to avoid ill-posedness. \\
+\indent 
+We parameterize the flux function and infer the parameterization that minimizes $\mathcal{M}$.
+Let the parameterized flux function be $G(\tilde{\boldsymbol{u}}, \xi)$,
+where $\xi$ values are the parameters.
+The inference problem is stated as follows:\\
 
-\fbox{\parbox{\textwidth}{
-Solve
+%\fbox{\parbox{\textwidth}{
+\indent Solve
 \begin{equation}
-    \xi^* = \arg\min_{\xi} L(\tilde{u}(\xi)) =
+    \xi^* = 
     \arg\min_{\xi} \left\{
-    \frac{1}{T}
-    \sum_{i=1}^{N}\sum_{k=1}^{T} \left(\tilde{u}_{ik} - u_{ik}\right)^2 \Delta t_k
-    \left| \Delta \mathbf{x}_i \right|
-    + \lambda \|\xi\|^2  \right\}
-    \,,
+    \mathcal{M}
+    + \lambda \|\xi\|^p  \right\}
     \label{objective twin model}
 \end{equation}
-where $u$ is the discretized space-time solution of the primal model, and $\tilde{u}$
+where $\tilde{\boldsymbol{u}}$
 is the discretized space-time solution of
 \begin{equation}
-    \frac{\partial\eta_s \tilde{u}_s(t,x)}{\partial t} + \nabla \cdot \left\{
-    \sum_{k=1}^{m_s}\xi_{sk} g_{sk}(\mathcal{D} \tilde{u}, \kappa)  \right\}
-    = q_s(\tilde{u},c(t,x))\,, \qquad s=1,\cdots, n\,,
+    \dot{ \tilde{\boldsymbol{u}}} + \nabla \cdot
+    G(\tilde{\boldsymbol{u}}, \xi)
+    = \boldsymbol{q}(\tilde{\boldsymbol{u}},c)
     \label{first equation 2}
 \end{equation}
-$g_{sk}$, $k=1\cdots m_s$ are the library of basis functions for $F_s$. 
-$\xi$'s are the coefficients for the basis functions. $\lambda\|\xi\|^2$
-is the regularization with $\lambda>0$. $\|\cdot\|$ is the $L_2$ vector norm.
-The grids of the primal model solver and the twin model solver are assumed the same.
-Also, the primal model and the twin model use the same design, initial condition, 
-boundary condition, and exogeneous parameters $\eta$ and $\kappa$.
-}}
+ $\lambda\|\xi\|^p$
+is an $L_p$ norm regularization, and $\lambda>0$.
+The space-time discretization of Eqn.\eqref{first equation 2} is the same as the gray-box simulator.
+%}}
 \\
 
-\noindent Similarly, for time-independent prototype equations, we have\\
-
-\fbox{\parbox{\textwidth}{
-Solve
+\indent Similarly, if we are interested in the steady state solution,
+we have
 \begin{equation}
-    \xi^* = \arg\min_{\xi} L(\tilde{u}(\xi)) =
-    \arg\min_{\xi} \left\{
-    \sum_{i=1}^{N}\left(\tilde{u}_{ik} - u_{ik}\right)^2
+    \mathcal{M} = \frac{1}{T}
+    \sum_{i=1}^{N} \left(\tilde{\boldsymbol{u}}_{i} - \boldsymbol{u}_{i}\right)^2
     \left| \Delta \mathbf{x}_i \right|
-    + \lambda \|\xi\|^2 \right\}
-    \,,
+    \label{minimizer twin model discrete steady}
+\end{equation}
+
+\indent The inference problem is stated as follows:\\
+
+%\fbox{\parbox{\textwidth}{
+\indent Solve
+\begin{equation}
+    \xi^* = 
+    \arg\min_{\xi} \left\{
+    \mathcal{M} 
+    + \lambda \|\xi\|^p  \right\}
     \label{objective twin model steady}
 \end{equation}
-where $u$ is the discretized spatial solution of the primal model, and $\tilde{u}$
+where $u$ is the discretized spatial solution of the gray-box simulation, and $\tilde{u}$
 is the discretized spatial solution of
 \begin{equation}
-    \nabla \cdot \left\{
-    \sum_{k=1}^{m_s}\xi_{sk} g_{sk}(\mathcal{D} \tilde{u}, \kappa)  \right\}
-    = q_s(\tilde{u},c(x))\,, \qquad s=1,\cdots, n\,,
+    \nabla \cdot
+    G(\tilde{\boldsymbol{u}}, \xi)
+    = \boldsymbol{q}(\tilde{\boldsymbol{u}},c)
     \label{first equation 2 steady}
 \end{equation}
-$g_{sk}$, $k=1\cdots m_s$ are the library of basis functions for $F_s$. 
-$\xi$'s are the coefficients for the basis functions. 
-$\lambda\|\xi\|^2$ is the regularization with $\lambda>0$.
-$\|\cdot\|$ is the $L_2$ vector norm.
-The grids of the primal model solver and the twin model solver are assumed the same.
-Also, the primal model and the twin model use the same design, 
-boundary condition, and exogeneous parameters $\kappa$.
-}}\\
+%}}\\
 
-\noindent Twin model is an open-box. Therefore, adjoint method 
-can be implemented for the optimization of the parameters $\xi$.\\
+\indent The match of space-time solutions does not ensure the match of flux functions.
+The problem can be ill-posed to infer $F$ on a domain not covered by the gray-box solution $u$.
+In other words, the basis for modeling the flux may be over-complete.
+We will call a domain of $u$ ``excited'' if inferring $F$ is well-posed on that domain.
+The ill-posedness
+can be allieviated by basis selection. It has been shown that basis selection can be performed
+by Lasso regularization corresponding to $p=1$ \cite{Lasso variable selection}.
+We will set $p=1$ in this article. \\
 
-\noindent Next, we consider choosing an appropriate basis library $g$.
+\indent Because the twin model is an open-box system, Eqns.\eqref{objective twin model} 
+and \eqref{objective twin model steady} can be solved by adjoint gradient-based methods.
+The parameterization of the twin model flux $G$ will be problem-dependent. We will discuss
+this topic in Section \ref{numerical example}.
+
+\subsection{Selecting the flux basis}
+two issues.
+1. Range of flux function being defined.
+Excited domain definition.
+Select a region that include the gray solution
+2.
+
+\indent Next, we consider choosing an appropriate basis library $g$.
 Many basis can be used, such as polynomial basis, Fourier basis, and wavelet basis.
 For the example of inferring the 1D conservation law, we are interested in inferring the flux.
 The addition of a constant to the flux function does not change the conservation law,
@@ -560,12 +604,15 @@ solution mismatch with Lasso regularization would be
 \end{equation}
 where $\|\cdot\|_1$ is the $L_1$ norm. \\
 
-\section{Numerical example}
+
+
+\section{Numerical examples}
 \label{numerical example}
-In this section we demonstrate a numerical example for fitting a twin model with fixed structure.
-Consider a 1D Buckley-Leverett equation
+In this section, we demonstrate the twin model with two numerical examples.
+\subsection{Gradient estimation for a 1-D porous media flow}
+Consider a 1-D PDE
 \begin{equation}
-    \frac{\partial u}{\partial t} + \frac{\partial F(u)}{\partial x} = 0\,\quad x\in[0,1]\,,\; t\in[0,1]
+    \frac{\partial u}{\partial t} + \frac{\partial F(u)}{\partial x} = c\,\quad x\in[0,1]\; t\in[0,1]
     \label{BL eqn}
 \end{equation}
 with periodic boundary condition
@@ -576,195 +623,220 @@ and initial condition
 \begin{equation}
     u(t=0) = u_0
 \end{equation}
-Buckley-Leverett equation is a simple model for 1D, two-phase, porous media flow driven by
-capillary pressure and Darcy's law \cite{Buckley Leverett}. $u$
-indicates one phase's saturation and $0\le u\le 1$.
-The flux function $F(u)$ depends on the phases and the porous media. 
-A popular $F(u)$ is
+Eqn.\eqref{BL eqn} can be used to model 1-D, two-phase, porous media flow, where $u$
+denotes the saturation of one phase. $0\le u\le 1$. $c=c(t,x)$ is a space-time dependent exogenous control.
+The flux function $F(u)$ depends on the properties of the porous media and the fluids.
+For example, the Buckley-Leverett equation models the flow driven by 
+capillary pressure and Darcy's law \cite{Buckley Leverett}, whose flux is
 \begin{equation}
-    F(u) = \frac{u^2}{1+A(1-u)^2}\,,
+    F(u) = \frac{u^2}{1+A(1-u)^2}
     \label{BL flux}
 \end{equation}
-where $A$ is a constant. In the following we assume the blackbox simulation
-solves Eqn\eqref{BL eqn} with the flux given by Eqn\eqref{BL flux}, and $A=2$.
+where $A$ is a constant. In the following we assume the graybox simulation
+solves Eqn.\eqref{BL eqn} and \eqref{BL flux} with $A=2$.
 \\
 
-\noindent Assume $F(u)$ is unknown, we will fit a twin model 
-using the blackbox simulation.
-The twin model can be written as
+\indent Assuming that $F(u)$ is unknown, we will fit a twin model 
+using the graybox simulation.
+We parameterize the twin model according to Eqn.\eqref{first equation 2}
 \begin{equation}
     \frac{\partial \tilde{u}}{\partial t} + \frac{\partial}{\partial x}\,
-    \left(\sum_{k=1}^m \xi_k g_{k}(\tilde{u})\right) = 0
+    \left(\sum_{k=1}^m \xi_k g_{k}(\tilde{u})\right) = c
     \label{twin model 3}
 \end{equation}
-with the same initial and boundary conditions. We will
-use sigmoid functions to represent the flux. Both the black-box simulation
-and the twin model use a second order finite volume discretization and 
-Crank-Nicolson time integration scheme.\\
+with the same initial condition, boundary conditions, and exogenous control. 
 
-\noindent The objective of fitting the twin model is given in Eqn\eqref{objective twin model},
-and is itself an optimization.
-We use an automatic differentiation module \textit{numpad} \cite{numpad} to compute
-$\frac{dJ}{d\xi_k}\,, k=1,\cdots, m$.
-Since the gradient information is available, we consider using a quasi-Newton method
-for the optimization. Quasi-Newton methods build the Hessian approximation iteratively 
-using gradient, and can greatly accelerate convergence \cite{Quasi-Newton Review}.
-When the degree of freedom of the optimization is high, the memory required to 
-store the Hessian matrix can be large. To reduce the memory requirement, 
-we can use the \emph{low-memory Broyden-Fletcher-Goldfarb-Shannon} (L-BFGS) algorithm
-\cite{nlopt, LBFGS}. 
+\indent Generally, the flux $F$ is a monotonic increasing function. To respect this fact, we
+choose $g$ values as a family of sigmoid functions 
+\begin{equation}
+    g_k(\tilde{u}) = \left(\tanh\left(\frac{\tilde{u}- \eta_k}{\sigma}\right)+1\right) \left.\right/2
+    \label{sigmoids}
+\end{equation}
+where $\eta_k$ and $\sigma$ are constants. Therefore, we just need to set $\xi\ge 0 $ 
+to enforce the monotonicity of the flux.
+We will use  a second-order finite volume discretization and 
+Crank-Nicolson time integration scheme in the twin model.
+\begin{figure}[H]\begin{center}
+    \includegraphics[width=7cm]{fluxbasis.png}
+    \caption{An example of the flux basis functions $g_k(\tilde{u})$. 
+    These basis functions are distinguished by different colors.}
+\end{center}\end{figure}
+
+To infer the coefficients $\xi$, we minimize
+\begin{equation}
+    \int_0^1 \int_0^1 (u-\tilde{u})^2 dx dt+ \lambda \sum_{k=1}^m |\xi_k|
+\end{equation}
+We use the {low-memory Broyden-Fletcher-Goldfarb-Shannon} (BFGS) algorithm
+\cite{LBFGS} for the minimization. 
 L-BFGS approximates the Hessian using only the gradients at newer previous iterations,
-and inverse the approximated Hessian efficiently using the Sherman-Morrison formula.
-For this work, we
-use the implementation of L-BFGS in Nlopt \cite{nlopt}.\\
+and inverses the approximated Hessian efficiently using the Sherman-Morrison formula.
+The gradient, $\frac{dJ}{d\xi_k}\,, k=1,\cdots, m$, 
+is computed by an automatic differentiation module \textit{numpad} \\
+$[$Q. Wang, https://github.com/qiqi/numpad.git.$]$\\
 
 
-\noindent The initial conditions are shown in Fig \ref{fig:initial condition}.
+\indent We set $c=0$, and test the quality of the twin model given several initial conditions.
+These initial conditions are shown in Fig. \ref{fig:initial condition}.
+For different initial conditions, the excited domain will be different.
+Let $u_{\max} = \max_{t,x}u(t,x)$ and $u_{\min} = \min_{t,x}u(t,x)$,
+we expect the inferred flux to match the true flux within $[u_{\min},u_{\max}]$.
 \begin{figure}[H]\begin{center}
     \includegraphics[height=8cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/initial_conditions.png}
-    \caption{Initial condition $u_0(x)$}
+    \caption{Initial condition $u_0(x)$. 
+    We choose a diverse set of initial conditions to test the twin model method.}
     \label{fig:initial condition}
 \end{center}\end{figure}
-\noindent We compare $\frac{dF}{du}$ with the trained $\frac{d\tilde{F}}{du}$. We also show the
-space-time solution of the gray-box, as well as the solution mismatch, for the 8 initial conditions.
+\indent In Eqn.\eqref{first equation},
+we can add a constant to the flux while yielding the same solution $u$. 
+Therefore, we compare $\frac{dF}{du}$ with $\frac{d\tilde{F}}{du}$, instead of comparing
+$F$ with $\tilde{F}$. We also show the
+space-time solution of the gray-box simulation, as well as the solution mismatch, for these initial conditions.\\
 \begin{figure}[H]\begin{center}
-    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/0_x.png}
+    Flux gradient\hspace{2cm} Gray-box solution \hspace{2cm} Solution mismatch
+    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/0_x_new.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/0_sol.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/0_err.png}
     \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
-    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/1_x.png}
+    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/1_x_new.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/1_sol.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/1_err.png}
     \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
-    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/2_x.png}
+    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/2_x_new.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/2_sol.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/2_err.png}
     \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
-    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/3_x.png}
+    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/3_x_new.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/3_sol.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/3_err.png}
     \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
-    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/4_x.png}
+    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/4_x_new.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/4_sol.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/4_err.png}
     \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
-    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_x.png}
+    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_x_new.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_sol.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_err.png}
     \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
-    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_x.png}
+    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_x_new.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_sol.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_err.png}
     \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
-    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_x.png}
+    \includegraphics[width=4.9cm,height=3.7cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_x_new.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_sol.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_err.png}
-    \label{fig:sol compare}
-    \caption{Left: ompare $F^\prime$ (red line) with $\tilde{F}^\prime$ (blue line). 
-             Middle: the space-time solutions of the gray-box model.
-             Right: $\left|u-\tilde{u}\right|$.}
-\end{center}\end{figure}
+    \label{fig: sol compare}
+    \caption{The left column shows the gradient of $F$ (red line) with the gradient of $\tilde{F}$ (blue line). 
+             The middle column shows the space-time solutions of the gray-box model.
+             The right column shows the solution mismatch $\left|u-\tilde{u}\right|$. Each row corresponds to an initial condition.
+             The excited domain, $[u_{\min}, u_{\max}]$, is indicated by the green region in
+             the left column.
+             When the excited domain is large, the twin model's flux 
+             approximates the gray-box model's flux in a large range of $u$, but
+             the solution mismatch tends to be less accurate in the exicted domain. When the excited domain is small,
+             the twin model's flux approximates the gray-box model's flux in a small range of $u$, but the flux
+             approximation tends to be more accurate in the excited domain.}
+\end{center}
 
-\noindent Using the twin model, we can estimate the objective's gradient by applying
+\end{figure}
+
+Using the twin model, we can estimate the objective's gradient by applying the
 adjoint method to the twin model, i.e. we approximate
-$\frac{\partial J}{\partial u}$ with $\frac{\partial \tilde{J}}{\partial u}$.
+$\frac{\partial J}{\partial u}$ with $\frac{\partial \tilde{J}}{\partial \tilde{u}}$.
 Suppose the gray-box model solves
 \begin{equation}
     \frac{\partial u}{\partial t} + \frac{\partial}{\partial x}\,
-    \left(F(u)\right) = c\,,
+    \left(F(u)\right) = c
 \end{equation}
-for $c=0$, with $F(u)$ given by Eqn\eqref{BL flux}. We trained a twin model
-Eqn\eqref{twin model 3} using the space time solution. We are interest in
-the approximation quality of the twin model's gradient at $c$ adjacent to $c=0$.
-The results are shown below
-\begin{figure}[H]\begin{center}
-    \includegraphics[width=3.8cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/0_Jc.png}
-    \includegraphics[width=3.8cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/1_Jc.png}
-    \includegraphics[width=3.8cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/2_Jc.png}
-    \includegraphics[width=3.8cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/3_Jc.png}
-\end{center}\end{figure}
-\vspace{-1.3cm}
-\begin{figure}[H]\begin{center}
-    \includegraphics[width=3.8cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/4_Jc.png}
-    \includegraphics[width=3.8cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_Jc.png}
-    \includegraphics[width=3.8cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_Jc.png}
-    \includegraphics[width=3.8cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_Jc.png}
-    \caption{Compare $J(c)$ (red line) with $\tilde{J}(c)$ (blue dashed line) for the 8 cases. 
-    The black vertical line indicates
-    $c=0$ where the twin models are trained.}
-\end{center}\end{figure}
+for $c=0$, with $F(u)$ given by Eqn.\eqref{BL flux} with $A=2$. We have trained a twin model
+Eqn.\eqref{twin model 3} using the space-time solution. We are interested in
+the approximation quality of the twin model's gradient at $c=0$.
+$c$ is space-time dependent, therefore $\frac{dJ}{dc}$ is space-time dependent too.
+We compare $\frac{dJ}{dc}$ with $\frac{d\tilde{J}}{dc}$ in Fig. 5.
+%The results are shown in Fig. 5.
+%\begin{figure}[H]\begin{center}
+%    \includegraphics[width=7.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/0_Jc.png}
+%    \includegraphics[width=7.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/1_Jc.png}
+%\end{center}\end{figure}
+%\begin{figure}[H]\begin{center}
+%    \includegraphics[width=7.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/2_Jc.png}
+%    \includegraphics[width=7.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/3_Jc.png}
+%\end{center}\end{figure}
+%\begin{figure}[H]\begin{center}
+%    \includegraphics[width=7.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/4_Jc.png}
+%    \includegraphics[width=7.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_Jc.png}
+%\end{center}\end{figure}
+%\begin{figure}[H]\begin{center}
+%    \includegraphics[width=7.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_Jc.png}
+%    \includegraphics[width=7.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_Jc.png}
+%    \caption{Comparison of $J(c)$ (red line) with $\tilde{J}(c)$ (blue dashed line) for the 8 cases. 
+%    The black vertical line indicates
+%    $c=0$ where the twin models are trained. In all these cases, the twin model estimates
+%    the gradient of the objective function accurately.}
+%\end{center}\end{figure}
 
 
-\noindent If the $c$ is space-time dependent, $\frac{dJ}{dc}$ will be a space-time dependent field.
-We compare $\frac{dJ}{dc}$ with $\frac{d\tilde{J}}{dc}$.
-\begin{figure}[H]\begin{center}
+\indent \begin{figure}[H]\begin{center}
+    $\frac{dJ}{dc}$ \hspace{4.3cm} $\frac{d\tilde{J}}{dc}$  \hspace{4cm} $\left|\frac{dJ}{dc} - \frac{d\tilde{J}}{dc}\right|$\\
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_primal.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_twin.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_err.png}
-    \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_primal.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_twin.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err.png}
-    \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_primal.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_twin.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_err.png}
-    \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_primal.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_twin.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_err.png}
-    \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_primal.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_twin.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_err.png}
-    \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_primal.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_twin.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_err.png}
-    \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_primal.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_twin.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png}
-    \label{fig:sol compare}
 \end{center}\end{figure}
 \vspace{-1cm}
 \begin{figure}[H]\begin{center}
@@ -772,575 +844,922 @@ We compare $\frac{dJ}{dc}$ with $\frac{d\tilde{J}}{dc}$.
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_twin.png}
     \includegraphics[width=5.1cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err.png}
     \label{fig:sol compare}
-    \caption{Left: $\frac{dJ}{dc}$, evaluated by the gray-box model. 
-             Middle: $\frac{d\tilde{J}}{dc}$, evaluated by the trained twin model.
-             Right: $\left|\frac{dJ}{dc} - \frac{d\tilde{J}}{dc}\right|$.}
+    \caption{The left column shows $\frac{dJ}{dc}$ which is evaluated by the gray-box model. 
+             The middle column shows $\frac{d\tilde{J}}{dc}$ which is evaluated by the trained twin model.
+             The right column shows $\left|\frac{dJ}{dc} - \frac{d\tilde{J}}{dc}\right|$.
+             We observe that the gradient is more accurate when the excited domain is smaller.}
 \end{center}\end{figure}
 
 
-The result is encouraging as the gradient computed by the twin model gives a good approximation
+\indent The result is encouraging, as the gradient computed by the twin model provides
+a good approximation
 of the gradient of the primal model. We reiterate that the good approximation quality benefits from 
-the matching of space-time solution.
+the matching of the space-time solution.\\
+
+\subsection{Gradient estimation of Navier-Stokes flows}
+\indent In the second numerical test case, we consider
+a compressible internal flow in a 2-D return bend channel.
+The flow is driven by the pressure difference between the inlet and the outlet.
+The flow is governed by Navier-Stokes equations, Eqn.\eqref{NSeqn}.
+Navier-Stokes equations require an additional state equation, Eqn.\eqref{state equation}, for closure.
+Many models of the state equations have been developed, including the ideal gas equation, the
+van der Waals equation, and the Redlich-Kwong equation \cite{state eqns}.\\
+
+\begin{figure}[H]\begin{center}
+    \includegraphics[width=12cm]{../numpad/test/ns_cases_spline/results/mesh/spline.png}
+    \caption{The return bend geometry and the mesh for simulation. The return bend is bounded by 
+    no-slip walls. The values of pressure
+    are fixed at the inlet and at the outlet. 
+    The inner and outer boundaries of the bend are generated by the control points
+    using quadratic B-spline.
+    We estimate the gradient of the steady state mass flux
+    to the red control points' coordinates.}
+    \label{NS mesh}
+\end{center}\end{figure}
+
+\indent The inner and outer boundaries at the bending section 
+are each generated by 6 control points using quadratic B-spline. 
+The control points are shown by the red and gray dots in Fig. 6. The gray control points are fixed 
+on the straight sections.
+The spanwise grid is generated by geometric grading. The streamwise
+grid at the straight and the bending section are each generated
+by uniform grading, except at the sponge region.
+The pressure at the outlet is set to be a constant $p_{out}$ while
+the total pressure at the inlet is set to be a constant $p_{t,in}$.
+Let $\rho_\infty$ be the steady state density, and
+$\boldsymbol{u}_\infty = (u_\infty, v_\infty)$ be the steady state Cartesian velocity.
+The steady state mass flux is
+\begin{equation}
+    J = - \int_{\textrm{outlet}} \rho_\infty u_\infty \big|_{\textrm{outlet}} \; dy=
+    \int_{\textrm{inlet}} \rho_\infty u_\infty\big|_{\textrm{inlet}} \; dy
+    \label{mass flux}
+\end{equation}
+We want to estimate the gradient of the steady state mass flux
+to the red control points' coordinates.
+\\
+
+\indent When the state equation of the fluid is unknown, the 
+adjoint method cannot be applied directly
+to estimate the gradient. We use the proposed twin model to infer the state
+equation from the steady state solution of the gray-box simulation.
+Assume that the gray-box simulation provides $\rho_\infty$, $\boldsymbol{u}_\infty$,
+and $E_\infty$. 
+Fig. 7 shows an example of the solution.
+\begin{figure}[H]\begin{center}
+    \includegraphics[width=16cm]{../numpad/test/ns_cases_spline/results/gray_sol/gray0_spline.png}
+    \caption{An example of the steady state velocity, energy, and density provided 
+    by the gray-box simulation. In the velocity subplot, the 
+    magnitude of the velocity is overlayed with the velocity vectors.}
+    \label{gray sol}
+\end{center}\end{figure}
+
+\indent We parameterize the unknown state equation by
+\begin{equation}
+    p(\rho, U) = \sum_{i=1}^{N_\rho} \sum_{j=1}^{N_U} \alpha_{ij} R_i(\rho) S_j(U) 
+    + p_0
+    \label{parameterization}
+\end{equation}
+where
+\begin{equation}
+    R_i(\rho) = \exp\left(\frac{-(\rho-\rho_i)^2}{\sigma_\rho}\right)\,,\quad i=1,\cdots,N_\rho 
+\end{equation}
+\begin{equation}
+    S_j(U) = \frac{1}{2}\left(\tanh\left( \frac{U-U_j}{\sigma_U}\right) +1\right)
+    \quad j = 1,\cdots,N_U\,.
+\end{equation}
+$R_i$ are radial basis functions, and $S_j$ are sigmoid functions.
+Let the density of the gray-box solution be in the range of $[\rho_{\min}, \rho_{\max}]$, and
+let the internal energy of the gray-box solution be in the range of $[U_{\min}, U_{\max}]$.
+We set $\rho_i$, $i=1,\cdots,N_\rho$ to be equally spaced in $[\rho_{\min}, \rho_{\max}]$, and set
+$U_j$, $j=1,\cdots,N_U$ to be equally spaced in $[U_{\min}, U_{\max}]$.
+We constrain $\alpha$ values to be positive to respect the fact that pressure
+monotonically increases with the internal energy.
+$p_0$ is a scalar. We set $\sigma_\rho=\frac{\rho_{\max}-\rho_{\min}}{N_\rho}$, 
+$\sigma_U = \frac{U_{\max}-U_{\min}}{N_U}$.\\
+
+\indent We define the solution mismatch, Eqn.\eqref{minimizer twin model discrete steady}, as
+\begin{equation}
+    \mathcal{M} = w_\rho \|\tilde{\rho}_{\infty} - \rho_{\infty}\|^2
+                + w_u
+                \|\tilde{u}_{\infty}- u_{\infty}\|^2
+                + w_v
+                \|\tilde{v}_{\infty}- v_{\infty}\|^2
+                + w_E
+                \|\tilde{E}_{\infty} - E_\infty\|^2
+    \label{NS mismatch}
+\end{equation}
+where $w_\rho$, $w_u$, $w_v$, and $w_E$ are positive weight constants.
+$\|\cdot\|$ is the $L_2$ norm.
+To infer the state equation we solve the optimization problem:
+\begin{equation}
+    \min_{\alpha, p_0} \left\{\mathcal{M} +\lambda 
+    \sum_{i=1}^{N_\rho}\sum_{j=1}^{N_U} \big|\alpha_{ij}\big|
+    \right\}
+    \label{NS optimize}
+\end{equation}
+
+\indent We need to choose suitable weights $w_\rho$, $w_u$, $w_v$, and $w_E$ in
+Eqn.\eqref{NS optimize}. To select these weights, 
+we first set $\alpha$ and $p_0$ values to several randomly guessed values. 
+Using these guessed state equation, we 
+obtain $\|\tilde{\rho}_{\infty} - \rho_{\infty}\|^2$,
+$\|\tilde{u}_{\infty}- u_{\infty}\|^2 $,
+$ \|\tilde{v}_{\infty}- v_{\infty}\|^2$,
+and $\|\tilde{E}_{\infty} - E_\infty\|^2$.
+The weights are chosen to be
+\begin{equation}\begin{split}
+    w_\rho &= \frac{1}{\left<\|\tilde{\rho}_{\infty} - \rho_{\infty}\|^2\right>}\\
+    w_u &= \frac{1}{\left<\|\tilde{u}_{\infty} - 
+    {u}_{\infty}\|^2\right>}\\
+    w_v &= \frac{1}{\left<\|\tilde{v}_{\infty} - 
+    v_{\infty}\|^2\right>}\\
+    w_E &= \frac{1}{\left<\|\tilde{E}_{\infty} - 
+    E_{\infty}\|^2\right>}
+\end{split}
+\label{NS weights}
+\end{equation}
+where $\left<\cdot\right>$ denotes the sample average of the randomly-guessed state equations.
+In this way, $\tilde{\rho}_\infty-\rho_\infty$, 
+$\tilde{u}_{\infty}-u_\infty$, $\tilde{v}_{\infty}-v_\infty$,
+and $\tilde{E}_\infty-E_\infty$ will, on average, contribute
+similarly to the solution mismatch for the randomly-guessed state equations.\\
+
+\indent We tested three example state equations in the graybox simulator:
+the ideal gas equation, the van der Waals equation, and the Redlich-Kwong equation:
+\begin{equation}\begin{split}
+    p_{ig} &= (\gamma-1) U\\
+    p_{vdw} &= \frac{(\gamma-1)U}{1-b_{vdw}\rho} - a_{vdw}\rho^2\\
+    p_{rk} &= \frac{(\gamma-1)U}{1-b_{rk}\rho} - 
+    \frac{a_{rk}\rho^{5/2}}{((\gamma-1)U)^{1/2}(1+b_{rk}\rho)}
+\end{split}\label{NS state equations}
+\end{equation}
+where $a_{vdw}$, $b_{vdw}$, $a_{rk}$, $b_{rk}$ are constants. In the following testcases, we choose
+$a_{vdw}=10^4$, $b_{vdw}=0.1$, $a_{rk}=10^7$, $b_{rk}=0.1$.\\
+
+\indent 
+By solving Eqn \eqref{NS optimize}, we obtain the solution mismatch for the state equations.
+The solution mismatch,
+ $\left|\tilde{\rho} -\rho\right|$, $\left|\tilde{\boldsymbol{u}}- \boldsymbol{u}\right|$, 
+and $\left|\tilde{E}-E\right|$,
+between the inferred twin model's solution and the graybox solution is shown in Fig. 8.
+\begin{figure}[H]\begin{center}
+    \centering Ideal gas\\
+    \includegraphics[width=16cm]{../numpad/test/ns_cases_spline/results/train_sol_error/err_0_spline.png}\\
+\end{center}\end{figure}
+\begin{figure}[H]\begin{center}
+    \centering van der Waals gas\\
+    \includegraphics[width=16cm]{../numpad/test/ns_cases_spline/results/train_sol_error/err_1_spline.png}
+\end{center}\end{figure}
+\begin{figure}[H]\begin{center}
+    \centering Redlich-Kwong gas
+    \includegraphics[width=16cm]{../numpad/test/ns_cases_spline/results/train_sol_error/err_2_spline.png}\\
+    \caption{The solution mismatch between the twin model's solution and the graybox solution for the
+    ideal gas equation, the van der Waals equation, and the Redlich-Kwong equation. 
+    The first group of images is for the ideal gas, the second group of images is for the van der Waals
+    gas, and the third group of images is for the Redlich-Kwong gas. For each gas, we show 
+    the solution mismatch of velocity, energy, and density. For all
+    three test cases, the relative error of the velocity, energy, and density is small.}
+    \label{fig:NS sol err}
+\end{center}\end{figure}
+
+\indent Let the $(\rho, U)$ be the gray-box steady state solution's 
+density and internal energy at all the spatial
+gridpoint, and let $H(\rho, U)$ be its convex hull. We expect the the estimated state equation
+to be more accurate inside $H(\rho, U)$ than outside $H(\rho, U)$.
+The inferred state equation, $p = p(\rho, U)$, is shown in Fig. 9.
+\begin{figure}[H]\begin{center}
+    \centering Ideal gas\\
+    \includegraphics[width=16cm]{../numpad/test/ns_cases_spline/results/train_state_eqn/state_ideal_gas_spline.png}
+\end{center}\end{figure}
+\begin{figure}[H]\begin{center}
+    \centering van der Waals gas\\
+    \includegraphics[width=16cm]{../numpad/test/ns_cases_spline/results/train_state_eqn/state_vdw_gas_spline.png}
+\end{center}\end{figure}
+\begin{figure}[H]\begin{center}
+    \centering Redlich-Kwong gas\\
+    \includegraphics[width=16cm]{../numpad/test/ns_cases_spline/results/train_state_eqn/state_rk_gas_spline.png}
+    \caption{The inferred state equation and the gray-box state equation for the three gases. 
+    The left column shows the inferred state equation, and the right column shows the 
+    gray-box state equation.
+    In all the three test cases, the inferred state equation approximates the gray-box state
+    equation accurately inside $H(\rho, U)$ indicated by the dashed line.}
+    \label{fig:NS state eqn}
+\end{center}\end{figure}
+
+\indent Using the inferred state equation, we are able to compute the
+gradient of the mass flux to the countrol points at the bending section.
+For example, the gradient and the perturbed boundary for the ideal gas are shown in Fig. 10.
+For all the three gases, the difference between the gray-box gradient and the
+twin model gradient is hardly visible.\\ 
+\begin{figure}[H]\begin{center}
+    \includegraphics[width=7cm]{../numpad/test/ns_cases_spline/results/outflux_geo_grad/geo_grad_0_spline.png}
+    \includegraphics[width=7cm]{../numpad/test/ns_cases_spline/results/outflux_geo_grad/perturb_0.png}
+    \caption{The left column shows the gradient of the outflux to the control points for the 
+    ideal gas. 
+    The wide gray arrow is the gradient evaluated by the gray-box model, while
+    the thin black arrow is the gradient evaluated by the twin model.
+    The right column shows a perturbed boundary according to the gradient. 
+    The blue dashed line is computed by the gray-box model's gradient, while the
+    red dashed line is computed by the twin model's gradient.}
+\end{center}\end{figure}
+
+\indent 
+We summarized the estimated gradient computed by the twin model
+in Table \ref{tab: idea gas gradient}, which is compared
+with the gradient computed by the gray-box model. For each gas,
+we compare the x-component and the y-component of the gradients.
+Twin model demonstrates to estimate the gradients accurately.
+\renewcommand{\arraystretch}{0.7}
+\begin{center}
+\captionof{table}{The gradient of the mass flux to the control points' coordinates}
+\label{tab: idea gas gradient}
+\begin{tabular}{|c|c|C{12mm}|C{12mm}|C{12mm}|C{12mm}|C{12mm}|C{12mm}|C{12mm}|C{12mm}|}
+\hline\hline
+\multicolumn{2}{|c|}{Ideal gas}&\multicolumn{4}{c|}{gradient at inner boundary}&\multicolumn{4}{c|}{gradient at outer boundary}\\
+\cline{1-10}
+x&Graybox&-2.407&-9.079&-7.727&-2.085&0.661&6.013&7.756&1.843\\
+\cline{2-10}
+&Twin model&-2.406&-9.071&-7.722&-2.084&0.661&6.008&7.751&1.841\\
+\hline
+y&Graybox&-0.971&-2.852&1.792&1.472&1.190&0.596&-1.854&-3.097\\
+\cline{2-10}
+&Twin model&-0.972&-2.849&1.792&1.473&1.189&0.595&-1.853&-3.094\\
+\hline\hline
+
+\multicolumn{2}{|c|}{VDW gas}&\multicolumn{4}{c|}{gradient at inner boundary}&\multicolumn{4}{c|}{gradient at outer boundary}\\
+\cline{1-10}
+x&Graybox&-2.389&-9.091&-7.736&-2.073&0.660&6.003&7.756&1.846\\
+\cline{2-10}
+&Twin model&-2.392&-9.085&-7.739&-2.078&0.659&6.006&7.759&1.846\\
+\hline
+y&Graybox&-0.942&-2.848&1.785&1.443&1.192&0.593&-1.858&-3.105\\
+\cline{2-10}
+&Twin model&-0.948&-2.846&1.789&1.452&1.188&0.593&-1.858&-3.104\\
+\hline\hline
+
+\multicolumn{2}{|c|}{RK gas}&\multicolumn{4}{c|}{gradient at inner boundary}&\multicolumn{4}{c|}{gradient at outer boundary}\\
+\cline{1-10}
+x&Graybox&-2.429&-9.064&-7.749&-2.122&0.663&6.045&7.773&1.837\\
+\cline{2-10}
+&Twin model&-2.412&-9.039&-7.702&-2.092&0.660&6.000&7.731&1.832\\
+\hline
+y&Graybox&-1.010&-2.848&1.820&1.536&1.183&0.603&-1.851&-3.081\\
+\cline{2-10}
+&Twin model&-0.995&-2.844&1.812&1.519&1.190&0.596&-1.845&-3.076\\
+\hline\hline
+
+\end{tabular}
+\end{center}
 
 
 
 \section{Conclusion}
-We propose a method to estimate the objective's gradient when the simulation does not
-implement adjoint. 
-The proposed method enables adjoint computation for gray-box simulations, whose adjoint
-sensitivity were conventionally considered unavailable.
-The method infers the governing PDE by taking advantage of the
-space-time solution of the gray-box simulation, and applies adjoint to estimate the gradient.
-We demonstrate the proposed method on a 1D conservation law simulation.
+We propose a method to estimate the objective's gradient when the simulator is a gray-box conservation
+law simulator and does not
+implement the adjoint method. 
+The proposed method uses the space-time or spatial solution of the gray-box simulation to
+infer a twin model. 
+There are several benefits to use the space-time or spatial solution. Firstly, in many conservation law
+simulations, flow quantities have a small domain of dependence. Secondly, the space-time or spatial
+solution from a single simulation provides a large number of samples for the inference. 
+Thirdly, in many high-dimensional design problems, the design variables are space-time or spatially distributed, 
+so the inference's input dimension does not scale up with the design dimension.
+The twin model method enables adjoint computation. We use the gradient computed 
+by the twin model to estimate the gradient of the gray-box simulation.\\
+
+The twin model method is demonstrated on a 1-D porous media flow problem and a
+2-D Navier-Stokes problem. In the 1-D problem  
+the flux function is unknown. We are able to infer the flux function in the excited domain. 
+Using the inferred twin model, we estimate the gradient of the objective to the 
+space-time dependent control.
+In the 2-D problem, the state equation is unknown. We are able to infer
+the state equation using the steady state solution of the gray-box model.
+Using the inferred state equation, we estimate the gradient of the mass flux
+to the coordinates of the control points.
+Our research shows that gradient can be efficiently estimated by adjoint method even if 
+the simulator is gray-box.\\
+
+The twin model enables adjoint computation for gray-box simulations. 
+In the future, we plan to apply the twin model to high-dimensional optimization problems.
 
 
-\begin{thebibliography}{9}
-%
-\bibitem{hanmaster} 
-Han Chen.
-"Blackbox stencil interpolation method for model reduction"
-Master thesis, 2012
 
-%\bibitem{Han AIAA} 
-%Chen, Han, et al. 
-%"Conditional sampling and experiment design for quantifying manufacturing error of transonic airfoil." 
-%Proceedings of the 49th Aerospace Sciences Meeting. 2011.
-%
-%\bibitem{Active subspace}
-%Constantine, Paul G., Eric Dow, and Qiqi Wang. 
-%"Active subspace methods in theory and practice: Applications to kriging surfaces." 
-%SIAM Journal on Scientific Computing 36.4 (2014): A1500-A1524.
-%
-%\bibitem{Balanced truncation}
-%Willcox, Karen, and Jaime Peraire. 
-%"Balanced model reduction via the proper orthogonal decomposition." 
-%AIAA journal 40.11 (2002): 2323-2330.
-%
-%\bibitem{andrewras}
-%March, Andrew, Karen Willcox, and Qiqi Wang. 
-%"Gradient-based multifidelity optimisation for aircraft design using Bayesian model calibration." 
-%Aeronautical Journal 115.1174 (2011): 729.
-%
-%\bibitem{jones1998}
-%Jones, Donald R., Matthias Schonlau, and William J. Welch. 
-%"Efficient global optimization of expensive black-box functions." 
-%Journal of Global optimization 13.4 (1998): 455-492.
-%
-%\bibitem{convergenceBayesian}
-%Bull, Adam D. 
-%"Convergence rates of efficient global optimization algorithms." 
-%The Journal of Machine Learning Research 12 (2011): 2879-2904.
-%
-%\bibitem{NARMAXbook}
-%Stephen A Billings.
-%"Nonlinear System Identification, NARMAX methods in time, frequency and spatial-temporal domains"
-%ISBN:978-1-119-94359-4, 2013
-%
-%\bibitem{practicalBayesianopt}
-%Snoek, Jasper, Hugo Larochelle, and Ryan P. Adams. 
-%"Practical Bayesian optimization of machine learning algorithms." 
-%Advances in Neural Information Processing Systems. 2012.
-%
-%\bibitem{KennedyOhagan1}
-%Kennedy, Marc C., and Anthony O'Hagan. 
-%"Predicting the output from a complex computer code when fast approximations are available." 
-%Biometrika 87.1 (2000): 1-13.
-%
-%\bibitem{KennedyOhagan2}
-%A. O'Hagan 
-%"A Markov property for covariance structures." 
-%Nottingham University Statistics Research Report 13 (1998).
-%
-%\bibitem{MCMC hyperparameters}
-%Murray, Iain, and Ryan P. Adams. 
-%"Slice sampling covariance hyperparameters of latent Gaussian models." 
-%Advances in Neural Information Processing Systems. 2010.
-%
-%\bibitem{Krigingold}
-%Oliver, Margaret A., and R. Webster. 
-%"Kriging: a method of interpolation for geographical information systems." 
-%International Journal of Geographical Information System 4.3 (1990): 313-332.
-%
-%\bibitem{inexactgradient1}
-%Carter, Richard G. 
-%"Numerical experience with a class of algorithms for nonlinear optimization using inexact function and gradient information." 
-%SIAM Journal on Scientific Computing 14.2 (1993): 368-388.
-%
-%\bibitem{inexactnewton1}
-%Dembo, Ron S., Stanley C. Eisenstat, and Trond Steihaug. 
-%"Inexact newton methods." 
-%SIAM Journal on Numerical analysis 19.2 (1982): 400-408.
-%
-%\bibitem{trustregionconn}
-%Conn, Andrew R., Katya Scheinberg, and Luís N. Vicente. 
-%"Global convergence of general derivative-free trust-region algorithms to first-and second-order critical points." 
-%SIAM Journal on Optimization 20.1 (2009): 387-415.
-%
-%\bibitem{trustregionwild}
-%Wild, Stefan M., and Christine Shoemaker. 
-%"Global convergence of radial basis function trust-region algorithms for derivative-free optimization." 
-%SIAM Review 55.2 (2013): 349-371.
-%
-%\bibitem{kriging}
-%G.M. Matheron,
-%"Principles of geostatistics".
-%Economic Geology 58.8 (1963): 1246-1266
-%
-%\bibitem{cokriging}
-%Goovaerts, Pierre. 
-%"Ordinary cokriging revisited." 
-%Mathematical Geology 30.1 (1998): 21-42.
-%
-%\bibitem{bishopbook}
-%Christopher M. Bishop
-%Pattern recognition and machine learning
-%ISBN: 978-0387310732. 2007
-%
-%\bibitem{SarmaEKF}
-%Sarma, Pallav, LJ Durlofsky, K Aziz, WH Chen. 
-%"Efficient real-time reservoir management using adjoint-based optimal control and model updating." 
-%Computational Geosciences 10.1 (2006): 3-36.
+\newpage
+\begin{thebibliography}{1}
+\bibitem{water flooding control}
+D. Brouwer et al.,
+Dynamic optimization of waterflooding with smart wells using optimal control theory,
+{SPE Journal},
+volume 9, number 4, 2004
 
-%
-\bibitem{gradfreereview}
-Rios, Luis Miguel, and Nikolaos V. Sahinidis. 
-"Derivative-free optimization: A review of algorithms and comparison of software implementations." 
-Journal of Global Optimization 56.3 (2013): 1247-1293.
+% first oil reservoir optimization
+\bibitem{first reservoir opt}
+W. F. Ramirez,
+Application of optimal control theory to enhanced oil recovery,
+Elsevier, 1987.
 
-%\bibitem{dynamicprogramming}
-%Powell, Warren B.
-%"Approximate Dynamic Programming: Solving the curses of dimensionality".
-%Vol. 703. John Wiley \& Sons, 2007.
+\bibitem{adjoint well placement}
+M. Zandvliet et al.,
+Adjoint-based well-placement optimization under production constraints,
+{SPE Journal}, volume 13, number 4, 2008.
 
-%
-\bibitem{quasiNewton}
-Dennis, Jr, John E., and Jorge J. Moré. 
-"Quasi-Newton methods, motivation and theory." 
-SIAM review 19.1 (1977): 46-89.
+%% black-oil model
+%\bibitem{blackoil}
+%J. A. Trangenstein and J. B. Bell.
+%Mathematical structure of black-oil model for petroleum reservoir simulation.
+%\emph{SIAM J. Appl. Math.},
+%49(3): 749-783, 1989.
 
-%\bibitem{adjoint}
-%Plessix, R-E. 
-%"A review of the adjoint-state method for computing the gradient of a functional with geophysical applications." 
-%Geophysical Journal International 167.2 (2006): 495-503.
-
-%
-\bibitem{cont discretize adjoint}
-Nadarajah, Siva, and Antony Jameson. 
-"A comparison of the continuous and discrete adjoint approach to automatic aerodynamic optimization." 
-AIAA paper 667 (2000): 2000.
-
-%
-\bibitem{automaticdiff}
-A Griewank, GF Corliss
-Automatic differentiation of algorithms: theory, implementation, and application.
-Defense Technical Information Center, 1992.
-
-%
-\bibitem{reservoir simulation book}
-Zhangxin Chen
-"Reservoir Simulation: Mathematical Techniques in Oil Recovery"
-Society for Industrial and Applied Mathematics, ISBN 0898716403, 2007
-
-%\bibitem{wavelet mallat}
-%Mallat, Stephane G. 
-%"A theory for multiresolution signal decomposition: the wavelet representation." 
-%Pattern Analysis and Machine Intelligence, IEEE Transactions on 11.7 (1989): 674-693.
-%
-%\bibitem{Bayopt converge 2}
-%Vazquez, Emmanuel, and Julien Bect. 
-%"Convergence properties of the expected improvement algorithm with fixed mean 
-% and covariance functions." 
-%Journal of Statistical Planning and inference 140.11 (2010): 3088-3095.
-
-%
-\bibitem{Buckley Leverett}
-S.E. Buckley and M.C. Leverett
-"Mechanism of fluid displacement in sands."
-Transactions of the AIME 146 (1942): 107-116
-
-%
-\bibitem{Reservoir Simulation Book}
-Chen, Zhangxin, Guanren Huan, and Yuanle Ma. 
-"Computational methods for multiphase flows in porous media."
-Vol. 2. Siam, 2006.
-
-%\bibitem{Boyd optimization}
-%Stephen Boyd and Lieven Vandenberghe
-%"Convex Optimization"
-%Cambridge University Press, 2004
-%
-%\bibitem{Sigmoid Approximation}
-%G. Cybenko
-%"Approximation by superpositions of a sigmoid function"
-%Mathematics of control, signals and systems 2.4 (1989): 303-314
-%
-%\bibitem{haar}
-%Alfred Haar
-%"On the theory of orthogonal function systems"
-%Mathematische Annalen 69 (1910): 331-371
-%
-%\bibitem{Analytic Meyer}
-%V.VV. Vermehren, H.M. de Oliveira
-%"Close expressions for Meyer wavelet and scale function"
-%arXiv:1502.00161 [stat.ME]
-%
-%\bibitem{Opt Koziel Book}
-%Slawomir Koziel, Xin-She Yang
-%"Computational optimization, methods and algorithms"
-%Springer Berlin Heidelberg, 2011
-%
-%\bibitem{Surrogate based analysis and optimization}
-%N.V. Queipo, R.T. Haftka, W. Shyy, T. Goel, R. Vaidynathan, P.K Tucker
-%"Surrogate-based analysis and optimization"
-%Progress in Aerospace Sciences 41 (2005): 1-28
-%
-%\bibitem{Space mapping 1}
-%T.D. Robinson, M.S. Eldred, K.E. Willcox, R. Haimes
-%"Surrogate-based optimization using multifidelity models with variable 
-%parameterization and corrected space mapping"
-%AIAA Journal 46 (2008): 2814-2822
-%
-%\bibitem{Space mapping 2}
-%Mohamed H. Bakr, John W. Bandler
-%"An introduction to the space mapping technique"
-%Optimization and Engineering 2 (2011): 369-384
-%
-%\bibitem{simplified physics}
-%N.M. Alexandrov, E.J. Nielsen, R.M. Lewis, W.K. Anderson
-%"First-Order Model Management with Variable-Fidelity Physics 
-%Applied to Multi-Element Airfoil Optimization"
-%8th AIAA Symposium on Multidisciplinary Design and Optimization (2000)
-
-%\bibitem{equality nonlinear constraint trust region opt}
-%Conn, Andrew R., Nicholas IM Gould, and Philippe Toint. 
-%"A globally convergent augmented Lagrangian algorithm for optimization with general constraints and simple bounds."
-%SIAM Journal on Numerical Analysis 28.2 (1991): 545-572.
-
-%\bibitem{coarse discretization}
-%N.M. Alexandrov, R.M. Lewis, C.R. Gumbert, L.L. Green, P.A. Newmann
-%"Optimization with Variable-Fidelity Models Applied to Wing Design"
-%38th Aerospace Sciences Meeting (2000)
-%
-%\bibitem{gradient kriging surrogate}
-%Han Zhong-Hua, Stefan Görtz, Ralf Zimmermann
-%"Improving variable-fidelity surrogate modeling via gradient-enhanced kriging and a generalized hybrid bridge function."
-%Aerospace Science and Technology 25.1 (2013): 177-189.
-%
-%\bibitem{poly functional surrogate}
-%Gary G. Wang, S. Shan
-%"Review of metamodeling techniques in support of engineering design optimization."
-%Journal of Mechanical Design 129.4 (2007): 370-380.
-%
-%\bibitem{kriging functional surrogate}
-%Shinkyu Jeong, Mitsuhiro Murayama, Kazuomi Yamamoto
-%"Efficient optimization design method using kriging model" 
-%Journal of aircraft 42.2 (2005): 413-420.
-%
-%\bibitem{ann functional surrogate}
-%Nestor V. Queipo, Javier V. Goicochea, Salvador Pintos. 
-%"Surrogate modeling-based optimization of SAGD processes." 
-%Journal of Petroleum Science and Engineering 35.1 (2002): 83-93.
-%
-%\bibitem{adjoint gradient cokriging without MLE}
-%Hyoung-Seog Chung, Juan J. Alonso. 
-%"Using gradients to construct cokriging approximation models for high-dimensional design optimization problems." 
-%AIAA paper 317 (2002): 14-17.
-%
-%\bibitem{survey of high dimensional blackbox optimization}
-%Songqing Shan, G. Gary Wang. 
-%"Survey of modeling and optimization strategies to solve high-dimensional design problems with computationally-expensive black-box functions." 
-%Structural and Multidisciplinary Optimization 41.2 (2010): 219-241.
-%
-%\bibitem{review of black-box modeling}
-%Jonas Sjöberg et al.
-%"Nonlinear black-box modeling in system identification: a unified overview." 
-%Automatica 31.12 (1995): 1691-1724.
-%
-%\bibitem{dimensional reduction}
-%Laurens JP van der Maaten, Eric O. Postma, H. Jaap van den Herik
-%"Dimensionality reduction: A comparative review." 
-%Journal of Machine Learning Research 10.1-41 (2009): 66-71.
-%
-%\bibitem{decomposition}
-%T.R. Browning
-%"Applying the design structure matrix to system decomposition and integration problems: a review
-% and new directions"
-%IEEE Trans Eng Manage 48.3 (2001): 292-306
-%
-%\bibitem{variable selection}
-%Raymond H. Myers, Douglas C. Montgomery, Christine M. Anderson-Cook
-%"Response surface methodology: process and product optimization using designed experiments"
-%Vol. 705. John Wiley and Sons, 2009
-%
-%\bibitem{thin airfoil}
-%Ira H. Abbott, E. Albert Von Doenhoff
-%"Theory of wing sections"
-%Dover Publications Inc., Section 4.2 (1959)
-%
-%\bibitem{turbulent modeling R high}
-%Tsan-Hsing Shih, et al. 
-%"A new k-ϵ eddy viscosity model for high reynolds number turbulent flows" 
-%Computers and Fluids 24.3 (1995): 227-238.
-%
-%\bibitem{turbulent modeling R low}
-%Virendra C. Patel, Wolfgang Rodi, and Georg Scheuerer
-%"Turbulence models for near-wall and low Reynolds number flows-a review"
-%AIAA journal 23.9 (1985): 1308-1319
-%
-%\bibitem{NP hard}
-%Toby S. Cubitt, Jens Eisert, Michael M. Wolf
-%"Extracting dynamical equations from experimental data is NP hard"
-%Physical review letters 108.12 (2012): 120503
-%
-%\bibitem{Hamilton Fluid Dynamics}
-%Rick Salmon 
-%"Hamiltonian fluid mechanics"
-%Annual review of fluid mechanics 20.1 (1988): 225-256
-%
-%\bibitem{numerical schemes for hyperbolic equation review}
-%Randall J. LaVeque
-%"Finite volume methods for hyperbolic problems"
-%Vol. 31. Cambridge university press, 2002
-%
-%\bibitem{SI old}
-%Pieter Eykhoff
-%"System identification, parameter and system estimation"
-%John Wiley and Sons, 1974
-%
-%\bibitem{piecewise linear}
-%S.A. Billings, W.S.F Voon
-%"Piecewise linear identification of non-linear system"
-%International Journal of Control, 46.1 (1987): 215-235
-%
-%\bibitem{volterra 1}
-%Georgios B. Giannakis, Erchin Serpedin
-%"A bibliography on nonlinear system identification"
-%Signal Processing 81.3 (2001): 533-580
-%
-%\bibitem{volterra 2}
-%M.J. Korenberg, I.W. Hunter
-%"The Identification of Nonlinear Biological Systems: Volterra Kernel Approaches"
-%Annals Biomedical Engineering 24.2 (1996): 250-268
-%
-%\bibitem{cross correlation}
-%Julian Jakob Bussgang
-%"Crosscorrelation functions of amplitude-distorted Gaussian signals" 
-%(1952)
-%
-%\bibitem{feedback linear}
-%C.P. Kwong, C. F. Chen
-%"Linear feedback system identification via block-pulse functions"
-%International Journal of Systems Science 12.5 (1981): 635-642
-%
-%\bibitem{billings 1981}
-%S.A. Billings, I.J. Leontaritis
-%"Identification of nonlinear systems using parametric estimation techniques"
-%Proceedings of the IEE Conference on Control and its Application, Warwick, UK, pp.183-187
-%
-%\bibitem{ANN SI}
-%Sheng Chen, S. A. Billings, P. M. Grant
-%"Non-linear system identification using neural networks" 
-%International journal of control 51.6 (1990): 1191-1214
-%
-%\bibitem{Wavelet SI}
-%Stephen A. Billings, Hua-Liang Wei
-%"A new class of wavelet networks for nonlinear system identification."
-%Neural Networks, IEEE Transactions on 16.4 (2005): 862-874.
-%
-%\bibitem{correlation model validation}
-%S. A. Billings, W. S. F. Voon
-%"Correlation based model validity tests for non-linear models"
-%International Journal of Control 44.1 (1986): 235-244.
-%
-%\bibitem{Dijkema book}
-%Tammo Jan. Dijkema
-%"Adaptive tensor product wavelet methods for solving PDEs"
-%PhD thesis, Utrecht University (2009)
-%
-%\bibitem{simple opt}
-%Ismail Kucuk,  Ibrahim Sadek
-%"An efficient computational method for the optimal control problem for the Burgers equation." 
-%Mathematical and computer modelling 44.11 (2006): 973-982.
-
-%
-\bibitem{numpad}
-Qiqi Wang,
-Numpad package,
-https://github.com/qiqi/numpad.git
-
-%\bibitem{sklearn}
-%Scikit-learn package,
-%https://github.com/scikit-learn/scikit-learn.git
-
-%
-\bibitem{nlopt}
-Steven G. Johnson,
-The NLopt nonlinear-optimization package, 
-http://ab-initio.mit.edu/nlopt
-
-%
-\bibitem{Quasi-Newton Review}
-John E. Dennis, Jorge J. Moré.
-"Quasi-Newton methods, motivation and theory." SIAM review 19.1 (1977): 46-89.
-
-%\bibitem{Eric master thesis}
-%Eric Alexander. Dow,
-%"Quantification of structural uncertainties in RANS turbulence models."
-%Dissertation, Massachusetts Institute of Technology, 2011.
-
-%
-\bibitem{LBFGS}
-J. Nocedal.
-"Updating quasi-Newton matrices with limited storage"
-Mathematics of Computation, 35 (1980): 773-782
-
-%\bibitem{review dimensional reduction}
-%Van der Maaten, Laurens JP, Eric O. Postma, and H. Jaap van den Herik. 
-%"Dimensionality reduction: A comparative review." 
-%Journal of Machine Learning Research 10.1-41 (2009): 66-71.
-%
-%\bibitem{review variable selection}
-%Havi, Ron, and George H. John. 
-%"Wrappers for feature subset selection."
-%Artificial intelligence 97.1 (1997): 273-324.
-%
-%\bibitem{Billing feature selection}
-%Wei, Hua-Liang, and Stephen A. Billings. 
-%"Feature subset selection and ranking for data dimensionality reduction." 
-%Pattern Analysis and Machine Intelligence, IEEE Transactions on 29.1 (2007): 162-166.
-%
-%\bibitem{PCA review}
-%Jolliffe, Ian. Principal component analysis. John Wiley and Sons, Ltd, 2002.
-%
-%\bibitem{constraint Bayesian Opt}
-%Gardner, Jacob, et al. 
-%"Bayesian optimization with inequality constraints."
-%Proceedings of The 31st International Conference on Machine Learning. 2014.
-
-%
-\bibitem{Lasso variable selection}
-Tibshirani, Robert. 
-"Regression shrinkage and selection via the lasso." 
-Journal of the Royal Statistical Society. Series B (Methodological) (1996): 267-288.
-
-%
-\bibitem{Critical review of variable selection}
-Dziak, John, Runze Li, and Linda Collins. 
-"Critical review and comparison of variable selection procedures for linear regression (Technical report)." (2005).
-
-%\bibitem{stepwise variable selection}
-%Derksen, Shelley, and H. J. Keselman. 
-%"Backward, forward and stepwise automated subset selection algorithms: Frequency of obtaining authentic and noise variables." 
-%British Journal of Mathematical and Statistical Psychology 45.2 (1992): 265-282.
-%
-%\bibitem{Elastic net variable selection}
-%Zou, Hui, and Trevor Hastie. 
-%"Regularization and variable selection via the elastic net." 
-%Journal of the Royal Statistical Society: Series B (Statistical Methodology) 67.2 (2005): 301-320.
-%
-%\bibitem{AIC}
-%Stone, Mervyn. 
-%"An asymptotic equivalence of choice of model by cross-validation and Akaike's criterion." 
-%Journal of the Royal Statistical Society. Series B (Methodological) (1977): 44-47.
-%
-%\bibitem{BIC}
-%Schwarz, Gideon. 
-%"Estimating the dimension of a model." 
-%The annals of statistics 6.2 (1978): 461-464.
-%
-%\bibitem{Mockus Bayesian opt}
-%J Mockus, V Tiesis, and A Zilinskas
-%"The application of Bayesian methods for seeking the extreme."
-%Towards Global Optimization, 2 (1978): 117-129
-%
-%\bibitem{MFO: two stage}
-%Choi, Seongim, Juan J. Alonso, and Ilan M. Kroo. 
-%"Two-level multifidelity design optimization studies for supersonic jets." 
-%Journal of Aircraft 46.3 (2009): 776-790.
-%
-%\bibitem{MFO: trust region acdl}
-%Robinson, T. D., et al. 
-%"Multifidelity optimization for variablecomplexity design."
-%Proceedings of the 11th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference, 
-%Portsmouth, VA. 2006.
-%
-%\bibitem{Pattern Search Convergence}
-%Torczon, Virginia. 
-%"On the convergence of pattern search algorithms." 
-%SIAM Journal on optimization 7.1 (1997): 1-25.
-%
-%\bibitem{Pattern Search Convergence MFO}
-%Booker, Andrew J., et al. 
-%"A rigorous framework for optimization of expensive functions by surrogates." 
-%Structural optimization 17.1 (1999): 1-13.
-%
-%\bibitem{andrew thesis}
-%Andrew I. March
-%"Multifidelity methods for multidisciplinary system design"
-%Dissertation, Massachusetts Institute of Technology (2012)
-%
-%\bibitem{RKHS aronszajn}
-%Aronszajn, Nachman. 
-%"Theory of reproducing kernels." 
-%Transactions of the American mathematical society (1950): 337-404.
-%
-%\bibitem{inverse book}
-%Vogel, Curtis R. 
-%"Computational methods for inverse problems."
-%Vol. 23. Siam, 2002.
-%% ---- turbulence modeling and simulation ----
-%
-%\bibitem{LES}
-%Meneveau, Charles, and P. Sagaut. 
-%Large eddy simulation for incompressible flows: an introduction.
-%Springer Science and Business Media, 2006.
-%
-%\bibitem{LES oldest}
-%Smagorinsky, Joseph. 
-%"General circulation experiments with the primitive equations: I. the basic experiment." 
-%Monthly weather review 91.3 (1963): 99-164.
-%
-%\bibitem{DNS}
-%Moin, Parviz, and Krishnan Mahesh. 
-%"Direct numerical simulation: a tool in turbulence research." 
-%Annual review of fluid mechanics 30.1 (1998): 539-578.
-%
-%\bibitem{constraint lift}
-%Li, Wu, Luc Hyuse, and Sharon Padula. 
-%"Robust airfoil optimization to achieve consistent drag reduction over a Mach range."
-%No. ICASE-TR-2001-22. 
-%Institute for computer applications in science and engineering, Hampton VA, 2001.
-
-%
+% return bend optimization
 \bibitem{ubend rans opt 1}
-Verstraete, Tom, et al. 
-"Optimization of a U-Bend for Minimal Pressure Loss in Internal Cooling Channels—Part I: Numerical Method." 
-Journal of Turbomachinery 135.5 (2013): 051015.
+T. Verstraete et al., 
+Optimization of a U-bend for minimal pressure loss in internal cooling channels — Part I: Numerical method,
+{Journal of Turbomachinery},
+volume 135, number 5, 2013.
 
-%
 \bibitem{ubend rans opt 2}
-Coletti, Filippo, et al. 
-"Optimization of a U-Bend for Minimal Pressure Loss in Internal Cooling Channels—Part II: Experimental Validation." 
-Journal of Turbomachinery 135.5 (2013): 051016.
+F. Coletti et al.,
+Optimization of a U-Bend for minimal pressure loss in internal cooling channels — Part II: Experimental validation,
+{Journal of Turbomachinery},
+volume 135, number 5, 2013.
 
-%\bibitem{Wilcox CFD}
-%Wilcox, David C. 
-%"Turbulence modeling for CFD." 
-%Vol. 2. La Canada, CA: DCW industries, (1998)
+% Buckley
+\bibitem{Buckley Leverett}
+S. E. Buckley et al.,
+Mechanism of fluid displacement in sands,
+{Transactions of the AIME},
+volume 146, number 1, 1942.
+
+% BSIM
+\bibitem{hanmaster} 
+H. Chen,
+Blackbox stencil interpolation method for model reduction,
+Master thesis, Massachusetts Institute of Technology, 2012.
+
+%ECMOR
+\bibitem{ecmor}
+H. Chen et al.,
+Data-driven model inference and its application to optimal control under reservoir uncertainty,
+14th European Conference of Mathematics of Oil Recovery, 2014.
+
+% adjoint original
+\bibitem{adjoint}
+J. L. Lions,
+Optimal control of systems governed by partial differential equations,
+{Springer-Verlag}, 1971.
+
+% adjoint aerodynamics
+\bibitem{adjoint aerodynamics}
+A. Jameson,
+Aerodynamic design via control theory,
+{Journal of Scientific Computing},
+volume 3, number 3, 1988.
+
+% adjoint history matching 
+\bibitem{adjoint history matching}
+W. H. Chen et al.,
+A new algorithm for automatic history matching,
+{Society of Petroleum Engineering Journal},
+volume 14, number 6, 1974.
+
+% adjoint reservoir optimization
+\bibitem{adjoint reservoir optimal control}
+W. F. Ramirez et al.,
+Optimal injection policies for enhanced oil recovery:
+part 1: theory and computational strategies.
+{Society of Petroleum Engineering Journal},
+volume 24, number 3, 1984.
+
+% quasi-Newton methods
+\bibitem{quasiNewton}
+J. E. Dennis et al.,
+Quasi-Newton methods, motivation and theory.
+SIAM Review,
+volume 19, number 1, 1977.
+
+% DFO review
+\bibitem{gradfreereview}
+L. M. Rios et al.,
+Derivative-free optimization: A review of algorithms and comparison of software implementations.
+{Journal of Global Optimization}, 
+volume 56, number 3, 2013.
+
+% LBFGS
+\bibitem{LBFGS}
+J. Nocedal,
+Updating quasi-Newton matrices with limited storage,
+Mathematics of Computation, 
+volume 35, number 151, 1980.
+
+% Lasso
+\bibitem{Lasso variable selection}
+R. Tibshirani,
+Regression shrinkage and selection via the lasso.
+{Journal of the Royal Statistical Society, Series B (Methodological)},
+1996.
+
+% gas state equations
+\bibitem{state eqns}
+J. W. Murdock,
+Fundamental fluid mechanics for the practicing engineer,
+{CRC Press}, 1993.
+
+%% inference optimizer
+%\bibitem{optimizer}
+%György, András, and Levente Kocsis. Efficient multi-start strategies for local search algorithms.
+%\emph{ Journal of Artificial Intelligence Research (2011)}: 407-444.
+
+%%\bibitem{Han AIAA} 
+%%Chen, Han, et al. 
+%%"Conditional sampling and experiment design for quantifying manufacturing error of transonic airfoil." 
+%%Proceedings of the 49th Aerospace Sciences Meeting. 2011.
+%%
+%%\bibitem{Active subspace}
+%%Constantine, Paul G., Eric Dow, and Qiqi Wang. 
+%%"Active subspace methods in theory and practice: Applications to kriging surfaces." 
+%%SIAM Journal on Scientific Computing 36.4 (2014): A1500-A1524.
+%%
+%%\bibitem{Balanced truncation}
+%%Willcox, Karen, and Jaime Peraire. 
+%%"Balanced model reduction via the proper orthogonal decomposition." 
+%%AIAA journal 40.11 (2002): 2323-2330.
+%%
+%%\bibitem{andrewras}
+%%March, Andrew, Karen Willcox, and Qiqi Wang. 
+%%"Gradient-based multifidelity optimisation for aircraft design using Bayesian model calibration." 
+%%Aeronautical Journal 115.1174 (2011): 729.
+%%
+%%\bibitem{jones1998}
+%%Jones, Donald R., Matthias Schonlau, and William J. Welch. 
+%%"Efficient global optimization of expensive black-box functions." 
+%%Journal of Global optimization 13.4 (1998): 455-492.
+%%
+%%\bibitem{convergenceBayesian}
+%%Bull, Adam D. 
+%%"Convergence rates of efficient global optimization algorithms." 
+%%The Journal of Machine Learning Research 12 (2011): 2879-2904.
+%%
+%%\bibitem{NARMAXbook}
+%%Stephen A Billings.
+%%"Nonlinear System Identification, NARMAX methods in time, frequency and spatial-temporal domains"
+%%ISBN:978-1-119-94359-4, 2013
+%%
+%%\bibitem{practicalBayesianopt}
+%%Snoek, Jasper, Hugo Larochelle, and Ryan P. Adams. 
+%%"Practical Bayesian optimization of machine learning algorithms." 
+%%Advances in Neural Information Processing Systems. 2012.
+%%
+%%\bibitem{KennedyOhagan1}
+%%Kennedy, Marc C., and Anthony O'Hagan. 
+%%"Predicting the output from a complex computer code when fast approximations are available." 
+%%Biometrika 87.1 (2000): 1-13.
+%%
+%%\bibitem{KennedyOhagan2}
+%%A. O'Hagan 
+%%"A Markov property for covariance structures." 
+%%Nottingham University Statistics Research Report 13 (1998).
+%%
+%%\bibitem{MCMC hyperparameters}
+%%Murray, Iain, and Ryan P. Adams. 
+%%"Slice sampling covariance hyperparameters of latent Gaussian models." 
+%%Advances in Neural Information Processing Systems. 2010.
+%%
+%%\bibitem{Krigingold}
+%%Oliver, Margaret A., and R. Webster. 
+%%"Kriging: a method of interpolation for geographical information systems." 
+%%International Journal of Geographical Information System 4.3 (1990): 313-332.
+%%
+%%\bibitem{inexactgradient1}
+%%Carter, Richard G. 
+%%"Numerical experience with a class of algorithms for nonlinear optimization using inexact function and gradient information." 
+%%SIAM Journal on Scientific Computing 14.2 (1993): 368-388.
+%%
+%%\bibitem{inexactnewton1}
+%%Dembo, Ron S., Stanley C. Eisenstat, and Trond Steihaug. 
+%%"Inexact newton methods." 
+%%SIAM Journal on Numerical analysis 19.2 (1982): 400-408.
+%%
+%%\bibitem{trustregionconn}
+%%Conn, Andrew R., Katya Scheinberg, and Luís N. Vicente. 
+%%"Global convergence of general derivative-free trust-region algorithms to first-and second-order critical points." 
+%%SIAM Journal on Optimization 20.1 (2009): 387-415.
+%%
+%%\bibitem{trustregionwild}
+%%Wild, Stefan M., and Christine Shoemaker. 
+%%"Global convergence of radial basis function trust-region algorithms for derivative-free optimization." 
+%%SIAM Review 55.2 (2013): 349-371.
+%%
+%%\bibitem{kriging}
+%%G.M. Matheron,
+%%"Principles of geostatistics".
+%%Economic Geology 58.8 (1963): 1246-1266
+%%
+%%\bibitem{cokriging}
+%%Goovaerts, Pierre. 
+%%"Ordinary cokriging revisited." 
+%%Mathematical Geology 30.1 (1998): 21-42.
+%%
+%%\bibitem{bishopbook}
+%%Christopher M. Bishop
+%%Pattern recognition and machine learning
+%%ISBN: 978-0387310732. 2007
+%%
+%%\bibitem{SarmaEKF}
+%%Sarma, Pallav, LJ Durlofsky, K Aziz, WH Chen. 
+%%"Efficient real-time reservoir management using adjoint-based optimal control and model updating." 
+%%Computational Geosciences 10.1 (2006): 3-36.
 %
-%\bibitem{chaotic Qiqi}
-%Wang, Qiqi. 
-%"Forward and adjoint sensitivity computation of chaotic dynamical systems." 
-%Journal of Computational Physics 235 (2013): 1-13.
+%%
 %
-%\bibitem{Chai opt}
-%Talnikar, C., et al. "Parallel Optimization for LES." Proceedings of the Summer Program. 2014.
+%%\bibitem{dynamicprogramming}
+%%Powell, Warren B.
+%%"Approximate Dynamic Programming: Solving the curses of dimensionality".
+%%Vol. 703. John Wiley \& Sons, 2007.
 %
-%% ------- proof of convergence -------
-%\bibitem{Torn and Zilinskas}
-%Aimo Torn, Antanas Zilinskas
-%"Global Optimization"
-%Springer-Verlag New York, Inc. New York, NY, (1989)
+%%
+%
+%%\bibitem{adjoint}
+%%Plessix, R-E. 
+%%"A review of the adjoint-state method for computing the gradient of a functional with geophysical applications." 
+%%Geophysical Journal International 167.2 (2006): 495-503.
+%
+%%
+%\bibitem{cont discretize adjoint}
+%Nadarajah, Siva, and Antony Jameson. 
+%"A comparison of the continuous and discrete adjoint approach to automatic aerodynamic optimization." 
+%AIAA paper 667 (2000): 2000.
+%
+%%
+%\bibitem{automaticdiff}
+%A Griewank, GF Corliss
+%Automatic differentiation of algorithms: theory, implementation, and application.
+%Defense Technical Information Center, 1992.
+%
+%%
+%\bibitem{reservoir simulation book}
+%Zhangxin Chen
+%"Reservoir Simulation: Mathematical Techniques in Oil Recovery"
+%Society for Industrial and Applied Mathematics, ISBN 0898716403, 2007
+%
+%%\bibitem{wavelet mallat}
+%%Mallat, Stephane G. 
+%%"A theory for multiresolution signal decomposition: the wavelet representation." 
+%%Pattern Analysis and Machine Intelligence, IEEE Transactions on 11.7 (1989): 674-693.
+%%
+%%\bibitem{Bayopt converge 2}
+%%Vazquez, Emmanuel, and Julien Bect. 
+%%"Convergence properties of the expected improvement algorithm with fixed mean 
+%% and covariance functions." 
+%%Journal of Statistical Planning and inference 140.11 (2010): 3088-3095.
+%
+%%
+%%
+%\bibitem{Reservoir Simulation Book}
+%Chen, Zhangxin, Guanren Huan, and Yuanle Ma. 
+%"Computational methods for multiphase flows in porous media."
+%Vol. 2. Siam, 2006.
+%
+%%\bibitem{Boyd optimization}
+%%Stephen Boyd and Lieven Vandenberghe
+%%"Convex Optimization"
+%%Cambridge University Press, 2004
+%%
+%%\bibitem{Sigmoid Approximation}
+%%G. Cybenko
+%%"Approximation by superpositions of a sigmoid function"
+%%Mathematics of control, signals and systems 2.4 (1989): 303-314
+%%
+%%\bibitem{haar}
+%%Alfred Haar
+%%"On the theory of orthogonal function systems"
+%%Mathematische Annalen 69 (1910): 331-371
+%%
+%%\bibitem{Analytic Meyer}
+%%V.VV. Vermehren, H.M. de Oliveira
+%%"Close expressions for Meyer wavelet and scale function"
+%%arXiv:1502.00161 [stat.ME]
+%%
+%%\bibitem{Opt Koziel Book}
+%%Slawomir Koziel, Xin-She Yang
+%%"Computational optimization, methods and algorithms"
+%%Springer Berlin Heidelberg, 2011
+%%
+%%\bibitem{Surrogate based analysis and optimization}
+%%N.V. Queipo, R.T. Haftka, W. Shyy, T. Goel, R. Vaidynathan, P.K Tucker
+%%"Surrogate-based analysis and optimization"
+%%Progress in Aerospace Sciences 41 (2005): 1-28
+%%
+%%\bibitem{Space mapping 1}
+%%T.D. Robinson, M.S. Eldred, K.E. Willcox, R. Haimes
+%%"Surrogate-based optimization using multifidelity models with variable 
+%%parameterization and corrected space mapping"
+%%AIAA Journal 46 (2008): 2814-2822
+%%
+%%\bibitem{Space mapping 2}
+%%Mohamed H. Bakr, John W. Bandler
+%%"An introduction to the space mapping technique"
+%%Optimization and Engineering 2 (2011): 369-384
+%%
+%%\bibitem{simplified physics}
+%%N.M. Alexandrov, E.J. Nielsen, R.M. Lewis, W.K. Anderson
+%%"First-Order Model Management with Variable-Fidelity Physics 
+%%Applied to Multi-Element Airfoil Optimization"
+%%8th AIAA Symposium on Multidisciplinary Design and Optimization (2000)
+%
+%%\bibitem{equality nonlinear constraint trust region opt}
+%%Conn, Andrew R., Nicholas IM Gould, and Philippe Toint. 
+%%"A globally convergent augmented Lagrangian algorithm for optimization with general constraints and simple bounds."
+%%SIAM Journal on Numerical Analysis 28.2 (1991): 545-572.
+%
+%%\bibitem{coarse discretization}
+%%N.M. Alexandrov, R.M. Lewis, C.R. Gumbert, L.L. Green, P.A. Newmann
+%%"Optimization with Variable-Fidelity Models Applied to Wing Design"
+%%38th Aerospace Sciences Meeting (2000)
+%%
+%%\bibitem{gradient kriging surrogate}
+%%Han Zhong-Hua, Stefan Görtz, Ralf Zimmermann
+%%"Improving variable-fidelity surrogate modeling via gradient-enhanced kriging and a generalized hybrid bridge function."
+%%Aerospace Science and Technology 25.1 (2013): 177-189.
+%%
+%%\bibitem{poly functional surrogate}
+%%Gary G. Wang, S. Shan
+%%"Review of metamodeling techniques in support of engineering design optimization."
+%%Journal of Mechanical Design 129.4 (2007): 370-380.
+%%
+%%\bibitem{kriging functional surrogate}
+%%Shinkyu Jeong, Mitsuhiro Murayama, Kazuomi Yamamoto
+%%"Efficient optimization design method using kriging model" 
+%%Journal of aircraft 42.2 (2005): 413-420.
+%%
+%%\bibitem{ann functional surrogate}
+%%Nestor V. Queipo, Javier V. Goicochea, Salvador Pintos. 
+%%"Surrogate modeling-based optimization of SAGD processes." 
+%%Journal of Petroleum Science and Engineering 35.1 (2002): 83-93.
+%%
+%%\bibitem{adjoint gradient cokriging without MLE}
+%%Hyoung-Seog Chung, Juan J. Alonso. 
+%%"Using gradients to construct cokriging approximation models for high-dimensional design optimization problems." 
+%%AIAA paper 317 (2002): 14-17.
+%%
+%%\bibitem{survey of high dimensional blackbox optimization}
+%%Songqing Shan, G. Gary Wang. 
+%%"Survey of modeling and optimization strategies to solve high-dimensional design problems with computationally-expensive black-box functions." 
+%%Structural and Multidisciplinary Optimization 41.2 (2010): 219-241.
+%%
+%%\bibitem{review of black-box modeling}
+%%Jonas Sjöberg et al.
+%%"Nonlinear black-box modeling in system identification: a unified overview." 
+%%Automatica 31.12 (1995): 1691-1724.
+%%
+%%\bibitem{dimensional reduction}
+%%Laurens JP van der Maaten, Eric O. Postma, H. Jaap van den Herik
+%%"Dimensionality reduction: A comparative review." 
+%%Journal of Machine Learning Research 10.1-41 (2009): 66-71.
+%%
+%%\bibitem{decomposition}
+%%T.R. Browning
+%%"Applying the design structure matrix to system decomposition and integration problems: a review
+%% and new directions"
+%%IEEE Trans Eng Manage 48.3 (2001): 292-306
+%%
+%%\bibitem{variable selection}
+%%Raymond H. Myers, Douglas C. Montgomery, Christine M. Anderson-Cook
+%%"Response surface methodology: process and product optimization using designed experiments"
+%%Vol. 705. John Wiley and Sons, 2009
+%%
+%%\bibitem{thin airfoil}
+%%Ira H. Abbott, E. Albert Von Doenhoff
+%%"Theory of wing sections"
+%%Dover Publications Inc., Section 4.2 (1959)
+%%
+%%\bibitem{turbulent modeling R high}
+%%Tsan-Hsing Shih, et al. 
+%%"A new k-ϵ eddy viscosity model for high reynolds number turbulent flows" 
+%%Computers and Fluids 24.3 (1995): 227-238.
+%%
+%%\bibitem{turbulent modeling R low}
+%%Virendra C. Patel, Wolfgang Rodi, and Georg Scheuerer
+%%"Turbulence models for near-wall and low Reynolds number flows-a review"
+%%AIAA journal 23.9 (1985): 1308-1319
+%%
+%%\bibitem{NP hard}
+%%Toby S. Cubitt, Jens Eisert, Michael M. Wolf
+%%"Extracting dynamical equations from experimental data is NP hard"
+%%Physical review letters 108.12 (2012): 120503
+%%
+%%\bibitem{Hamilton Fluid Dynamics}
+%%Rick Salmon 
+%%"Hamiltonian fluid mechanics"
+%%Annual review of fluid mechanics 20.1 (1988): 225-256
+%%
+%%\bibitem{numerical schemes for hyperbolic equation review}
+%%Randall J. LaVeque
+%%"Finite volume methods for hyperbolic problems"
+%%Vol. 31. Cambridge university press, 2002
+%%
+%%\bibitem{SI old}
+%%Pieter Eykhoff
+%%"System identification, parameter and system estimation"
+%%John Wiley and Sons, 1974
+%%
+%%\bibitem{piecewise linear}
+%%S.A. Billings, W.S.F Voon
+%%"Piecewise linear identification of non-linear system"
+%%International Journal of Control, 46.1 (1987): 215-235
+%%
+%%\bibitem{volterra 1}
+%%Georgios B. Giannakis, Erchin Serpedin
+%%"A bibliography on nonlinear system identification"
+%%Signal Processing 81.3 (2001): 533-580
+%%
+%%\bibitem{volterra 2}
+%%M.J. Korenberg, I.W. Hunter
+%%"The Identification of Nonlinear Biological Systems: Volterra Kernel Approaches"
+%%Annals Biomedical Engineering 24.2 (1996): 250-268
+%%
+%%\bibitem{cross correlation}
+%%Julian Jakob Bussgang
+%%"Crosscorrelation functions of amplitude-distorted Gaussian signals" 
+%%(1952)
+%%
+%%\bibitem{feedback linear}
+%%C.P. Kwong, C. F. Chen
+%%"Linear feedback system identification via block-pulse functions"
+%%International Journal of Systems Science 12.5 (1981): 635-642
+%%
+%%\bibitem{billings 1981}
+%%S.A. Billings, I.J. Leontaritis
+%%"Identification of nonlinear systems using parametric estimation techniques"
+%%Proceedings of the IEE Conference on Control and its Application, Warwick, UK, pp.183-187
+%%
+%%\bibitem{ANN SI}
+%%Sheng Chen, S. A. Billings, P. M. Grant
+%%"Non-linear system identification using neural networks" 
+%%International journal of control 51.6 (1990): 1191-1214
+%%
+%%\bibitem{Wavelet SI}
+%%Stephen A. Billings, Hua-Liang Wei
+%%"A new class of wavelet networks for nonlinear system identification."
+%%Neural Networks, IEEE Transactions on 16.4 (2005): 862-874.
+%%
+%%\bibitem{correlation model validation}
+%%S. A. Billings, W. S. F. Voon
+%%"Correlation based model validity tests for non-linear models"
+%%International Journal of Control 44.1 (1986): 235-244.
+%%
+%%\bibitem{Dijkema book}
+%%Tammo Jan. Dijkema
+%%"Adaptive tensor product wavelet methods for solving PDEs"
+%%PhD thesis, Utrecht University (2009)
+%%
+%%\bibitem{simple opt}
+%%Ismail Kucuk,  Ibrahim Sadek
+%%"An efficient computational method for the optimal control problem for the Burgers equation." 
+%%Mathematical and computer modelling 44.11 (2006): 973-982.
+%
+%%
+%%
+%\bibitem{Quasi-Newton Review}
+%John E. Dennis, Jorge J. Moré.
+%"Quasi-Newton methods, motivation and theory." SIAM review 19.1 (1977): 46-89.
+%
+%%\bibitem{Eric master thesis}
+%%Eric Alexander. Dow,
+%%"Quantification of structural uncertainties in RANS turbulence models."
+%%Dissertation, Massachusetts Institute of Technology, 2011.
+%
+%%
+%%\bibitem{review dimensional reduction}
+%%Van der Maaten, Laurens JP, Eric O. Postma, and H. Jaap van den Herik. 
+%%"Dimensionality reduction: A comparative review." 
+%%Journal of Machine Learning Research 10.1-41 (2009): 66-71.
+%%
+%%\bibitem{review variable selection}
+%%Havi, Ron, and George H. John. 
+%%"Wrappers for feature subset selection."
+%%Artificial intelligence 97.1 (1997): 273-324.
+%%
+%%\bibitem{Billing feature selection}
+%%Wei, Hua-Liang, and Stephen A. Billings. 
+%%"Feature subset selection and ranking for data dimensionality reduction." 
+%%Pattern Analysis and Machine Intelligence, IEEE Transactions on 29.1 (2007): 162-166.
+%%
+%%\bibitem{PCA review}
+%%Jolliffe, Ian. Principal component analysis. John Wiley and Sons, Ltd, 2002.
+%%
+%%\bibitem{constraint Bayesian Opt}
+%%Gardner, Jacob, et al. 
+%%"Bayesian optimization with inequality constraints."
+%%Proceedings of The 31st International Conference on Machine Learning. 2014.
+%
+%%
+%%
+%\bibitem{Critical review of variable selection}
+%Dziak, John, Runze Li, and Linda Collins. 
+%"Critical review and comparison of variable selection procedures for linear regression (Technical report)." (2005).
+%
+%%\bibitem{stepwise variable selection}
+%%Derksen, Shelley, and H. J. Keselman. 
+%%"Backward, forward and stepwise automated subset selection algorithms: Frequency of obtaining authentic and noise variables." 
+%%British Journal of Mathematical and Statistical Psychology 45.2 (1992): 265-282.
+%%
+%%\bibitem{Elastic net variable selection}
+%%Zou, Hui, and Trevor Hastie. 
+%%"Regularization and variable selection via the elastic net." 
+%%Journal of the Royal Statistical Society: Series B (Statistical Methodology) 67.2 (2005): 301-320.
+%%
+%%\bibitem{AIC}
+%%Stone, Mervyn. 
+%%"An asymptotic equivalence of choice of model by cross-validation and Akaike's criterion." 
+%%Journal of the Royal Statistical Society. Series B (Methodological) (1977): 44-47.
+%%
+%%\bibitem{BIC}
+%%Schwarz, Gideon. 
+%%"Estimating the dimension of a model." 
+%%The annals of statistics 6.2 (1978): 461-464.
+%%
+%%\bibitem{Mockus Bayesian opt}
+%%J Mockus, V Tiesis, and A Zilinskas
+%%"The application of Bayesian methods for seeking the extreme."
+%%Towards Global Optimization, 2 (1978): 117-129
+%%
+%%\bibitem{MFO: two stage}
+%%Choi, Seongim, Juan J. Alonso, and Ilan M. Kroo. 
+%%"Two-level multifidelity design optimization studies for supersonic jets." 
+%%Journal of Aircraft 46.3 (2009): 776-790.
+%%
+%%\bibitem{MFO: trust region acdl}
+%%Robinson, T. D., et al. 
+%%"Multifidelity optimization for variablecomplexity design."
+%%Proceedings of the 11th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference, 
+%%Portsmouth, VA. 2006.
+%%
+%%\bibitem{Pattern Search Convergence}
+%%Torczon, Virginia. 
+%%"On the convergence of pattern search algorithms." 
+%%SIAM Journal on optimization 7.1 (1997): 1-25.
+%%
+%%\bibitem{Pattern Search Convergence MFO}
+%%Booker, Andrew J., et al. 
+%%"A rigorous framework for optimization of expensive functions by surrogates." 
+%%Structural optimization 17.1 (1999): 1-13.
+%%
+%%\bibitem{andrew thesis}
+%%Andrew I. March
+%%"Multifidelity methods for multidisciplinary system design"
+%%Dissertation, Massachusetts Institute of Technology (2012)
+%%
+%%\bibitem{RKHS aronszajn}
+%%Aronszajn, Nachman. 
+%%"Theory of reproducing kernels." 
+%%Transactions of the American mathematical society (1950): 337-404.
+%%
+%%\bibitem{inverse book}
+%%Vogel, Curtis R. 
+%%"Computational methods for inverse problems."
+%%Vol. 23. Siam, 2002.
+%%% ---- turbulence modeling and simulation ----
+%%
+%%\bibitem{LES}
+%%Meneveau, Charles, and P. Sagaut. 
+%%Large eddy simulation for incompressible flows: an introduction.
+%%Springer Science and Business Media, 2006.
+%%
+%%\bibitem{LES oldest}
+%%Smagorinsky, Joseph. 
+%%"General circulation experiments with the primitive equations: I. the basic experiment." 
+%%Monthly weather review 91.3 (1963): 99-164.
+%%
+%%\bibitem{DNS}
+%%Moin, Parviz, and Krishnan Mahesh. 
+%%"Direct numerical simulation: a tool in turbulence research." 
+%%Annual review of fluid mechanics 30.1 (1998): 539-578.
+%%
+%%\bibitem{constraint lift}
+%%Li, Wu, Luc Hyuse, and Sharon Padula. 
+%%"Robust airfoil optimization to achieve consistent drag reduction over a Mach range."
+%%No. ICASE-TR-2001-22. 
+%%Institute for computer applications in science and engineering, Hampton VA, 2001.
+%
+%%
+%%\bibitem{Wilcox CFD}
+%%Wilcox, David C. 
+%%"Turbulence modeling for CFD." 
+%%Vol. 2. La Canada, CA: DCW industries, (1998)
+%%
+%%\bibitem{chaotic Qiqi}
+%%Wang, Qiqi. 
+%%"Forward and adjoint sensitivity computation of chaotic dynamical systems." 
+%%Journal of Computational Physics 235 (2013): 1-13.
+%%
+%%\bibitem{Chai opt}
+%%Talnikar, C., et al. "Parallel Optimization for LES." Proceedings of the Summer Program. 2014.
+%%
+%%% ------- proof of convergence -------
+%%\bibitem{Torn and Zilinskas}
+%%Aimo Torn, Antanas Zilinskas
+%%"Global Optimization"
+%%Springer-Verlag New York, Inc. New York, NY, (1989)
 
 
 \end{thebibliography}
@@ -1351,7 +1770,7 @@ Journal of Turbomachinery 135.5 (2013): 051016.
 
 % =============== TRASHED SCRIPT =======================
 
-%\noindent We give a formal definition of $\mathcal{E}$ below\\
+%\indent We give a formal definition of $\mathcal{E}$ below\\
 %\fbox{\parbox{\textwidth}{
 %\begin{definition}
 %    Given a primal model with flux $F(\cdot)$ and a twin model with flux $\tilde{F}(\cdot)$,
@@ -1365,7 +1784,7 @@ Journal of Turbomachinery 135.5 (2013): 051016.
 %\end{definition}
 %}}\\
 %
-%\noindent How do we determine $\mathcal{E}$? 
+%\indent How do we determine $\mathcal{E}$? 
 %To gain some insights, consider
 %a 1D PDE with unknown $F(\cdot)$
 %\begin{equation}

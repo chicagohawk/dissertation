@@ -1,0 +1,31 @@
+\documentclass[a4paper,onecolumn]{article}
+\usepackage{amsmath, amsthm, graphicx, amssymb, wrapfig, fullpage, subfigure, array}
+\usepackage[font=sl, labelfont={sf}, margin=1cm]{caption}
+\DeclareMathOperator{\e}{e}
+\linespread{2}
+
+\begin{document}
+
+\setcounter{page}{1}
+
+\title{Significance and novelty of this paper}
+\date{}
+\maketitle
+This paper proposes a method to estimate the gradient of objective functions 
+constrained by conservation law simulations.
+In previous works, adjoint method is widely used to compute the gradient.
+But the adjoint method is not able to be implemented if the conservation law is unknown.
+The present work enables adjoint computation for unknown conservation law by
+leveraging the simulation's space- and/or time-solution. 
+The method uses the solution to infer the conservation law, and then applies the adjoint method
+to compute the gradient.
+Furthermore, we demonstrate that the proposed method gives accurate
+gradient estimation in two conservation law simulations.
+
+
+
+
+
+
+\end{document}
+

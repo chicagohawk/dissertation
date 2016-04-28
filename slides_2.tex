@@ -1,0 +1,2583 @@
+\documentclass{beamer}
+\usepackage{movie15, graphicx}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{pifont, xcolor, soul}
+\usepackage{transparent}
+\usepackage{biblatex}
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\mode<presentation>
+{
+    \usetheme{CambridgeUS}
+    \usecolortheme{default}
+    \setbeamercovered{transparent}
+}
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{fancybox}
+\usepackage{graphics}
+\usepackage{pgf, pgfarrows, pgfnodes}
+\usepackage[noend]{algorithmic}
+\usepackage{algorithm}
+\algsetup{indent=2em}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\let\oldcite=\cite                                                              
+\renewcommand{\cite}[1]{\textcolor[rgb]{.4,.4,.85}{\oldcite{#1}}}
+
+\definecolor{OliveGreen}{rgb}{0.6,0.6,0}
+\definecolor{Purple}{rgb}{0.6,0,0.6}
+\definecolor{darkred}{rgb}{.58, .12, .12}
+\newcommand{\barrow}{\item[\color{darkred}\ding{228}]} 
+\newcommand{\carrow}{\item[\color{darkred}\ding{227}]} 
+\newcommand{\putat}[3]{\begin{picture}(0,0)(0,0)\put(#1,#2){#3}\end{picture}}
+
+\setbeamercolor{frametitle}{bg=darkred}
+\setbeamercolor{frametitle}{fg=white}
+\setbeamertemplate{frametitle}{
+    \begin{beamercolorbox}[sep=0.3cm,ht=1.8em,wd=\paperwidth]{frametitle}
+        \vbox{}\vskip-2ex
+        \strut\insertframetitle\strut
+        \vskip-0.8ex
+    \end{beamercolorbox}
+}
+\addtobeamertemplate{frametitle}{\vspace{-.8\baselineskip}}
+
+\logo{
+  \raisebox{0cm}{\includegraphics[width=15ex]{mit.png}}
+}
+
+\setbeamertemplate{footline}{
+\leavevmode
+\hbox{
+\begin{beamercolorbox}[wd=.85\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}
+    \usebeamerfont{title in head/foot}\tiny{\insertshorttitle}\hspace*{-2ex}
+\end{beamercolorbox}
+\begin{beamercolorbox}[wd=0.15\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}
+    \usebeamerfont{date in head/foot}
+    \insertframenumber{} \textcolor{gray}{/ 47}\hspace*{2ex}
+\end{beamercolorbox}
+}
+}
+
+\title{An adjoint-based optimization method\\ using the solution of gray-box conservation laws}
+\author{\scriptsize
+   Han Chen\\\vspace{0.5cm}}
+\author{\scriptsize
+   Han Chen\\\vspace{0.5cm} Committee: Qiqi Wang, Karen Willcox, Youssef Marzouk\\
+   Thesis readers: Hector Klie, Paul Constantine}
+\date{\scriptsize Mar 17, 2016}
+
+
+
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\setcounter{framenumber}{0}
+\begin{frame}
+    \frametitle{Outline}\small
+    \begin{dinglist}{228}
+        \barrow Background and contributions.
+        \barrow Estimate gradient by using the space(-time) solution.
+        \barrow Optimization framework.
+        \barrow Numerical examples.
+    \end{dinglist}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Background \hfill \scriptsize{background and contribution}}\small
+    \begin{dinglist}{228}
+        \barrow Optimization constrained by conservation law simulation.
+        \barrow Expensive simulation.
+        \barrow High dimensional design.
+        \barrow Code has no adjoint and is proprietary / legacy.
+    \end{dinglist}
+    \begin{columns}
+        \column{.5\textwidth}\centering
+            \includegraphics[height=3.5cm]{turbine_1.png}\\
+        \column{.5\textwidth}\centering
+            \includegraphics[height=3.5cm]{turbine_2.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Research scope\hfill \scriptsize{background and contribution}}\small
+    \begin{dinglist}{228}
+        \barrow Gray-box conservation law simulation:
+        \vspace{.1cm}
+        \begin{dinglist}{227}
+            \carrow adjoint not available nor implementable.
+            \vspace{.1cm}
+            \carrow provide space(-time) solution.
+        \end{dinglist}
+    \vspace{.1cm}
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+                       & {space(-time) solution} &
+                       Adjoint\\ \hline
+            Black-box  & \ding{56}    & \ding{56}  \\ \hline
+            \textcolor{darkred}{Gray-box}   
+                       & \textcolor{darkred}{\ding{52}}    & \textcolor{darkred}{\ding{56}}   \\ \hline
+            Open-box   &          &   \ding{52}      \\ \hline
+        \end{tabular}
+     \end{center}
+%    \begin{tabular}{|c|c|c|c|c|}
+%        \hline
+%                   & PDE and implementation & {space(-time) solution} &
+%                   Adjoint\\ \hline
+%        Black-box  & \ding{56} & \ding{56}    & \ding{56}  \\ \hline
+%        \textcolor{darkred}{Gray-box}   & \textcolor{darkred}{\ding{56}}
+%                   & \textcolor{darkred}{\ding{52}}    & \textcolor{darkred}{\ding{56}}   \\ \hline
+%        Open-box   & \ding{52}    &          &   \ding{52}      \\ \hline
+%    \end{tabular}
+    \vspace{.1cm}
+    \small
+        \barrow High-dimensional design space.
+        %\begin{dinglist}{227}
+        %    \carrow large number of parameters required to parameterize the space(-time) dependent design.
+        %\end{dinglist}
+    \end{dinglist}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Different optimization methods apply\hfill \scriptsize{background and contribution}}\small
+    \begin{dinglist}{228}
+        \barrow {Black-box}: use \textcolor{darkred}{derivative-free optimization},\\
+                \scriptsize{
+                pattern search methods, evolution based methods, etc.}
+%                \scriptsize{
+%                pattern search methods \cite{Tarma03}, evolution based methods\cite{Eberhart 10, Davis 10}, etc}
+                \small
+                \begin{dinglist}{227}
+                    \carrow not require derivative evaluation.
+                    \vspace{.15cm}
+                    \carrow not suitable for high dimensional optimization.
+                \end{dinglist}
+
+                \vspace{.15cm}
+        \barrow Open-box: use \textcolor{darkred}{gradient-based optimization},\\
+                \scriptsize
+                quasi-Newton methods, etc. %\cite{John 77}: BFGS, L-BFGS, etc.
+                \small
+                \begin{dinglist}{227}
+                    \carrow requires efficient gradient evaluation, generally using adjoint 
+                    \scriptsize \cite{Lions 71} \small.
+                    \vspace{.15cm}
+                    \carrow suitable for high dimensional optimization.
+                \end{dinglist}
+
+                \vspace{.15cm}
+        \barrow Gray-box: treated as black-box. 
+                \textcolor{blue}{Space(-time) solution wasted!}
+    \end{dinglist}
+%    \begin{center}
+%        \includegraphics[height=2.5cm]{treat.png}
+%    \end{center}   
+\end{frame}
+
+\begin{frame}
+    \frametitle{Problem statement\hfill \scriptsize{background and contribution}}\small
+    \begin{dinglist}{228}
+        \barrow 
+        Minimize 
+        $$
+           \xi(c) = \int_0^T \int_\Omega j(\boldsymbol{u},c) \textrm{d}\mathbf{x}\textrm{d}t
+        $$
+        using a gradient-based optimization method.\\
+
+        $\boldsymbol{u}$: the space-time solution of
+        \begin{equation*}
+            \dot{\boldsymbol{u}} + \nabla \cdot {\boldsymbol{F}}
+            (\boldsymbol{u})
+            = \boldsymbol{q}(\boldsymbol{u},c)
+        \end{equation*}
+        whose $\boldsymbol{F}$ is unknown.
+        \barrow 
+        Steady state solution $\boldsymbol{u}_\infty$
+        \begin{equation*} 
+            \nabla \cdot {\boldsymbol{F}}
+            (\boldsymbol{u}_\infty)
+            = \boldsymbol{q}(\boldsymbol{u}_\infty,c)
+        \end{equation*}
+        is a special case of the time-dependent solution.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Contributions\hfill \scriptsize{contributions}} \small
+    \begin{dinglist}{228}
+%----------------- VERSION 1 ---------------------
+%        \barrow Adjoint-based gradient can be estimated by the twin model when a simulations's
+%                governing PDE is unavailable.\vspace{.2cm}
+%        \barrow The estimated gradient can be used in a GPO framework and can improve the optimization
+%                performance.
+%                \vspace{.2cm}
+%        \barrow The win-model GPO is demonstrated in two numerical examples, 
+%                showing superior objective function improvement 
+%                under a limited number of gray-box simulations.
+
+%---------------- VERSION 2 ----------------------
+%        \barrow Developed the twin model method that estimates the adjoint gradient for
+%                gray-box simulations. Presented the sigmoid parameterization for the flux and the
+%                adaptive refinement of the basis.\vspace{.2cm}
+%        \barrow Building upon previous research, a Gaussian process model of the estimated gradient
+%                is developed and applied to a Bayesian optimization framework.
+%                Demonstrated the acceleration of GPO due to the incorporation of noisy gradient sampling.
+%                Proved the twin-model GPO finds the optimal regardless of the quality of the gradient estimation.
+%                \vspace{.2cm}
+%        \barrow The effectiveness of twin-model GPO is compared to a vanilla GPO. 
+%                The twin-model GPO is demonstrated in two numerical examples
+%                to reduce the number of gray-box simulations required
+%                to achieve desired optimization results. 
+
+%--------------- VERSION 3 -----------------------
+        \barrow Developed the twin model method to efficiently estimate the gradient of objective functions constrained by gray-box simulations.
+                \vspace{.3cm}
+        \barrow Practically and theoretically presented the utility of the estimated gradient in a Bayesian optimization framework.
+                \vspace{.3cm}
+        \barrow Applied the twin-model GPO to a Buckley-Leverett simulation and the Navier-Stokes simulaiton to reduce
+                the number of gray-box simulations required to achieve desired optimization results.
+    \end{dinglist}
+\end{frame}
+
+%\begin{frame}
+%    \frametitle{Objectives \hfill \scriptsize{background and objective}}\small
+%    \begin{dinglist}{228}
+%        \barrow Develop a method to estimate the gradient by using the space(-time) solution
+%                from the gray-box simulation with unknown flux.
+%        \vspace{.1cm}
+%        \barrow Formulate an optimization framework that uses the estimated gradient 
+%                to improve the objective function, constrained by
+%                a limited number of gray-box simulations.
+%        \vspace{.1cm}
+%        \barrow Assess the design objective improvement 
+%                by using the proposed framework in several numerical examples.
+%    \end{dinglist}
+%\end{frame}
+
+
+
+\setcounter{framenumber}{6}
+\begin{frame}
+    \frametitle{Outline}\small
+    \begin{dinglist}{228}
+        \barrow \transparent{1.}Background and contribution.
+        \barrow \textcolor{darkred}{Estimate gradient by using the space(-time) solution.}
+        \begin{dinglist}{227}
+            \carrow Leverage the space-time solution.
+            \carrow Parameterize the flux.
+            \carrow Algorithm for training twin model.
+            \carrow Numerical examples.
+        \end{dinglist}
+        \barrow Optimization framework.
+        \barrow Numerical examples.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Estimate adjoint from space-time solution \hfill \scriptsize{twin model}} \small
+    \begin{dinglist}{228}
+        \barrow Primal:
+        $$
+            \textcolor{red}{\frac{\partial u}{\partial t}} + \textcolor{blue}{\frac{d F}{d u}} \textcolor{red}{\frac{\partial u}{\partial x}} = q \,,
+            \quad \textrm{with I.C. and B.C.}
+        $$
+        \barrow
+        Adjoint:
+        $$
+            \frac{\partial v}{\partial t} + \textcolor{blue}{\frac{dF}{du}} \frac{\partial v}{\partial x} = p\,,
+            \quad \textrm{with I.C. and B.C.}
+        $$\\
+        \vspace{.3cm}
+        Observations:\\
+        \vspace{.2cm}
+        \begin{dinglist}{227}
+            \carrow From $u(t,x)$, we get
+            $\textcolor{red}{\frac{\partial u}{\partial t}}$, 
+            $\textcolor{red}{\frac{\partial u}{\partial x}}$.
+  
+            \vspace{.3cm}
+            \carrow From 
+            $\textcolor{red}{\frac{\partial u}{\partial t}}$, 
+            $\textcolor{red}{\frac{\partial u}{\partial x}}$, we
+            estimate \textcolor{blue}{$\frac{dF}{du}$}. 
+
+            \vspace{.3cm}
+            \carrow From \textcolor{blue}{$\frac{dF}{du}$}, we solve for $v$.
+
+            \vspace{.3cm}
+            \carrow Primal / adjoint depend on {$\frac{dF}{du}$}, not $F$.
+        \end{dinglist}
+        %\barrow The inferrability is still an open problem for
+        %\begin{dinglist}{227}
+        %    \carrow $x\in \Omega$ with $>1$ dimension.
+        %    \carrow systems of equations.
+        %    \carrow $u(t,x)$ is under-resolved.
+        %\end{dinglist}
+    \end{dinglist}
+    
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Leverage the space(-time) solution \hfill \scriptsize{twin model}}\small
+    Estimate the gradient:
+    \begin{dinglist}{228}
+        \barrow Infer the conservation law from the space(-time) solution.
+        \barrow Estimate the gradient by adjoint method.
+    \end{dinglist}
+    \vspace{.2cm}
+
+    Example: infer flux $F(u)$ from space-time solution.
+    \vspace{.1cm}
+    \begin{columns}
+        \column{.5\textwidth}
+        \begin{equation*}\begin{split}
+            &\frac{\partial u}{\partial t}+ \frac{\partial {F(u)}}{\partial x} = c(x)\\
+            &u(t=0,x) = u_0(x)\\
+            &u(t,x=0) = u(t, x=1)
+        \end{split}\end{equation*}
+        \column{.5\textwidth}
+        \centering
+        \scriptsize{
+        Space-time solution}\small
+        \vspace{-.1cm}
+        \begin{center}
+            \includegraphics[width=4cm]{imag_1.png}
+        \end{center}
+    \end{columns}
+    \vspace{.15cm}
+    Infer the flux that reproduces the space(-time) solution. The inferred
+    conservation law is called \textcolor{darkred}{twin model}.
+\end{frame}
+
+%\begin{frame}
+%    \frametitle{Why is the PDE inferrable?\hfill \scriptsize{twin model}}\small
+%    \begin{dinglist}{228}
+%        \barrow The governing PDE is a conservation law. Flux and source terms are functionals. For example,\\
+%        \vspace{-.1cm}
+%        \begin{center}
+%            \includegraphics[height=.7cm]{two_eqn.png}
+%        \end{center}
+%        \vspace{-.1cm}
+%        \barrow The flow quantities only depend on the flow quantities in an older time
+%                inside a domain of dependence.\\
+%        \vspace{-.1cm}
+%        \begin{center}
+%            \includegraphics[height=1.5cm]{locality.png}
+%        \end{center}
+%        \vspace{-.1cm}
+%        \barrow Space-(time) solution can provide large number of samples.
+%        %\barrow The inference can be independent of the design space dimensionality.
+%    \end{dinglist}
+%\end{frame}
+
+\begin{frame}
+    \frametitle{Inference can boil down to minimization \hfill \scriptsize{twin model}}\small
+    \begin{columns}
+        \column{.5\textwidth}
+        \centering Gray-box model
+        \begin{equation*}\begin{split}
+            &\frac{\partial u}{\partial t}+ \frac{\partial \textcolor{red}{F(u)}}{\partial x} = c(x)\\
+            &u(t=0,x) = u_0(x)\\
+            &u(t,x=0) = u(t, x=1)
+        \end{split}\end{equation*}
+        \centering
+        \includegraphics[width=3.5cm]{imag_1.png} 
+        \column{.5\textwidth}
+        \centering Twin model
+        \begin{equation*}\begin{split}
+            &\frac{\partial \tilde{u}}{\partial t}+ \frac{\partial {\textcolor{red}{\tilde{F}
+             (\tilde{u})}}}{\partial x} = c(x)\\
+            &\tilde{u}(t=0,x) = u_0(x)\\
+            &\tilde{u}(t,x=0) = \tilde{u}(t, x=1)
+        \end{split}\end{equation*}
+        \centering
+        \includegraphics[width=3.5cm]{imag_2.png}
+    \end{columns}
+    \begin{center}
+    \normalsize
+    $
+        \min_{\tilde{F}}\left\{ \mathcal{M}(\tilde{F}, u) \equiv \int_0^1\int_0^1\left(u-\tilde{u}\right)^2_{L_2}\; dt\,dx \right\}
+    $
+    \end{center}
+\end{frame}
+
+% ----------------- basis selection ---------------------
+\begin{frame}
+    \frametitle{Parameterize the flux \hfill \scriptsize{twin model}}\small
+    \begin{columns}
+    \column{.7\textwidth}
+    \begin{dinglist}{228}
+        \barrow Multi-resolution analysis (MRA) \scriptsize{\cite{Mallat 89}}\small\\
+                Wavelet basis
+        \barrow Adjoint depends on $\nabla_u F$
+        \barrow Use the integral of wavelet as basis for univariate flux.
+                \begin{equation*}
+                    \phi(u) = \left\{
+                    \begin{split}
+                        &0\;, u\rightarrow -\infty\\
+                        &1\;, u\rightarrow \infty
+                    \end{split}
+                    \right.\;,
+                 \quad
+                 \phi(u) = \frac{1}{2}\left(\tanh (u) + 1\right) 
+                \end{equation*}
+   \end{dinglist}
+   \column{.3\textwidth}
+   \includegraphics[height=2.5cm]{meyer_2.png}\\
+   \includegraphics[height=2.5cm]{basis_combined.png}
+   \end{columns}
+   
+   \begin{dinglist}{228}
+        \barrow Univariate flux: use sigmoid function as basis \scriptsize\cite{Mhaskar 92} \small.
+             $$
+                 \phi_{j,\eta}(u) = \phi(\lambda_j u-\eta)\;,\;\;
+                 \tilde{F}(u) = \sum_{j,\eta} \alpha_{j,\eta}\phi_{j,\eta}(u)
+             $$
+        \barrow
+             Multivariate flux: 
+             tensor product of univariate sigmoid basis.
+    \end{dinglist}
+\end{frame}
+
+
+%\begin{frame}
+%    \frametitle{Regularize the training of twin model \hfill \scriptsize{twin model}}\small
+%        Basis selection\\\vspace{.05cm}
+%            \scriptsize matching pursuit \cite{Adler 96, Billing07}: forward selection, backward pruning;\\
+%            regularization \cite{Stone 77, Schwarz 78, Tibshirani 96}: AIC/BIC, Lasso, elastic net
+%            \small\vspace{.16cm}
+%            \begin{dinglist}{227}
+%                \carrow we choose Lasso regularization for basis selection.\scriptsize\\
+%                $$
+%                    \min_{\tilde{F}} \left\{ \mathcal{M}(\tilde{F})+\textcolor{darkred}{\lambda\sum_{i=1}^n\left| \alpha_i \right|}\right\}
+%                $$
+%            \end{dinglist}
+%\end{frame}
+
+%\begin{frame}
+%    \frametitle{Parameterize multi-variable flux \hfill \scriptsize{twin model}}\small
+%    \begin{dinglist}{228}
+%        \barrow
+%        If $u=(u_1, \cdots, u_m) \in\mathbb{R}^m$, we parameterize the flux by
+%        \begin{equation*}
+%            \tilde{F}_{j_1,\cdots,j_m} (u) 
+%            = \sum_{k_1=1}^{N_1} \cdots \sum_{k_m =1}^{N_m} \alpha^{j_1,\cdots,j_m}_{k_1,\cdots, k_m} 
+%            \phi_{j_1,k_1} (u_1) \cdots \phi_{j_m,k_m} (u_m)
+%        \end{equation*}
+%        Resolution:$\;$ $\boldsymbol{j} = \{j_1,\cdots, j_m\}$.\\
+%        Basis functions for resolution $\boldsymbol{j}$:$\;$
+%        $\Phi^{\boldsymbol{j}}$\\
+%        Coefficients for resolution $\boldsymbol{j}$:$\;$
+%        $\boldsymbol{\alpha}^{\boldsymbol{j}} = 
+%         \left\{ \alpha^{j_1,\cdots,j_m}_{k_1,\cdots, k_m}
+%        \right\}_{k_1,\cdots, k_m}$\\
+%        Optimal coefficients :
+%        $\boldsymbol{\alpha}^{\boldsymbol{j}*}$
+%    \end{dinglist}
+%\end{frame}
+
+
+\begin{frame}
+    \frametitle{Estimate gradient for BL equation\hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+    \barrow 
+    Consider a Buckley-Leverett equation \scriptsize \cite{Buckley 42}\small
+    \begin{columns}
+        \column{.6\textwidth}
+        $$
+            F(u) = \frac{u^2}{1+2(1-u)^2} \;,\quad c: \;\textrm{constant-valued control}
+        $$
+        \column{.4\textwidth}
+        \begin{center}
+            \includegraphics[width=3.5cm]{Buckley_flux.png}
+        \end{center}
+    \end{columns}
+    \vspace{-.3cm}
+    \barrow Infer the twin model:
+    \begin{columns}
+        \column{.62\textwidth}
+        $$
+            \min_{\boldsymbol{\alpha}}\left\{ \underbrace{\int_0^1\int_0^1\left(u-\tilde{u}\right)^2\; dt\,dx}_{\mathcal{M}} + \lambda \left\|\boldsymbol{\alpha}\right\|_{L_1}\right\}\,,
+            \; \lambda > 0
+        $$
+        \column{.38\textwidth}
+        \begin{center}
+        \includegraphics[width=3.2cm]{fixed_basis_eg.png}
+        \end{center}
+    \end{columns}
+    \vspace{-.3cm}
+    \barrow
+    Estimate $d\xi\slash dc\quad$ \scriptsize \cite{Kucuk 06}\small\\
+    $$
+        \xi(c) \equiv \int_{x=0}^1 \big(u(x,t=1;c) - 0.5\big)^2 \,\textrm{d}x
+    $$
+    \end{dinglist}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Estimate gradient for BL equation, cont.\hfill\scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+    \barrow Train a twin model using $u(t,x)$ at $c=0$.
+    \begin{columns}
+        \column{.5\textwidth} \centering
+            \includegraphics[width=3.6cm]{leftcol.png}\\
+        \column{.5\textwidth} \centering
+            \includegraphics[width=3.6cm]{rightcol.png}\\
+    \end{columns}
+    \barrow Twin model can estimate ${d\xi} \slash {dc}$ at $c=0$.
+    \begin{center}
+        \includegraphics[width=5cm]{J_twin_vs_primal.png}
+    \end{center}
+    \end{dinglist}
+\end{frame}
+
+%\begin{frame}
+%    \frametitle{Solution mismatch for various initial conditions \hfill \scriptsize{twin model}}\small
+%    \begin{center}\begin{columns}
+%        \column{.33\textwidth}
+%        \centering\scriptsize Initial conditions\\
+%        \includegraphics[height=4cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/initial_conditions_2.png}
+%        \column{.33\textwidth}
+%        \centering \scriptsize Gray-box solution\\
+%        \includegraphics[height=2.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_sol.png}\\
+%        \includegraphics[height=2.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_sol.png}\\
+%        \includegraphics[height=2.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_sol.png}
+%        \column{.33\textwidth}
+%        \centering \scriptsize Mismatch\\
+%        \includegraphics[height=2.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_err.png}\\
+%        \includegraphics[height=2.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_err.png}\\
+%        \includegraphics[height=2.5cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_err.png}
+%    \end{columns}\end{center}
+%\end{frame}
+
+%\begin{frame}
+%    \frametitle{Estimate $\frac{d\xi}{d c}$ for several solutions, $c=c(t,x)$ \hfill \scriptsize{twin model}}\small
+%    \begin{center}\begin{columns}
+%        \column{.33\textwidth}
+%        \centering\scriptsize Initial conditions\\
+%        \includegraphics[height=2.5cm]{init_0.png}\\
+%        \includegraphics[height=2.5cm]{init_1.png}\\
+%        \includegraphics[height=2.5cm]{init_2.png}
+%        \column{.33\textwidth}
+%        \centering \scriptsize $\frac{d\xi}{d c}$\\
+%        \includegraphics[height=2.5cm,width=3.6cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_primal_2.png}\\
+%        \includegraphics[height=2.5cm,width=3.8cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_primal_2.png}\\
+%        \includegraphics[height=2.5cm,width=3.6cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_primal_2.png}
+%        \column{.33\textwidth}
+%        \centering \scriptsize Mismatch\\
+%        \includegraphics[height=2.5cm,width=3.6cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_err_2.png}\\
+%        \includegraphics[height=2.5cm,width=3.6cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err_2.png}\\
+%        \includegraphics[height=2.5cm,width=3.6cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err_2.png}
+%    \end{columns}\end{center}
+%\end{frame}
+
+
+\begin{frame}
+    \frametitle{Only expect match where there is solution \hfill \scriptsize{twin model}} \small
+    %\begin{columns}
+    %    \column{.33\textwidth}
+    %    \begin{center}
+    %        \includegraphics[height=2.5cm]{init_0.png}
+    %    \end{center}
+    %    \column{.33\textwidth}
+    %    \begin{center}
+    %        \includegraphics[height=2.5cm]{init_1.png}
+    %    \end{center}
+    %    \column{.33\textwidth}
+    %    \begin{center}
+    %        \includegraphics[height=2.5cm]{init_2.png}
+    %    \end{center}
+    %\end{columns}
+    %\begin{center}
+    %    \includegraphics[width=8cm]{trained_flux_for_3_inits.png}
+    %\end{center}
+    %\begin{columns}
+    %    \column{.33\textwidth}
+    %    \includegraphics[width=4cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/5_x_new_2.png}
+    %    \column{.33\textwidth}
+    %    \includegraphics[width=4cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/6_x_new_2.png}
+    %    \column{.33\textwidth}
+    %    \includegraphics[width=4cm]{/home/voila/Documents/2014GRAD/mirror/final/paper1/7_x_new_2.png}
+    % \end{columns}
+    \begin{center}
+        \includegraphics[width=11.5cm]{combine_3_inits.png}
+    \end{center}
+     \begin{dinglist}{228}
+        \barrow The range of the discrete gray-box solution $\mathcal{E}_u :=[u_{\min},u_{\max}]$ \\
+                 are shaded by green.
+        \barrow The twin model flux does not affect 
+                $\mathcal{M}$ outside the range of the gray-box solution.
+     \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Reduce mismatch by adding more basis\hfill \scriptsize{twin model}} \small
+    Consider improvement of \textcolor{darkred}{least solution mismatch} using more basis functions:\\
+    \begin{dinglist}{228}
+    \barrow
+    Basis $\left[\boldsymbol{\Phi}_0\right]$ :
+    $$
+        \mathcal{M}^*_0 = \min_{\boldsymbol{\alpha}_0}
+        \mathcal{M}\left(
+        \tilde{F}(\boldsymbol{\alpha}_0), u\right)
+    $$
+    \barrow
+    Append basis $\left[ \boldsymbol{\Phi}_0; \boldsymbol{\Phi}_1\right]$ :
+    $$
+        \mathcal{M}^*_{01} = \min_{
+        \boldsymbol{\alpha}_0 , \boldsymbol{\alpha}_1}
+        \mathcal{M}\left(
+        \tilde{F}(\boldsymbol{\alpha}_0, 
+                  \boldsymbol{\alpha}_1), u\right)
+    $$
+    \barrow
+    Mismatch improvement due to appending $\boldsymbol{\Phi}_1$:
+    $$
+        \Delta\mathcal{M}^*= \mathcal{M}^*_0
+        - \mathcal{M}^*_{01} \ge 0
+    $$
+    \end{dinglist}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Rank the basis to be added \hfill\scriptsize{twin model}} \small
+    \begin{dinglist}{228}
+    \barrow
+    $$
+        \Delta\mathcal{M}^* \approx -\Big(\underbrace{\int_\Omega \left.\frac{\partial\mathcal{M}}{\partial \tilde{F}}
+        \right|_{\tilde{F}(\boldsymbol{\alpha}_0^*)} \boldsymbol{\Phi}_1
+        \; \textrm{d} u}_{\textrm{weight vector}} \Big) \cdot \boldsymbol{\alpha}_1 
+        = \Big( \underbrace{
+          \int_\Omega \nabla \Psi \cdot \nabla \boldsymbol{\Phi}_1 d u}_{
+          \textrm{weight vector}}\Big) \cdot 
+        \boldsymbol{\alpha}_1  \;, 
+    $$  
+    where $\nabla^2 \Psi = \left.\frac{\partial\mathcal{M}}{\partial \tilde{F}}
+        \right|_{\tilde{F}(\boldsymbol{\alpha}_0^*)}$
+    \barrow
+    The weight vector ranks the importance of basis. Select the basis with the largest absolute value of weight \scriptsize\cite{Miller 90} \small.
+    \end{dinglist}
+    \begin{figure}[H]\begin{center}
+        \includegraphics[width=5.cm]{adaptive_basis.png}
+    \end{center}\end{figure}
+\end{frame}
+
+\setcounter{framenumber}{16}
+\begin{frame}
+    \frametitle{Represent the sigmoid functions\hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow
+        Consider the sigmoid functions:
+        $$
+            \phi_{j, \eta}(u) = \phi(2^j u - \eta)
+        $$
+        Denote $\phi_{j, \eta}(u)$ by the tuple $\{j, \eta\}$.\\
+        \vspace{.2cm}
+        $j\in \{j_0, j_0+1, j_0+2, \cdots \}$ represents resolution. $\frac{\eta}{2^j}$ represents
+        the center of the sigmoid's derivative.
+        \barrow $j=0$, $\eta=0$\\
+        \begin{center}
+            \includegraphics[width=10.cm]{basis_0.png}
+        \end{center}
+    \end{dinglist}
+\end{frame}
+
+
+\setcounter{framenumber}{16}
+\begin{frame}
+    \frametitle{Represent the sigmoid functions\hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow
+        Consider the sigmoid functions:
+        $$
+            \phi_{j, \eta}(u) = \phi(2^j u - \eta)
+        $$
+        Denote $\phi_{j, \eta}(u)$ by the tuple $\{j, \eta\}$.\\
+        \vspace{.2cm}
+        $j\in \{j_0, j_0+1, j_0+2, \cdots \}$ represents resolution. $\frac{\eta}{2^j}$ represents
+        the center of the sigmoid's derivative.
+        \barrow $j=0$, $\eta=\textcolor{red}{-1}$\\
+        \begin{center}
+            \includegraphics[width=10.cm]{basis_1.png}
+        \end{center}
+    \end{dinglist}
+\end{frame}
+
+\setcounter{framenumber}{16} 
+\begin{frame}
+    \frametitle{Represent the sigmoid functions\hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow
+        Consider the sigmoid functions:
+        $$
+            \phi_{j, \eta}(u) = \phi(2^j u - \eta)
+        $$
+        Denote $\phi_{j, \eta}(u)$ by the tuple $\{j, \eta\}$.\\
+        \vspace{.2cm}
+        $j\in \{j_0, j_0+1, j_0+2, \cdots \}$ represents resolution. $\frac{\eta}{2^j}$ represents
+        the center of the sigmoid's derivative.
+        \barrow $j=0$, $\eta=\textcolor{red}{1}$\\
+        \begin{center}
+            \includegraphics[width=10.cm]{basis_2.png}
+        \end{center}
+    \end{dinglist}
+\end{frame}
+
+\setcounter{framenumber}{16} 
+\begin{frame}
+    \frametitle{Represent the sigmoid functions\hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow
+        Consider the sigmoid functions:
+        $$
+            \phi_{j, \eta}(u) = \phi(2^j u - \eta)
+        $$
+        Denote $\phi_{j, \eta}(u)$ by the tuple $\{j, \eta\}$.\\
+        \vspace{.2cm}
+        $j\in \{j_0, j_0+1, j_0+2, \cdots \}$ represents resolution. $\frac{\eta}{2^j}$ represents
+        the center of the sigmoid's derivative.
+        \barrow $j=\textcolor{red}{1}$, $\eta=0$\\
+        \begin{center}
+            \includegraphics[width=10.cm]{basis_3.png}
+        \end{center}
+    \end{dinglist}
+\end{frame}
+
+\setcounter{framenumber}{16} 
+\begin{frame}
+    \frametitle{Represent the sigmoid functions\hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow
+        Consider the sigmoid functions:
+        $$
+            \phi_{j, \eta}(u) = \phi(2^j u - \eta)
+        $$
+        Denote $\phi_{j, \eta}(u)$ by the tuple $\{j, \eta\}$.\\
+        \vspace{.2cm}
+        $j\in \{j_0, j_0+1, j_0+2, \cdots \}$ represents resolution. $\frac{\eta}{2^j}$ represents
+        the center of the sigmoid's derivative.
+        \barrow $j=1$, $\eta=\textcolor{red}{-1}$\\
+        \begin{center}
+            \includegraphics[width=10.cm]{basis_4.png}
+        \end{center}
+    \end{dinglist}
+\end{frame}
+
+\setcounter{framenumber}{16} 
+\begin{frame}
+    \frametitle{Represent the sigmoid functions\hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow
+        Consider the sigmoid functions:
+        $$
+            \phi_{j, \eta}(u) = \phi(2^j u - \eta)
+        $$
+        Denote $\phi_{j, \eta}(u)$ by the tuple $\{j, \eta\}$.\\
+        \vspace{.2cm}
+        $j\in \{j_0, j_0+1, j_0+2, \cdots \}$ represents resolution. $\frac{\eta}{2^j}$ represents
+        the center of the sigmoid's derivative.
+        \barrow $j=1$, $\eta=\textcolor{red}{-2}$\\
+        \begin{center}
+            \includegraphics[width=10.cm]{basis_5.png}
+        \end{center}
+    \end{dinglist}
+\end{frame}
+
+\setcounter{framenumber}{16} 
+\begin{frame}
+    \frametitle{Represent the sigmoid functions\hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow
+        Consider the sigmoid functions:
+        $$
+            \phi_{j, \eta}(u) = \phi(2^j u - \eta)
+        $$
+        Denote $\phi_{j, \eta}(u)$ by the tuple $\{j, \eta\}$.\\
+        \vspace{.2cm}
+        $j\in \{j_0, j_0+1, j_0+2, \cdots \}$ represents resolution. $\frac{\eta}{2^j}$ represents
+        the center of the sigmoid's derivative.
+        \barrow $j=1$, $\eta=\textcolor{red}{1}$\\
+        \begin{center}
+            \includegraphics[width=10.cm]{basis_6.png}
+        \end{center}
+    \end{dinglist}
+\end{frame}
+
+\setcounter{framenumber}{16} 
+\begin{frame}
+    \frametitle{Represent the sigmoid functions\hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow
+        Consider the sigmoid functions:
+        $$
+            \phi_{j, \eta}(u) = \phi(2^j u - \eta)
+        $$
+        Denote $\phi_{j, \eta}(u)$ by the tuple $\{j, \eta\}$.\\
+        \vspace{.2cm}
+        $j\in \{j_0, j_0+1, j_0+2, \cdots \}$ represents resolution. $\frac{\eta}{2^j}$ represents
+        the center of the sigmoid's derivative.
+        \barrow $j=1$, $\eta=\textcolor{red}{2}$\\
+        \begin{center}
+            \includegraphics[width=10.cm]{basis_7.png}
+        \end{center}
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Neighborhood of a sigmoid function\hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow
+        Define the ``neighborhood'' of a sigmoid function $\{j, \eta\}$ 
+        to be
+        $$
+            \mathcal{N}(\{j, \eta\}) := \big\{ \{j+1, 2\eta\}, \{j, \eta\pm 1\}\big\}
+        $$
+        \barrow $\mathcal{N}(\{0,0\})$ 
+        \begin{center}
+            \includegraphics[width=10.cm]{basis_neighbor.png}
+        \end{center}
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Neighborhood of sigmoid functions\hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow Define
+        $$
+            \mathcal{N}(\{j_1, \eta_1\}, \cdots, \{j_n, \eta_n\})
+            := \mathcal{N}(\{j_1, \eta_1\})\bigcup \cdots \bigcup \mathcal{N}(\{j_n, \eta_n\})
+        $$
+        \begin{center}
+            \includegraphics[width=10.cm]{basis_neighbor_2.png}
+        \end{center}
+    \end{dinglist}
+\end{frame}
+
+
+
+
+\begin{frame}
+    \frametitle{Select the basis adaptively \hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow Finite dictionary.  \\
+                Can be solved by matching pursuit \scriptsize{\cite{Mallat 93}}\small.
+                (forward selection \scriptsize{\cite{Friedman 94}} \small, 
+                backward prunning \scriptsize \cite{Reed 93} \small).\\
+                \vspace{.2cm}
+                Requires the predetermined basis dictionary contains a subset sufficient
+                for approximation.
+        \vspace{.3cm}
+        \barrow Infinite dictionary.
+                 \scriptsize
+                \cite{Jekabsons 10, Blatman 10} \small.\\
+                \vspace{.2cm}
+                Start from an empty or simple dictionary.
+                \begin{dinglist}{227}
+                    \carrow \textbf{Forward step:} (improve accuracy)\\
+                    Add a new basis to the dictionary.
+                    \carrow \textbf{Backward step:} (avoid overfit)\\
+                    Try to remove a basis from the dictionary.
+                \end{dinglist}
+                Iterate forward / backward steps until the ``approximation quality'' no longer improves.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Train twin model \hfill \scriptsize{twin model}}\small
+    \begin{center}
+        \includegraphics[height=5cm]{algo1.png}
+    \end{center}
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Criterion for basis addition / deletion \hfill \scriptsize{twin model}}\small
+    \begin{dinglist}{228}
+        \barrow Balance approximation accuracy and model complexity. \\
+                \textcolor{red}{$k$-fold cross validation} 
+                \scriptsize \cite{Geisser 93} \small.\\
+    \end{dinglist}
+    \vspace{-.2cm}
+            \begin{columns}
+                \column{.7\textwidth}
+                \begin{dinglist}{227}
+                    \carrow Shuffle $u$ dataset into $k$ disjoint sets:\\ \textcolor{red}{$u_1$}, 
+                            \textcolor{green}{$u_2,$} $\,\cdots, \, $ 
+                            \textcolor{blue}{$u_k$}.\\
+                    $\quad$ \texttt{ravel($u$); [$u_1, \cdots, u_k$]=shuffle($u$,k)}
+                    \vspace{.1cm}
+                    \carrow Train $k$ twin models.\\
+                    $\quad$ \texttt{$T_1$ = TrainTwinModel($u_2, \cdots, u_k$)}\\
+                    $\quad$ $\cdots$\\
+                    $\quad$ \texttt{$T_k$ = TrainTwinModel($u_1, \cdots, u_{k-1}$)}
+                    \vspace{.1cm}
+                    \carrow Validate.\\
+                    $\quad$ \texttt{$\mathcal{M}_1$ = SolutionMismatch($T_1$, $u_1$)}\\
+                    $\quad$ $\cdots$\\
+                    $\quad$ \texttt{$\mathcal{M}_k$ = SolutionMismatch($T_k$, $u_k$)}\\
+                    \vspace{.1cm}
+                    \carrow Compute \texttt{$\overline{\mathcal{M}}$=mean($\mathcal{M}_1, \cdots, 
+                            \mathcal{M}_k$)}
+                \end{dinglist}
+                \column{.3\textwidth}
+                \begin{center}
+                    \includegraphics[width=3.2cm]{shuffle_1.png}
+                \end{center}
+            \end{columns}
+    \begin{dinglist}{228}
+        \barrow Add / delete basis if $\overline{\mathcal{M}}$ decreases.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Train twin model \hfill \scriptsize{twin model}}\small
+    \begin{center}
+        \includegraphics[height=5cm]{algo1.png}
+    \end{center}
+\end{frame}
+
+
+\setcounter{framenumber}{22}
+{
+\makeatletter
+\setbeamertemplate{headline}[default] 
+\def\beamer@entrycode{\vspace*{-\headheight}} 
+\makeatother
+\begin{frame}
+    \begin{center}
+        \includegraphics[height=9cm]{algo2.png}
+    \end{center}
+\end{frame}
+}
+%\begin{frame}[shrink=10]
+%    \frametitle{Algorithm for training twin model \hfill\scriptsize{twin model}}
+%    \begin{algorithm}[H]
+%    \begin{algorithmic}[1]
+%    \REQUIRE{Basis library $\Psi=\Psi_0$, $\quad$
+%            coefficients $\alpha_\Psi= \mathbf{0}$}. $\overline{\mathcal{M}}_0 = \infty$.
+%    \LOOP 
+%    \STATE Minimize solution mismatch 
+%           $
+%               \alpha_\Psi \leftarrow \min_{\alpha} \mathcal{M}\left(\tilde{F}(\Psi, \alpha)\right)
+%           $
+%    \IF{No more basis needed"}
+%        \STATE \textbf{break}
+%    \ELSE 
+%        \STATE Add a basis
+%    \ENDIF
+%
+%    \IF{No basis shall be deleted}
+%        \STATE \textbf{continue}
+%    \ELSE
+%        \STATE Delete a basis
+%    \ENDIF
+%
+%    \ENDLOOP
+%    \ENSURE $\Psi, \alpha$
+%    \end{algorithmic}
+%    \caption{Train twin model}
+%    \label{alg:seq}
+%    \end{algorithm}
+%\end{frame}
+%
+%\begin{frame}[shrink=14]
+%    \frametitle{Algorithm for training twin model \hfill\scriptsize{twin model}}
+%    \begin{algorithm}[H]
+%    \begin{algorithmic}[1]
+%    \REQUIRE{Basis library $\Psi=\Psi_0$, $\quad$
+%            coefficients $\alpha_\Psi= \mathbf{0}$}. $\overline{\mathcal{M}}_0 = \infty$.
+%    \LOOP 
+%    \STATE Minimize solution mismatch 
+%           $
+%               \alpha_\Psi \leftarrow \min_{\alpha} \mathcal{M}\left(\tilde{F}(\Psi, \alpha)\right)
+%           $
+%    \STATE Compute $v = \left.\frac{\partial \mathcal{M}}{\partial \tilde{F}}\right|_{\tilde{F}(\Psi, \alpha_{\Psi})}$
+%    \STATE Find $\phi_{add}\in \mathcal{N}(\Psi) \backslash \Psi$ with maximum 
+%    $\left|\int_\Omega v\phi_{add} \,\textrm{d}u\right|$ \\
+%    $\Psi \leftarrow \Psi \bigcup \{\phi_{add}\}$, $\alpha \leftarrow \{\alpha, 0\}$
+%    \STATE Train twin model via $k$-fold cross validation, compute $\overline{\mathcal{M}}$
+%    \IF {$\overline{\mathcal{M}} < \overline{\mathcal{M}}_0$} 
+%        \STATE Accept addition, $\overline{\mathcal{M}}_0\leftarrow \overline{\mathcal{M}}$,
+%        train twin model using all $u$, update $\alpha$
+%    \ELSE \STATE Reject addition, $\Psi\leftarrow \Psi \backslash \{\phi_{add}\}$ , 
+%          $\alpha \leftarrow \alpha\backslash \{\alpha_{\phi_{add}}\}$, $\;$
+%          \textbf{break}
+%    \ENDIF
+%    \STATE Compute $v = \left.\frac{\partial \mathcal{M}}{\partial \tilde{F}}\right|_{\tilde{F}(\Psi, \alpha_{\Psi})}$
+%    \STATE Find $\phi_{del}\in \Psi$ with least $\left|\int_\Omega v\phi_{del} \,\textrm{d}u\right|$
+%    \IF {$\phi_{del} \neq \phi_{add}$}
+%    \STATE  $\Psi \leftarrow \Psi\backslash\{\phi_{del}\}$, 
+%    $\alpha \leftarrow \alpha\backslash \{\alpha_{\phi_{del}}\}$
+%    \STATE Train twin model via $k$-fold cross validation, compute $\overline{\mathcal{M}}$
+%    \IF{  $\overline{\mathcal{M}} > \overline{\mathcal{M}}_0$ }
+%    \STATE Reject deletion, $\Psi\leftarrow \Psi \bigcup \{\phi_{del}\}$, $\alpha \leftarrow 
+%           \alpha\bigcup \{\alpha_{\phi_{del}}\}$
+%    \ELSE \STATE Accept deletion, train twin model using all $u$, update $\alpha$
+%    \ENDIF
+%    \ENDIF
+%    \ENDLOOP
+%    \ENSURE $\Psi, \alpha$
+%    \end{algorithmic}
+%    \caption{Train twin model}
+%    \label{alg:seq}
+%    \end{algorithm}
+%\end{frame}
+
+\begin{frame}
+    \frametitle{Estimate gradient for a Navier-Stokes flow\hfill \scriptsize{twin model}} \small
+    \begin{dinglist}{228}
+        \barrow Steady-state, 2-D, compressible, laminar Navier-Stokes flow 
+                with \\ \textcolor{blue}{unknown state equation}.\\
+                ($\rho, U \rightarrow p$ : ideal, van der Waals, Redlich-Kwong
+                \scriptsize \cite{Redlich 49} \small, etc)
+    \barrow Geometry
+    \vspace{-.2cm}
+    \begin{center}
+        \includegraphics[width=6cm]{../numpad/test/ns_cases_spline/results/mesh/spline.png}
+    \end{center}
+        \barrow Bending boundary generated by B-splines.
+        \barrow Inlet: fixed $\rho$, $p^t$. Outlet: fixed $p$. No slip boundary.
+    \end{dinglist}
+\end{frame}
+
+%\begin{frame}
+%    \frametitle{Modeling the state equation \hfill \scriptsize{twin model}} \small
+%    \begin{dinglist}{228}
+%    \barrow Parameterize the state equation
+%        \begin{equation*}
+%            p(\rho, U) = \sum_{i=1}^{N_\rho} \sum_{j=1}^{N_U} \alpha_{ij} R_i(\rho) S_j(U) 
+%            + p_0
+%            \label{parameterization}
+%        \end{equation*}
+%        where
+%        \begin{equation*}
+%            R_i(\rho) = \exp\left(\frac{-(\rho-\rho_i)^2}{\sigma_\rho}\right)\,,\quad i=1,\cdots,N_\rho 
+%        \end{equation*}
+%        \begin{equation*}
+%            S_j(U) = \frac{1}{2}\left(\tanh\left( \frac{U-U_j}{\sigma_U}\right) +1\right)
+%            \quad j = 1,\cdots,N_U\,.
+%        \end{equation*}
+%        \vspace{.5cm}
+%        \begin{dinglist}{227}
+%            \carrow $\rho_i$'s and $U_j$'s equally spaced in $[\rho_{\min}, \rho_{\max}]$ and
+%                    $[U_{\min}, U_{\max}]$.\\\vspace{.4cm}
+%            \carrow Constrain $\alpha_{ij} >0$ to respect monotonicity of $p$ w.r.t. $U$.
+%        \end{dinglist}
+%    \end{dinglist}
+%\end{frame}
+
+\begin{frame}
+    \frametitle{Train the state equation \hfill \scriptsize{twin model}} \small
+    \scriptsize
+    \vspace{-.2cm}
+    \begin{equation*}\begin{split}
+        \mathcal{M} = &w_\rho \int_\Omega \left|\tilde{\rho}_{\infty} - \rho_{\infty}\right|^2 d\boldsymbol{x}
+                    + w_u
+                    \int_\Omega \left|\tilde{u}_{\infty}- u_{\infty}\right|^2 d\boldsymbol{x} \\
+                    + &w_v
+                    \int_\Omega \left| \tilde{v}_{\infty}- v_{\infty}\right|^2 d\boldsymbol{x}
+                    + w_E
+                    \int_\Omega \left|\tilde{E}_{\infty} - E_\infty\right|^2 d\boldsymbol{x}
+        \label{NS mismatch}
+    \end{split}\end{equation*}
+    \begin{center}
+        \includegraphics[height=6cm]{graysol_Ubend.png}
+        \includegraphics[height=6cm]{err_Ubend.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Twin model fits the state equation \hfill \scriptsize{twin model}} \small
+%    \begin{figure}[H]\begin{center}
+%        \centering van der Waals gas\\
+%        \includegraphics[width=7.cm]{state_eqn_vdw.png}
+%    \end{center}\end{figure}
+%    \vspace{-.4cm}
+    \begin{figure}[H]\begin{center}
+        \centering $\qquad\quad$ $\textrm{Inferred} \qquad\qquad \textrm{Gray-box, Redlich-Kwong}$
+        \includegraphics[width=10.cm]{state_eqn_rk.png}
+    \end{center}\end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Estimate the gradient\hfill \scriptsize{twin model}} \small
+    \begin{dinglist}{228}
+        \barrow
+        $\xi$: steady state mass flux rate.$\qquad$ $c$: control points' coordinates.
+        \begin{figure}\begin{center}
+            \includegraphics[width=5.cm]{Ubend_grad_compare.png}
+            %\includegraphics[width=4.8cm]{Ubend_perturb_compare.png}
+        \end{center}\end{figure}
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Polymer waterflooding for secondary recovery\hfill \scriptsize{twin model}}\small
+    \begin{columns}
+        \column{.6\textwidth}
+        \begin{dinglist}{228}
+            \barrow Waterflooding for secondary recovery, high water cut.
+            \barrow Inject polymer to enhance water-phase viscosity and remove residual oil.
+        \end{dinglist}
+        \column{.4\textwidth}
+        \begin{center}
+            \includegraphics[width=4.6cm]{/home/voila/Documents/mrst-2015b/results/waterflooding.png}
+        \end{center}
+    \end{columns}
+    Governing equation:
+    \begin{equation*}\begin{split}
+        \frac{\partial }{\partial t} \left(\rho_\alpha \phi S_\alpha \right) + \nabla \cdot
+        \left( \rho_\alpha \vec{v}_{\alpha} \right) &= 0\,, \quad \alpha \in \{w,o\}\\
+        \frac{\partial}{\partial t}\left( \rho_w \phi S_w c \right) + \nabla \cdot
+        \left( c \rho \vec{v}_{wp}\right) &= 0        
+    \end{split}\end{equation*}
+    Darcy's law:
+    \begin{equation*}\begin{split}
+        \vec{v}_\alpha &= - \textcolor{red}{M_\alpha} k_{r\alpha} \boldsymbol{K} \cdot (\nabla p - \rho_w g \nabla z), \, \quad \alpha \in \{w,o\}\\
+        \vec{v}_{wp} &= \textcolor{red}{M_{wp}} k_{rw} \boldsymbol{K} (\nabla p - \rho_{w} g \nabla z)
+    \end{split}\end{equation*}
+    \vspace{.1cm}
+    Mobility factors \textcolor{red}{$M_o, M_w, M_{wp}$} depends on $S_w, p, c$. 
+\end{frame}
+
+\begin{frame}
+    \frametitle{Train the mobility factors, 1D \hfill \scriptsize{twin model}}\small
+    Minimize solution mismatch:
+    $$
+        \mathcal{M} = w_{S_w}\int_T\int_\Omega |S_w-\tilde{S}_w|^2 d\boldsymbol{x} dt
+                    + w_{c}\int_T\int_\Omega |c-\tilde{c}|^2 d\boldsymbol{x} dt 
+                    + w_{p}\int_T\int_\Omega |p-\tilde{p}|^2 d\boldsymbol{x} dt
+    $$
+    \begin{center}
+        \includegraphics[height=2.1cm]{/home/voila/Documents/mrst-2015b/results/grid1D.png}
+    \end{center}
+    \begin{columns}
+        \column{.5\textwidth}
+        \centering
+        \includegraphics[width=5.2cm]{/home/voila/Documents/mrst-2015b/results/sW_1D.png}
+        \column{.5\textwidth}
+        \centering
+        \includegraphics[width=5.2cm]{/home/voila/Documents/mrst-2015b/results/c_1D.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Train the mobility factors, 3D \hfill \scriptsize{twin model}}\scriptsize
+    \begin{center}
+        \includegraphics[height=3.cm]{/home/voila/Documents/mrst-2015b/results/grid.png}
+    \end{center}
+    \centering
+    \begin{columns}
+        \column{.33\textwidth}
+        \centering
+        Untrained twin model\\
+        \includegraphics[height=3.cm]{/home/voila/Documents/mrst-2015b/results/iso_sW_notrain_2D.png}
+        \column{.33\textwidth}
+        \centering
+        PSim\\
+        \includegraphics[height=3.cm]{/home/voila/Documents/mrst-2015b/results/iso_sW_gray_2D.png}
+        \column{.33\textwidth}
+        \centering
+        Trained twin model\\
+        \includegraphics[height=3.cm]{/home/voila/Documents/mrst-2015b/results/iso_sW_twin_2D.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Estimate gradient for injection schedule \hfill\scriptsize{twin model}}\small
+    Objective: oil residual at $t=50\, \textrm{days}$ , $$\xi = \int_\Omega \rho_o \phi S_o \,\textrm{d} \boldsymbol{x} $$
+    Controls: injection rate schedule at two injectors.
+    \begin{columns}
+        \column{.5\textwidth}
+        \centering
+        \includegraphics[width=6cm]{/home/voila/Documents/mrst-2015b/results/grad_2D.png}
+        \column{.5\textwidth}
+        \centering
+        \includegraphics[width=4cm]{/home/voila/Documents/mrst-2015b/results/waterfront.png}
+    \end{columns}
+\end{frame}
+
+% ====================== SECTION 3 ======================
+
+\setcounter{framenumber}{31}
+\begin{frame}
+    \frametitle{Outline}\small
+    \begin{dinglist}{228}
+        \barrow \transparent{1.}Background and contribution.
+        \barrow Estimate gradient by using the space(-time) solution.
+        \barrow \textcolor{darkred}{Optimization framework.}
+        \begin{dinglist}{227}
+            \carrow Model the estimated gradient.
+            \carrow Twin-GPO framework.
+            \carrow Convergence properties.
+            \carrow A numerical example.
+        \end{dinglist}
+        \barrow Numerical examples.
+    \end{dinglist}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Modeling the gradient \hfill \scriptsize{optimization}}\small
+    \begin{dinglist}{228}
+        \barrow The gradient estimated by twin model is not exactly the true gradient.\\
+            \vspace{.2cm}
+            \begin{dinglist}{227}
+                \carrow Gray-box solution under-resolved.\\
+                \vspace{.2cm}
+                \carrow Solvers use different numerical implementations.\\
+            \end{dinglist}
+        \vspace{.3cm}
+        \barrow To identify the sources of the errors and quantify the errors are difficult.\\
+                Model the error of each component by ``model discrepancy'' \scriptsize 
+              \cite{Kennedy 01, Higdon 04}.\small
+              \begin{equation*}\begin{split}
+                  \left.\xi_{\tilde{\nabla}}(c)\right._1 
+                  &= \textcolor{red}{\rho_1} \left. \nabla \xi(c)\right._1 + 
+                    \textcolor{red}{\mathbf{\epsilon}_1(c)}\\
+                  &\cdots\\
+                  \left.\xi_{\tilde{\nabla}}(c)\right._d
+                  &= \textcolor{red}{\rho_d }\left. \nabla \xi(c)\right._d + 
+                  \textcolor{red}{\mathbf{\epsilon}_d(c)}
+              \end{split}\end{equation*}
+              \begin{equation*}
+                  \xi_{\tilde{\nabla}}: \textrm{ estimated gradient}\;,\qquad
+                  \nabla \xi: \textrm{ true gradient}\;.
+              \end{equation*}
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Assumptions for modeling the gradient \hfill \scriptsize{optimization}}\small
+    \begin{dinglist}{228}
+            \barrow Model $\xi, \epsilon_1, \cdots, \epsilon_d$ as stationary 
+                    Gaussian processes with covariances $K, G_1, \cdots, G_d$ respectively
+                    \scriptsize \cite{Kennedy 01, Higdon 04} \small.
+            \barrow Assume the gradient error to be independent with the objective.
+            \begin{equation*}\left.\begin{split}
+                &\textrm{cov} \left[\xi(c_1), \mathbf{\epsilon}_i(c_2) \right] = 0
+            %    &\left( \textrm{cov} \left[\nabla \xi(c_1), \mathbf{\epsilon}_i(c_2) \right] = 0
+            %     \right)
+            \end{split} \right.\qquad \textrm{for all } c_1, c_2 \in \mathcal{C}\,.
+            \; i=1,\cdots, d\;.
+            \end{equation*}
+            \barrow For simplicity, assume the components of the gradient error 
+                    are pairwise independent.
+            $$
+                \textrm{cov} \left[\epsilon_i, \epsilon_j\right] = 0 \quad \textrm{for}\; i\neq j
+            $$
+            \barrow For simplicity, assume the covariance functions are isotropic.\\
+            $K(c_1, c_2), \; G_1(c_1, c_2),\; \cdots\; G_d(c_1, c_2)$ only depend on
+            $\big\|c_1-c_2\big\|$.\\ \scriptsize
+            (Use $L_2$ norm.)\small
+    \end{dinglist}
+\end{frame}
+
+%\begin{frame}
+%    \frametitle{Review of multi-fidelity optimization (MFO)\hfill \scriptsize{optimization}}\small
+%    %\begin{center}
+%    %    \includegraphics[height=2.5cm]{mfo.png}
+%    %\end{center}
+%   
+%    \begin{dinglist}{228}
+%    \barrow Cast the problem as MFO:
+%            \begin{dinglist}{227}
+%                \carrow Gray-box model: high-fidelity $\xi$.
+%                \carrow Twin model: low-fidelity $\frac{\partial \xi}{\partial c}$.
+%            \end{dinglist}
+%    \barrow MFO methods include\vspace{.1cm}
+%               \begin{dinglist}{227}
+%                   \carrow pattern search MFO \scriptsize \cite{Booker 99}. \vspace{0.1cm}
+%                   \small
+%                   \carrow trust-region MFO \scriptsize \cite{Wild 13, March 12, Robinson 06}.\vspace{.1cm}
+%                   \small
+%                   \carrow Bayesian MFO \scriptsize \cite{Kennedy 01, March 11}.
+%               \end{dinglist}
+%    \vspace{.12cm}
+%    \barrow Choose Bayesian MFO as our optimization framework:\vspace{.1cm}
+%               \begin{dinglist}{227}
+%                   \small
+%                   \carrow uses all model evaluations to find the next design.\vspace{.1cm}
+%                   \small
+%                   \carrow can fuse sampled data of different types: co-Kriging \scriptsize \cite{Chung 02}.\vspace{.1cm}
+%                   \small
+%                   \carrow the next candidate design is optimal under a Bayesian metric.\vspace{.1cm}
+%               \end{dinglist}
+%    \end{dinglist}
+%\end{frame}
+%
+%\begin{frame}
+%    \frametitle{Joint modelling objective and gradient \hfill \scriptsize{optimization}}\small
+%    \begin{dinglist}{228}
+%        \barrow Sources of uncertainty in the estimated gradient
+%            \begin{dinglist}{227}
+%                \carrow Twin model parameters. Calibrated by fitting the solution.
+%                \carrow Model discrepancy. Missing physics and numerical approximation.
+%                \carrow \st{Experimental (gray-box simulation) uncertainty.}
+%            \end{dinglist}
+%        \barrow Gaussian process modeling:
+%        \begin{dinglist}{227}
+%            \carrow $\xi(c)$: the objective calculated by the gray-box model.\vspace{.15cm}
+%            \carrow $\epsilon(c)$: model discrepancy \scriptsize\cite{Kennedy 01, Higdon 04}\small of the gradient.
+%                    $$
+%                        \xi_{\tilde{\nabla}}(c) = \nabla \xi(c) + \mathbf{\epsilon}(c)\,,
+%                        \qquad \epsilon = (\epsilon_1, \cdots, \epsilon_d)
+%                    $$
+%        \end{dinglist}
+%        \small
+%        \vspace{.2cm}
+%        \barrow Assumptions
+%            \begin{dinglist}{227}
+%                \carrow Model $\xi, \epsilon_1, \cdots, \epsilon_d$ by Gaussian processes.
+%                \carrow
+%                \begin{equation*}\left.\begin{split}
+%                    &\textrm{cov} \left[\nabla \xi(c_1), \mathbf{\epsilon}(c_2) \right] = 0\\
+%                    &\textrm{cov} \left[\xi(c_1), \mathbf{\epsilon}(c_2) \right] = 0
+%                \end{split} \right.\qquad \textrm{for all } c_1, c_2 \in \mathcal{C}\,,\end{equation*}
+%                \carrow 
+%                $\textrm{cov} \left[\epsilon_i, \epsilon_j\right] = 0$ for $i\neq j$
+%            \end{dinglist}
+%    \end{dinglist}
+%\end{frame}
+
+\begin{frame}
+    \frametitle{Modeling the joint distribution \hfill \scriptsize{optimization}} \small
+        Predict $\xi$ and its error bar at a new point $c$ using co-Kriging.\\
+                $\underline{c}_n := (c_1, \cdots, c_N)$: sampled points.
+        %\begin{center}
+        %    \includegraphics[width=7cm]{coKriging_sketch.png}
+        %\end{center}
+        \begin{equation*}
+            \begin{pmatrix}
+                \xi(c) \\ \xi(\underline{c}_n) \\ \xi_{\tilde{\nabla}}(\underline{c}_n)
+            \end{pmatrix}
+            \sim
+            \mathcal{N}\left(
+            \begin{pmatrix}
+                \mu \\
+                \boldsymbol{\mu}\\
+                \boldsymbol{0}
+            \end{pmatrix} ,
+            \begin{pmatrix}
+                K(c,c) & \mathbf{v} & \mathbf{w}\\
+                \mathbf{v}^T & \mathbf{D} & \mathbf{H}\\
+                \mathbf{w}^T & \mathbf{H}^T & \mathbf{E} +{\mathbf{G}}
+            \end{pmatrix}
+            \right)\,,
+            \label{joint dis}
+        \end{equation*}
+    \scriptsize
+    \begin{equation*}\begin{split}
+        \mathbf{v} = \left(K(c, c_1), \cdots, K(c,c_N) \right)\;,\quad
+        \mathbf{w} = \left(\nabla_{c_1} K(c, c_1),\cdots, \nabla_{c_N} K(c, c_N) \right)
+    \end{split}\end{equation*}
+    \begin{equation*}
+           \mathbf{D}  = \begin{pmatrix}
+            K(c_1, c_1) & \cdots & K(c_1, c_N) \\
+            \vdots & \ddots & \vdots \\
+            K(c_N, c_1) & \cdots & K(c_N, c_N)
+        \end{pmatrix}\;,\quad
+        \mathbf{H} = \begin{pmatrix}
+            \nabla_{c_1^\prime} K(c_1, c_1^\prime) & \cdots & \nabla_{c_N^\prime} K(c_1, c_N^\prime) \\
+            \vdots & \ddots & \vdots\\
+            \nabla_{c_1^\prime} K(c_N, c_1^\prime) & \cdots & \nabla_{c_N^\prime} K(c_N, c_N^\prime) 
+        \end{pmatrix}
+    \end{equation*}
+    \begin{equation*}
+        \mathbf{E} =
+        \begin{pmatrix}
+            \nabla_{c_1} \nabla_{c_1^\prime} K(c_1, c_1^\prime) & \cdots &
+            \nabla_{c_1} \nabla_{c_N^\prime} K(c_1, c_N^\prime)\\
+            \vdots & \ddots & \vdots \\
+            \nabla_{c_1} \nabla_{c_N^\prime} K(c_N, c_1^\prime) & \cdots &
+            \nabla_{c_N} \nabla_{c_N^\prime} K(c_N, c_N^\prime)\\
+        \end{pmatrix}\;,\quad
+        {\mathbf{G}} =
+        \begin{pmatrix}
+            G(c_1, c_1^\prime) & \cdots & G(c_1, c_N^\prime) \\
+            \vdots & \ddots & \vdots \\
+            G(c_N, c_1^\prime) & \cdots & G(c_N, c_N^\prime)
+        \end{pmatrix}
+    \end{equation*}
+    $$
+        G(c_i, c_j) = \textrm{diag}\big(G_1(c_i, c_j), \cdots, G_d(c_i, c_j)\big)
+    $$
+\end{frame}
+
+\begin{frame}
+    \frametitle{Determine the hyper-parameters \hfill \scriptsize{optimization}}\small
+            \begin{dinglist}{228}
+                \barrow
+                The Matern $5/2$ kernel \scriptsize\cite{Matern 60, Snoek 12} \small
+                $$
+                    C_{\frac{5}{2}}(c_1,c_2) = \textcolor{red}{\sigma^2}
+                    \left(1+ \frac{\sqrt{5}|c_1-c_2|}{\textcolor{red}{L}}
+                    + \frac{5|c_1-c_2|^2}{ 3\textcolor{red}{L}^2}\right)
+                    \exp\left(-\frac{\sqrt{5}|c_1-c_2|}{\textcolor{red}{L}}\right) 
+                $$
+                Hyper-parameters: $\sigma^2$'s, $L$'s, $\rho$'s, and $\mu$.
+                \barrow 
+                Maximum likelihood estimate (MLE)\scriptsize\cite{Jones 98}\small
+                $$
+                \max_{\sigma^2, L, \rho, \mu}\left\{ \log p\big(\xi(\underline{c}_n), \xi_{\tilde{\nabla}}(\underline{c}_n) \big| \sigma^2, L, \rho, \mu \big)\right\}
+                $$
+                Solved by gradient based optimization.
+                \barrow Full Bayesian approach \scriptsize \cite{Higdon 04, Kennedy 01}\small
+                $$
+                    p(\sigma^2, L, \rho \big| 
+                    \xi(\underline{c}_n), \xi_{\tilde{\nabla}}(\underline{c}_n))
+                $$
+                \barrow Both approaches provide similar results \scriptsize\cite{Bayarri 07} \small. 
+                        We use the MLE approach.
+           \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Gaussian process optimization (GPO)\hfill \scriptsize{optimization}} \small
+    \begin{dinglist}{228}
+        \barrow GPO introduces an acquisition function:\\
+                %$$
+                %    \rho: \mathcal{C}\rightarrow \mathbb{R}^+
+                %$$
+                $\rho(c)$: the expected utility of investing the next sample at $c$ given 
+                the posterior.
+                %$p\big(\cdot\big|\mathcal{F}_n\big)$.
+        \begin{columns}
+        \column{.5\textwidth}
+            \begin{dinglist}{227}
+                %\carrow Upper confidence bound \scriptsize\cite{Srinivas 09}\small
+                  % \begin{equation*}
+                  %     \rho_{UCB}(c) = \mathbb{E}[\xi(c)|\mathcal{F}_n] + \kappa \sigma[c| \mathcal{F}_n]\,,
+                  %     \label{UCB form}
+                  % \end{equation*}
+                \carrow Expected improvement \\ \scriptsize\cite{Mokus 78, Snoek 12}\small
+                   \begin{equation*}
+                       \rho_{\textrm{EI}}(c) = \mathbb{E}
+                       \left[ \max\left(\xi(c) - \xi(c^*), 0\right) | \mathcal{F}_n \right]
+                   \end{equation*}
+            \end{dinglist}
+        \column{.5\textwidth}
+        \begin{center}
+            \includegraphics[width=6.1cm]{EI_sketch.png}
+        \end{center}
+        \end{columns}
+    \end{dinglist}
+\end{frame}
+
+{
+\makeatletter
+\setbeamertemplate{headline}[default]
+\def\beamer@entrycode{\vspace*{-\headheight}} 
+\makeatother
+\begin{frame}
+    \begin{center}
+        \includegraphics[width=8.9cm]{opt_framework.png}
+    \end{center}
+\end{frame}
+}
+
+\begin{frame}
+    \frametitle{\large Able to find optimal regardless of gradient quality \hfill \scriptsize{optimization}}\small
+    \begin{equation*}\begin{split}
+        &\textrm{
+        {GPO will explore the entire design space as $n\rightarrow \infty$.} 
+        \scriptsize \cite{Vazquez 10} }\\
+        \textrm{\textcolor{blue}{Twin-model}}\;\;
+        &\textrm{\textcolor{blue}{GPO will explore the entire design space as $n\rightarrow \infty$.}}
+    \end{split}\end{equation*}
+    \vspace{.1cm}
+    \begin{dinglist}{228}
+        \barrow
+        Let $\xi\in \mathcal{K}(\mathcal{C})$. $\mathcal{K}$ is the reproducing kernel Hilbert space 
+        (RKHS)
+        with the semi-positive definite kernel $K: \mathcal{C}\times \mathcal{C}\rightarrow \mathbb{R}$.
+        Define $\Phi(c) := K(c, 0)$ for all $c\in \mathcal{C}$. $\hat{\Phi}$ denotes the Fourier 
+        transform of $\Phi$.\\
+        \vspace{.2cm}
+        Let $\epsilon_i\in \mathcal{H}_G^i$. $\mathcal{H}_G^i$ is the RKHS with the semi-positive  
+        definite kernel $G_i$.
+        \vspace{.3cm}
+        \barrow
+        Assume there exist $C\ge 0$ and $k \in\mathbb{N}^+$, such that
+        $(1+|\eta|^2)^k \big|\hat{\Phi}(\eta)\big|\ge C$ for all $\eta\in \mathbb{R}^d$.\\
+        \vspace{.3cm}
+        \barrow
+        For all $c_{init}\in \mathcal{C}$, all $\xi\in \mathcal{H}_K$ and $\epsilon_i \in
+        \mathcal{H}_G^i,\; i=1,\cdots, d$,
+        the sequence $\underline{c}_n$ generated by twin-model GPO is dense in $\mathcal{C}$.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Gradient improves optimization performance \hfill \scriptsize{optimization}}\small
+    \begin{dinglist}{228}
+    \barrow Rosenbrock $2$-D
+    $$
+        \xi(c_1,c_2) = (1-c_1)^2 + 100(c_2-c_1^2)^2
+    $$
+    Global minimum $\xi(1, 1) = 0$
+        \barrow Simulate $\epsilon_i,\; i=1,\cdots, d$ by i.i.d. stationary GP with correlation length
+        $1$ and variance $\sigma^2$.\\
+            Accurate: $\sigma=10$.
+            Noisy: $\sigma=100$.
+            None: $\sigma=\infty$.
+     \end{dinglist}
+       \begin{center}
+           \includegraphics[width=6.cm]{../Meet/19_Jan12/compare_ratio.png}
+       \end{center}
+%     \begin{columns}    
+%       \column{.4\textwidth}
+%       \begin{center}
+%           \includegraphics[width=4cm]{../Meet/19_Jan12/example_contour.png}
+%       \end{center}
+%       \column{.4\textwidth}
+%       \begin{center}
+%           \includegraphics[width=5.5cm]{../Meet/19_Jan12/compare_ratio.png}
+%       \end{center}
+%     \end{columns}
+\end{frame}
+
+\begin{frame}
+   \frametitle{More benefit for higher dimension \hfill \scriptsize{optimization}}\small
+   \begin{dinglist}{228}
+      \barrow
+      Generalized $n$-D Rosenbrock function
+      $$
+          \xi(c) = \sum_{i=0}^{d-2} 100(c_{i+1}-c_i)^2 + 1(1-c_i)^2 
+      $$
+   \end{dinglist}
+   \begin{center}
+       \includegraphics[width=7cm]{../Meet/19_Jan12/compare_bar_2.png}
+   \end{center}
+\end{frame}
+
+
+\setcounter{framenumber}{41}
+\begin{frame}
+    \frametitle{Outline}\small
+    \begin{dinglist}{228}
+        \barrow \transparent{1.}Background and contribution.
+        \barrow Estimate gradient by using the space(-time) solution.
+        \barrow Optimization framework.
+        \barrow \textcolor{darkred}{Numerical examples}
+    \end{dinglist}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Optimize injection for BL equation \hfill \scriptsize{numerical examples}} \small
+    \begin{dinglist}{228}
+    \barrow
+    $u(t,x)$ generated by:
+    \begin{equation*}\begin{split}
+        &\frac{\partial u}{\partial t} + \frac{\partial F(u)}{\partial x} = c(t,x)\,
+        \quad x\in[0,1]\; t\in[0,1]\\
+        &u(t=0,x) =u_0(x),\; u(t,x=0)=u(t,x=1)
+        \label{BL eqn}
+    \end{split}\end{equation*}
+    \barrow
+    Control:
+    \vspace{-.7cm}
+    \begin{columns}
+        \column{.6\textwidth}
+        \begin{equation*}\begin{split}
+            &c(t,x) = \sum_{i=1}^m \sum_{j=n}^s c_{ij} \cdot B_{ij}(t,x)\\
+            &B_{ij} = \exp\left(-\frac{(t-t_i)^2}{L_t^2}\right)
+            \exp\left(-\frac{(x-x_j)^2}{L_x^2}\right)
+        \end{split}\end{equation*}
+        \column{.4\textwidth}
+        \begin{center}
+            \includegraphics[width=5cm]{25controls.png}
+        \end{center}
+    \end{columns}
+    \vspace{-.3cm}
+    \barrow
+    Objective function:
+    \begin{equation*}
+        \xi(c) = \int_{x=0}^1 \left| u(t=1,x) -  \frac{1}{2}\right|^2 + \lambda\sum_{ij} c_{ij}^2
+        \,,
+        \quad  \lambda > 0
+        \label{BL obj fun}
+    \end{equation*}
+    \end{dinglist}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Optimized injection \hfill \scriptsize{numerical examples}}\small
+    \begin{columns}
+        \column{.5\textwidth} \centering Optimized injection
+        \includegraphics[width=5.5cm]{opt_source.png}
+        \column{.5\textwidth} \centering Optimized space-time solution
+        \includegraphics[width=5.5cm]{LD_utx.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Compare optimization performance\hfill \scriptsize{numerical examples}}\small
+    \begin{columns}
+        \column{.5\textwidth}\centering $u(t=1,x)$
+        \includegraphics[width=6.cm,height=5cm]{finalutx.png}
+        \column{.5\textwidth} \centering $\xi^*_n$
+        \includegraphics[width=6.cm,height=5cm]{opt_BL.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Optimize return bend\hfill \scriptsize{numerical examples}}\small
+    \begin{columns}
+        \column{.65\textwidth}
+        Objective: maximize mass flux.\\
+        %\begin{equation*}
+        %    \xi = - \int_{\textrm{outlet}} \rho u \big|_{\textrm{outlet}} \; dy=
+        %    \int_{\textrm{inlet}} \rho u\big|_{\textrm{inlet}} \; dy\,,
+        %    \label{mass flux}
+        %\end{equation*}
+        Constraint by fixed area of the return bend.\\
+        Unknown state equation.
+        \column{.35\textwidth}
+        \includegraphics[width=3.5cm]{spline_simple.png}
+    \end{columns}
+    \vspace{.3cm}
+    \begin{center}
+    \includegraphics[width=11.3cm]{Ubend_combined_new.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Twin model improves GPO performance \hfill \scriptsize{numerical examples}}\small
+    \begin{dinglist}{228}
+        \barrow Faster improvement for the current best objective function evaluation.
+        \barrow Most improvement is achieved for small $n$.
+    \end{dinglist}
+    \begin{center}
+        \includegraphics[width=8cm]{obj_ubend_2.png}
+    \end{center}
+\end{frame}
+
+
+
+\setcounter{framenumber}{46}
+\begin{frame}
+    \begin{center}
+        Thank you!
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Thesis progress}
+    \begin{dinglist}{228}
+        \barrow Introduction
+        \begin{dinglist}{227}
+            \carrow \textcolor{blue}{Optimization constrained by conservation law simulations.}
+            \carrow Literature review.
+            \begin{dinglist}{227}
+                \carrow \textcolor{blue}{Derivative-free optimization methods.}
+                \carrow \textcolor{blue}{Gradient-based optimization methods.}
+                \carrow Adjoint method.
+            \end{dinglist}
+            \carrow Challenges for optimization constrained by gray-box simulations.
+            \carrow Conservation law with unknown flux function.
+            \carrow \textcolor{blue}{Thesis Objectives.}
+            \carrow Contributions.
+        \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Thesis progress}
+    \begin{dinglist}{228}
+        \barrow Estimate gradient by using the space-time solution.
+        \begin{dinglist}{227}
+            \carrow Approach.
+            \begin{dinglist}{227}
+                \carrow \textcolor{blue}{Infer conservation law from space(-time) solution.}
+                \carrow \textcolor{blue}{Estimate the gradient for inferred conservation law.}
+            \end{dinglist}
+            \carrow Implementation.
+            \begin{dinglist}{227}
+                \carrow Flux parameterization.
+                \carrow Adaptive refinement of basis functions.
+                \carrow Algorithm for training twin model.
+                \carrow Numerical examples.
+            \end{dinglist}
+        \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Thesis progress}
+    \begin{dinglist}{228}
+        \barrow Optimization framework.
+        \begin{dinglist}{227}
+            \carrow \textcolor{blue}{Model the estimated gradient.}
+            \carrow Twin-model GPO.
+            \carrow \textcolor{blue}{Discussion of onvergence properties.}
+            \begin{dinglist}{227}
+                \carrow \textcolor{blue}{Theoretical results on the design sequence.}
+                \carrow Experimental results on the convergence rate.
+            \end{dinglist}
+            \carrow Numerical examples.
+        \end{dinglist}
+        \barrow Conclusions.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Key dates}
+    \begin{dinglist}{228}
+        \barrow April 29. Submit draft to Prof. Wang. 
+        \barrow May 9. Submit draft to committee and thesis readers.
+        \barrow June 20-. Thesis defense.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Details of return bend testcase \hfill \scriptsize{backup}}\scriptsize
+    N-S equation:
+    \begin{equation*}
+        \frac{\partial}{\partial t}
+        \begin{pmatrix}
+            \rho \\ \rho u \\ \rho v\\ \rho E
+        \end{pmatrix}
+        + \frac{\partial}{\partial x} 
+        \begin{pmatrix}
+            \rho u\\
+            \rho u^2 + p - \sigma_{xx}\\
+            \rho uv - \sigma_{xy}\\
+            u(E\rho+p) - \sigma_{xx} u - \sigma_{xy} v
+        \end{pmatrix}
+        + \frac{\partial}{\partial y}
+        \begin{pmatrix}
+            \rho v\\
+            \rho uv-\sigma_{xy}\\
+            \rho v^2+p-\sigma_{yy}\\
+            v(E\rho+p) - \sigma_{xy} u -\sigma_{yy}v
+        \end{pmatrix} 
+        = \boldsymbol{0}
+        \label{NSeqn}
+    \end{equation*}
+
+    \begin{columns}
+        \column{.5\textwidth}
+        where
+        \begin{equation*}\begin{split}
+            \sigma_{xx} &= \mu \left(2 \frac{\partial u}{\partial x} - \frac{2}{3} \left(\frac{\partial u}{\partial x} 
+            + \frac{\partial v}{\partial y}\right)\right)\\
+            \sigma_{yy} &= \mu \left(2 \frac{\partial v}{\partial y} - \frac{2}{3} \left(\frac{\partial u}{\partial x} 
+            + \frac{\partial v}{\partial y}\right)\right)\\
+            \sigma_{xy}&=\mu\left(\frac{\partial u}{\partial y} + \frac{\partial v}{\partial x}\right)
+        \end{split}\end{equation*}
+        \column{.5\textwidth}
+        \begin{equation*}\begin{split}
+            p_{\textrm{ideal}} &= (\gamma-1) U\\
+            p_{\textrm{vdw}} &= \frac{(\gamma-1)U}{1-b_{vdw}\rho} - a_{vdw}\rho^2\\
+            p_{\textrm{rk}} &= \frac{(\gamma-1)U}{1-b_{rk}\rho} - 
+            \frac{a_{rk}\rho^{5/2}}{((\gamma-1)U)^{1/2}(1+b_{rk}\rho)}
+        \end{split}\label{NS state equations}
+        \end{equation*}
+    \end{columns}
+    \vspace{.2cm}
+    Inlet: $\rho, \; p_t=p\left(1+\frac{1}{5} M^2\right)^{3.5}$ fixed.\\
+    Outlet: $p$ fixed.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Approximation by superposition of sigmoids\hfill \scriptsize{backup}} \small
+    The sigmoid functions can form the bases for continuous $f:\mathbb{R}^d\rightarrow \mathbb{R}$.\vspace{1cm}
+    \begin{dinglist}{228}
+        \barrow \cite{Mhaskar 92} has shown that: for any integer $s\ge 1$, any compact
+        set $\Omega\subset\mathbb{R}^d$, any continuous function $f: \Omega\rightarrow \mathbb{R}$,
+        and any $\epsilon>0$, there exist an integer $N$, numbers $\alpha_k, t_k\in \mathbb{R}$ and
+        $\lambda_k\in \mathbb{R}^d$, such that
+        $$
+            \sup_{x\in\Omega} \left| f(x) - \sum_{k=1}^N \alpha_k\phi(\lambda_k\cdot (x-t_k))\right|
+            < \epsilon
+        $$
+        \barrow If $v_1, \cdots, v_n$ is a basis for $V$, $w_1, \cdots, w_m$ is a basis for $W$, then
+        $\{v_i\otimes w_j\}_{1\le i\le n, 1\le j\le m}$ is a basis for $V\otimes W$.\\
+        The theorem also holds for infinite dimensional $V, W$.
+    \end{dinglist}
+\end{frame}
+
+
+%\begin{frame}
+%    \frametitle{$k$-fold cross validation, cont. \hfill \scriptsize{backup}}\small
+%    \begin{center}
+%        \includegraphics[height=5.cm]{cross_validation.png}
+%    \end{center}
+%\end{frame}
+
+\begin{frame}
+    \frametitle{Accuracy of gradient estimation \hfill \scriptsize{backup}}\small
+    \begin{dinglist}{228}
+        \barrow 
+        What flow quantity to use to compute $\mathcal{M}$? (Goal-oriented approach?)
+        \barrow 
+        How to quantify $\mathcal{M}$ and estimation error in $\frac{d\xi}{dc}$?
+    \begin{dinglist}{227}
+        \carrow Consider a special case
+        \begin{equation*}\begin{split}
+            \frac{\partial u}{\partial t} + \nabla \cdot F(u) &= c\,,\quad
+            \frac{\partial \tilde{u}}{\partial t} + \nabla\cdot\tilde{F}(\tilde{u}) = c
+            \\
+            \tilde{F} = F + \delta F
+        \end{split}\,,\end{equation*}
+        with $u\big|_{t=0} = u_0$ and $\frac{\partial u}{\partial \mathbf{n}}\big|_{\partial \Omega} = 0$.
+        $$
+            \textrm{Objective:} \quad \xi = \int_t\int_\Omega g(u) dxdt
+        $$
+        \carrow 
+        After linearization, the solution error $\delta u$ and the adjoint error $\delta v$ satisfy
+        \begin{equation*}\begin{split}
+            \frac{\partial \textcolor{red}{\delta u}}{\partial t} + \nabla \cdot
+            \left( \frac{dF}{du} \textcolor{red}{\delta u}\right) &= - \nabla\cdot
+            \delta F\\
+            \frac{\partial \textcolor{red}{\delta v}}{\partial t} + \frac{dF}{du} \cdot\nabla\textcolor{red}{\delta v}
+            &= -\frac{d^2 g}{du^2}\delta u - \frac{d\delta F}{du} \cdot \nabla v-\frac{d^2 F}{du^2}
+            \cdot \nabla v
+            \delta u
+        \end{split}\end{equation*}
+    \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+%\begin{frame}
+%    \frametitle{Accuracy of gradient estimation, cont.\hfill \scriptsize{backup}}\small
+%    \begin{columns}
+%    \column{.5\textwidth}
+%    \begin{dinglist}{228}
+%        \barrow The relation between $\delta u$ and $\delta v$ is not obvious.
+%        \vspace{1cm}
+%        \barrow Explore the relation experimentally. Simulating $\delta F$ by GP. 
+%        \vspace{1cm}
+%        \barrow Quantifying the accuracy is a future work.
+%    \end{dinglist}
+%    \column{.5\textwidth}
+%    \begin{center}
+%        \includegraphics[width=5cm]{error_relation.png}
+%    \end{center}
+%    \end{columns}
+%\end{frame}
+
+\begin{frame}
+    \frametitle{Non-stationary GP modeling \hfill \scriptsize{backup}}\small
+    \begin{dinglist}{228}
+    \barrow
+    Non-stationary covariance functions allow GP to adapt to functions whose smoothness
+    varies with the inputs.
+    \barrow
+    $$
+        K^{NS}(c_i, c_j) = \int k_{\textcolor{red}{c_i}}(c) k_{\textcolor{red}{c_j}}(c) dc
+    $$
+    For Gaussian kernels \scriptsize\cite{Higdon 99} \small, 
+    $$
+        K^{NS}(c_i, c_j) = \sigma^2 |\Sigma_i|^{1/4} |\Sigma_j|^{1/4} \big|\left( 
+        \Sigma_i + \Sigma_j
+        \right)/2\big|^{- 1/2} \exp(-Q_{ij})
+    $$
+    $$
+        Q_{ij} = (c_i - c_j)^T \big((\Sigma_i + \Sigma_j)/2\big)^{-1}(c_i-c_j)
+    $$
+    \barrow
+    The extension of GP to non-stationary introduces additional parameterization that
+    models the variation of the kernel. 
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Reduce computational cost of GPO \hfill \scriptsize{backup}}\small
+    \begin{dinglist}{228}
+        \barrow The search of the next candidate design requires optimizing an acquisition function.
+        \barrow Requires repetitive evaluation of 
+                \begin{equation*}
+                    (\mathbf{v}, \mathbf{w})
+                    {\underbrace{\begin{pmatrix}
+                        \mathbf{D} & \mathbf{H}\\
+                        \mathbf{H}^T & \mathbf{E} + \mathbf{G}
+                    \end{pmatrix}}_{{\Sigma}}}^{-1}
+                    (\mathbf{v}, \mathbf{w})^T
+                \end{equation*}
+                for different $c$. $\Sigma:$ $n(d+1)\times n(d+1)$.
+        \barrow Cholesky decomposition $\Sigma = \mathbf{L}\mathbf{L}^T$, $ \mathcal{O}(n^3(d+1)^3)$ FLOPs. 
+        \barrow The inclusion of new data at $c=c^\prime$ updates $\mathbf{L}$ by
+        $$
+            \mathbf{L}_{\textrm{updated}}\leftarrow 
+            \begin{pmatrix}
+                \mathbf{L} & \lambda^T\\
+                \lambda  & K(c^\prime,c^\prime) - \lambda^T\lambda
+            \end{pmatrix}\;,\quad
+            \lambda = (\mathbf{v}, \mathbf{w})\mathbf{L}^{-T}
+        $$
+        Updating the Cholesky decomposition requires $ \mathcal{O}(n^2(d+1)^2)$ FLOPs.
+        \barrow
+        Sparse GP is also applicable (e.g. greedy subset selection \scriptsize \cite{Smola 01}, 
+        \small latent variable method \scriptsize \cite{Lawrence 04} \small), 
+        at the cost of reducing accuracy.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Reduce computational cost of twin model\hfill\scriptsize{backup}}\small
+    \begin{dinglist}{228}
+        \barrow Instead of minimizing the solution mismatch $\mathcal{M}$, we can minimize
+        $$  \mathcal{R} :=
+            \int_t\int_x \left\|\tilde{R}(u)\right\| dxdt\;,\qquad
+            \tilde{R}(\textcolor{red}{u}) = \dot{\textcolor{red}{u}} + \nabla \cdot 
+            \textcolor{blue}{\tilde{F}}(\textcolor{red}{u}) - q(\textcolor{red}{u},c)\,,
+        $$
+        thus avoid the integration of twin model PDE.
+        \barrow Small residual does not guarantee small solution mismatch.\scriptsize
+        \begin{dinglist}{227}
+            \carrow
+            Consider the discretized the gray-box and twin models:
+            \begin{equation*}\begin{split}
+                \textrm{twin model:} &\; \tilde{u}_{t+1} - \mathcal{G}\tilde{u}_{t} = 0\\
+                \textrm{gray-box model:}&\; u_{t+1} - \mathcal{H}u_t = 0
+            \end{split}\;,\quad
+            t = 0,\cdots, T-1
+            \end{equation*}
+            $$
+                \tilde{R}(u) \approx \big\|u_1-\mathcal{G}u_0\big\|^2 + \cdots \big\|u_T-\mathcal{G}u_{T-1}
+                \big\|^2
+            $$
+            \textcolor{blue}{
+            If $\left\|\mathcal{G}u-\mathcal{G}u^\prime\right\| \le \alpha \left\|u-u^\prime\right\| $ 
+            for all $u, u^\prime$ with $\alpha <1$, then
+            $\mathcal{M} \le \frac{1}{1-\alpha} \mathcal{R}$.
+            }
+        \end{dinglist}
+        \small
+        \barrow We first minimize the residual, then minimize the solution mismatch.
+                The procedure reduces the cost of training, and yields good twin model.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Optimization with constraints\hfill \scriptsize{backup}}\small
+    \begin{dinglist}{228}
+        \barrow Constraints independent of $u$,
+                $$
+                    \textrm{e.g.} \;\;
+                    \boldsymbol{c}_{\textrm{lower}}\le \boldsymbol{c}\le \boldsymbol{c}_{\textrm{upper}}
+                $$
+                Enforced in optimizing $\rho(c\big|\mathcal{F}_n)$.
+        \barrow Constraints depends on $u$
+                \begin{dinglist}{227}
+                    \carrow Modify the objective function\\
+                    e.g. penalty methods\scriptsize\cite{Homaifar 94} \small,
+                    augmented lagrangian methods 
+                    \scriptsize\cite{Conn 91}\small, barrier function methods 
+                    \scriptsize\cite{Conn 97}\small .
+                    \vspace{.15cm}
+                    \carrow Modify the acquisition\\
+                    e.g. expected improvement with constraints (EIC \scriptsize\cite{Gardner 14} 
+                    \small)
+                    $$
+                        \mathbb{E}\left[\max(\xi(c) - \xi(c^*_n),0)\big|\mathcal{F}_n\right]
+                        \mathbb{P}\left[g(c)\le 0\right]
+                    $$
+                    integrated expected conditional improvement (IECI \scriptsize \cite{Gramacy 11}
+                    \small ).
+                    $$
+                        \int_\mathcal{C} \left[\rho\left(c^\prime\right) 
+                        -\rho\left(c^\prime\big| c\right)\right]
+                        \mathbb{P}[g(c) \le 0] \;\textrm{d} c^\prime
+                    $$
+                \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+%\begin{frame}
+%    \frametitle{Other candidate optimization frameworks}
+%\end{frame}
+
+\begin{frame}
+    \frametitle{Analyze computational cost: twin model\hfill \scriptsize{backup}}\small
+        \textcolor{blue}{$n$}: num of gray-box simulations.\\
+        \textcolor{blue}{$n_b$}: average num of basis addition / deletion.\\
+        \textcolor{blue}{$n_\mathcal{M}$}: average num of twin model simulations to minimize 
+                         $\mathcal{M}$.\\
+        \textcolor{blue}{$d$}: $\textrm{dim}(c)$.\\
+        \textcolor{blue}{$C_T$}: cost of running the twin model for once.\\
+        \textcolor{blue}{$C_G$}: cost of running the gray-box model for once.
+    \vspace{.2cm}
+    \begin{dinglist}{228}
+        \barrow Cost for training twin model at each design $c$
+            \begin{dinglist}{227}
+            \carrow Twin model may offer significant benefit if
+                    $$
+                        \frac{C_T}{C_G} < \frac{d}{n_b n_\mathcal{M}}
+                    $$
+            \carrow Reuse trained twin model to reduce $n_b$, $n_\mathcal{M}$.
+            \carrow Reduce $C_T$ by minimizing the twin model residual's first.
+            \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analyze computational cost: GPO\hfill \scriptsize{backup}}\small
+    \textcolor{blue}{$n$}: num of gray-box simulations.\\
+    \textcolor{blue}{$d$}: $\textrm{dim}(c)$.\\
+    \textcolor{blue}{$n_\rho$}: average num of $\rho$ evalutions for each $\max \rho$.\\
+    \textcolor{blue}{$n_{MLE}$}: average num of likelihood evalutions for each $\max \textrm{MLE}$.
+    \vspace{.1cm}
+    \begin{dinglist}{228}
+        \barrow Cost for MLE and optimizing $\rho(c\big|\mathcal{F}_n)$ in GPO
+        \begin{dinglist}{227}
+            \carrow Cost of likelihood evalution is $\mathcal{O}(n^3d^3)$.
+            \carrow Cost of $\rho$ evaluation is $\mathcal{O}(n^2d^2)$.
+            \carrow Total cost: 
+            $$
+                n\left( \underbrace{n_{MLE} n^3d^3}_{\textrm{MLE cost}} +
+                \underbrace{n_\rho n^2 d^2}_{\textrm{max $\rho$ cost}} \right)
+            $$
+            \carrow MLE cost can be controlled by 
+            \begin{dinglist}{227}
+                \carrow Use full Bayesian approach \scriptsize \cite{Kennedy 01, Snoek 12} \small (MCMC).
+                \carrow Only update hyper-parameters when determined necessary. Future work.
+            \end{dinglist}
+            \carrow Assume GPO cost negligible vs gray-box simulation cost.
+        \end{dinglist}
+    \end{dinglist}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Reuse gray-box solutions and trained twin models \hfill \scriptsize{backup}}\small
+    \begin{dinglist}{228}
+        \barrow Use previously trained twin model as an initial guess.\\
+        \begin{center}
+            \includegraphics[width=6.cm]{reuse_twin_model.png}
+        \end{center}
+        \begin{dinglist}{227}
+            \carrow Search for a design in the trained database which is ``closest'' to $c$.
+                    Prune the model using the backward steps.
+            \carrow More efficient reuse of twin models remains a future work.
+        \end{dinglist}
+        
+        \barrow Use multiple solutons to train a single twin model.\\
+        \begin{dinglist}{227}
+            \carrow Incorporate multiple solutions to calibrate a model can improve 
+                    the predictive performance of the calibrated model.
+                    \scriptsize \cite{Arendt 12}\small
+            \carrow In the adjoint analysis, however, $\frac{\partial \xi}{\partial c}$ 
+                    at a design $c$ only involves $u(c)$.
+        \end{dinglist}
+    \end{dinglist}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Prove the search sequence is dense\hfill \scriptsize{backup}}\scriptsize
+    {\textbf{Lemma}} \scriptsize (Chapter 1, Theorem 4.1, \cite{Berlinet 11})\\
+    {\emph
+        Let $K_1, K_2$ be the reproducing kernels of functions on $\mathcal{C}$ with
+        norms $\|\cdot\|_{\mathcal{H}_1}$ and $\|\cdot\|_{\mathcal{H}_2}$ respectively. Then $K=K_1+K_2$ is
+        the reproducing kernel of the space 
+        $$
+            \mathcal{H} = \mathcal{H}_1\oplus \mathcal{H}_2 =
+            \left\{ 
+                f = f_1 + f_2, \; f_1\in \mathcal{H}_1, \; f_2\in\mathcal{H}_2
+            \right\}
+        $$
+        with norm $\|\cdot\|_\mathcal{H}$ defined by 
+        $$
+            \forall f\in \mathcal{H} \quad \|f\|_{\mathcal{H}}^2 
+            = \min_{
+                    f=f_1+f_2,\; 
+                    f_1\in \mathcal{H}_1, f_2\in \mathcal{H}_2
+            }
+            \left(\|f_1\|_{\mathcal{H}_1^2} + \|f_2\|_{\mathcal{H}_2}^2\right)
+        $$
+    }
+    \vspace{.2cm}
+    {\textbf{Theorem 1}} (Cauchy inequality)\\
+        Let $\xi\in \mathcal{K}(\mathcal{C})$. $\mathcal{K}$ is the reproducing kernel Hilbert space 
+        (RKHS)
+        with the semi-positive definite kernel $K: \mathcal{C}\times \mathcal{C}\rightarrow \mathbb{R}$.
+        \\
+        \vspace{.2cm}
+        Let $\epsilon_i\in \mathcal{H}_G^i$. $\mathcal{H}_G^i$ is the RKHS with the semi-positive  
+        definite kernel $G_i$.
+    $$
+      \left|\xi(c,\omega_\xi) - \hat{\xi}(c;\underline{c}_n) \right|^2
+      \le  C         \sigma^2(c; \underline{c}_n)
+    $$
+    $$
+        C =
+          \left(1+\frac{4d}{3}\right)  \left\| \xi(c; \omega_\xi) \right\|_{\mathcal{H}_K}
+          + \frac{4d}{3} \left\| \nabla_c \xi(c;\omega_\xi)
+            \right\|_{\mathcal{H}_{K_\nabla}}
+          +\frac{4}{3}\sum_{i=1}^d  
+           \left\| \epsilon_i(c;\omega_\epsilon^i) \right\|_{\mathcal{H}_G^i}
+    $$
+\end{frame}
+
+\begin{frame}
+    \frametitle{Prove the search sequence is dense, cont.\hfill \scriptsize{backup}}\small
+    \textbf{Theorem 2} 
+    Let $(\underline{c}_n)_{n\ge 1}$ and $(\underline{a}_n)_{n\ge 1}$ be two sequences in $\mathcal{C}$.
+    Assume that the sequence $(a_n)$ is convergent, and denote by $a^*$ its limit. Then each of the
+    following conditions implies the next one:\\
+    1.  $a^*$ is an adherent point of $\underline{c}_n$ (there exists a subsequence in 
+              $\underline{c}_n$ that converges to $a^*$) ,\\
+    2.  $\sigma^2(a_n;\underline{c}_n)\rightarrow 0$  when $n\rightarrow \infty$,\\
+    3.  $\hat{\xi}(a_n; \underline{c}_n) \rightarrow \xi(a^*, \omega)$ when $n\rightarrow \infty$,
+              for all $\xi \in \mathcal{H}_K\,,\, \epsilon \in \mathcal{H}_G$.\\
+    \vspace{.2cm}
+    The proof of theorem 2 is similar to the proof of proposition 8 in \cite{Vazquez 10}.\\
+    \vspace{.3cm}
+    \textbf{Theorem 3}
+    Under the assumption \\
+    There exist $C\ge 0$ and $k \in\mathbb{N}^+$, such that 
+    $(1+|\eta|^2)^k \big|\hat{\Phi}(\eta)\big|\ge C$ for all $\eta\in \mathbb{R}^d$.\\
+    We have
+   (E. Vazquez, Theorem 5 \cite{Vazquez 10})\\
+   If the 3 conditions in Theorem 2 
+   are equivalent, then for all $c_{init}\in \mathcal{C}$ and all $\omega \in \mathcal{H}$, the sequence 
+   $\underline{c}_n$ generated by the GP-EI algorithm is dense in $\mathcal{C}$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Conjecture: convergence rate \hfill \scriptsize{backup}}\small
+    \begin{dinglist}{228}
+    \barrow
+    Only the objective value: GPO converges at rate
+    \textcolor{blue}{$n^{-\frac{\nu}{d}}$} for $\xi$ in the RKHS associated with Matern $\nu$ kernel.
+    \scriptsize\cite{Bull 11}\small.
+    \barrow Conjecture: Twin-model GPO converges at the same rate as vanilla GPO 
+        \begin{dinglist}{227}
+            \carrow 1-D Periodic GP $\xi(c)$, $c\in [-\pi, \pi]$
+            \carrow Sample uniformly: (1) $\xi$ $\quad$ (2) $\xi$ and noisy $\frac{d \xi}{dc}$.
+            \carrow Posteriors becomes indistinguishable as $n\rightarrow \infty$.
+        \end{dinglist}
+    \begin{columns}
+        \column{.5\textwidth}
+        \begin{center}
+            \includegraphics[width=6cm]{circle_var_sketch.png}
+        \end{center}
+        \column{.5\textwidth}
+        \begin{center}
+            \includegraphics[width=6cm]{var_ratio.png}
+        \end{center}
+    \end{columns}
+    \barrow \textcolor{blue}{Twin model boosts optimization in an initial phase of GPO. The boost
+    diminishes as $n\rightarrow \infty$}.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{What if twin model fails? \hfill \scriptsize{backup}}\small
+    \begin{dinglist}{228}
+        \barrow Twin model may yield low-quality gradient estimation
+        \vspace{.2cm}
+        \begin{dinglist}{227}
+            \barrow Gray-box solution is poorly resolved.
+            \vspace{.15cm}
+            \barrow Wrong conditions used in twin model.\\ e.g. wrong I.C. B.C., source term.
+            \barrow ...
+        \end{dinglist}
+        \barrow We do NOT expect good gradient estimate when assumptions are violated.
+        \vspace{.2cm}
+        \barrow Twin model searches for a model within its model scope to best match the solution.
+        \vspace{.2cm}
+        \barrow The error can be catched by the model discrepancy.
+        \vspace{.2cm}
+        \barrow Worst case scenario: degenerates to derivative-free GPO.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Unknown flux / source / B.C. \hfill \scriptsize{backup}}\small
+    \begin{dinglist}{228}
+        \barrow Unknown flux is a common problem:
+        \begin{columns}
+            \column{.5\textwidth}
+            \begin{dinglist}{227}
+                \carrow Re-entry vehicle control.
+                \carrow Oil reservoir wells / B.C.
+            \end{dinglist}
+            \column{.5\textwidth}
+            \begin{center}
+                \includegraphics[width=3.cm,height=2cm]{reentry.png}
+                \includegraphics[width=3.cm,height=2cm]{icd.png}
+            \end{center}
+        \end{columns}
+        \vspace{.2cm}
+        \barrow My work is to demonstrate the value of PDE solution in inferring the adjoint.
+        \vspace{.2cm}
+        \barrow Future work to explore the applicability of twin model to unknown source / B.C.
+    \end{dinglist}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Parallel twin-model GPO \hfill \scriptsize{backup}}\small
+    \begin{dinglist}{228}
+        \barrow Parallel Bayesian optimization \scriptsize \cite{Snoek 12} \small.
+        $N$ evaluations completed, $\{c_i,\xi_i,\xi_{\tilde{\nabla}}\}_{i=1}^N$.\\
+        Running gray-box and twin model on $J$ processes, pending data $\{c_j, \textcolor{red}{\xi_j}, 
+        \textcolor{red}{\xi_{\tilde{\nabla}}} \}_{j=1}^J$.\\
+        Expected acquisition:
+        $$
+            \rho(c; \{c_i,\xi_i,\xi_{\tilde{\nabla}}\}_{i=1}^N, \{c_j\}_{j=1}^J) = 
+            \int \rho(c; \{c_i,\xi_i,\xi_{\tilde{\nabla}}\}_{i=1}^N, \{c_j,  \xi_j, \xi_{\tilde{\nabla}}\}_{j=1}^J) 
+            d\boldsymbol{\xi} d\boldsymbol{\xi}_{\tilde{\nabla}}
+        $$
+        \barrow Parallel twin model:\\
+        Twin model is a conservation law simulator that may be parallelled.
+    \end{dinglist}
+\end{frame}
+
+
+% ========================= References ============================
+\begin{frame}[t,allowframebreaks]
+    \frametitle{References}
+    \begin{thebibliography}{10}    
+
+        \beamertemplatearticlebibitems
+        \bibitem{Eberhart 10}
+          RC.~Eberhart et al.
+          \newblock {\em Particle swarm optimization}.
+          \newblock Encyclopedia of machine learning, 2010.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Davis 10}
+          L.~Davis
+          \newblock {\em Handbook of genetic algorithms}.
+          \newblock New York: Van Nostrand Reinhold, 1991.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Tamara 03}
+          K.~Tamara et al.
+          \newblock {\em Optimization by direct search: new perspective on some
+                     classical and modern methods}.
+          \newblock SIAM review, 45.3:385-482, 2003.
+
+        \beamertemplatearticlebibitems
+        \bibitem{John 77}
+          D.~Dennis et al.
+          \newblock {\em Quasi-Newton methods, motivation and theory}.
+          \newblock SIAM review, 19.1:46-89, 1977.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Adler 96}
+          R.~Adler
+          \newblock {\em Comparison of basis selection methods}.
+          \newblock Signals, systems and computers, Thirtieth Asilomar Conference on. Vol. 1. IEEE, 1996.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Billing 07}
+          S.~Billing et al.
+          \newblock {\em Feature subset selection and ranking for data dimensionality reduction.}
+          \newblock Pattern analysis and machine intelligence, IEEE transactions on 29.1 (2007): 162-166.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Schwarz 78}
+          G.~Schwarz
+          \newblock {\em Estimating the dimension of a model.}
+          \newblock The annals of statistics 6.2 (1978): 461-464.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Stone 77}
+          M.~Stone
+          \newblock {\em An asymptotic equivalence of choice of model by cross-validation and Akaike's criterion.}
+          \newblock Journal of the royal statistical society. series B (methodological) (1977): 44-47.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Tibshirani 96}
+          R.~Tibshirani
+          \newblock {\em Regression shrinkage and selection via the lasso.}
+          \newblock Journal of the royal statistical society. series B (methodological) (1996): 267-288.
+
+        \beamertemplatearticlebibitems
+        \bibitem{Kucuk 06}
+          I.~Kucuk
+          \newblock {\em An efficient computational method for the optimal control problem for the Burgers equation.}
+          \newblock Mathematical and computer modelling 44.11 (2006): 973-982.
+
+       \beamertemplatearticlebibitems
+        \bibitem{Booker 99}
+          A.~Booker
+          \newblock {\em A rigorous framework for optimization of expensive functions by surrogates.}
+          \newblock Structural optimization 17.1 (1999): 1-13.        
+
+        \beamertemplatearticlebibitems
+        \bibitem{Wild 13}
+          S.~Wild et al.
+          \newblock {\em Global convergence of radial basis function trust-region algorithms for derivative-free optimization.}
+          \newblock SIAM Review 55.2 (2013): 349-371.
+
+       \beamertemplatearticlebibitems
+        \bibitem{March 12}
+          A.~March
+          \newblock {\em Multifidelity methods for multidisciplinary system design}
+          \newblock Dissertation, Massachusetts Institute of Technology (2012)
+
+       \beamertemplatearticlebibitems
+        \bibitem{Robinson 06}
+          T.~Robinson
+          \newblock {\em Multifidelity optimization for variablecomplexity design.}
+          \newblock Proceedings of the 11th AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference, Portsmouth, VA. 2006.
+
+       \beamertemplatearticlebibitems
+        \bibitem{Kennedy 01}
+          M.~Kennedy et al.
+          \newblock {\em Bayesian calibration of computer models}
+          \newblock Journal of the royal statistical society, series B (statistical methodology) 63.3 (2001): 425-464.
+
+       \beamertemplatearticlebibitems
+         \bibitem{Higdon 04}
+         D.Higdon et al.
+         \newblock{Combining field data and computer simulations for calibration and prediction}
+         \newblock{\em SIAM Journal of Scientific computations (USA), 26.2, (2004): 448-466.}
+ 
+       \beamertemplatearticlebibitems
+        \bibitem{March 11}
+          A.~March et al.
+          \newblock {\em Gradient-based multifidelity optimisation for aircraft design using Bayesian model calibration}
+          \newblock Aeronautical Journal, 115.1174 (2011): 729.
+ 
+       \beamertemplatearticlebibitems
+        \bibitem{Chung 02}
+          H.~Chung et al.
+          \newblock {\em Using gradients to construct cokriging approximation models for high-dimensional design optimization problems.}
+          \newblock AIAA paper 317 (2002): 14-17.
+
+       \beamertemplatearticlebibitems
+        \bibitem{Snoek 12}
+          J.~Snoek et al.
+          \newblock {\em Practical Bayesian optimization of machine learning algorithms.}
+          \newblock Advances in neural information processing systems, 2012.
+
+       \beamertemplatearticlebibitems
+        \bibitem{Mockus 78}
+          J.~Mockus et al.
+          \newblock {\em The application of Bayesian methods for seeking the extreme}
+          \newblock Towards Global Optimization, 2 (1978): 117-229
+
+       \beamertemplatearticlebibitems
+        \bibitem{Srinivas 09}
+          N.~Srinivas et al.
+          \newblock {\em Gaussian process optimization in the bandit setting: No regret
+                     and experiment design}
+          \newblock{arXiv preprint arXiv:0912.3995 (2009).}
+
+       \beamertemplatearticlebibitems
+        \bibitem{Coletti 13}
+          F.~Coletti et al.
+          \newblock {\em Optimization of a U-Bend for Minimal Pressure Loss in Internal Cooling Channels-Part II: Experimental Validation.}
+          \newblock Journal of Turbomachinery 135.5 (2013): 051016.
+
+    \beamertemplatearticlebibitems
+            \bibitem{Han 15}
+              H.~Chen et al.
+              \newblock {\em Adjoint-based gradient estimation for gray-box solutions of unknown 
+              conservation laws}
+              \newblock Submitted to Journal of Computational Physics.
+
+       \beamertemplatearticlebibitems
+        \bibitem{Wilcox 98}
+          D.~Wilcox
+          \newblock {\em Turbulence modeling for CFD.}
+          \newblock Vol. 2. La Canada, CA: DCW industries, (1998)
+
+       \beamertemplatearticlebibitems
+        \bibitem{Gardner 14}
+          J.~Gardner
+          \newblock {\em Bayesian optimization with inequality constraints}
+          \newblock Proceedings of The 31st International Conference on Machine Learning. 2014.
+
+       \beamertemplatearticlebibitems
+        \bibitem{Chen 15}
+          H.~Chen
+          \newblock {\em Adjoint-based gradient estimation from gray-box solutions of unknown conservation laws}
+          \newblock arXiv preprint arXiv:1511.04576 (2015).
+
+       \beamertemplatearticlebibitems
+        \bibitem{Buckley 42}
+          S.E. ~Buckley
+          \newblock {\em Mechanism of fluid displacement in sands.}
+          \newblock Transactions of the AIME 146 (1942): 107-116
+
+       \beamertemplatearticlebibitems
+        \bibitem{Mallat 89}
+          S.G. ~Mallat
+          \newblock {\em A theory for multiresolution signal decomposition: the wavelet representation.}
+          \newblock Pattern Analysis and Machine Intelligence, IEEE Transactions on 11.7 (1989): 674-693
+
+       \beamertemplatearticlebibitems
+        \bibitem{Miller 90}
+          A.J. ~Miller
+          \newblock {\em Subset selection in regression}
+          \newblock London: Chapmen and Hall press, 1990
+
+       \beamertemplatearticlebibitems
+       \bibitem{Mhaskar 92}
+         H.N. ~Mhaskar et al.
+         \newblock{\em Approximation by superposition of sigmoidal and radial basis functions.}
+         \newblock{\em Advances in Applied mathematics 13.3 (1992): 350-373.}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Bayarri 07}
+         M.J. ~Bayarri et al.
+         \newblock{\em A framework for validation of computer models}
+         \newblock{\em Technometrics 49.2 (2007): 138-154.}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Jones 98}
+         D.R. ~Jones et al.
+         \newblock{\em Efficient global optimization of expensive black-box functions}
+         \newblock{\em Journal of Global Optimization 13.4 (1998): 455-492.}
+     
+       \beamertemplatearticlebibitems
+       \bibitem{Higdon 99}
+         D. ~Higdon et al.
+         \newblock{\em Non-stationary spatial modeling}
+         \newblock{\em Bayesian Statistics 6 (1999): 761-768. Oxford University Press.}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Smola 01}
+         A.J. ~Smola et al.
+         \newblock{\em Sparse greedy Gaussian process regression}
+         \newblock{\em Advances in Neural Information Processing Systems 13. 2001.}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Lawrence 04}
+         N. ~Lawrence et al.
+         \newblock{\em Gaussian process latent variable models for visualization of high
+         dimensional data}
+         \newblock{\em Advances in Neural Information Processing Systems 16.3 (2004): 329-336}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Friedman 94}
+         J.H. ~Friedman et al.
+         \newblock{\em An overview of predictive learning and function approximation}
+         \newblock{\em From Statistics to Neural Networks, Springer, NY, 1994}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Reed 93}
+         R. ~Reed
+         \newblock{\em Pruning algorithm - a survey}
+         \newblock{\em IEEE Transactions on Neural Networks, 4.5 (1993): 740-747}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Jekabsons 10}
+         G. ~Jekabsons
+         \newblock{\em Adaptive basis function construction: an approach for adaptive building 
+         of sparse polynomial regression models.}
+         \newblock{\em INTECH Open Access Publiser, 2010.}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Mallat 93}
+         S.G. Mallat et al.
+         \newblock{\em Matching pursuits with time-frequency dictionaries}
+         \newblock{\em IEEE Transactions on Signal Processing, 41.12 (1993): 3397-3415}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Blatman 10}
+         G. ~ Blatman et al.
+         \newblock{\em An adaptive algorithm to build up sparse polynomial chaos expansions
+         for stochastic finite element analysis.}
+         \newblock{\em Probabilistic Engineering Mechanics, 25.2 (2010): 183-197}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Matern 60}
+         B. ~Matern
+         \newblock{\em Spatial Variation}
+         \newblock{\em Springer, New York, 1960}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Gudmundsson 98}
+         S. ~Gudmundsson
+         \newblock{\em Parallel global optimization}
+         \newblock{\em Ms. Thesis, IMM, Technical University of Denmark (1998)}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Vazquez 10}
+         E. ~Vazquez et al.
+         \newblock{\em Convergence properties of the expected improvement algorithm with fixed mean and
+         covariance functions}
+         \newblock{\em Journal of Statistical Planning and inference 140.11 (2010): 3088-3095.}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Berlinet 11}
+         A. ~Berlinet
+         \newblock{\em Reproducing kernel Hilbert spaces in probability and statistics.}
+         \newblock{\em Springer Science and Business Media, 2011.}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Arendt 12}
+         P.D. ~Arendt et al.
+         \newblock{\em Improving identifiability in model calibration using multiple responses.}
+         \newblock{\em Journal of Mechanical Design 134.10 (2012): 100909}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Conn 97}
+         A.R. ~Conn et al.
+         \newblock{\em A globally convergent Lagrangian barrier algorithm for optimization
+                       with general inequality constraints and simple bounds}
+         \newblock{\em Mathematics of Computation of the American Mathematical Society 66.217 (1997):
+                       261-288}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Homaifar 94}
+         A. ~Homaifar et al.
+         \newblock{\em Constrained optimization via genetic algorithms.}
+         \newblock{\em Simulation 62.4 (1994): 242-253.}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Conn 91}
+         A.R. ~ Conn et al.
+         \newblock{\em A globally convergent augmented Lagrangian algorithm for optimization with general constraints and simple bounds.}
+         \newblock{\em SIAM Journal on Numerical Analysis 28.2 (1991): 545-572.}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Gramacy 11}
+         R.B. ~ Gramacy et al.
+         \newblock{\em Optimization under unknown constraints.}
+         \newblock{\em Bayesian Statistics, 9. (2011)}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Bull 11}
+         A.D. ~Bull
+         \newblock{\em Convergence rates of efficient global optimization algorithms.}
+         \newblock{\em Journal of Machine Learning Research, 12 (2011) 2879-2904}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Redlich 49}
+         O. ~Redlich
+         \newblock{\em On the thermodynamics of solutions}
+         \newblock{\em Chemical Reviews, 44.1 (1949) 233-244.}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Lions 71}
+         J.P. ~Lions
+         \newblock{\em Optimal control of systems governed by partial differential equations}
+         \newblock{\em Springer-Verlag, New York.}
+
+       \beamertemplatearticlebibitems
+       \bibitem{Geisser 93}
+         S. ~Geisser
+         \newblock{\em Predictive inference}
+         \newblock{\em New York, NY: Champman and Hall, 1993.}
+
+    \end{thebibliography}
+\end{frame}
+
+\end{document}

@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  18 MAY 2015 14:34
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  20 APR 2016 17:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**paper2
+**paper2.tex
 (./paper2.tex
 LaTeX2e <2011/06/27>
 Babel <3.9h> and hyphenation patterns for 78 languages loaded.
@@ -593,32 +593,26 @@ Package caption Info: wrapfig package is loaded.
 Writing nomenclature file paper2.nlo
 (./paper2.aux
 
-LaTeX Warning: Label `general opt' multiply defined.
+LaTeX Warning: Label `first equation 2' multiply defined.
 
 
-LaTeX Warning: Label `global error' multiply defined.
-
-
-LaTeX Warning: Label `local error' multiply defined.
-
-
-LaTeX Warning: Label `error diff' multiply defined.
+LaTeX Warning: Label `fig:opt_BL' multiply defined.
 
 )
 \openout1 = `paper2.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
  (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count140
@@ -681,789 +675,343 @@ e
 ABD: EveryShipout initializing macros
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for U+msa on input line 21.
+LaTeX Font Info:    Try loading font information for U+msa on input line 33.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 21.
+LaTeX Font Info:    Try loading font information for U+msb on input line 33.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 46--59
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 60--69
+Underfull \hbox (badness 10000) in paragraph at lines 53--65
 
  []
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 70--82
+Underfull \hbox (badness 10000) in paragraph at lines 72--76
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 83--96
+Underfull \hbox (badness 10000) in paragraph at lines 77--86
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 97--122
+Underfull \hbox (badness 10000) in paragraph at lines 87--95
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 123--146
+Underfull \hbox (badness 10000) in paragraph at lines 96--104
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--110
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 197--213
-
- []
-
-[3] (./paper2.toc)
-\tf@toc=\write5
-\openout5 = `paper2.toc'.
-
- [4]
-Underfull \hbox (badness 10000) in paragraph at lines 230--245
+Underfull \hbox (badness 10000) in paragraph at lines 111--126
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 258--262
+Underfull \hbox (badness 10000) in paragraph at lines 127--142
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 269--287
+Underfull \hbox (badness 10000) in paragraph at lines 144--151
+
+ []
+
+[3]
+Overfull \hbox (5.55148pt too wide) in paragraph at lines 152--168
+\OT1/cmr/m/n/10 We also give the con-ver-gence proof for the op-ti-miza-tion fr
+ame-work. Sec-tion 6[] demon-strate the op-ti-miza-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 171--184
+
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 207--223
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 301--306
+Underfull \hbox (badness 10000) in paragraph at lines 246--250
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 311--313
+Underfull \hbox (badness 10000) in paragraph at lines 258--264
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 320--339
+Underfull \hbox (badness 10000) in paragraph at lines 288--292
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 344--347
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 360--368
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 378--386
+Underfull \hbox (badness 10000) in paragraph at lines 305--308
 
  []
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 402--404
-
- []
-
-
-Overfull \hbox (3.7552pt too wide) in paragraph at lines 407--421
-\OT1/cmr/m/n/10 Existing meth-ods for op-ti-miza-tion can be classed into two c
-at-e-gories: us-ing gra-di-ent in-for-ma-tion (gradient-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 407--421
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 423--439
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 440--458
+Underfull \hbox (badness 10000) in paragraph at lines 337--341
 
  []
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 459--464
+Underfull \hbox (badness 10000) in paragraph at lines 383--389
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 466--470
+Underfull \hbox (badness 10000) in paragraph at lines 390--393
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 471--482
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 483--487
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 488--495
+Underfull \hbox (badness 10000) in paragraph at lines 401--404
 
  []
 
 [8]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 521.
-
- (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 521.
- [9]
-Underfull \hbox (badness 10000) in paragraph at lines 543--559
+Underfull \hbox (badness 10000) in paragraph at lines 449--451
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 560--578
+Underfull \hbox (badness 10000) in paragraph at lines 457--459
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 579--587
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 588--606
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 607--624
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 525--531
 
  []
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 625--631
+Underfull \hbox (badness 10000) in paragraph at lines 552--555
+
+ []
+
+[11]
+Overfull \hbox (4.59187pt too wide) in paragraph at lines 639--662
+\OT1/cmr/m/n/10 dis-cussed in the pre-vi-ous sec-tion. Re-searchers have ex-plo
+red the con-ver-gence prop-er-ties of GP op-ti-miza-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 639--662
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 638--642
+Underfull \hbox (badness 10000) in paragraph at lines 663--678
 
  []
 
+[12]
 
-Underfull \hbox (badness 10000) in paragraph at lines 643--653
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 659--669
-
- []
+Package amsmath Warning: Cannot use `split' here;
+(amsmath)                trying to recover with `aligned' on input line 692.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 670--678
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 691--711
-
- []
-
-<locality.png, id=71, 448.7967pt x 277.5168pt>
-File: locality.png Graphic file (type png)
- <use locality.png>
-Package pdftex.def Info: locality.png used on input line 713.
-(pdftex.def)             Requested size: 230.06114pt x 142.26378pt.
- [11]
-Underfull \hbox (badness 10000) in paragraph at lines 722--732
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 733--740
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 754--766
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 767--780
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 781--792
-
- []
-
-[12 <./locality.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1017--1024
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1043--1045
+Underfull \hbox (badness 10000) in paragraph at lines 716--722
 
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 1046--1053
+Underfull \hbox (badness 10000) in paragraph at lines 747--751
 
  []
 
-
-Overfull \hbox (21.79999pt too wide) in paragraph at lines 1080--1082
-[][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1080--1082
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1083--1084
-
- []
-
-
-Overfull \hbox (21.79999pt too wide) in paragraph at lines 1111--1113
-[][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1111--1113
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1116--1121
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1122--1127
-
- []
-
-[14] <meyer.png, id=86, 542.025pt x 160.6pt>
-File: meyer.png Graphic file (type png)
- <use meyer.png>
-Package pdftex.def Info: meyer.png used on input line 1160.
-(pdftex.def)             Requested size: 384.1209pt x 113.81102pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1163--1182
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1189--1194
-
- []
-
-[15 <./meyer.png>] <basis.png, id=92, 380.622pt x 279.444pt>
-File: basis.png Graphic file (type png)
- <use basis.png>
-Package pdftex.def Info: basis.png used on input line 1215.
-(pdftex.def)             Requested size: 193.77197pt x 142.26378pt.
-
-<basis_2D.png, id=93, 444.862pt x 338.866pt>
-File: basis_2D.png Graphic file (type png)
- <use basis_2D.png>
-Package pdftex.def Info: basis_2D.png used on input line 1216.
-(pdftex.def)             Requested size: 186.76608pt x 142.26378pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1225--1238
-
- []
-
-<sigmoid_basis.png, id=94, 766.865pt x 233.673pt>
-File: sigmoid_basis.png Graphic file (type png)
- <use sigmoid_basis.png>
-Package pdftex.def Info: sigmoid_basis.png used on input line 1263.
-(pdftex.def)             Requested size: 466.87427pt x 142.26378pt.
-
-Overfull \hbox (13.90637pt too wide) in paragraph at lines 1263--1264
- [] 
- []
-
-[16 <./basis.png> <./basis_2D.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1293--1297
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1306--1311
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1312--1320
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1321--1336
-
- []
-
-[17 <./sigmoid_basis.png>]
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 1337--1365
+[14]
+Overfull \hbox (49.93443pt too wide) in paragraph at lines 855--855
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1337--1365
+Underfull \hbox (badness 10000) in paragraph at lines 855--858
+
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 871--876
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1366--1375
-
- []
-
-<initial_condition.png, id=104, 551.4201pt x 315.0972pt>
-File: initial_condition.png Graphic file (type png)
-
-<use initial_condition.png>
-Package pdftex.def Info: initial_condition.png used on input line 1380.
-(pdftex.def)             Requested size: 199.16737pt x 113.81102pt.
- <fit_flux_2.png, id=105, 1067.4279pt x 413.3844pt>
-File: fit_flux_2.png Graphic file (type png)
-
-<use fit_flux_2.png>
-Package pdftex.def Info: fit_flux_2.png used on input line 1388.
-(pdftex.def)             Requested size: 367.35092pt x 142.26378pt.
- [18 <./initial_condition.png>]
-<BL_sol.png, id=110, 1033.461pt x 424.2249pt>
-File: BL_sol.png Graphic file (type png)
- <use BL_sol.png>
-Package pdftex.def Info: BL_sol.png used on input line 1395.
-(pdftex.def)             Requested size: 346.56245pt x 142.26378pt.
-
-<fit_flux_30_1.png, id=111, 1120.185pt x 442.2924pt>
-File: fit_flux_30_1.png Graphic file (type png)
- <use fit_flux_30_1.png>
-Package pdftex.def Info: fit_flux_30_1.png used on input line 1404.
-(pdftex.def)             Requested size: 360.31253pt x 142.26378pt.
-
-<BL_sol_30.png, id=112, 1033.461pt x 424.2249pt>
-File: BL_sol_30.png Graphic file (type png)
- <use BL_sol_30.png>
-Package pdftex.def Info: BL_sol_30.png used on input line 1411.
-(pdftex.def)             Requested size: 346.56245pt x 142.26378pt.
- [19 <./fit_flux_2.png> <./BL_sol.png> <./fit_flux_30_1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1425--1446
+Underfull \hbox (badness 10000) in paragraph at lines 877--884
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1472--1472
+Underfull \hbox (badness 10000) in paragraph at lines 894--903
 
  []
 
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 1453--1473
-[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1453--1473
+Underfull \hbox (badness 10000) in paragraph at lines 904--914
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1474--1479
+Underfull \hbox (badness 10000) in paragraph at lines 915--919
 
  []
 
-[20 <./BL_sol_30.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1491--1501
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 938--948
 
  []
 
-<sketch2.png, id=123, 507.3354pt x 342.5598pt>
-File: sketch2.png Graphic file (type png)
- <use sketch2.png>
-Package pdftex.def Info: sketch2.png used on input line 1528.
-(pdftex.def)             Requested size: 210.69508pt x 142.26378pt.
+<compare_ratio.png, id=92, 793.364pt x 549.252pt>
+File: compare_ratio.png Graphic file (type png)
+ <use compare_ratio.png>
+Package pdftex.def Info: compare_ratio.png used on input line 960.
+(pdftex.def)             Requested size: 369.88582pt x 256.07838pt.
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 1534--1560
-[] 
- []
+[17] <compare_bar_2.png, id=96, 522.753pt x 322.806pt>
+File: compare_bar_2.png Graphic file (type png)
+ <use compare_bar_2.png>
+Package pdftex.def Info: compare_bar_2.png used on input line 976.
+(pdftex.def)             Requested size: 369.88582pt x 228.40576pt.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1534--1560
-
- []
-
-[21 <./sketch2.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1561--1569
+Underfull \hbox (badness 10000) in paragraph at lines 984--987
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1621--1638
+[18 <./compare_ratio.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 995--1004
 
  []
+
+[19 <./compare_bar_2.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1022--1025
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1026--1033
+
+ []
+
+<opt_source.png, id=106, 534.798pt x 411.939pt>
+File: opt_source.png Graphic file (type png)
+ <use opt_source.png>
+Package pdftex.def Info: opt_source.png used on input line 1035.
+(pdftex.def)             Requested size: 199.16928pt x 153.41446pt.
+
+<LD_utx.png, id=107, 532.6299pt x 404.712pt>
+File: LD_utx.png Graphic file (type png)
+ <use LD_utx.png>
+Package pdftex.def Info: LD_utx.png used on input line 1036.
+(pdftex.def)             Requested size: 199.16928pt x 151.33435pt.
+
+<finalutx.png, id=108, 516.7305pt x 383.7537pt>
+File: finalutx.png Graphic file (type png)
+ <use finalutx.png>
+Package pdftex.def Info: finalutx.png used on input line 1046.
+(pdftex.def)             Requested size: 284.52756pt x 211.30525pt.
+ [20 <./opt_source.png> <./LD_utx.png (PNG copy)>]
+<opt_BL.png, id=113, 465.4188pt x 279.6849pt>
+File: opt_BL.png Graphic file (type png)
+ <use opt_BL.png>
+Package pdftex.def Info: opt_BL.png used on input line 1057.
+(pdftex.def)             Requested size: 284.52756pt x 170.9831pt.
+ [21 <./finalutx.png (PNG copy)> <./opt_BL.png>]
+<../numpad/test/ns_cases_spline/results/mesh/spline_2.png, id=118, 433.62pt x 2
+94.1389pt>
+File: ../numpad/test/ns_cases_spline/results/mesh/spline_2.png Graphic file (ty
+pe png)
+ <use ../numpad/test/ns_cases_spline/results/mesh/spline_2.png>
+Package pdftex.def Info: ../numpad/test/ns_cases_spline/results/mesh/spline_2.p
+ng used on input line 1107.
+(pdftex.def)             Requested size: 341.43306pt x 231.61765pt.
 
 [22]
-Underfull \hbox (badness 10000) in paragraph at lines 1652--1657
+Underfull \hbox (badness 10000) in paragraph at lines 1122--1126
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1658--1675
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1686--1696
-
- []
-
-<all.png, id=131, 1046.4696pt x 419.8887pt>
-File: all.png Graphic file (type png)
- <use all.png>
-Package pdftex.def Info: all.png used on input line 1700.
-(pdftex.def)             Requested size: 354.56543pt x 142.26378pt.
-
-<all2.png, id=132, 1045.7469pt x 406.8801pt>
-File: all2.png Graphic file (type png)
- <use all2.png>
-Package pdftex.def Info: all2.png used on input line 1706.
-(pdftex.def)             Requested size: 365.63394pt x 142.26378pt.
- [23]
-Underfull \hbox (badness 10000) in paragraph at lines 1715--1718
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1719--1729
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1730--1739
-
- []
-
-[24 <./all.png> <./all2.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1760--1765
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1774--1794
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1795--1802
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1803--1811
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1812--1824
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1825--1838
-
- []
-
-[25]
-Underfull \hbox (badness 10000) in paragraph at lines 1839--1864
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1865--1888
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1939--1955
-
- []
-
-[26]
-Underfull \hbox (badness 10000) in paragraph at lines 1956--1967
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1968--1977
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1978--1995
-
- []
-
-<J_twin_vs_primal.png, id=148, 554.3109pt x 364.2408pt>
-File: J_twin_vs_primal.png Graphic file (type png)
-
-<use J_twin_vs_primal.png>
-Package pdftex.def Info: J_twin_vs_primal.png used on input line 2009.
-(pdftex.def)             Requested size: 259.79875pt x 170.71652pt.
- [27]
-Underfull \hbox (badness 10000) in paragraph at lines 2025--2030
-
- []
-
-[28 <./J_twin_vs_primal.png>]
-Overfull \hbox (11.71375pt too wide) detected at line 2096
-\OML/cmm/m/it/10 K[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 c[]; c[]\OT1/cmr/m/n/10 ;
- \OML/cmm/m/it/10 ^^R\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^Q []\OML/cmm/m/it/10 
-cov\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 J\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 c[]\OT1
-/cmr/m/n/10 )\OML/cmm/m/it/10 ; J\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 c[]\OT1/cmr/
-m/n/10 )) = \OML/cmm/m/it/10 ^^[[] [] [] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2144--2153
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2172--2178
-
- []
-
-[29]
-Underfull \hbox (badness 10000) in paragraph at lines 2179--2189
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2190--2202
-
- []
-
-<Bopt_flowchart.png, id=160, 325.215pt x 442.7742pt>
-File: Bopt_flowchart.png Graphic file (type png)
- <use Bopt_flowchart.png>
-Package pdftex.def Info: Bopt_flowchart.png used on input line 2206.
-(pdftex.def)             Requested size: 250.79346pt x 341.43306pt.
-
-[30] <highdimoptdemon.png, id=164, 640.3122pt x 430.0065pt>
-File: highdimoptdemon.png Graphic file (type png)
-
-<use highdimoptdemon.png>
-Package pdftex.def Info: highdimoptdemon.png used on input line 2226.
-(pdftex.def)             Requested size: 296.5794pt x 199.16928pt.
- [31 <./Bopt_flowchart.png>]
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 2242--2258
-[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2242--2258
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2317--2317
-
- []
-
-
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 2259--2318
-[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2259--2318
-
- []
-
-[32 <./highdimoptdemon.png>]
-<geometric_constraint.png, id=175, 631.35875pt x 615.29875pt>
-File: geometric_constraint.png Graphic file (type png)
-
-<use geometric_constraint.png>
-Package pdftex.def Info: geometric_constraint.png used on input line 2339.
-(pdftex.def)             Requested size: 175.17041pt x 170.71652pt.
- [33]
-Underfull \hbox (badness 10000) in paragraph at lines 2347--2360
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2376--2383
-
- []
-
-<Bayconstraint.png, id=180, 285.7074pt x 407.6028pt>
-File: Bayconstraint.png Graphic file (type png)
- <use Bayconstraint.png>
-Package pdftex.def Info: Bayconstraint.png used on input line 2395.
-(pdftex.def)             Requested size: 239.32991pt x 341.43306pt.
-
-[34 <./geometric_constraint.png>] [35 <./Bayconstraint.png>]
-<ubend.png, id=189, 420.57124pt x 345.29pt>
-File: ubend.png Graphic file (type png)
- <use ubend.png>
-Package pdftex.def Info: ubend.png used on input line 2425.
-(pdftex.def)             Requested size: 173.28242pt x 142.26378pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 2431--2445
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2465--2467
-
- []
-
-[36 <./ubend.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 2477--2481
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2520--2528
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2530--2541
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2542--2554
-
- []
-
-[37] [38] <sketch.png, id=201, 507.3354pt x 342.5598pt>
-File: sketch.png Graphic file (type png)
- <use sketch.png>
-Package pdftex.def Info: sketch.png used on input line 2580.
-(pdftex.def)             Requested size: 210.69508pt x 142.26378pt.
-
-
-Package amsmath Warning: Cannot use `split' here;
-(amsmath)                trying to recover with `aligned' on input line 2615.
-
-
-Overfull \hbox (1.22102pt too wide) detected at line 2618
-\OML/cmm/m/it/10 Err[] \OMS/cmsy/m/n/10 ^^T [] []
- []
-
-
-Package amsmath Warning: Cannot use `split' here;
-(amsmath)                trying to recover with `aligned' on input line 2630.
-
-
-Overfull \hbox (47.96921pt too wide) detected at line 2633
-\OML/cmm/m/it/10 Err[] \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 Err[] \OMS/cmsy/m/
-n/10 ^^T [] []
- []
-
-[39 <./sketch.png>]
-
-Package amsmath Warning: Cannot use `split' here;
-(amsmath)                trying to recover with `aligned' on input line 2653.
-
-
-Package amsmath Warning: Cannot use `split' here;
-(amsmath)                trying to recover with `aligned' on input line 2668.
-
-[40]
+<opt_Ubend.png, id=122, 586.8324pt x 442.2924pt>
+File: opt_Ubend.png Graphic file (type png)
+ <use opt_Ubend.png>
+Package pdftex.def Info: opt_Ubend.png used on input line 1133.
+(pdftex.def)             Requested size: 341.43306pt x 257.33963pt.
+ [23 <../numpad/test/ns_cases_spline/results/mesh/spline_2.png>]
+<opt_NS.png, id=127, 534.798pt x 305.7021pt>
+File: opt_NS.png Graphic file (type png)
+ <use opt_NS.png>
+Package pdftex.def Info: opt_NS.png used on input line 1142.
+(pdftex.def)             Requested size: 341.43306pt x 195.17287pt.
+ [24 <./opt_Ubend.png> <./opt_NS.png>] [25]
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no î in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no î in font cmr10!
+ [26] [27]
+Missing character: There is no ƒ in font cmr10!
+Missing character: There is no ç in font cmr10!
 Missing character: There is no √ in font cmr10!
 Missing character: There is no ≠ in font cmr10!
- [41]
-Missing character: There is no √ in font cmr10!
-Missing character: There is no © in font cmr10!
-Missing character: There is no √ in font cmr10!
-Missing character: There is no ∂ in font cmr10!
- [42]
-Missing character: There is no √ in font cmr10!
-Missing character: There is no ∂ in font cmr10!
-Missing character: There is no œ in font cmr10!
-Missing character: There is no µ in font cmr10!
- [43]
-Missing character: There is no √ in font cmr10!
-Missing character: There is no © in font cmr10!
- [44]
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no î in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no î in font cmr10!
- [45] (./paper2.aux)
+ [28]
+Underfull \hbox (badness 1320) in paragraph at lines 2324--2328
+\OT1/cmr/m/n/10 Sur-ro-gate Mod-el-ing for Non-Hierarchical In-for-ma-tion Sour
+ces" 56th AIAA/ASCE/AHS/ASC
+ []
+
+[29] (./paper2.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 15160 strings out of 493308
- 270422 string characters out of 6140092
- 354169 words of memory out of 5000000
- 18256 multiletter control sequences out of 15000+600000
- 17099 words of font info for 62 fonts, out of 8000000 for 9000
+ 14986 strings out of 493308
+ 267328 string characters out of 6140092
+ 351598 words of memory out of 5000000
+ 18100 multiletter control sequences out of 15000+600000
+ 15697 words of font info for 58 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 56i,23n,69p,1019b,414s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 56i,24n,69p,488b,348s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl8.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfdin
-g/uzdr.pfb>
-Output written on paper2.pdf (45 pages, 1494297 bytes).
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/urw/zapfding/uzdr.pfb>
+Output written on paper2.pdf (29 pages, 604874 bytes).
 PDF statistics:
- 302 PDF objects out of 1000 (max. 8388607)
+ 214 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 209 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 154 words of extra memory for PDF output out of 10000 (max. 10000000)
 

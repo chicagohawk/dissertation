@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  18 MAY 2015 14:59
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  8 MAR 2016 09:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -613,45 +613,21 @@ LaTeX Warning: Label `fig:sol compare' multiply defined.
 
 LaTeX Warning: Label `fig:sol compare' multiply defined.
 
-
-LaTeX Warning: Label `fig:sol compare' multiply defined.
-
-
-LaTeX Warning: Label `fig:sol compare' multiply defined.
-
-
-LaTeX Warning: Label `fig:sol compare' multiply defined.
-
-
-LaTeX Warning: Label `fig:sol compare' multiply defined.
-
-
-LaTeX Warning: Label `fig:sol compare' multiply defined.
-
-
-LaTeX Warning: Label `fig:sol compare' multiply defined.
-
-
-LaTeX Warning: Label `fig:sol compare' multiply defined.
-
-
-LaTeX Warning: Label `fig:sol compare' multiply defined.
-
 )
 \openout1 = `paper1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
  (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count140
@@ -714,803 +690,721 @@ e
 ABD: EveryShipout initializing macros
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for U+msa on input line 21.
+LaTeX Font Info:    Try loading font information for U+msa on input line 33.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 21.
+LaTeX Font Info:    Try loading font information for U+msb on input line 33.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 48--57
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 58--79
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 81--93
+Underfull \hbox (badness 10000) in paragraph at lines 54--66
 
  []
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 107--118
+Overfull \hbox (21.55156pt too wide) in paragraph at lines 67--91
+\OT1/cmr/m/n/10 com-pu-ta-tional mod-els in-volved, and large-scale time and sp
+ace dis-cretiza-tion. Fur-ther-more, the di-men-sion-al-ity
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 67--91
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--138
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 139--143
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 154--156
+Underfull \hbox (badness 10000) in paragraph at lines 93--105
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 157--161
+Underfull \hbox (badness 10000) in paragraph at lines 122--134
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 169--186
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 191--193
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 206--214
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 224--232
+Underfull \hbox (badness 10000) in paragraph at lines 135--154
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 260--270
+Underfull \hbox (badness 10000) in paragraph at lines 155--163
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 271--290
+Underfull \hbox (badness 10000) in paragraph at lines 185--199
 
  []
 
-<locality.png, id=49, 448.7967pt x 277.5168pt>
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 206--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 231--238
+
+ []
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 281--283
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 286--305
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 306--326
+
+ []
+
+[6] <locality.png, id=57, 448.7967pt x 277.5168pt>
 File: locality.png Graphic file (type png)
  <use locality.png>
-Package pdftex.def Info: locality.png used on input line 292.
+Package pdftex.def Info: locality.png used on input line 328.
 (pdftex.def)             Requested size: 230.06114pt x 142.26378pt.
- [4]
-Underfull \hbox (badness 10000) in paragraph at lines 301--309
+
+Underfull \hbox (badness 10000) in paragraph at lines 339--347
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 310--317
+Underfull \hbox (badness 10000) in paragraph at lines 348--355
+
+ []
+
+[7 <./locality.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 405--407
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 346--352
+Underfull \hbox (badness 10000) in paragraph at lines 408--413
 
  []
 
-[5 <./locality.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 371--373
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 374--381
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 430--436
 
  []
 
 
-Overfull \hbox (21.79999pt too wide) in paragraph at lines 408--410
-[][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 408--410
+Underfull \hbox (badness 10000) in paragraph at lines 446--447
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 411--412
+Underfull \hbox (badness 10000) in paragraph at lines 467--475
+
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 488--495
 
  []
 
 
-Overfull \hbox (21.79999pt too wide) in paragraph at lines 439--440
-[][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 439--440
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 441--443
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 444--451
-
- []
-
-
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 452--480
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 496--524
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 452--480
-
- []
-
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 481--490
+Underfull \hbox (badness 10000) in paragraph at lines 496--524
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 493--515
+Underfull \hbox (badness 10000) in paragraph at lines 525--534
+
+ []
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 537--559
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 541--541
+Underfull \hbox (badness 10000) in paragraph at lines 585--585
 
  []
 
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 522--542
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 566--586
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 522--542
+Underfull \hbox (badness 10000) in paragraph at lines 566--586
+
+ []
+
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 587--592
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 543--548
+LaTeX Warning: Citation `Critical review of variable selection' on page 12 unde
+fined on input line 594.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 604--606
 
  []
 
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 560--562
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 634--638
 
  []
 
+<fluxbasis.png, id=78, 586.8324pt x 442.2924pt>
+File: fluxbasis.png Graphic file (type png)
+ <use fluxbasis.png>
+Package pdftex.def Info: fluxbasis.png used on input line 660.
+(pdftex.def)             Requested size: 199.16928pt x 150.10747pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 587--591
-
+Overfull \hbox (1.28192pt too wide) in paragraph at lines 668--676
+\OT1/cmr/m/n/10 We use the low-memory Broyden-Fletcher-Goldfarb-Shannon (BFGS) 
+al-go-rithm [[]] for the min-i-miza-tion.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 599--604
+Underfull \hbox (badness 10000) in paragraph at lines 668--676
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 605--620
-
- []
-
-
+[13 <./fluxbasis.png>]
 </home/voila/Documents/2014GRAD/mirror/final/paper1/initial_conditions.png, id=
-64, 586.8324pt x 442.2924pt>
+85, 586.8324pt x 442.2924pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/initial_conditions.png
  Graphic file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/initial_conditions.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/ini
-tial_conditions.png used on input line 624.
+tial_conditions.png used on input line 684.
 (pdftex.def)             Requested size: 302.01163pt x 227.62204pt.
-[8]
-</home/voila/Documents/2014GRAD/mirror/final/paper1/0_x.png, id=69, 550.6974pt 
-x 225.4824pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_x.png Graphic file (
-type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/0_x.png>
-Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_x
-.png used on input line 631.
-(pdftex.def)             Requested size: 139.41342pt x 105.27486pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/0_sol.png, id=70, 586.8324p
-t x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/0_x_new.png, id=86, 489.267
+9pt x 214.6419pt>
+File: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_x_new.png Graphic fi
+le (type png)
+
+<use /home/voila/Documents/2014GRAD/mirror/final/paper1/0_x_new.png>
+Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_x
+_new.png used on input line 696.
+(pdftex.def)             Requested size: 139.41293pt x 105.2737pt.
+
+</home/voila/Documents/2014GRAD/mirror/final/paper1/0_sol.png, id=87, 515.2851p
+t x 393.1488pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_sol.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/0_sol.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_s
-ol.png used on input line 632.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+ol.png used on input line 697.
+(pdftex.def)             Requested size: 145.10922pt x 110.7108pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/0_err.png, id=71, 586.8324p
-t x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/0_err.png, id=88, 508.0581p
+t x 401.8212pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_err.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/0_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_e
-rr.png used on input line 633.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+rr.png used on input line 698.
+(pdftex.def)             Requested size: 145.10922pt x 114.76547pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/1_x.png, id=72, 550.6974pt 
-x 225.4824pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_x.png Graphic file (
-type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/1_x.png>
+Underfull \hbox (badness 10000) in paragraph at lines 689--700
+
+ []
+
+
+</home/voila/Documents/2014GRAD/mirror/final/paper1/1_x_new.png, id=89, 489.267
+9pt x 214.6419pt>
+File: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_x_new.png Graphic fi
+le (type png)
+
+<use /home/voila/Documents/2014GRAD/mirror/final/paper1/1_x_new.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_x
-.png used on input line 638.
-(pdftex.def)             Requested size: 139.41342pt x 105.27486pt.
+_new.png used on input line 703.
+(pdftex.def)             Requested size: 139.41293pt x 105.2737pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/1_sol.png, id=73, 586.8324p
-t x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/1_sol.png, id=90, 505.1673p
+t x 391.7034pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_sol.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/1_sol.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_s
-ol.png used on input line 639.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+ol.png used on input line 704.
+(pdftex.def)             Requested size: 145.10922pt x 112.51523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/1_err.png, id=74, 586.8324p
-t x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/1_err.png, id=91, 508.0581p
+t x 401.8212pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_err.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/1_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_e
-rr.png used on input line 640.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+rr.png used on input line 705.
+(pdftex.def)             Requested size: 145.10922pt x 114.76547pt.
+ [14 </home/voila/Documents/2014GRAD/mirror/final/paper1/initial_conditions.png
+>]
+</home/voila/Documents/2014GRAD/mirror/final/paper1/2_x_new.png, id=96, 489.267
+9pt x 214.6419pt>
+File: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_x_new.png Graphic fi
+le (type png)
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/2_x.png, id=75, 550.6974pt 
-x 225.4824pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_x.png Graphic file (
-type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/2_x.png>
+<use /home/voila/Documents/2014GRAD/mirror/final/paper1/2_x_new.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_x
-.png used on input line 645.
-(pdftex.def)             Requested size: 139.41342pt x 105.27486pt.
+_new.png used on input line 710.
+(pdftex.def)             Requested size: 139.41293pt x 105.2737pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/2_sol.png, id=76, 586.8324p
-t x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/2_sol.png, id=97, 505.89pt 
+x 391.7034pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_sol.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/2_sol.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_s
-ol.png used on input line 646.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+ol.png used on input line 711.
+(pdftex.def)             Requested size: 145.10922pt x 112.35385pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/2_err.png, id=77, 586.8324p
-t x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/2_err.png, id=98, 508.0581p
+t x 401.8212pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_err.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/2_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_e
-rr.png used on input line 647.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+rr.png used on input line 712.
+(pdftex.def)             Requested size: 145.10922pt x 114.76547pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/3_x.png, id=78, 550.6974pt 
-x 225.4824pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_x.png Graphic file (
-type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/3_x.png>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/3_x_new.png, id=99, 489.267
+9pt x 214.6419pt>
+File: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_x_new.png Graphic fi
+le (type png)
+
+<use /home/voila/Documents/2014GRAD/mirror/final/paper1/3_x_new.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_x
-.png used on input line 652.
-(pdftex.def)             Requested size: 139.41342pt x 105.27486pt.
+_new.png used on input line 717.
+(pdftex.def)             Requested size: 139.41293pt x 105.2737pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/3_sol.png, id=79, 586.8324p
-t x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/3_sol.png, id=100, 503.7219
+pt x 391.7034pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_sol.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/3_sol.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_s
-ol.png used on input line 653.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+ol.png used on input line 718.
+(pdftex.def)             Requested size: 145.10922pt x 112.83798pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/3_err.png, id=80, 586.8324p
-t x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/3_err.png, id=101, 508.0581
+pt x 401.8212pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_err.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/3_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_e
-rr.png used on input line 654.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+rr.png used on input line 719.
+(pdftex.def)             Requested size: 145.10922pt x 114.76547pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/4_x.png, id=81, 550.6974pt 
-x 225.4824pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_x.png Graphic file (
-type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/4_x.png>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/4_x_new.png, id=102, 489.26
+79pt x 214.6419pt>
+File: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_x_new.png Graphic fi
+le (type png)
+
+<use /home/voila/Documents/2014GRAD/mirror/final/paper1/4_x_new.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_x
-.png used on input line 659.
-(pdftex.def)             Requested size: 139.41342pt x 105.27486pt.
+_new.png used on input line 724.
+(pdftex.def)             Requested size: 139.41293pt x 105.2737pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/4_sol.png, id=82, 586.8324p
-t x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/4_sol.png, id=103, 505.89pt
+ x 391.7034pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_sol.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/4_sol.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_s
-ol.png used on input line 660.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+ol.png used on input line 725.
+(pdftex.def)             Requested size: 145.10922pt x 112.35385pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/4_err.png, id=83, 586.8324p
-t x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/4_err.png, id=104, 508.0581
+pt x 401.8212pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_err.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/4_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_e
-rr.png used on input line 661.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
- [9 </home/voila/Documents/2014GRAD/mirror/final/paper1/initial_conditions.png>
- </home/voila/Documents/2014GRAD/mirror/final/paper1/0_x.png> </home/voila/Docu
-ments/2014GRAD/mirror/final/paper1/0_sol.png> </home/voila/Documents/2014GRAD/m
-irror/final/paper1/0_err.png> </home/voila/Documents/2014GRAD/mirror/final/pape
-r1/1_x.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/1_sol.png> </ho
-me/voila/Documents/2014GRAD/mirror/final/paper1/1_err.png> </home/voila/Documen
-ts/2014GRAD/mirror/final/paper1/2_x.png> </home/voila/Documents/2014GRAD/mirror
-/final/paper1/2_sol.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/2_
-err.png>]
-</home/voila/Documents/2014GRAD/mirror/final/paper1/5_x.png, id=97, 550.6974pt 
-x 225.4824pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_x.png Graphic file (
-type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/5_x.png>
-Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_x
-.png used on input line 666.
-(pdftex.def)             Requested size: 139.41342pt x 105.27486pt.
+rr.png used on input line 726.
+(pdftex.def)             Requested size: 145.10922pt x 114.76547pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/5_sol.png, id=98, 586.8324p
-t x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/5_x_new.png, id=105, 489.26
+79pt x 214.6419pt>
+File: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_x_new.png Graphic fi
+le (type png)
+
+<use /home/voila/Documents/2014GRAD/mirror/final/paper1/5_x_new.png>
+Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_x
+_new.png used on input line 731.
+(pdftex.def)             Requested size: 139.41293pt x 105.2737pt.
+
+</home/voila/Documents/2014GRAD/mirror/final/paper1/5_sol.png, id=106, 505.1673
+pt x 391.7034pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_sol.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/5_sol.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_s
-ol.png used on input line 667.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+ol.png used on input line 732.
+(pdftex.def)             Requested size: 145.10922pt x 112.51523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/5_err.png, id=99, 586.8324p
-t x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/5_err.png, id=107, 508.0581
+pt x 401.8212pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_err.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/5_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_e
-rr.png used on input line 668.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+rr.png used on input line 733.
+(pdftex.def)             Requested size: 145.10922pt x 114.76547pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/6_x.png, id=100, 550.6974pt
- x 225.4824pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_x.png Graphic file (
-type png)
+</home/voila/Documents/2014GRAD/mirror/final/paper1/6_x_new.png, id=108, 489.26
+79pt x 214.6419pt>
+File: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_x_new.png Graphic fi
+le (type png)
 
-<use /home/voila/Documents/2014GRAD/mirror/final/paper1/6_x.png>
+<use /home/voila/Documents/2014GRAD/mirror/final/paper1/6_x_new.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_x
-.png used on input line 673.
-(pdftex.def)             Requested size: 139.41342pt x 105.27486pt.
+_new.png used on input line 738.
+(pdftex.def)             Requested size: 139.41293pt x 105.2737pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/6_sol.png, id=101, 586.8324
-pt x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/6_sol.png, id=109, 519.6213
+pt x 393.8715pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_sol.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/6_sol.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_s
-ol.png used on input line 674.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+ol.png used on input line 739.
+(pdftex.def)             Requested size: 145.10922pt x 109.98877pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/6_err.png, id=102, 586.8324
-pt x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/6_err.png, id=110, 508.0581
+pt x 401.8212pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_err.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/6_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_e
-rr.png used on input line 675.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+rr.png used on input line 740.
+(pdftex.def)             Requested size: 145.10922pt x 114.76547pt.
+ [15 </home/voila/Documents/2014GRAD/mirror/final/paper1/0_x_new.png> </home/vo
+ila/Documents/2014GRAD/mirror/final/paper1/0_sol.png> </home/voila/Documents/20
+14GRAD/mirror/final/paper1/0_err.png> </home/voila/Documents/2014GRAD/mirror/fi
+nal/paper1/1_x_new.png (PNG copy)> </home/voila/Documents/2014GRAD/mirror/final
+/paper1/1_sol.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/1_err.pn
+g> </home/voila/Documents/2014GRAD/mirror/final/paper1/2_x_new.png> </home/voil
+a/Documents/2014GRAD/mirror/final/paper1/2_sol.png> </home/voila/Documents/2014
+GRAD/mirror/final/paper1/2_err.png (PNG copy)> </home/voila/Documents/2014GRAD/
+mirror/final/paper1/3_x_new.png (PNG copy)> </home/voila/Documents/2014GRAD/mir
+ror/final/paper1/3_sol.png> </home/voila/Documents/2014GRAD/mirror/final/paper1
+/3_err.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/4_x_new.png> </
+home/voila/Documents/2014GRAD/mirror/final/paper1/4_sol.png> </home/voila/Docum
+ents/2014GRAD/mirror/final/paper1/4_err.png>]
+</home/voila/Documents/2014GRAD/mirror/final/paper1/7_x_new.png, id=126, 489.26
+79pt x 214.6419pt>
+File: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_x_new.png Graphic fi
+le (type png)
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/7_x.png, id=103, 550.6974pt
- x 225.4824pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_x.png Graphic file (
-type png)
-
-<use /home/voila/Documents/2014GRAD/mirror/final/paper1/7_x.png>
+<use /home/voila/Documents/2014GRAD/mirror/final/paper1/7_x_new.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_x
-.png used on input line 680.
-(pdftex.def)             Requested size: 139.41342pt x 105.27486pt.
+_new.png used on input line 745.
+(pdftex.def)             Requested size: 139.41293pt x 105.2737pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/7_sol.png, id=104, 586.8324
-pt x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/7_sol.png, id=127, 518.8986
+pt x 392.4261pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_sol.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/7_sol.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_s
-ol.png used on input line 681.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
+ol.png used on input line 746.
+(pdftex.def)             Requested size: 145.10922pt x 109.74083pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/7_err.png, id=105, 586.8324
-pt x 442.2924pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/7_err.png, id=128, 508.0581
+pt x 401.8212pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_err.png Graphic file
  (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/7_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_e
-rr.png used on input line 682.
-(pdftex.def)             Requested size: 145.10922pt x 109.36478pt.
-
-</home/voila/Documents/2014GRAD/mirror/final/paper1/0_Jc.png, id=106, 542.025pt
- x 289.08pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_Jc.png Graphic file 
-(type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/0_Jc.png>
-Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_J
-c.png used on input line 702.
-(pdftex.def)             Requested size: 108.12054pt x 57.66058pt.
-
-</home/voila/Documents/2014GRAD/mirror/final/paper1/1_Jc.png, id=107, 542.025pt
- x 289.08pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_Jc.png Graphic file 
-(type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/1_Jc.png>
-Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_J
-c.png used on input line 703.
-(pdftex.def)             Requested size: 108.12054pt x 57.66058pt.
-
-</home/voila/Documents/2014GRAD/mirror/final/paper1/2_Jc.png, id=108, 542.025pt
- x 289.08pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_Jc.png Graphic file 
-(type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/2_Jc.png>
-Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_J
-c.png used on input line 704.
-(pdftex.def)             Requested size: 108.12054pt x 57.66058pt.
-
-</home/voila/Documents/2014GRAD/mirror/final/paper1/3_Jc.png, id=109, 542.025pt
- x 289.08pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_Jc.png Graphic file 
-(type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/3_Jc.png>
-Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_J
-c.png used on input line 705.
-(pdftex.def)             Requested size: 108.12054pt x 57.66058pt.
-
-[10 </home/voila/Documents/2014GRAD/mirror/final/paper1/3_x.png> </home/voila/D
-ocuments/2014GRAD/mirror/final/paper1/3_sol.png> </home/voila/Documents/2014GRA
-D/mirror/final/paper1/3_err.png> </home/voila/Documents/2014GRAD/mirror/final/p
-aper1/4_x.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/4_sol.png> <
-/home/voila/Documents/2014GRAD/mirror/final/paper1/4_err.png> </home/voila/Docu
-ments/2014GRAD/mirror/final/paper1/5_x.png> </home/voila/Documents/2014GRAD/mir
-ror/final/paper1/5_sol.png> </home/voila/Documents/2014GRAD/mirror/final/paper1
-/5_err.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/6_x.png> </home
-/voila/Documents/2014GRAD/mirror/final/paper1/6_sol.png> </home/voila/Documents
-/2014GRAD/mirror/final/paper1/6_err.png> </home/voila/Documents/2014GRAD/mirror
-/final/paper1/7_x.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/7_so
-l.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/7_err.png>]
-</home/voila/Documents/2014GRAD/mirror/final/paper1/4_Jc.png, id=128, 542.025pt
- x 289.08pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_Jc.png Graphic file 
-(type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/4_Jc.png>
-Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_J
-c.png used on input line 709.
-(pdftex.def)             Requested size: 108.12054pt x 57.66058pt.
-
-</home/voila/Documents/2014GRAD/mirror/final/paper1/5_Jc.png, id=129, 542.025pt
- x 289.08pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_Jc.png Graphic file 
-(type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/5_Jc.png>
-Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_J
-c.png used on input line 710.
-(pdftex.def)             Requested size: 108.12054pt x 57.66058pt.
-
-</home/voila/Documents/2014GRAD/mirror/final/paper1/6_Jc.png, id=130, 542.025pt
- x 289.08pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_Jc.png Graphic file 
-(type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/6_Jc.png>
-Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_J
-c.png used on input line 711.
-(pdftex.def)             Requested size: 108.12054pt x 57.66058pt.
-
-</home/voila/Documents/2014GRAD/mirror/final/paper1/7_Jc.png, id=131, 542.025pt
- x 289.08pt>
-File: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_Jc.png Graphic file 
-(type png)
- <use /home/voila/Documents/2014GRAD/mirror/final/paper1/7_Jc.png>
-Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_J
-c.png used on input line 712.
-(pdftex.def)             Requested size: 108.12054pt x 57.66058pt.
-
-</home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_primal.png, id=132, 5
-78.16pt x 433.62pt>
+rr.png used on input line 747.
+(pdftex.def)             Requested size: 145.10922pt x 114.76547pt.
+ [16 </home/voila/Documents/2014GRAD/mirror/final/paper1/5_x_new.png> </home/vo
+ila/Documents/2014GRAD/mirror/final/paper1/5_sol.png> </home/voila/Documents/20
+14GRAD/mirror/final/paper1/5_err.png> </home/voila/Documents/2014GRAD/mirror/fi
+nal/paper1/6_x_new.png (PNG copy)> </home/voila/Documents/2014GRAD/mirror/final
+/paper1/6_sol.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/6_err.pn
+g> </home/voila/Documents/2014GRAD/mirror/final/paper1/7_x_new.png> </home/voil
+a/Documents/2014GRAD/mirror/final/paper1/7_sol.png> </home/voila/Documents/2014
+GRAD/mirror/final/paper1/7_err.png>]
+</home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_primal.png, id=139, 5
+78.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_primal.png Graph
 ic file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_primal.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_a
-dj_primal.png used on input line 722.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_primal.png used on input line 801.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_twin.png, id=133, 578
-.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_twin.png, id=140, 578
+.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_twin.png Graphic
  file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_twin.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_a
-dj_twin.png used on input line 723.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_twin.png used on input line 802.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_err.png, id=134, 578.
-16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_err.png, id=141, 578.
+16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_err.png Graphic 
 file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/0_a
-dj_err.png used on input line 724.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_err.png used on input line 803.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_primal.png, id=135, 5
-78.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_primal.png, id=142, 5
+78.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_primal.png Graph
 ic file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_primal.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_a
-dj_primal.png used on input line 729.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_primal.png used on input line 807.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_twin.png, id=136, 578
-.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_twin.png, id=143, 578
+.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_twin.png Graphic
  file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_twin.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_a
-dj_twin.png used on input line 730.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_twin.png used on input line 808.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err.png, id=137, 578.
-16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err.png, id=144, 578.
+16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err.png Graphic 
 file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_a
-dj_err.png used on input line 731.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_err.png used on input line 809.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_primal.png, id=138, 5
-78.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_primal.png, id=145, 5
+78.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_primal.png Graph
 ic file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_primal.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_a
-dj_primal.png used on input line 736.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_primal.png used on input line 813.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_twin.png, id=139, 578
-.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_twin.png, id=146, 578
+.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_twin.png Graphic
  file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_twin.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_a
-dj_twin.png used on input line 737.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_twin.png used on input line 814.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_err.png, id=140, 578.
-16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_err.png, id=147, 578.
+16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_err.png Graphic 
 file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/2_a
-dj_err.png used on input line 738.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_err.png used on input line 815.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_primal.png, id=141, 5
-78.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_primal.png, id=148, 5
+78.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_primal.png Graph
 ic file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_primal.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_a
-dj_primal.png used on input line 743.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_primal.png used on input line 819.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_twin.png, id=142, 578
-.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_twin.png, id=149, 578
+.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_twin.png Graphic
  file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_twin.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_a
-dj_twin.png used on input line 744.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_twin.png used on input line 820.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_err.png, id=143, 578.
-16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_err.png, id=150, 578.
+16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_err.png Graphic 
 file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/3_a
-dj_err.png used on input line 745.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_err.png used on input line 821.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_primal.png, id=144, 5
-78.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_primal.png, id=151, 5
+78.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_primal.png Graph
 ic file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_primal.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_a
-dj_primal.png used on input line 750.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_primal.png used on input line 825.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_twin.png, id=145, 578
-.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_twin.png, id=152, 578
+.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_twin.png Graphic
  file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_twin.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_a
-dj_twin.png used on input line 751.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_twin.png used on input line 826.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_err.png, id=146, 578.
-16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_err.png, id=153, 578.
+16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_err.png Graphic 
 file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/4_adj_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/4_a
-dj_err.png used on input line 752.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
- [11 </home/voila/Documents/2014GRAD/mirror/final/paper1/0_Jc.png> </home/voila
-/Documents/2014GRAD/mirror/final/paper1/1_Jc.png> </home/voila/Documents/2014GR
-AD/mirror/final/paper1/2_Jc.png> </home/voila/Documents/2014GRAD/mirror/final/p
-aper1/3_Jc.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/4_Jc.png> <
-/home/voila/Documents/2014GRAD/mirror/final/paper1/5_Jc.png> </home/voila/Docum
-ents/2014GRAD/mirror/final/paper1/6_Jc.png> </home/voila/Documents/2014GRAD/mir
-ror/final/paper1/7_Jc.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/
-0_adj_primal.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_twi
-n.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_err.png> </hom
-e/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_primal.png> </home/voila/D
-ocuments/2014GRAD/mirror/final/paper1/1_adj_twin.png> </home/voila/Documents/20
-14GRAD/mirror/final/paper1/1_adj_err.png> </home/voila/Documents/2014GRAD/mirro
-r/final/paper1/2_adj_primal.png> </home/voila/Documents/2014GRAD/mirror/final/p
-aper1/2_adj_twin.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj
-_err.png>]
-</home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_primal.png, id=167, 5
-78.16pt x 433.62pt>
+dj_err.png used on input line 827.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
+ [17 </home/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_primal.png> </ho
+me/voila/Documents/2014GRAD/mirror/final/paper1/0_adj_twin.png> </home/voila/Do
+cuments/2014GRAD/mirror/final/paper1/0_adj_err.png> </home/voila/Documents/2014
+GRAD/mirror/final/paper1/1_adj_primal.png> </home/voila/Documents/2014GRAD/mirr
+or/final/paper1/1_adj_twin.png> </home/voila/Documents/2014GRAD/mirror/final/pa
+per1/1_adj_err.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_p
+rimal.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_twin.png> 
+</home/voila/Documents/2014GRAD/mirror/final/paper1/2_adj_err.png>]
+</home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_primal.png, id=166, 5
+26.8483pt x 494.3268pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_primal.png Graph
 ic file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_primal.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_a
-dj_primal.png used on input line 757.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_primal.png used on input line 831.
+(pdftex.def)             Requested size: 145.10922pt x 136.1477pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_twin.png, id=168, 578
-.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_twin.png, id=167, 578
+.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_twin.png Graphic
  file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_twin.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_a
-dj_twin.png used on input line 758.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_twin.png used on input line 832.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_err.png, id=169, 578.
-16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_err.png, id=168, 578.
+16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_err.png Graphic 
 file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/5_a
-dj_err.png used on input line 759.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_err.png used on input line 833.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_primal.png, id=170, 5
-78.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_primal.png, id=169, 5
+13.8397pt x 494.3268pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_primal.png Graph
 ic file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_primal.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_a
-dj_primal.png used on input line 764.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_primal.png used on input line 837.
+(pdftex.def)             Requested size: 145.10922pt x 139.59477pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_twin.png, id=171, 578
-.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_twin.png, id=170, 578
+.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_twin.png Graphic
  file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_twin.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_a
-dj_twin.png used on input line 765.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_twin.png used on input line 838.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png, id=172, 578.
-16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png, id=171, 578.
+16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png Graphic 
 file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_a
-dj_err.png used on input line 766.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_err.png used on input line 839.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_primal.png, id=173, 5
-78.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_primal.png, id=172, 5
+26.8483pt x 494.3268pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_primal.png Graph
 ic file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_primal.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_a
-dj_primal.png used on input line 771.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_primal.png used on input line 843.
+(pdftex.def)             Requested size: 145.10922pt x 136.1477pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_twin.png, id=174, 578
-.16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_twin.png, id=173, 578
+.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_twin.png Graphic
  file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_twin.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_a
-dj_twin.png used on input line 772.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
+dj_twin.png used on input line 844.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err.png, id=175, 578.
-16pt x 433.62pt>
+</home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err.png, id=174, 578.
+16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err.png Graphic 
 file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_a
-dj_err.png used on input line 773.
-(pdftex.def)             Requested size: 145.10922pt x 108.82819pt.
- [12 </home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_primal.png> </ho
+dj_err.png used on input line 845.
+(pdftex.def)             Requested size: 145.10922pt x 136.03523pt.
+ [18 </home/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_primal.png> </ho
 me/voila/Documents/2014GRAD/mirror/final/paper1/3_adj_twin.png> </home/voila/Do
 cuments/2014GRAD/mirror/final/paper1/3_adj_err.png> </home/voila/Documents/2014
 GRAD/mirror/final/paper1/4_adj_primal.png> </home/voila/Documents/2014GRAD/mirr
@@ -1520,56 +1414,251 @@ rimal.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_twin.png>
 </home/voila/Documents/2014GRAD/mirror/final/paper1/5_adj_err.png> </home/voila
 /Documents/2014GRAD/mirror/final/paper1/6_adj_primal.png> </home/voila/Document
 s/2014GRAD/mirror/final/paper1/6_adj_twin.png> </home/voila/Documents/2014GRAD/
-mirror/final/paper1/6_adj_err.png> </home/voila/Documents/2014GRAD/mirror/final
-/paper1/7_adj_primal.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/7
-_adj_twin.png> </home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err.pn
-g>]
-Missing character: There is no Ã in font cmr10!
-Missing character: There is no © in font cmr10!
-Missing character: There is no Ã in font cmr10!
-Missing character: There is no © in font cmr10!
-Missing character: There is no â in font cmr10!
-Missing character: There is no € in font cmr10!
-Missing character: There is no ” in font cmr10!
-Missing character: There is no â in font cmr10!
-Missing character: There is no € in font cmr10!
-Missing character: There is no ” in font cmr10!
+mirror/final/paper1/6_adj_err.png>]
+Overfull \hbox (1.22737pt too wide) in paragraph at lines 854--858
+[]\OT1/cmr/m/n/10 The re-sult is en-cour-ag-ing, as the gra-di-ent com-puted by
+ the twin model pro-vides a good ap-prox-i-ma-tion
+ []
 
-[13] (./paper1.aux)
+
+Underfull \hbox (badness 10000) in paragraph at lines 854--858
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 860--867
+
+ []
+
+
+<../numpad/test/ns_cases_spline/results/mesh/spline.png, id=190, 433.62pt x 294
+.1389pt>
+File: ../numpad/test/ns_cases_spline/results/mesh/spline.png Graphic file (type
+ png)
+ <use ../numpad/test/ns_cases_spline/results/mesh/spline.png>
+Package pdftex.def Info: ../numpad/test/ns_cases_spline/results/mesh/spline.png
+ used on input line 869.
+(pdftex.def)             Requested size: 341.43306pt x 231.61765pt.
+ [19 </home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_primal.png> </ho
+me/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_twin.png> </home/voila/Do
+cuments/2014GRAD/mirror/final/paper1/7_adj_err.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 896--900
+
+ []
+
+
+<../numpad/test/ns_cases_spline/results/gray_sol/gray0_spline.png, id=198, 596.
+2275pt x 297.7524pt>
+File: ../numpad/test/ns_cases_spline/results/gray_sol/gray0_spline.png Graphic 
+file (type png)
+
+<use ../numpad/test/ns_cases_spline/results/gray_sol/gray0_spline.png>
+Package pdftex.def Info: ../numpad/test/ns_cases_spline/results/gray_sol/gray0_
+spline.png used on input line 909.
+(pdftex.def)             Requested size: 455.24408pt x 227.34822pt.
+
+Overfull \hbox (2.27618pt too wide) in paragraph at lines 909--912
+ [] 
+ []
+
+[20 <../numpad/test/ns_cases_spline/results/mesh/spline.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 929--939
+
+ []
+
+[21 <../numpad/test/ns_cases_spline/results/gray_sol/gray0_spline.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 980--986
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 995--998
+
+ []
+
+
+<../numpad/test/ns_cases_spline/results/train_sol_error/err_0_spline.png, id=20
+7, 634.5306pt x 297.0297pt>
+File: ../numpad/test/ns_cases_spline/results/train_sol_error/err_0_spline.png G
+raphic file (type png)
+
+<use ../numpad/test/ns_cases_spline/results/train_sol_error/err_0_spline.png>
+Package pdftex.def Info: ../numpad/test/ns_cases_spline/results/train_sol_error
+/err_0_spline.png used on input line 1007.
+(pdftex.def)             Requested size: 455.24408pt x 213.11337pt.
+
+Overfull \hbox (2.27618pt too wide) in paragraph at lines 1007--1007
+ [][] 
+ []
+
+[22]
+<../numpad/test/ns_cases_spline/results/train_sol_error/err_1_spline.png, id=21
+1, 711.8595pt x 364.9635pt>
+File: ../numpad/test/ns_cases_spline/results/train_sol_error/err_1_spline.png G
+raphic file (type png)
+
+<use ../numpad/test/ns_cases_spline/results/train_sol_error/err_1_spline.png>
+Package pdftex.def Info: ../numpad/test/ns_cases_spline/results/train_sol_error
+/err_1_spline.png used on input line 1011.
+(pdftex.def)             Requested size: 455.24408pt x 233.4032pt.
+
+Overfull \hbox (2.27618pt too wide) in paragraph at lines 1011--1012
+ [][] 
+ []
+
+
+<../numpad/test/ns_cases_spline/results/train_sol_error/err_2_spline.png, id=21
+2, 719.8092pt x 364.9635pt>
+File: ../numpad/test/ns_cases_spline/results/train_sol_error/err_2_spline.png G
+raphic file (type png)
+
+<use ../numpad/test/ns_cases_spline/results/train_sol_error/err_2_spline.png>
+Package pdftex.def Info: ../numpad/test/ns_cases_spline/results/train_sol_error
+/err_2_spline.png used on input line 1015.
+(pdftex.def)             Requested size: 455.24408pt x 230.8248pt.
+
+Overfull \hbox (2.27618pt too wide) in paragraph at lines 1014--1015
+ [] 
+ []
+
+[23 <../numpad/test/ns_cases_spline/results/train_sol_error/err_0_spline.png> <
+../numpad/test/ns_cases_spline/results/train_sol_error/err_1_spline.png>]
+<../numpad/test/ns_cases_spline/results/train_state_eqn/state_ideal_gas_spline.
+png, id=218, 518.1759pt x 265.9536pt>
+File: ../numpad/test/ns_cases_spline/results/train_state_eqn/state_ideal_gas_sp
+line.png Graphic file (type png)
+
+<use ../numpad/test/ns_cases_spline/results/train_state_eqn/state_ideal_gas_spl
+ine.png>
+Package pdftex.def Info: ../numpad/test/ns_cases_spline/results/train_state_eqn
+/state_ideal_gas_spline.png used on input line 1032.
+(pdftex.def)             Requested size: 455.24408pt x 233.65842pt.
+
+Overfull \hbox (2.27618pt too wide) in paragraph at lines 1032--1033
+ [][] 
+ []
+
+
+<../numpad/test/ns_cases_spline/results/train_state_eqn/state_vdw_gas_spline.pn
+g, id=219, 539.8569pt x 271.7352pt>
+File: ../numpad/test/ns_cases_spline/results/train_state_eqn/state_vdw_gas_spli
+ne.png Graphic file (type png)
+
+<use ../numpad/test/ns_cases_spline/results/train_state_eqn/state_vdw_gas_splin
+e.png>
+Package pdftex.def Info: ../numpad/test/ns_cases_spline/results/train_state_eqn
+/state_vdw_gas_spline.png used on input line 1036.
+(pdftex.def)             Requested size: 455.24408pt x 229.14745pt.
+
+Overfull \hbox (2.27618pt too wide) in paragraph at lines 1036--1037
+ [][] 
+ []
+
+[24 <../numpad/test/ns_cases_spline/results/train_sol_error/err_2_spline.png>]
+<../numpad/test/ns_cases_spline/results/train_state_eqn/state_rk_gas_spline.png
+, id=224, 531.1845pt x 273.1806pt>
+File: ../numpad/test/ns_cases_spline/results/train_state_eqn/state_rk_gas_splin
+e.png Graphic file (type png)
+
+<use ../numpad/test/ns_cases_spline/results/train_state_eqn/state_rk_gas_spline
+.png>
+Package pdftex.def Info: ../numpad/test/ns_cases_spline/results/train_state_eqn
+/state_rk_gas_spline.png used on input line 1040.
+(pdftex.def)             Requested size: 455.24408pt x 234.13455pt.
+
+Overfull \hbox (2.27618pt too wide) in paragraph at lines 1040--1045
+ [][] 
+ []
+
+[25 <../numpad/test/ns_cases_spline/results/train_state_eqn/state_ideal_gas_spl
+ine.png> <../numpad/test/ns_cases_spline/results/train_state_eqn/state_vdw_gas_
+spline.png>]
+<../numpad/test/ns_cases_spline/results/outflux_geo_grad/geo_grad_0_spline.png,
+ id=231, 367.1316pt x 447.3513pt>
+File: ../numpad/test/ns_cases_spline/results/outflux_geo_grad/geo_grad_0_spline
+.png Graphic file (type png)
+
+<use ../numpad/test/ns_cases_spline/results/outflux_geo_grad/geo_grad_0_spline.
+png>
+Package pdftex.def Info: ../numpad/test/ns_cases_spline/results/outflux_geo_gra
+d/geo_grad_0_spline.png used on input line 1055.
+(pdftex.def)             Requested size: 199.16928pt x 242.68556pt.
+
+<../numpad/test/ns_cases_spline/results/outflux_geo_grad/perturb_0.png, id=232,
+ 371.4678pt x 442.2924pt>
+File: ../numpad/test/ns_cases_spline/results/outflux_geo_grad/perturb_0.png Gra
+phic file (type png)
+
+<use ../numpad/test/ns_cases_spline/results/outflux_geo_grad/perturb_0.png>
+Package pdftex.def Info: ../numpad/test/ns_cases_spline/results/outflux_geo_gra
+d/perturb_0.png used on input line 1056.
+(pdftex.def)             Requested size: 199.16928pt x 237.14713pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1049--1064
+
+ []
+
+[26 <../numpad/test/ns_cases_spline/results/train_state_eqn/state_rk_gas_spline
+.png>]
+Overfull \hbox (2.35631pt too wide) in paragraph at lines 1076--1112
+ [] 
+ []
+
+[27 <../numpad/test/ns_cases_spline/results/outflux_geo_grad/geo_grad_0_spline.
+png> <../numpad/test/ns_cases_spline/results/outflux_geo_grad/perturb_0.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1117--1129
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1130--1141
+
+ []
+
+[28] [29]
+Missing character: There is no â in font cmr10!
+Missing character: There is no € in font cmr10!
+Missing character: There is no ” in font cmr10!
+Missing character: There is no â in font cmr10!
+Missing character: There is no € in font cmr10!
+Missing character: There is no ” in font cmr10!
+ [30] [31] (./paper1.aux)
+
+LaTeX Warning: There were undefined references.
+
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 15178 strings out of 493308
- 281681 string characters out of 6140092
- 352306 words of memory out of 5000000
- 18248 multiletter control sequences out of 15000+600000
- 14258 words of font info for 53 fonts, out of 8000000 for 9000
+ 15231 strings out of 493308
+ 283754 string characters out of 6140092
+ 360575 words of memory out of 5000000
+ 18287 multiletter control sequences out of 15000+600000
+ 16395 words of font info for 60 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 56i,18n,69p,435b,414s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 56i,18n,69p,966b,412s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/urw/zapfding/uzdr.pfb>
-Output written on paper1.pdf (13 pages, 1381306 bytes).
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on paper1.pdf (31 pages, 2308500 bytes).
 PDF statistics:
- 260 PDF objects out of 1000 (max. 8388607)
+ 314 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 399 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 414 words of extra memory for PDF output out of 10000 (max. 10000000)
 

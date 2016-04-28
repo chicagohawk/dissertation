@@ -1,0 +1,116 @@
+\begin{thebibliography}{12}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[Brouwer (2004)]{water flooding control}
+{\sc D. Brouwer et al.} 2004 Dynamic optimization of waterflooding with smart wells using optimal control theory. {\em SPE Journal\/} {\bf 9}~(4)
+
+% first oil reservoir optimization
+\bibitem[Ramirez (1987)]{first reservoir opt}
+{\sc W. F. Ramirez} 1987
+Application of optimal control theory to enhanced oil recovery.
+{\em Elsevier}
+
+\bibitem[Zandvliet (2008)]{adjoint well placement}
+{\sc M. Zandvliet et al.} 2008
+Adjoint-based well-placement optimization under production constraints.
+{\em SPE Journal\/}  {\bf 13}~(4)
+
+% return bend optimization
+\bibitem[Verstraete (2013)]{ubend rans opt 1}
+{\sc T. Verstraete et al.} 2013 
+Optimization of a U-bend for minimal pressure loss in internal cooling channels — Part I: Numerical method.
+{\em Journal of Turbomachinery \/} {\bf 135}~(5)
+
+\bibitem[Coletti (2013)]{ubend rans opt 2}
+{\sc F. Coletti et al.} 2013
+Optimization of a U-Bend for minimal pressure loss in internal cooling channels — Part II: Experimental validation.
+{\em Journal of Turbomachinery \/} {\bf 135}~(5)
+
+% Buckley
+\bibitem[Buckley (1942)]{Buckley Leverett}
+{\sc S. E. Buckley et al.} 1942
+Mechanism of fluid displacement in sands.
+{\em Transactions of the AIME \/} {\bf 146}~(1)
+
+% BSIM
+\bibitem[Chen (2012)]{hanmaster} 
+{\sc H. Chen} 2012
+Blackbox stencil interpolation method for model reduction.
+{\em Master thesis, Department of Aeronautics and Astronautics, Massachusetts Institute of Technology \/}
+
+%ECMOR
+\bibitem[Chen (2014)]{ecmor}
+{\sc H. Chen et al.} 2014
+Data-driven model inference and its application to optimal control under reservoir uncertainty.
+{\em 14th European Conference of Mathematics of Oil Recovery \/}
+
+% adjoint original
+\bibitem[Lion (1971)]{adjoint}
+{\sc J. L. Lions} 1971
+Optimal control of systems governed by partial differential equations.
+{\em Springer-Verlag}
+
+% adjoint aerodynamics
+\bibitem[Jameson (1988)]{adjoint aerodynamics}
+{\sc A. Jameson} 1988
+Aerodynamic design via control theory.
+{\em Journal of Scientific Computing \/} {\bf 3}~(3)
+
+% adjoint history matching 
+\bibitem[Chen (1974)]{adjoint history matching}
+{\sc W. H. Chen et al.} 1974
+A new algorithm for automatic history matching.
+{\em Society of Petroleum Engineering Journal \/} {\bf 14}~(6)
+
+% adjoint reservoir optimization
+\bibitem[Ramirez (1984)]{adjoint reservoir optimal control}
+{\sc W. F. Ramirez et al.} 1984
+Optimal injection policies for enhanced oil recovery:
+part 1: theory and computational strategies.
+{\em Society of Petroleum Engineering Journal \/} {\bf 24}~(3)
+
+% Schlieren
+\bibitem[Bystrov (1998)]{schlieren reconstruct}
+{\sc S. A. Bystrov et al.} 1998
+Density reconstruction from laser schlieren signal in shock tube experiments.
+{\em Shock Waves \/} {\bf 8}~(3)
+
+% Francis plasma
+\bibitem[Chen (1976)]{francis chen}
+{\sc F. Chen and A. W. Trivelpiece} 1976
+Introduction to plasma physics.
+{\em Physics Today \/} {\bf 29}~(54)
+
+% quasi-Newton methods
+\bibitem[Dennis (1977)]{quasiNewton}
+{\sc J. E. Dennis et al.} 1977
+Quasi-Newton methods, motivation and theory.
+{\em SIAM Review \/} {\bf 19}~(1)
+
+% DFO review
+\bibitem[Rios (2013)]{gradfreereview}
+{\sc L. M. Rios et al.} 2013
+Derivative-free optimization: A review of algorithms and comparison of software implementations.
+{\em Journal of Global Optimization \/}, {\bf 56}~(3)
+
+% LBFGS
+\bibitem[Nocedal (1980)]{LBFGS}
+{\sc J. Nocedal} 1980
+Updating quasi-Newton matrices with limited storage.
+{\em Mathematics of Computation \/}, {\bf 35}~(151)
+
+% Lasso
+\bibitem[Tibshirani (1996)]{Lasso variable selection}
+{\sc R. Tibshirani} 1996
+Regression shrinkage and selection via the lasso.
+{\em Journal of the Royal Statistical Society, Series B (Methodological) \/},{267-288}
+
+% gas state equations
+\bibitem[Murdock (1993)]{state eqns}
+{\sc J. W. Murdock} 1993
+Fundamental fluid mechanics for the practicing engineer,
+{\em CRC Press}
+
+
+
+\end{thebibliography}

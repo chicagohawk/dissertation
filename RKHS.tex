@@ -718,9 +718,209 @@ $$
 $$
 where $\sigma^2$ is the posterior variance of $f(x)$.\\
 
+Use theorem 4.1 from RKHS book chp1.pdf to complete the proof.\\
+
+\textbf{Power set} $X^Y$ is the set of all functions from $Y$ to $X$. $2^\Omega$ is the set of all
+functions from $\Omega$ to $\{0,1\}$.\\
+
+\textbf{Set function} is a function whose input is a set. The output is usually a number.
+
+\textbf{Submodular set function} is a set function $f: 2^\Omega\rightarrow \mathbb{R}$,
+which satisfies the following condition:
+For every $X, Y\subseteq \Omega$ with $X\subseteq Y$, and every $x\in\Omega \backslash Y$,
+we have $f(X\bigcup \left\{x\right\}) -f(x) \ge f(Y\bigcup\left\{x\right\})-f(Y)$.
+
+\section{Multi-armed bandit and UCB optimization}
+Maximization
+$$
+x^* = \arg\max_{x\in D}f(x)
+$$
+Regret
+$$
+    r_t = f(x^*) - f(x_t)
+$$
+Cumulative regret after $T$ rounds
+$$
+    R_T = \sum_{t=1}^T r_t
+$$
+We consider function $f$ with domain $\mathcal{D}$. The samples can be taken on a finite point set $D$.
+Let $f_D$ be $f$ restricted to $D$.\\
+Observation type 1:
+$$
+    y_t = f(x_t) + \epsilon_t\,,
+$$
+Observation type 2:
+$$
+    z_t = \nabla f(x_t) + g(x_t)\,,
+$$
+where $t$ is the round of sample. $f\in \mathcal{H}_{K_f}$, $g\in \mathcal{H}_{K_g}$.
+$\epsilon_t$ are i.i.d Gaussian noise with zero mean and $\sigma^2$ variance.
+For simplicity, assume $\mathcal{D}\subset \mathbb{R}^1$.\\
+Let the sampled points be $\textbf{x}_T$
+The mutual information between $f$ and the observations $\textbf{y}_T, \textbf{z}_T$ is:
+$$
+I(\left\{\textbf{y}_T, \textbf{z}_T\right\}; f) = H(\left\{\textbf{y}_T, \textbf{z}_T\right\}) 
+- H(\left\{\textbf{y}_T, \textbf{z}_T\right\}\left.\right| f)
+$$
+According to 
+$$
+    I(X,Y) = H(X) + H(Y) - H(X,Y)\,,
+$$
+and
+$$
+    I(\left\{\textbf{y}_T, \textbf{z}_T\right\}\left.\right| f) = 0
+$$
+we have
+$$
+    I(\left\{\textbf{y}_T, \textbf{z}_T\right\};f) = H(\left\{\textbf{y}_T, \textbf{z}_T\right\}) 
+    - H(\textbf{y}_T|f) - H(\textbf{z}_T|f)
+$$
+Define 
+\begin{equation*}
+    \Sigma = \begin{pmatrix}
+        K_f + \sigma^2 I_T & (\nabla K_f)^T\\
+        \nabla K_f & \nabla^2 K_f + K_g
+    \end{pmatrix}\,,
+\end{equation*}
+where $K_f, K_g$ are the matrix corresponding to $\textbf{x}_T$. Then
+$$
+    I(\left\{\textbf{y}_T, \textbf{z}_T\right\}; f)
+    = \frac{1}{2}\ln \left| 2\pi e \Sigma \right| - \frac{1}{2} \ln \left| 2 \pi e K_g\right|
+    - \frac{T}{2}\ln(2\pi e\sigma^2)
+$$
+The mutual information is independent of sampled values.\\
+
+\noindent Next, we try to find the relationship between $\sigma_{t-1}(x_t)$ and $\tilde{\sigma}_{t-1}(x_t)$,
+where $\sigma$ indicates the predictive variance of $f(x_t)$ by using $\textbf{y}_{t-1}$ alone,
+and $\tilde{\sigma}$ indicates the predictive variance by using $\textbf{y}_{t-1}$ and $\textbf{z}_{t-1}$.
+Let $k_f\equiv K_f(x_t, \textbf{x}_{t-1})$, and $\nabla k_f \equiv K_f(x_t, \nabla \textbf{x}_{t-1})$. We have
+$$
+    \tilde{\sigma}^2_{t-1}(x_t) = K_f(x_t, x_t) - 
+    \begin{pmatrix}
+        k_f & \nabla k_f
+    \end{pmatrix}
+    \begin{pmatrix}
+        K_f+\sigma^2 I_{T-1} & (\nabla K_f)^T\\
+        \nabla K_f & \nabla^2 K_f + K_g
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        k_f & \nabla k_f
+    \end{pmatrix}^T
+$$
+
+$$
+    \sigma^2_{t-1}(x_t) = K_f(x_t, x_t) - 
+    k_f 
+    \begin{pmatrix}
+        K_f + \sigma^2 I_{T-1} 
+    \end{pmatrix}^{-1}
+    k_f^T
+$$
+Define 
+\begin{equation*}\begin{split}
+    A &= K_f + \sigma^2 I_{T-1}\\
+    B &= \nabla K_f\\
+    C &= \nabla^2 K_f + K_g
+\end{split}\end{equation*}
+Using the formula
+\begin{equation*}
+    \begin{pmatrix}
+        A & B\\
+        B^T & C
+    \end{pmatrix} ^{-1}
+    = 
+    \begin{pmatrix}
+        I & - A^{-1} B\\
+          & I
+    \end{pmatrix}
+    \begin{pmatrix}
+        A^{-1}  & \\
+        & \left(C-B^{T}A^{-1}B\right)^{-1}
+    \end{pmatrix}
+    \begin{pmatrix}
+        I &\\
+        -B^TA^{-1} & I
+    \end{pmatrix}\,,
+\end{equation*}
+we get
+\begin{equation*}
+    \begin{pmatrix}
+        x\\ y
+    \end{pmatrix}^{T}
+    \begin{pmatrix}
+        A& B\\
+        B^T & C
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        x\\y
+    \end{pmatrix}
+    = x^T A^{-1} x + \left(y-B^TA^{-1}x\right)^{T}
+    \left(C-B^T A^{-1}B\right)^{-1} \left(y-B^T A^{-1}x\right)
+    \ge x^T A^{-1} x 
+\end{equation*}
+
+\noindent Notice $\Sigma^{-1}$ and $K_f+\sigma^2 I_{T-1}$ is positive-definite, we have
+$$
+    \tilde{\sigma}^2_{t-1}(x_t) \le \sigma^2_{t-1}(x_t)
+$$
+Using the same reasoning of Lemma 5.1 and 5.2 of Niranjan's paper, we get
+$$
+    \tilde{r}_t \le 2 \beta_t^{1/2} \tilde{\sigma}_{t-1}(x_t) \le 2 \beta_t^{1/2} {\sigma}_{t-1}(x_t)\,,
+$$
+where the sequence $\{x_1,\cdots, x_t\}$ are generated using the estimated gradient.\\
+Lemma 5.3 and 5.4 of Niranjan's paper states
+$$
+    I(\textbf{y}_T; \textbf{f}_T) = \frac{1}{2}\sum_{t=1}^T \log\left( 1+\sigma^{-2}\sigma^{2}_{t-1} (x_t) \right)
+$$
+and
+$$
+    I(\textbf{y}_T; \textbf{f}_T) \le \gamma_T = \max_{A\subset D: |A|=T} I(\textbf{y}_A; \textbf{f}_A)
+$$
+Therefore, for finite $D$, twin-model-based GP-UCB optimization is not slower than black-box GP-UCB optimization.
+
+\section{Information theory}
+The entropy rate of a stochastic process is the average density of information in a stochastic process.
+For stochastic process with a countable set, the entropy rate is
+$$
+    H(X) = \lim_{n\rightarrow \infty} \frac{1}{n}H(X_1, X_2, \cdots, X_n)
+$$
+A stochastic process is mean-ergodic if
+$$
+    \frac{1}{T}\int_0^T X(t) \; dt \rightarrow \mu \quad \textrm{as} \; T\rightarrow \infty\,,
+$$
+where $\mu$ is the ensemble average. Similarly, a stochastic process is autocovariance-ergodic if
+$$
+    \frac{1}{T}\int_0^T \left[X(t+\tau) - \mu\right]\left[X(t)-\mu\right] \; dt \rightarrow r(\tau) 
+    \quad \textrm{as} \; T\rightarrow \infty
+$$
+Asymptotic equipartition property (AEP): 
+$$
+    \mathbb{P}\left[ \lim_{n\rightarrow \infty} -\frac{1}{n} \log p(X_1, \cdots, X_n) = H(X)\right] = 1
+$$
+The differential entropy is the extension of Shannon entropy to random variables with continuous distributions
+(with probability density $f(X)$)
+$$
+    h(X) = -\int_{\mathbb{X}} f(X) \log f(X)\; dx
+$$
+The entropy for so-called measure-preserving dynamic systems: Kolmogorov-Sinai-entropy. KSE
+measures the unpredicatability of a dynamical system.\\
+Intuition of Shannon entropy: the number of questions that need to ask to restore the message.\\
+
+Conditional entropy: the average of $H(Y|X=x)$ over all possible values $x$ may take, it measures
+the expected entropy of $Y$ if $X$ has been received beforehand.
+$$
+    H(Y|X) = - \sum_{x,y} p(x,y) \log\frac{p(x,y)}{p(x)}
+$$
+
+Spectral distribution function $F(\lambda)$ of a covariance function $\gamma_n$
+(for discrete stochastic process)
+$$
+    \gamma_n = \int_{-\pi}^{\pi} e^{in\lambda} dF(\lambda)\,,
+$$
+where $F(-\pi) = 0, F(\pi)=\gamma_0$.
+$$
+    F(\lambda) = \int_{-\pi}^\lambda f(t) dt\,,
+$$
+$f(t)$ is called the spectral density function (SDF).
 \end{document}
-
-
-
-
 
