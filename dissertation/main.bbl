@@ -20,6 +20,17 @@ Buckley, S. E., and Leverett, M.
 \newblock Mechanism of Fluid Displacement in Sands. 
 \newblock {\em Transactions of the AIME}, 146(01): 107-116, 1942.
 
+% reservoir simulation
+\bibitem{reservoir sim book}
+Peaceman, D. W. 
+\newblock{Fundamentals of Numerical Reservoir Simulation}
+Vol. 6. \newblock{\em Elsevier}, 2000.
+
+\bibitem{secondary recovery review}
+Alvarado, V., and Manrique, E. 
+\newblock{Enhanced Oil Recovery: an Update Review.} 
+\newblock{\em Energies}, 3(9):1529-1575, 2010.
+
 % Aerodynamic control ====================================
 % return bend optimization
 \bibitem{ubend rans opt 1}
@@ -37,6 +48,11 @@ Coletti, F., Verstraete, T., Bulle, J., Van der Wielen, T., Van den Berge, N., a
 Redlich, O., and Kwong, J. N. 
 \newblock On the Thermodynamics of Solutions. V. An Equation of State. Fugacities of Gaseous Solutions. 
 \newblock {\em Chemical Reviews}, 44(1):233-244, 1949.
+
+\bibitem{airfoil cooling}
+Han, J. C., Dutta, S., and Ekkad, S. 
+\newblock Gas Turbine Heat Transfer and Cooling Technology. 
+\newblock {\em CRC Press}, 2012.
 
 
 % Adjoint =============================================
@@ -204,6 +220,19 @@ Carter, R. G.
 Carter, R. G. 
 \newblock Numerical Experience with a Class of Algorithms for Nonlinear Optimization Using Inexact Function and Gradient Information. 
 \newblock {\em SIAM Journal on Scientific Computing}, 14(2):368-388, 1993.
+
+\bibitem{opt via sim review}
+Fu, M. C. 
+\newblock {Optimization via Simulation: A Review.}
+\newblock {\em Annals of Operations Research}, 53(1):199-247, 1994.
+
+\bibitem{openfoam}
+OpenFOAM,
+\newblock{\em http://www.openfoam.org/}
+
+\bibitem{aspen}
+Aspen,
+\newblock{\em http://www.aspentech.com/products/aspenONE/}
 
 % Bayesian calibration and optimization ===================================
 \bibitem{derivative RKHS}

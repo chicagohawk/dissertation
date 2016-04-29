@@ -10,7 +10,7 @@
 \section{Motivation}
 \label{sec: motivation}
 A conservation law states that a particular property of a physical system does not
-change as the system evolves over time, such as the conservation of mass, momentum, and energy. 
+appear or vanish as the system evolves over time, such as the conservation of mass, momentum, and energy. 
 Mathematically, a conservation law can be expressed locally as a continuity equation
 \eqref{eqn: conservation law},
 \begin{equation}
@@ -21,17 +21,24 @@ where $u$ is the conserved physical quantity, $t$ is time, $F$ is the flux of $u
 is the source for $u$. Many equations fundamental to the physical world, such as the Navier-Stokes equation,
 the Maxwell equation, and the porous medium transport equation, can be described by \eqref{eqn: conservation law}.\\
 
-Optimization constrained by conservation laws are present in many engineering applications.
-For example, in gas turbines, the rotor blades can operate at a temperature close to 2000K 
-\cite{ubend rans opt 1, ubend rans opt 2}.
+Optimization constrained by conservation laws is present in many engineering applications.
+For example, in gas turbines, the rotor blades can operate at a temperature close to 2000K \cite{airfoil cooling}.
 To prevent material failure due to overheating, channels can be drilled inside the rotor blades
-to circulate coolant air whose dynamics are governed by the Navier-Stokes equation. The pressure
+to circulate coolant air whose dynamics are governed by the Navier-Stokes equation 
+\cite{ubend rans opt 1}. The pressure
 used to drive the coolant flow is provided by the compressor, resulting in a penalty on the 
-turbine's thermo-dynamic efficiency. Engineers are thereby interested in optimizing the coolant
-channel geometry in order to suppress the pressure loss. Another example is the field control of petroleum
+turbine's thermo-dynamic efficiency \cite{ubend rans opt 2}. 
+Engineers are thereby interested in optimizing the coolant
+channel geometry in order to suppress the pressure loss. In this optimization problem, the control variables
+are the parameters that describe the channel geometry. The dimensionality of the optimization is the
+number of control variables, i.e. the control's degree of freedom.
+Another example is the field control of petroleum
 reservoir. In petroleum reservoir, the fluid flow of various phases and chemical components 
-is dictated by porous medium transport equations. The flow can be passively and actively controlled by a variety of techniques \cite{first reservoir opt},
-such as the wellbore pressure control, the polymer injection, the hydrolic fracturing, and the steam heating.
+is dictated by porous medium transport equations \cite{reservoir sim book}. The flow can be passively and actively controlled by a variety of techniques \cite{first reservoir opt},
+such as the wellbore pressure control, the polymer injection, and the steam heating,
+where the reservoir is controlled by the pressure at each wells, by the the injection rate of polymer, and by the temperature of the steam \cite{secondary recovery review}.
+These controls can be parameterized in time for each well, polymer injector, and steam injector. The dimensionality of the optimization is
+the total number of these control variables.
 Driven by economic interests, petroleum producers are 
 devoted to optimizing the controls for enhanced recovery and reduced cost.\\
 
@@ -39,22 +46,22 @@ Such optimization is being revolutionized by the numerical simulation and optimi
 algorithms. On one hand, conservation law simulation can provide an evaluation of a candidate control
 that is cheaper, faster, and more scalable than conducting physical experiments. 
 On the other hand, advanced optimization algorithms can guide 
-the control towards the optimal with reduced number of simulation.
+the control towards the optimal with reduced number of simulation \cite{quasiNewton, gradfreereview, LBFGS, trustregionconn, genetic algo, particle swarm, cuckoo, review EI}.
 However, optimization based on conservation law simulation can still be overwhelmingly costly. 
 The cost is two-folded: Firstly, each simulation for a given control may run for hours or days even on a high-end
 computer. This is mainly because of the high-fidelity physical models, the complex numerical schemes, and the large scale space-time 
 discretization employed in the simulation. Secondly, optimization algorithms generally take many iterations of simulation on
 various controls. The number of iterations required to achieve near-optimality usually 
-increases with the control's degree of freedom. The two costs are multiplicative.
+increases with the control's degree of freedom \cite{opt via sim review}. The two costs are multiplicative.
 The multiplicative effect compromises the impact of computational efforts among field engineers.\\
 
-Fortunately, the cost due to iteration can be alleviated by adopting gradient-based optimization algorithms.
+Fortunately, the cost due to iteration can be alleviated by adopting gradient-based optimization algorithms \cite{opt via sim review}.
 A gradient-based algorithm requires significantly less iterations than a derivative-free algorithm for problems with many control
 variables. Gradient-based algorithms require the gradient of the optimization objective to the control variables, which is efficiently 
 computable through the adjoint method \cite{adjoint}. The adjoint method propogates the gradient from the objective 
 backward to the control variables through the path of time integration \cite{adjoint} or through the chain of numerical operations \cite{AD review}. 
-To keep track of the back propogation, the simulator source code needs to be modified.
-In real-world industrial simulators, adjoint is scarcely available because most source codes are proprietary and/or legacy.
+To keep track of the back propogation, the simulator source code needs to be available.
+In real-world industrial simulators, adjoint is scarcely implemented because most source codes are proprietary and/or legacy.
 For example, \textit{PSim}, a reservoir simulator developed and owned by \textit{ConocoPhillips}, 
 is a multi-million-line Fortran-77 code that traces its birth back to the 1980's. 
 Implementing adjoint directly into the source code is unpreferable because it can take tremendous amount of brain hours.
@@ -70,7 +77,7 @@ For example, \textit{PSim} provides the space-time solution of pressure, saturat
 Similarly, most steady state simulators are able 
 to provide the spatial solution. the discussion will focus on the unsteady case, 
 since a steady state simulator can be viewed as a special case of the unsteady
-one where the solution remains the same at every timestep.\\
+one where the solution remains the same over many time steps.\\
 %In addition, the functional form of the 
 %conservation law is usually well-known. For example, in petroleum reservoir with polymer injection, the flow can be governed by a two-phase transport equation
 %\begin{equation*}\begin{split}
@@ -113,7 +120,9 @@ can be plugged into \eqref{eqn: 1D conceptual no shock} to obtain samples of $\f
 The reasoning remains intact at the shock wave, where $\frac{dF}{du}$ in \eqref{eqn: 1D conceptual no shock} is 
 replaced by the finite difference form $\frac{\Delta F}{\Delta u}$ according to the Rankine-Hugoniot condition.
 Based upon the sampled $\frac{dF}{du}$ and $\frac{\Delta F}{\Delta u}$, the unknown flux function $F$
-can be approximated up to a constant by indefinite integral. Let $\tilde{F}$ be the approximation for $F$.
+can be approximated up to a constant 
+for values of $u$ that appeared in the solution, 
+by using indefinite integral. Let $\tilde{F}$ be the approximation for $F$.
 An alternative conservation law can be proposed
 \begin{equation}
     \frac{\partial \tilde{u}}{\partial t} + \frac{\partial \tilde{F}(\tilde{u})}{\partial \tilde{u}} = c\,,\quad
@@ -121,26 +130,39 @@ An alternative conservation law can be proposed
     \label{eqn: 1D conceptual inferred}
 \end{equation}
 that approximates the true but unknown conservation law \eqref{eqn: 1D conceptual}, where
-$\tilde{u}$ is the solution associated with $\tilde{F}$.
-Thereby, the adjoint method can be applied to \eqref{eqn: 1D conceptual inferred} to efficiently compute the gradient, which estimates the true gradient.
+$\tilde{u}$ is the solution associated with $\tilde{F}$, in the following sense: If $\tilde{F}$ and $F$ are off by a constant, the solutions of \eqref{eqn: 1D conceptual} 
+and \eqref{eqn: 1D conceptual inferred}  to any initial value
+problem will be the same. 
+In addition, the solutions to any adjoint equation, with any objective function, will be the same. As a result, the gradient computed 
+by the adjoint equation of \eqref{eqn: 1D conceptual inferred} will be the true gradient, and therefore can drive
+the optimization constrained by \eqref{eqn: 1D conceptual}.
 A simulator for the approximated conservation law is named \textbf{twin model}, since it behaves as an adjoint-enabled
-twin of the original simulator.\\
+twin of the original simulator.
+If a conservation law has a system of equations and/or has a greater-than-one spatial dimension, 
+the above simple method to recover the flux function from a solution will no longer work. 
+Nonetheless, I expect a lot of information for the flux function can be extracted from the solution. 
+Given some additional information of the conservation law, one may be able to recover the unknown aspects of the flux function. 
+The details of this topic are discussed in Chapter \ref{chapter 2}.\\
 
-A simulator is defined to be \textbf{gray-box} if the following two conditions are met:
+My thesis focuses on a class of simulators that I call \textbf{gray-box}.
+A simulator is defined to be gray-box if the following two conditions are met:
 \begin{enumerate}
-    \item the adjoint is unavailable, and is infeasible to implement into the source code.
+    \item the adjoint is unavailable, and is impractical to implement into the source code.
     \item the full space-time solution of relevant flow quantities is available.
 \end{enumerate}
 Many industrial simulators, such as \textit{PSim}, satisfy both conditions.
 In contrast, a simulator is named \textbf{open-box} if condition 1 is violated.
-For example, \textit{OpenFOAM} is an open-source fluid simulator where adjoint can be implemented directly
+For example, \textit{OpenFOAM} \cite{openfoam} is an open-source fluid simulator where adjoint can be implemented directly
 into its source code, so it is open-box by definition. Open-box simulators enjoy the
 benifit of efficient gradient computation brought by adjoint, thereby are not within the research
 scope of my thesis. If condition 1 is met but 2 is violated, a simulator
-is named \textbf{black-box}. For example, \textit{Aspen}, an industrial chemical reactor simulator, provides neither
+is named \textbf{black-box}. For example, \textit{Aspen} \cite{aspen}, an industrial chemical reactor simulator, provides neither
 the adjoint nor the full space-time solution. Black-box simulators are simply calculators
 for the objective function. Due to the lack of space-time solution, adjoint can not be enabled
-using the twin model. My thesis will only investigate gray-box simulators.\\
+using the twin model. 
+Gray-box simulators are ubiquitous in many engineering applications. Examples are ... for computational fluid
+dynamics, and ECLIPSE (Schlumberger), PSim (ConocoPhillips), and MORES (Shell) for petroleum reservoir simulations.
+My thesis will only investigate gray-box simulators.\\
 
 My thesis aims at reducing the number of expensive iterations in the optimization constrained by
 gray-box simulators. 
@@ -153,15 +175,19 @@ for problems with many control parameters.\\
 
 Instead of discussing gray-box simulators in general, my thesis only focuses on
 simulators with (partially) unknown flux function, while their boundary condition,
-initial condition, and the source term are known. This assumption is valid for some applications,
+initial condition, and the source term are known. 
+... a more precise definition of partially known ...
+This assumption is valid for some applications,
 such as simulating a petroleum reservoir with polymer injection.
 The flow in such reservoir is governed by multi-phase multi-component porous medium transport 
-equations. The initial condition is usually given at the equilibrium state, the boundary
+equations \cite{reservoir sim book}. The initial condition is usually given at the equilibrium state, the boundary
 is usually described by a no-flux condition, and the source term can be modeled as controls
 with given flow rate or wellbore pressure.
-Although it's public knowledge that the flux satisfies the Darcy's law, 
-the mechanism that modifies the rock permeability and flow viscosity due to the injected
-polymer can be unavailable. Thereby the flux is partially unknown.
+Usually the flux function is given by the Darcy's law.
+The Darcy's law involves physical models like the permeability\footnote{The permeability quantifies the
+easiness of liquids to pass through the rock.} and the viscosity\footnote{The viscosity quantifies the
+internal friction of the liquid flow.}.
+The mechanism that modifies the rock permeability and flow viscosity can be unavailable. Thereby the flux is partially unknown.
 The specific form of PDE considered in my thesis is given in Section \ref{sec: formulation}.
 It is a future work to extend my research to more general gray-box settings where
 the initial condition, boundary condition, source term, and the flux are jointly unknown.\\
