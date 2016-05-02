@@ -243,25 +243,26 @@ the estimated gradient for optimization is analyzed both numerically and theoret
 
 Given the background, I review the literature on derivative-free optimization and gradient-based optimization. In addition,
 I review the adjoint method since it is an essential ingredient for Chapter 2. Finally, I review model calibration and Bayesian optimization methods, which serve as the framework for the developments in Chapter 3.
-
-\subsection{Derivative-free Optimization}
+\subsection{Review of Optimization Methods}
+\subsubsection{Derivative-free Optimization}
 \label{section: DFO}
 Derivative-free optimization (DFO) requires only the availability of objective
 function values but no gradient information \cite{gradfreereview}, thus is useful when the gradient
 is unavailable, unreliable, or too expensive to obtain. 
 Such methods are suitable for problems constrained by black-box simulators.\\
 
-Depending on whether the searched optimum is local or global,
+Depending on whether a local or global optimum is desired,
 DFO methods can be categorized into local methods and global methods \cite{gradfreereview}.
 Local methods seek a local optimum which is also the global optimum for convex problems. 
 An important local method is the
 trust-region method \cite{trust region review}. Trust-region method introduces a surrogate model that is
 cheap to evaluate and presumably accurate within a trust region: an adaptive neighborhood around the current iterate \cite{trust region review}. 
-At each iterate, the surrogate is optimized in a domain bounded by the trust region to generate
+At each iteration, the surrogate is optimized in a domain bounded by the trust region to generate
 candidte steps for additional objective evaluations \cite{trust region review}.
 The surrogates can be constructed either by interpolating the objective evaluations \cite{linear trust region, trustregionwild}, or by running a low-fidelity simulation \cite{MFO trust region,
 Alexandrov trust region}.
-Convergence to the objective function's optimum is guaranteed by ensuring the surrogate have the
+Convergence to the objective function's optimum is guaranteed by ensuring that
+the surrogate have the
 same value and gradient as the objective function when the size of the trust region shrinks to zero
 \cite{trustregionconn, trustregionwild}.\\
 
@@ -278,7 +279,7 @@ of candidate controls, which adapts and mutates in a way that resembles natural 
 such as the natural selection \cite{genetic algo, cuckoo} 
 and the swarm intelligence \cite{particle swarm}.
 Bayesian methods model the objective function as a random member function from a stochastic process.
-At each iterate, the statistics of the stochastic process are calculated 
+At each iteration, the statistics of the stochastic process are calculated 
 and the posterior, a probability measure, of the objective 
 is updated using Bayesian metrics \cite{practical Bayesian, review EI}. 
 The posterior is used to pick the next candidate step
@@ -286,12 +287,13 @@ that best balances the exploration of unsampled regions and the exploitation aro
 optimum \cite{Locatelli, jones1998, GP bandit}. Details of Bayesian optimization methods are discussed in Section \ref{section: bayes opt}.\\
 
 Because many real-world problems are non-convex, global methods are usually preferred to local methods
-if the global optimum is desired \cite{gradfreereview}. Besides, it's important to notice that some DFO methods 
-can be modified to admit gradient information if available \cite{derivative RKHS, grad coKriging, grad particle swarm, grad cuckoo}. 
-The details are discussed in Section
-\ref{section: GBO}.\\
+if the global optimum is desired \cite{gradfreereview}. Besides, DFO methods usually require
+a large number of function evaluations to converge, especially when the dimension of control is large
+\cite{gradfreereview}. This issue can be alleviated by incorporating the gradient information
+\cite{derivative RKHS, grad coKriging, grad particle swarm, grad cuckoo}.
+The details are discussed in the next section.\\
 
-\subsection{Gradient-based Optimization}
+\subsubsection{Gradient-based Optimization}
 \label{section: GBO}
 Gradient-based optimization (GBO) requires the availability of the gradient values \cite{opt via sim review, nonlinear program}. 
 A gradient value, if exists,
