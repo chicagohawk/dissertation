@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  2 MAY 2016 13:43
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  2 MAY 2016 14:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -531,7 +531,11 @@ Enter file names to process, (chap1,chap2 ...), or `all' to process all files:
 
 \files=all
 Including all files.
-(./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux
+(./main.aux (./cover.aux) (./contents.aux) (./chap1.aux
+
+LaTeX Warning: Label `eqn: adjoint' multiply defined.
+
+) (./chap2.aux
 
 LaTeX Warning: Label `fig: graysol Ubend' multiply defined.
 
@@ -946,71 +950,95 @@ s-ing only one PDE sim-u-la-tion
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [26]
-Underfull \hbox (badness 10000) in paragraph at lines 425--429
+Underfull \hbox (badness 10000) in paragraph at lines 426--430
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--443
+Underfull \hbox (badness 10000) in paragraph at lines 431--444
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 444--450
+Overfull \hbox (13.20184pt too wide) in paragraph at lines 445--452
+[]\T1/cmr/m/n/12 The dis-crete ad-joint method [[]] dis-cretizes $\OMS/cmsy/m/n
+/12 F\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 u; c\OT1/cmr/m/n/12 ) = 0$ \T1/cmr/m/n/1
+2 first. Af-ter the dis-cretiza-tion,
+ []
+
+
+Overfull \hbox (19.21318pt too wide) in paragraph at lines 455--460
+$[][]$ \T1/cmr/m/n/12 is de-rived as an-other dif-fer-ence op-er-a-tor. With pr
+oper dis-cretized bound-ary/initial
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 455--460
 
  []
 
 
-Underfull \vbox (badness 2393) has occurred while \output is active []
+Underfull \vbox (badness 5667) has occurred while \output is active []
 
  [27]
-Overfull \hbox (21.20279pt too wide) in paragraph at lines 472--483
+Overfull \hbox (1.37184pt too wide) in paragraph at lines 461--468
+\T1/cmr/m/n/12 ex-e-cutes a se-quence of el-e-men-tary arith-metic op-er-a-tion
+s (e.g. ad-di-tion, mul-ti-pli-ca-tion)
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 461--468
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 469--475
+
+ []
+
+
+Overfull \hbox (21.20279pt too wide) in paragraph at lines 497--508
 \T1/cmr/m/n/12 where $\OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 ^^^[]\OMS/cmsy/m/n/12 
 g[]$ \T1/cmr/m/n/12 is called a ba-sis dic-tio-nary [[]]. For ex-am-ple, in pol
 y-no-mial ap-prox-i-ma-tions,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 472--483
+Underfull \hbox (badness 10000) in paragraph at lines 497--508
 
  []
 
-
-Overfull \hbox (6.55794pt too wide) in paragraph at lines 484--501
+[28]
+Overfull \hbox (6.55794pt too wide) in paragraph at lines 509--526
 \T1/cmr/m/n/12 [[]]. For-tu-nately, in many ap-pli-ca-tions, many bases are in-
 signif-i-cant so their co-ef-fi-cients
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 484--501
-
- []
-
-[28]
-Underfull \hbox (badness 10000) in paragraph at lines 502--523
+Underfull \hbox (badness 10000) in paragraph at lines 509--526
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 527--553
-
- []
-
-[29]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [30]
-Underfull \hbox (badness 10000) in paragraph at lines 589--594
+Underfull \hbox (badness 10000) in paragraph at lines 527--548
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 595--611
+Underfull \vbox (badness 5652) has occurred while \output is active []
+
+ [29]
+Underfull \hbox (badness 10000) in paragraph at lines 552--578
+
+ []
+
+[30]
+Underfull \hbox (badness 10000) in paragraph at lines 614--619
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 615--626
+Underfull \hbox (badness 10000) in paragraph at lines 620--636
 
  []
 
@@ -1018,48 +1046,53 @@ Underfull \hbox (badness 10000) in paragraph at lines 615--626
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [31]
-Overfull \hbox (9.9646pt too wide) in paragraph at lines 627--631
+Underfull \hbox (badness 10000) in paragraph at lines 640--651
+
+ []
+
+
+Overfull \hbox (9.9646pt too wide) in paragraph at lines 652--656
 \T1/cmr/m/n/12 op-ti-miza-tion be-gins by as-sum-ing that the ob-jec-tive func-
 tion is sam-pled from a stochas-tic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 635--642
+Underfull \hbox (badness 10000) in paragraph at lines 660--667
 
  []
 
-
-Underfull \vbox (badness 3872) has occurred while \output is active []
-
- [32]
-Overfull \hbox (0.61395pt too wide) in paragraph at lines 695--707
+[32] [33]
+Overfull \hbox (0.61395pt too wide) in paragraph at lines 720--732
 \T1/cmr/m/n/12 Bayesian ap-proach [[], []]. I re-fer to the ref-er-ence [[]] fo
 r the de-tails and a com-par-i-son
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 695--707
+Underfull \hbox (badness 10000) in paragraph at lines 720--732
+
+ []
+
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 746.
+
+Underfull \vbox (badness 2035) has occurred while \output is active []
+
+ [34]
+Underfull \hbox (badness 10000) in paragraph at lines 762--770
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 771--781
 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [33]
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 721.
-
-Underfull \hbox (badness 10000) in paragraph at lines 737--745
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 746--756
-
- []
-
-[34] [35] [36]
-Overfull \hbox (12.45134pt too wide) in paragraph at lines 814--817
+ [35]
+[36]
+Overfull \hbox (12.45134pt too wide) in paragraph at lines 839--842
 \T1/cmr/m/n/12 con-strained by gray-box con-ser-va-tion law sim-u-la-tions with
  un-known flux func-tions,
  []
@@ -1097,7 +1130,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--76
 Underfull \vbox (badness 6348) has occurred while \output is active []
 
  [40]
-<../locality.png, id=155, 448.7967pt x 277.5168pt>
+<../locality.png, id=156, 448.7967pt x 277.5168pt>
 File: ../locality.png Graphic file (type png)
  <use ../locality.png>
 Package pdftex.def Info: ../locality.png used on input line 78.
@@ -1122,7 +1155,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 124--134
 
  []
 
-<../excitedDomain.png, id=161, 586.8324pt x 442.2924pt>
+<../excitedDomain.png, id=162, 586.8324pt x 442.2924pt>
 File: ../excitedDomain.png Graphic file (type png)
 
 <use ../excitedDomain.png>
@@ -1142,7 +1175,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 163--177
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [43]
-<../meyer_2.png, id=169, 203.159pt x 163.812pt>
+<../meyer_2.png, id=170, 203.159pt x 163.812pt>
 File: ../meyer_2.png Graphic file (type png)
  <use ../meyer_2.png>
 Package pdftex.def Info: ../meyer_2.png used on input line 199.
@@ -1155,7 +1188,7 @@ Package amsmath Warning: Cannot use `split' here;
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [44 <../meyer_2.png>] <../basis_combined.png, id=175, 357.335pt x 282.656pt>
+ [44 <../meyer_2.png>] <../basis_combined.png, id=176, 357.335pt x 282.656pt>
 File: ../basis_combined.png Graphic file (type png)
 
 <use ../basis_combined.png>
@@ -2178,49 +2211,49 @@ Underfull \hbox (badness 10000) in paragraph at lines 339--361
 
 
 ] [103]
-Underfull \hbox (badness 1742) in paragraph at lines 104--107
+Underfull \hbox (badness 1742) in paragraph at lines 114--117
 []\T1/cmr/m/n/12 Friedman, J. H.   An Overview of Pre-dic-tive Learn-ing and Fu
 nc-tion
  []
 
 
-Underfull \hbox (badness 2460) in paragraph at lines 124--128
+Underfull \hbox (badness 2460) in paragraph at lines 134--138
 []\T1/cmr/m/n/12 Blatman, G., and Su-dret, B.  An Adap-tive Al-go-rithm to Buil
 d up
  []
 
-
-Underfull \hbox (badness 3179) in paragraph at lines 162--165
+[104]
+Underfull \hbox (badness 3179) in paragraph at lines 172--175
 []\T1/cmr/m/n/12 Nocedal, J.  Up-dat-ing Quasi-Newton Ma-tri-ces with Lim-ited 
 Stor-age.
  []
 
-[104]
-Underfull \hbox (badness 1052) in paragraph at lines 194--197
+
+Underfull \hbox (badness 1052) in paragraph at lines 204--207
 []\T1/cmr/m/it/12 Conn, A. R., Schein-berg, K., and Vi-cente, L. N.  Global Con
 -ver-gence
  []
 
 
-Underfull \hbox (badness 1253) in paragraph at lines 199--202
+Underfull \hbox (badness 1253) in paragraph at lines 209--212
 \T1/cmr/m/it/12 Trust-region Al-go-rithms for Derivative-free Op-ti-miza-tion. 
  \T1/cmr/m/n/12 SIAM Re-view\T1/cmr/m/it/12 ,
  []
 
 
-Underfull \hbox (badness 1097) in paragraph at lines 204--207
+Underfull \hbox (badness 1097) in paragraph at lines 214--217
 []\T1/cmr/m/it/12 Pint$[]$r, J.D.  Global Op-ti-miza-tion in Ac-tion: Con-tin-u
 -ous and Lip-s-chitz
  []
 
 
-Underfull \hbox (badness 1331) in paragraph at lines 204--207
+Underfull \hbox (badness 1331) in paragraph at lines 214--217
 \T1/cmr/m/it/12 Op-ti-miza-tion. Al-go-rithms, Im-ple-men-ta-tions and Ap-pli-c
 a-tions.  \T1/cmr/m/n/12 Non-con-vex
  []
 
 [105] [106]
-Underfull \hbox (badness 1728) in paragraph at lines 369--372
+Underfull \hbox (badness 1728) in paragraph at lines 379--382
 []$[]$\T1/cmr/m/it/12 ilinskas, J.  Branch and Bound with Sim-pli-cial Par-ti-t
 ions for Global
  []
@@ -2232,10 +2265,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 7089 strings out of 493308
- 104375 string characters out of 6140092
- 192289 words of memory out of 5000000
- 10174 multiletter control sequences out of 15000+600000
+ 7092 strings out of 493308
+ 104435 string characters out of 6140092
+ 192310 words of memory out of 5000000
+ 10177 multiletter control sequences out of 15000+600000
  35284 words of font info for 90 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  38i,27n,39p,890b,744s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2275,7 +2308,7 @@ type1/public/cm-super/sfsl1200.pfb></usr/share/texmf/fonts/type1/public/cm-supe
 r/sfti0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr
 /share/texmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/t
 ype1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (109 pages, 2856892 bytes).
+Output written on main.pdf (109 pages, 2859235 bytes).
 PDF statistics:
  600 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

@@ -84,6 +84,16 @@ Corliss, G.
 \newblock Automatic Differentiation of Algorithms: From Simulation to Optimization.
 \newblock {\em Springer Science and Business Media}, vol.1, 2002.
 
+\bibitem{intro adjoint}
+Giles, M. B., and Pierce, N. A. 
+\newblock An Introduction to the Adjoint Approach to Design. 
+\newblock{\em Flow, Turbulence and Combustion}, 65(3-4):393-415, 2000.
+
+\bibitem{discrete adjoint phd}
+Schneider, R. 
+\newblock Applications of the Discrete Adjoint Method in Computational Fluid Dynamics.
+\newblock {\em Doctoral Dissertation, The University of Leeds}, 2006.
+
 % Adaptive Basis ========================================
 \bibitem{PCE}
 Ghanem, R. G., and Spanos, P. D. 

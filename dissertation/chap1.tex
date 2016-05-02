@@ -402,6 +402,7 @@ plus one adjoint simulation
 To see this, linearize $\mathcal{F}(u,c)=0$ into a variational form
 \begin{equation}
     \delta \mathcal{F} = \frac{\partial \mathcal{F}}{\partial u} \delta u + \frac{\partial \mathcal{F}}{\partial c} \delta c = 0\,,
+\label{eqn: variational form}
 \end{equation}
 which gives
 \begin{equation}
@@ -429,13 +430,34 @@ solves for $\lambda$. \\
 
 Adjoint methods can be categorized into continuous adjoint and discrete adjoint methods,
 depending on whether the linearization or the discretization is excuted first \cite{review adjoint geo}.
+The above procedure, \eqref{eqn: variational form} thru. \eqref{eqn: adjoint},
+is the continuous adjoint,
+where $\mathcal{F}$ is a differential operator.
 The continous adjoint method linearizes the continuous PDE $\mathcal{F}(u,c) = 0$ first,
 then discretizes the adjoint equation 
 \eqref{eqn: adjoint} \cite{adjoint}. 
-Explain that (dF/du)^T in this case can be derived as another differenitial operator, with a different set of boundary conditions and/or initial conditions, that uniquely determines a lambda. Refer to papers / books that contain readable derivation of the continuosu adjoint.
+In \eqref{eqn: adjoint}, 
+$\left(\frac{\partial \mathcal{F}}{\partial u}\right)^T$ can
+be derived as another differential operator. With proper boundary and/or initial
+conditions, it uniquely determines the adjoint solution $\lambda$. See \cite{intro adjoint}
+for a detailed derivation of the continuous adjoint equation.\\
 
-The discrete adjoint method 
-discretizes $\mathcal{F}(u,c)=0$ first, then linearizes the discretized adjoint equation \cite{discrete adjoint}.
+The discrete adjoint method \cite{discrete adjoint}
+discretizes $\mathcal{F}(u,c)=0$ first. After the discretization, $u$ and $c$ become
+vectors $\boldsymbol{u}$ and $\boldsymbol{c}$.
+$\boldsymbol{u}$ is defined implicitly by the system
+$\mathcal{F}_d(\boldsymbol{u}, \boldsymbol{c}) = 0$, where $\mathcal{F}_d$ indicates
+the discretized difference operator. Using the same derivation as \eqref{eqn: variational form}
+thru. \eqref{eqn: adjoint}, the discrete adjoint equation can be obtained
+\begin{equation}
+    \left(\frac{\partial \mathcal{F}_d}{\partial \boldsymbol{u}}\right)^T \boldsymbol{\lambda} = \left(\frac{\partial \xi}{\partial \boldsymbol{u}}\right)^T\,.
+    \label{eqn: adjoint}
+\end{equation}
+$\left(\frac{\partial \mathcal{F}_d}{\partial \boldsymbol{u}}\right)^T$ is derived as
+another difference operator. With proper discretized boundary/initial conditions, it uniquely
+ditermines the discrete adjoint vector $\boldsymbol{\lambda}$.
+See Chapter 1 of \cite{discrete adjoint phd} for a detailed derivation of the discrete adjoint.\\
+
 The discrete adjoint method can be implemented by automatic differentiation (AD) 
 \cite{AD review}.
 AD exploits the fact that a PDE simulation, no matter how complicated, executes a sequence
