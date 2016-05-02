@@ -69,6 +69,16 @@ Jameson, A.
 \newblock {\em Journal of Scientific Computing},
 3(3):233-260, 1988.
 
+\bibitem{review adjoint geo}
+Plessix, R. E. 
+\newblock A Review of the Adjoint-state Method for Computing the Gradient of a Functional with Geophysical Applications. 
+\newblock{\em Geophysical Journal International}, 167(2):495-503, 2006.
+
+\bibitem{discrete adjoint}
+Giles, M. B., Duta, M. C., M-uacute, J. D., ller, and Pierce, N. A. 
+\newblock Algorithm Developments for Discrete Adjoint Methods. 
+\newblock{ \em AIAA journal}, 41(2):198-205, 2003.
+
 \bibitem{AD review}
 Corliss, G. 
 \newblock Automatic Differentiation of Algorithms: From Simulation to Optimization.
@@ -164,6 +174,11 @@ Torczon, V.
 \newblock On the Convergence of Pattern Search Algorithms. 
 \newblock {\em SIAM Journal on optimization}, 7(1):1-25, 1997.
 
+\bibitem{trust region review}
+Conn, A. R., Gould, N. I., and Toint, P. L. 
+\newblock Trust Region Methods.
+\newblock \em{SIAM}, vol. 1, 2000.
+
 \bibitem{linear trust region}
 Powell, M.J.
 \newblock A Direct Search Optimization Method that Models the Objective and Constraint Functions
@@ -189,6 +204,11 @@ Wild, S. M., and Shoemaker, C.
 Pint$\acute{\textrm{e}}$r, J.D.
 \newblock Global Optimization in Action: Continuous and Lipschitz Optimization. Algorithms, Implementations and Applications. 
 \newblock {\em Nonconvex Optimization and its Applications}, vol. 6, 1996.
+
+\bibitem{evolution review}
+Schwefel, H. P. P. 
+\newblock Evolution and Optimum Seeking: the Sixth Generation. 
+\newblock {\em John Wiley \& Sons, Inc.}, 1993.
 
 \bibitem{genetic algo}
 Holland, J.H.
@@ -320,10 +340,15 @@ Jones, D. R., Schonlau, M., and Welch, W. J.
 \newblock Efficient Global Optimization of Expensive Black-box Functions. 
 \newblock {\em Journal of Global Optimization}, 13(4):455-492, 1998.
 
-\bibitem{test functions for optimization}
-Surjanovic, S. and Bingham, D. 
-\newblock{ Virtual Library of Simulation Experiments: Test Functions and Datasets.}
-\newblock{ Retrieved March 28, 2016, from \em {http://www.sfu.ca/~ssurjano}},  2013.
+\bibitem{nonlinear program}
+Bertsekas, D. P. 
+\newblock Nonlinear Programming.
+\newblock{\em Athena Scientific}, Cambridge, MA, 1999.
+
+\bibitem{stochastic search}
+Spall, J. C. 
+\newblock{ Introduction to Stochastic Search and Optimization: Estimation, Simulation, and Control.}
+\newblock{\em John Wiley \& Sons}, vol. 65, 2005.
 
 \bibitem{linear conjugate gradient}
 Fletcher, R., and Reeves, C. M. 
@@ -359,6 +384,11 @@ Yang, X. S., and Deb, S.
 Rasmussen, C. E. 
 \newblock Gaussian Processes in Machine Learning. 
 \newblock in {\em Advanced Lectures on Machine Learning}, Springer Berlin Heidelberg, pp.63-71, 2004.
+
+\bibitem{Matern kernel}
+Mat$\acute{\textrm{e}}$rn, B.
+\newblock{Spatial Variation},
+\newblock{\em Springer}, New York, 1960.
 
 \bibitem{prob of improve}
 Kushner, H. J. 

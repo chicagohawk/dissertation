@@ -229,11 +229,12 @@ of the unsteady one, so it will not be discussed separately.\\
 
 My thesis focuses on reducing the number of gray-box simulations in the optimization,
 especially for problems where $d$, the dimensionality of the control variable,
-is large. We assume that the computational cost
+is large. I assume that the computational cost
 is dominated by the repeated gray-box simulation, while the cost of optimization algorithm 
 is relatively small. Chapter 2 develops a mathematical procedure, called the twin model method, 
 that enables adjoint gradient computation by leveraging the full space-time solution.
-Based upon previous research, Chapter 3 develops an optimization algorithm that takes 
+Based upon previous research \cite{derivative RKHS, convergen EI, practical Bayesian, review EI, grad coKriging, KennedyOhagan1, KennedyOhagan2}, 
+Chapter 3 develops an optimization algorithm that takes 
 advantage of the estimated gradient to achieve iteration reduction. The utility of
 the estimated gradient for optimization is analyzed both numerically and theoretically.
 
@@ -246,30 +247,32 @@ I review the adjoint method since it is an essential ingredient for Chapter 2. F
 \subsection{Derivative-free Optimization}
 \label{section: DFO}
 Derivative-free optimization (DFO) requires only the availability of objective
-function values but no gradient information, thus is useful when the gradient
-is unavailable, unreliable, or too expensive to obtain \cite{gradfreereview}. 
+function values but no gradient information \cite{gradfreereview}, thus is useful when the gradient
+is unavailable, unreliable, or too expensive to obtain. 
 Such methods are suitable for problems constrained by black-box simulators.\\
 
 Depending on whether the searched optimum is local or global,
-DFO methods can be categorized into local methods and global methods.
+DFO methods can be categorized into local methods and global methods \cite{gradfreereview}.
 Local methods seek a local optimum which is also the global optimum for convex problems. 
 An important local method is the
-trust-region method. Trust-region method introduces a surrogate model that is
-cheap to evaluate and presumably accurate within a trust region: an adaptive neighborhood around the current iterate. 
+trust-region method \cite{trust region review}. Trust-region method introduces a surrogate model that is
+cheap to evaluate and presumably accurate within a trust region: an adaptive neighborhood around the current iterate \cite{trust region review}. 
 At each iterate, the surrogate is optimized in a domain bounded by the trust region to generate
-candidte steps for additional objective evaluations.
-The surrogates can be constructed either by interpolating the objective evaluations \cite{linear trust region, trustregionwild}, or by running a low-fidelity simulation \cite{MFO trust region}.
+candidte steps for additional objective evaluations \cite{trust region review}.
+The surrogates can be constructed either by interpolating the objective evaluations \cite{linear trust region, trustregionwild}, or by running a low-fidelity simulation \cite{MFO trust region,
+Alexandrov trust region}.
 Convergence to the objective function's optimum is guaranteed by ensuring the surrogate have the
 same value and gradient as the objective function when the size of the trust region shrinks to zero
 \cite{trustregionconn, trustregionwild}.\\
 
 Global methods seek the global optimum. 
-Example methods include the branch-and-bound search, evolution methods, and Bayesian methods. 
+Example methods include the branch-and-bound search \cite{Branch and Bound}, evolution methods \cite{evolution review}, and 
+Bayesian methods \cite{practical Bayesian, Locatelli, prob of improve}. 
 The branch-and-bound search sequentially partitions the entire control space into a tree structure, and
 determines lower and upper bounds for the optimum
 \cite{Branch and Bound}. Partitions that are inferior are eliminated 
-in the course of the search. The bounds are usually obtained through the assumption of the
-Lipschitz continuity or statistical bounds for the objective function. 
+in the course of the search \cite{Branch and Bound}. The bounds are usually obtained through the assumption of the
+Lipschitz continuity or statistical bounds for the objective function \cite{Branch and Bound}. 
 Evolution methods maintain a population
 of candidate controls, which adapts and mutates in a way that resembles natural phenomenons
 such as the natural selection \cite{genetic algo, cuckoo} 
@@ -280,46 +283,50 @@ and the posterior, a probability measure, of the objective
 is updated using Bayesian metrics \cite{practical Bayesian, review EI}. 
 The posterior is used to pick the next candidate step
 that best balances the exploration of unsampled regions and the exploitation around the sampled
-optimum \cite{Locatelli, jones1998, GP bandit}. Details of Bayesian optimization methods are discussed in section \ref{section: bayes opt}.\\
+optimum \cite{Locatelli, jones1998, GP bandit}. Details of Bayesian optimization methods are discussed in Section \ref{section: bayes opt}.\\
 
-Because many real-world problems are non-convex, global methods are preferred to local methods
-if the global optimum is desired. Besides, it's important to notice that some DFO methods 
-can be modified to admit gradient information if available. The details are discussed in section
+Because many real-world problems are non-convex, global methods are usually preferred to local methods
+if the global optimum is desired \cite{gradfreereview}. Besides, it's important to notice that some DFO methods 
+can be modified to admit gradient information if available \cite{derivative RKHS, grad coKriging, grad particle swarm, grad cuckoo}. 
+The details are discussed in Section
 \ref{section: GBO}.\\
 
 \subsection{Gradient-based Optimization}
 \label{section: GBO}
-Gradient-based optimization (GBO) requires the availability of the gradient values. 
+Gradient-based optimization (GBO) requires the availability of the gradient values \cite{opt via sim review, nonlinear program}. 
 A gradient value, if exists,
 provides the optimal infinitesimal change of control variables at each iterate,
 thus is useful in searching for a better control.
-Similar to DFO, GBO can also be categorized into local methods and global methods.
-Examples of local GBO methods include the gradient descent method, the (nonlinear) conjugate gradient 
-methods, and the quasi-Newton methods. The gradient descent method and
-the (nonlinear) conjugate gradient methods
-choose the search step in the direction of either the gradient or a conjugate gradient
+Similar to DFO, GBO can also be categorized into local methods and global methods \cite{opt via sim review}.
+Examples of local GBO methods include the gradient descent methods 
+\cite{stochastic search, backtrack line search}, the conjugate gradient 
+methods \cite{linear conjugate gradient, nonlinear conjugate gradient}, and the quasi-Newton methods \cite{quasiNewton, LBFGS}. 
+The gradient descent methods and
+the conjugate gradient methods
+choose the search step in the direction of either the gradient \cite{stochastic search, backtrack line search} or a conjugate gradient
 \cite{linear conjugate gradient, nonlinear conjugate gradient}.
 The quasi-Newton methods, such as the Broyden-Fletcher-Goldfarb-Shannon (BFGS) method
 \cite{quasiNewton},
 approximate the Hessian matrix using the gradient values. The approximated Hessian allows
 a local quadratic approximation to the objective function which determines the search step 
-by the Newton's method. 
-Notice that some local DFO methods can be modified to admit gradient information. For instance,
+by the Newton's method \cite{quasiNewton}. 
+In addition, some local DFO methods can be modified to admit gradient information \cite{trust region global, trust region inexact grad}. 
+For instance,
 in trust-region methods, the construction of local surrogates can incorporate 
 gradient values if available \cite{trust region global, trust region inexact grad}.
 The usage of gradient usually improves the surrogate's accuracy thus enhances the quality
-of the search step. \\
+of the search step \cite{trust region global, trust region inexact grad}. \\
 
-Global GBO methods search for the global optimum using gradient values.
-Many global GBO methods can trace their development to corresponding DFO methods. 
+Global GBO methods search for the global optimum using gradient values \cite{opt via sim review, nonlinear program}.
+Many global GBO methods can trace their development to corresponding DFO methods \cite{stogo 1, stogo 2, grad particle swarm, grad cuckoo, grad coKriging}. 
 For example, the stochastic gradient-based global optimization method (StoGo) 
 \cite{stogo 1, stogo 2} works by partitioning the control space and bounding the optimum in the same way 
-as the branch-and-bound method. But the search in each partition is performed
-by gradient-based algorithms such as BFGS. Similarly, some gradient-based evolution methods,
+as the branch-and-bound method \cite{Branch and Bound}. But the search in each partition is performed
+by gradient-based algorithms such as BFGS \cite{quasiNewton}. Similarly, some gradient-based evolution methods,
 such as the gradient-based particle swarm method \cite{grad particle swarm} 
 and the gradient-based cuckoo search method \cite{grad cuckoo},
-can be viewed as gradient variations of corresponding derivative-free counterparts.
-My thesis is particularly interested in the gradient-based Bayesian optimization method.
+can be viewed as gradient variations of corresponding derivative-free counterparts \cite{particle swarm, cuckoo}.
+My thesis is particularly interested in the gradient-based Bayesian optimization method \cite{coKriging}.
 In this method, the posterior of the objective function assimilates both the gradient 
 and function values in a CoKriging framework \cite{derivative RKHS, coKriging}.
 The details of my treatment is discussed in Section \ref{section: bayes opt} and
@@ -330,21 +337,21 @@ achieve near-optimality. The effect of iteration reduction
 is analyzed numerically in Chapter \ref{chapter 3}.\\
 
 A property of the Bayesian method is that the search step can be determined using all 
-available objective and gradient values. In addition, the search step is optimal 
-under the Bayesian metric. The advantage of such properties can be justified
+available objective and gradient values \cite{practical Bayesian, jones1998}. In addition, the search step is optimal 
+under a Bayesian metric \cite{practical Bayesian, jones1998}. The advantage of such properties can be justified
 when the objective and gradient evaluations
-are dominantly more expensive than running the optimization algorithm. Besides, the
+are dominantly more expensive than running the optimization algorithm \cite{practical Bayesian}. Besides, the
 Baysian optimization method is provably convergent even if the gradient values are estimated
-inexactly. Under some assumptions of the objective and the inexact gradient, the convergence 
-can be proven regardless of the accuracy of the gradient estimation. Details of the proof
-are given in Section \ref{sec: chap3 convergence}.\\
+inexactly, which is discussed in Section \ref{sec: chap3 convergence}.
+The conclusion of Section \ref{sec: chap3 convergence} is: Under some assumptions of the objective and the inexact gradient, 
+a Bayesian optimization algorithm can find the optimum regardless of the accuracy of the gradient estimation.\\
 
 \indent To achieve a desired objective value, 
 GBO methods generally require much less iterations than DFO methods for problems with many 
-control variables. GBO methods can be efficiently applied to 
+control variables \cite{opt via sim review, nonlinear program}. GBO methods can be efficiently applied to 
 optimization constrained by open-box simulators, because the gradient is efficiently computable by
-the adjoint method.
-My thesis extends GBO to optimization constrained by gray-box simulators by estimating 
+the adjoint method \cite{adjoint, opt via sim review}.
+My thesis extends GBO to optimization constrained by gray-box simulation by estimating 
 the gradient using the full space-time solution.
 
 \subsection{The Adjoint Method}
@@ -391,22 +398,23 @@ using one simulation of $F(u,c)=0$ and one simulation of \eqref{eqn: adjoint} th
 solves for $\lambda$. \\
 
 Adjoint methods can be categorized into continuous adjoint and discrete adjoint methods,
-depending on whether the linearization or the discretization is excuted first.
+depending on whether the linearization or the discretization is excuted first \cite{review adjoint geo}.
 The continous adjoint method linearizes the continuous PDE $F(u,c) = 0$ first,
-then discretizes the adjoint equation \eqref{eqn: adjoint}. The discrete adjoint method 
-discretizes $F(u,c)=0$ first, then linearizes the discretized adjoint equation.
+then discretizes the adjoint equation \eqref{eqn: adjoint} \cite{adjoint}. The discrete adjoint method 
+discretizes $F(u,c)=0$ first, then linearizes the discretized adjoint equation \cite{discrete adjoint}.
 The discrete adjoint method can be implemented by automatic differentiation (AD) 
 \cite{AD review}.
 AD exploits the fact that a PDE simulation, no matter how complicated, executes a sequence
 of elementary arithmetic operations (e.g. addition, multiplication) and elementary functions
-(e.g. $\exp$, $\sin$). By storing the operations in addition to their output values, 
+(e.g. $\exp$, $\sin$) \cite{AD review}. By storing the operations in addition to their output values, 
 $\frac{d\xi}{d c}$ can be computed using the chain rule that propogates the gradient 
-from $\xi$ to $c$. \\
+from $\xi$ to $c$ \cite{AD review}. \\
 
 The adjoint method has seen proliferated applications in many areas, including the aerodynamic design
 \cite{adjoint aerodynamics} and the petroleum reservoir control
 \cite{adjoint reservoir optimal control}. Conventionally, the adjoint method is not applicable
-to gray-box simulations. To break this limitation, Chapter \ref{chapter 2} develops the twin model 
+to gray-box simulations, as explained in Section \ref{sec: motivation}. 
+To break this limitation, Chapter \ref{chapter 2} develops the twin model method
 that enables the adjoint gradient computation for gray-box simulations.\\
 
 \subsection{Adaptive Basis Construction}
@@ -423,54 +431,62 @@ a bivariate function can be represented by monomials
 \begin{equation*}
     1,\,  u_1,\, u_1^2,\,
     u_2,\, u_1 u_2,\,  u_1^2 u_2, \,
-    u_2^2,\,  u_1 u_2^2,\,  u_1^2 u_2^2,\, \cdots\,,
+    u_2^2,\,  u_1 u_2^2,\,  u_1^2 u_2^2,\, \cdots\,.
 \end{equation*}
-although orthonormal bases, such as the Hermite polynomials, are preferable in most applications.
 Let $\mathcal{A}$ be a non-empty finite subset of $\mathbb{N}$,
 $\tilde{F}$ can be approximated using a subset of the bases, 
 \begin{equation}
     \tilde{F}(\cdot) \approx \sum_{i\in \mathcal{A}} {\alpha_i} \phi_i(\cdot)\,,
     \label{eqn: linear param truncate}
 \end{equation}
-where $\{\phi_i\}_{i\in \mathcal{A}}$ is called a basis dictionary. 
+where $\{\phi_i\}_{i\in \mathcal{A}}$ is called a basis dictionary \cite{match pursuit}. 
 For example, in polynomial approximations, the basis dictionary usually consists of
-the basis whose total polynomial degree does not exceed $p\in \mathbb{N}$.
-Given a basis dictionary, the coefficients can be determined by projection \cite{PCE}
-or by least squares, such that the error between approximations
-and function evaluations is minimized. My thesis parameterizes the twin-model flux $\tilde{F}$ and
+the basis whose total polynomial degree does not exceed $p\in \mathbb{N}$ \cite{PCE}.
+Given a basis dictionary, the coefficients can be determined by projection \cite{PCE}, 
+such that the error between the approximation
+and the true function on a set of evaluation points 
+is minimized. My thesis parameterizes the twin-model flux $\tilde{F}$ and
 optimizes the coefficients,
 so the twin model serves as a proxy of the gray-box model. Details are discussed in 
 Section \ref{sec: flux param}.\\
 
 The cardinality of $\mathcal{A}$ can increase drastically as the number of variables increases, and
-as the basis complexity (e.g. the total degree $p$ of the polynomial basis) increases.
+as the basis complexity (e.g. the total degree $p$ of the polynomial basis) increases \cite{PCE}.
 Fortunately, in many applications, 
 many bases are insignificant so their coefficients can set to zero without affecting the approximation 
-performance. There are several methods that can determine the insignificant bases which result 
+performance \cite{match pursuit}. 
+There are several methods that can determine the insignificant bases which result 
 in a sparse representation, such as the Lasso regularization 
 \cite{Lasso variable selection} and the matching 
 pursuit \cite{match pursuit}. Lasso regularization adds a penalty $\lambda
 \sum_{i\in\mathcal{A}}|\alpha_i|$
-to the approximation error, where $\lambda>0$ is a tunable parameter. 
-It balances the approximation error and the number of non-zero
-coefficients. Matching pursuit adopts a greedy, stepwise approach to construct a basis. 
-It either selects a significant basis one-at-a-time (forward selection \cite{forward selection}),
-or prunes an insignificant basis one-at-a-time (backward pruning \cite{backward prune}).
+to the approximation error, where $\lambda>0$ is a tunable parameter \cite{Lasso variable selection}. 
+Therefore it balances the approximation error and the number of non-zero
+coefficients \cite{Lasso variable selection}.
+Matching pursuit adopts a greedy, stepwise approach to construct a basis \cite{match pursuit}.
+It either selects a significant basis one-at-a-time (forward selection) \cite{forward selection},
+or prunes an insignificant basis one-at-a-time (backward pruning) \cite{backward prune}.
 Matching pursuit will be used in my thesis because it requires no tunable parameters. \\
 
 In conventional matching pursuit, the basis dictionary needs to
-be pre-determined, with the belief that the dictionary is a superset of the significant basis. 
+be pre-determined, with the belief that the dictionary is a superset of the significant basis
+\cite{adaptive basis 2}. 
 This can be problematic because the significant ones are unknown a prior.
 To address this issue, adaptive methods have been devised 
 \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
 Although different in details, such methods share the same heuristics: Starting from a trivial
 basis (e.g. 1), a dictionary is built up progressively 
-by iterating over a forward step and a backward step.
+by iterating over a forward step and a backward step
+\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
 The forward step searches over a candidate set of bases, and appends the significant ones 
-to the dictionary. The backward step searches over the current dictionary, and removes the 
-insignificant ones from the dictionary. 
+to the dictionary
+\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
+The backward step searches over the current dictionary, and removes the 
+insignificant ones from the dictionary
+\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
 The iteration stops when no alternation is made to the dictionary or a targeted approximation
-performance is met.
+performance is met 
+\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
 Such heuristics are adopted in my thesis to build up 
 a sparse representation of $\tilde{F}$. Details are discussed in Section \ref{sec: adaptive basis}.\\
 
@@ -482,27 +498,30 @@ A computer simulation may not reproduce experimental results
 exactly due to several sources of uncertainties,
 including parameter uncertainty, model inadequacy, code uncertainty,
 and observation error \cite{KennedyOhagan2}.
-Parameter uncertainty refers to uncertain parameters of a model.
+Parameter uncertainty refers to uncertain parameters of a model \cite{KennedyOhagan2}.
 Consider an example in the polymer-injected petroleum reservoir. The parameters in the permeability
 models and viscosity models, measured in laboratory conditions, may not equal the
 true parameters in reservoir conditions. Parameter uncertainty can be eliminated if 
-the true parameters are known and specified in a simulation. 
-Model inadequacy relates to the fact that no model is perfect.
+the true parameters are known and specified in a simulation \cite{KennedyOhagan2}. 
+Model inadequacy relates to the fact that no model is perfect \cite{KennedyOhagan2}.
 The model output differs from experimental results due to underlying
 missing physics and numerical approximations, even if the model's parameter uncertainty 
-is eliminated. For example, in the same petroleum reservoir simulation, model inadequacy would 
+is eliminated \cite{KennedyOhagan2}. 
+For example, in the same petroleum reservoir simulation, model inadequacy would 
 exist if the compressibility is neglected, or if the flux is approximated by numerical schemes
 like upwinding.  Code uncertainty refers to the unknown output of a computer simulation given any 
-particular control variables and model parameters until the code is run. 
+particular control variables and model parameters until the code is run \cite{KennedyOhagan2}. 
 In theory, code uncertainty disappears if the model is simulated densely
-over its entire input domain. In practice, however, the simulation output can only be interpolated
+over its entire input domain \cite{KennedyOhagan2}. 
+In practice, however, the simulation output can only be interpolated
 on a limited number of simulated results since the code can be expensive to run.
 Observation error is the uncertainty associated with experimental
-measurements. This error represents the variability in the experimental response if
-the experiment were repeated multiple times under the exact same settings.\\
+measurements \cite{KennedyOhagan2}. 
+This error represents the variability in the experimental response if
+the experiment were repeated multiple times under the exact same settings \cite{KennedyOhagan2}.\\
 
 Model calibration addresses the problem of adjusting the model parameters and 
-quantifying the uncertainties. 
+quantifying the uncertainties \cite{KennedyOhagan2}. 
 An important approach for model calibration, proposed by Kennedy and O'Hagan,
 adopts a Bayesian modeling for the observation, the code output, and 
 the uncertainties \cite{KennedyOhagan2,
@@ -517,17 +536,22 @@ by
 \end{equation}
 where $z_i$ is the $i$th observation, $\rho$ is an unknown regression parameter, 
 $\epsilon(\cdot)$ is the model inadequacy that depends on $c$, and $\delta_i$ is the observation
-error for the $i$th observation. $\delta_i$'s are assumed to be i.i.d. Gaussian distributed,
-which models the idiosyncratic observation error for individual experiments. $\epsilon(\cdot)$ accounts
-for the model inadequacy, which is assumed to be an unknown member of a Gaussian process. 
+error for the $i$th observation \cite{KennedyOhagan2}. 
+$\delta_i$'s are assumed to be i.i.d. Gaussian distributed,
+which models the idiosyncratic observation error for individual experiments
+\cite{KennedyOhagan2}. $\epsilon(\cdot)$ accounts
+for the model inadequacy, which is assumed to be an unknown member of a Gaussian process 
+\cite{KennedyOhagan2}. 
 The Gaussian process model expresses
 a belief in the smoothness of underlying function, and offers the flexibility in adjusting
-the smoothness by tuning hyperparameters like the correlation length. To incorporate the code
+the smoothness by tuning hyperparameters like the correlation length \cite{KennedyOhagan2}. 
+To incorporate the code
 uncertainty, $y(\cdot, \cdot)$ is modeled by a joint Gaussian process that distributes 
-on $c$ and $\theta$.
-Usually, $y(\cdot, \cdot)$ is assumed to be independent of $\epsilon(\cdot)$.
-We refer to the reference \cite{markov property} for a justification of the independence assumption.
-The parameter uncertainty is accounted for by assuming a prior distribution on $\theta$.
+on $c$ and $\theta$ \cite{KennedyOhagan2}.
+Usually, $y(\cdot, \cdot)$ is assumed to be independent of $\epsilon(\cdot)$ \cite{KennedyOhagan2}.
+I refer to the reference \cite{markov property} for a justification of the independence assumption.
+The parameter uncertainty is accounted for by assuming a distribution on $\theta$ 
+\cite{KennedyOhagan2}.
 Denote the hyperparameters in these Gaussian processes by $\phi$. A joint posterior distribution
 \begin{equation}
     p(\theta, \rho, \phi\big| \mathcal{D}) \propto p(\theta,\rho, \phi) p(\mathcal{D}\big| \theta, \rho,\phi)
@@ -558,16 +582,20 @@ It is a future work to extend the developments to joint calibration.\\
 \subsection{Bayesian Optimization}
 \label{section: bayes opt}
 Similar to other kinds of optimization, Bayesian optimization aims at finding the maximum
-of a function $\xi(\cdot)$ in a bounded set $\mathcal{C}\subset \mathbb{R}^d$. However,
+of a function $\xi(\cdot)$ in a bounded set $\mathcal{C}\subset \mathbb{R}^d$ 
+\cite{practical Bayesian, review EI, jones1998}. However,
 Bayesian optimization distinguishes from other methods by maintaining a probabilistic
-model for $\xi$. The probabilistic model is exploited to 
-make decisions about where to invest the next function evaluation in $\mathcal{C}$.
+model for $\xi$ \cite{practical Bayesian, review EI, jones1998}. 
+The probabilistic model is exploited to 
+make decisions about where to invest the next function evaluation in $\mathcal{C}$ 
+\cite{practical Bayesian, review EI, jones1998}.
 In addition, it uses all information of available evaluations, not just local evaluations,
-to direct the search step.\\
+to direct the search step 
+\cite{practical Bayesian, review EI, jones1998}.\\
 
 Consider the case when the objective function evaluation is available.
 Bayesian optimization begins by assuming that the objective function is sampled
-from a stochastic process. 
+from a stochastic process \cite{practical Bayesian, review EI, jones1998}. 
 A stochastic process is a function
 \begin{equation}\begin{split}
     f \; :\; & \mathcal{C} \times \Omega \rightarrow \mathbb{R}\\
@@ -581,14 +609,15 @@ $\xi(\cdot) = f(\cdot, \omega^*)$ with an unknown $\omega^* \in \Omega$.
 My thesis will use the notations $\xi(\cdot)$, $f(\cdot, \omega)$, and $f(\cdot, \omega^*)$ 
 interchangeably when the context is clear.\\
 
-Stationary Gaussian process is a stochastic process that is used ubiquitously in Bayesian optimization.
+Stationary Gaussian process is a stochastic process that is used ubiquitously in Bayesian optimization
+\cite{GP book}.
 For any given $\omega$ and any finite set of $N$ points $\{c_i\in \mathcal{C}\}_{i=1}^N$, 
 a stationary Gaussian process $f(\cdot, \cdot)$ 
 has the property that $\left\{ f(c_i, \cdot) \right\}_{i=1}^N$ 
 are multivariate Gaussian distributed; in addition, the distribution remains unchanged if 
 $c_i$'s are all added by the same constant in $\mathcal{C}$.
 The Gaussian process is solely determined by its mean 
-function $m(c)$ and its covariance function $K(c,c^\prime)$
+function $m(c)$ and its covariance function $K(c,c^\prime)$ \cite{GP book}
 \begin{equation}\begin{split}
     m(c) &= \mathbb{E}_\omega\big[f(c, \omega)\big]\\
     K(c, c^\prime) &= \mathbb{E}_\omega\Big[\big(f(c,\omega)-m(c)\big)\big(f(c^\prime,\omega)
@@ -596,7 +625,7 @@ function $m(c)$ and its covariance function $K(c,c^\prime)$
 \end{split}\end{equation}
 for any $c, c^\prime \in \mathcal{C}$, which is denoted by $f \sim\mathcal{N}(m, K)$.
 Conditioned on a set of samples $\left\{\xi(c_1), \cdots, \xi(c_N)\right\}$, 
-the posterior is also a Gaussian process with the mean and covariance
+the posterior is also a Gaussian process with the mean and covariance \cite{GP book}
 \begin{equation}\begin{split}
     \tilde{m}(c) & 
     = m(c) + K(c,\underline{c}_n)K(\underline{c}_n,\underline{c}_n)^{-1}
@@ -619,14 +648,14 @@ K(c, c_1), \cdots, K(c, c_N)\right)$, and
     \end{pmatrix}\,.
 \end{equation*}
 Without prior knowledge about the underlying function,
-$m(\cdot)$ is usually modeled as a constant independent of $c$.
+$m(\cdot)$ is usually modeled as a constant independent of $c$ \cite{GP book}.
 In many cases, the covariance are assumed isotropic, indicating that $K(c,c^\prime)$ only depends
-on the $L_2$ norm $\|c-c^\prime\|$.
+on the $L_2$ norm $\|c-c^\prime\|$ \cite{GP book}.
 There are many choices for $K$, such as the exponential kernel, the squared
 exponential kernel, and the Mat$\acute{\textrm{e}}$rn kernels, each embeds 
 different degrees of smoothness (differentiability) for the underlying function. For a survey of
-various covariance functions, we refer to the Chapter 4 in \cite{GP book}.
-Among such choices, the Mat$\acute{\textrm{e}}$rn $5/2$ kernel 
+various covariance functions, I refer to the Chapter 4 in \cite{GP book}.
+Among such choices, the Mat$\acute{\textrm{e}}$rn $5/2$ kernel \cite{Matern kernel}
 \begin{equation}
     K(c, c^\prime) = 
     \sigma^2 \left(1+\frac{\sqrt{5} \|c-c^\prime\|}{L}
@@ -635,10 +664,12 @@ Among such choices, the Mat$\acute{\textrm{e}}$rn $5/2$ kernel
 \end{equation}
 has been recommended because it results in functions that are
 twice differentiable, an assumption made by, e.g. quasi-Newton methods, but without further
-smoothness. My thesis will focus on using the Mat$\acute{\textrm{e}}$rn $5/2$ kernel. 
+smoothness \cite{practical Bayesian}. 
+My thesis will focus on using the Mat$\acute{\textrm{e}}$rn $5/2$ kernel. 
 Notice the parameters $L$ and $\sigma$, known as the hyperparametes, are yet to be determined. 
 They can be determined by the posterior maximum likelihood estimation (MLE) or by a
-fully-Bayesian approach. We refer to the reference \cite{practical Bayesian} for the details 
+fully-Bayesian approach \cite{practical Bayesian, jones1998}. 
+I refer to the reference \cite{practical Bayesian} for the details 
 and a comparison of these treatments. 
 My thesis will focus on MLE due to its simpler numerical implementation.
 \\
@@ -647,9 +678,13 @@ Based on the posterior and the current best evaluation
 $c_{\textrm{best}} = \argmax_{c\in \underline{c}_n}\xi(c)$, 
 Bayesian optimization introduces an acquisition function,
 $a:\mathcal{C} \rightarrow \mathbb{R}^+$, that evaluates the expected utility of
-investing the next sample at $c\in \mathcal{C}$. The location of the next sample is 
-determined by an optimization $c_{N+1} = \argmax_{c\in\mathcal{C}} a(c)$.
-In most cases, a greedy acquisition function is used, which evaluates the one-step-lookahead utility.
+investing the next sample at $c\in \mathcal{C}$
+\cite{GP bandit, practical Bayesian, review EI, jones1998, prob of improve}.
+The location of the next sample is 
+determined by an optimization $c_{N+1} = \argmax_{c\in\mathcal{C}} a(c)$
+\cite{GP bandit, practical Bayesian, review EI, jones1998, prob of improve}.
+In most cases, a greedy acquisition function is used, which evaluates the one-step-lookahead utility
+\cite{GP bandit, practical Bayesian, review EI, jones1998, prob of improve}.
 There are several choices for the acquisition function, such as
 \begin{itemize}
     \item the probability of improvement (PI) \cite{prob of improve}, 
@@ -673,13 +708,13 @@ $\gamma(c) = \sigma^{-1}(c)\big(\mu(c) - \xi(c_{\textrm{best}})\big)$,
 and $\Phi, \mathcal{N}$ indicate the cumulative and
 density functions for the standard normal distribution.
 My thesis will focus on the EI acquisition function, as it behaves better 
-than the PI, and requires no extra tunable parameters.
+than the PI, and requires no extra tunable parameters \cite{practical Bayesian}.
 Because \eqref{eqn: EI} has a closed-form gradient, the acquisition function
-can be maximized by a global GBO method, e.g. StoGo, to obtain its global maximum.\\
+can be maximized by a global GBO method, e.g. StoGo \cite{stogo 2}, to obtain its global maximum.\\
 
 Although my thesis only focuses on bound constraints as shown in \eqref{eqn: objective prototype}, 
 Bayesian optimization can accommodate more general inequality and equality 
-constraints. The constraints can be enforced by modifying the objective, such as
+constraints \cite{PhD review constraint}. The constraints can be enforced by modifying the objective, such as
 the penalty method \cite{penalty method}, the augmented Lagrangian method
 \cite{augmented lagrangian method}, and the barrier function method \cite{barrier method}.
 They can also be enforced by modifying the acquisition function, such as the
@@ -689,11 +724,12 @@ See Chapter 2 of \cite{PhD review constraint}
 for a detailed review of constrained Bayesian optimization.\\
 
 In addition to function evaluations $\xi(\underline{c}_n)$, Bayesian optimization
-admits gradient information \cite{derivative RKHS, grad coKriging}. Besides, such
-evaluations can be inexact, possibly corrupted by model inadequacy and observation error.
-These properties are important because my thesis 
-will use both the exact function evaluation and the inexact twin-model gradient 
-for the optimization. 
+admits gradient information \cite{derivative RKHS, grad coKriging}. In Chapter \ref{chapter 3},
+I investigate the scenario where the gradient
+evaluations are inexact, possibly corrupted by model inadequacy and observation error
+\cite{KennedyOhagan2}.
+The Bayesian optimization method developed in my thesis 
+allows both the exact function evaluation and the inexact gradient evaluation.
 Details of this topic will be discussed in Section
 \ref{sec: chap3 approach}.
 
