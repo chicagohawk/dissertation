@@ -244,6 +244,8 @@ the estimated gradient for optimization is analyzed both numerically and theoret
 Given the background, I review the literature on derivative-free optimization and gradient-based optimization. In addition,
 I review the adjoint method since it is an essential ingredient for Chapter 2. Finally, I review model calibration and Bayesian optimization methods, which serve as the framework for the developments in Chapter 3.
 \subsection{Review of Optimization Methods}
+Optimization methods can be categorized into derivative-free and gradient-based methods 
+\cite{gradfreereview}. In the sequel, I review the two types of methods.\\
 \subsubsection{Derivative-free Optimization}
 \label{section: DFO}
 Derivative-free optimization (DFO) requires only the availability of objective
@@ -291,7 +293,7 @@ if the global optimum is desired \cite{gradfreereview}. Besides, DFO methods usu
 a large number of function evaluations to converge, especially when the dimension of control is large
 \cite{gradfreereview}. This issue can be alleviated by incorporating the gradient information
 \cite{derivative RKHS, grad coKriging, grad particle swarm, grad cuckoo}.
-The details are discussed in the next section.\\
+The details are discussed in the next subsection.\\
 
 \subsubsection{Gradient-based Optimization}
 \label{section: GBO}
@@ -307,27 +309,35 @@ The gradient descent methods and
 the conjugate gradient methods
 choose the search step in the direction of either the gradient \cite{stochastic search, backtrack line search} or a conjugate gradient
 \cite{linear conjugate gradient, nonlinear conjugate gradient}.
-The quasi-Newton methods, such as the Broyden-Fletcher-Goldfarb-Shannon (BFGS) method
+Quasi-Newton methods, such as the Broyden-Fletcher-Goldfarb-Shannon (BFGS) method
 \cite{quasiNewton},
-approximate the Hessian matrix using the gradient values. The approximated Hessian allows
-a local quadratic approximation to the objective function which determines the search step 
+approximate the Hessian matrix using a series of gradient values. The approximated Hessian allows
+a local quadratic approximation to the objective function which determines the search direction
+and stepsize
 by the Newton's method \cite{quasiNewton}. 
-In addition, some local DFO methods can be modified to admit gradient information \cite{trust region global, trust region inexact grad}. 
+In addition, some local DFO methods can be enhanced to use gradient information \cite{trust region global, trust region inexact grad}. 
 For instance,
 in trust-region methods, the construction of local surrogates can incorporate 
 gradient values if available \cite{trust region global, trust region inexact grad}.
 The usage of gradient usually improves the surrogate's accuracy thus enhances the quality
-of the search step \cite{trust region global, trust region inexact grad}. \\
+of the search step, thereby reducing the required number of iterations
+\cite{trust region global, trust region inexact grad}.\\
 
 Global GBO methods search for the global optimum using gradient values \cite{opt via sim review, nonlinear program}.
 Many global GBO methods can trace their development to corresponding DFO methods \cite{stogo 1, stogo 2, grad particle swarm, grad cuckoo, grad coKriging}. 
 For example, the stochastic gradient-based global optimization method (StoGo) 
 \cite{stogo 1, stogo 2} works by partitioning the control space and bounding the optimum in the same way 
 as the branch-and-bound method \cite{Branch and Bound}. But the search in each partition is performed
-by gradient-based algorithms such as BFGS \cite{quasiNewton}. Similarly, some gradient-based evolution methods,
+by gradient-based algorithms such as BFGS \cite{quasiNewton}. 
+Similarly, some gradient-based evolution methods,
 such as the gradient-based particle swarm method \cite{grad particle swarm} 
 and the gradient-based cuckoo search method \cite{grad cuckoo},
 can be viewed as gradient variations of corresponding derivative-free counterparts \cite{particle swarm, cuckoo}.
+For example, the gradient-based particle swarm method combines particle swarm algorithm with the
+stochastic gradient descent method \cite{grad particle swarm}. 
+The movement of each particle is dictated not only by the 
+function evaluations of all particles, but also by its local gradient \cite{grad particle swarm}.\\
+
 My thesis is particularly interested in the gradient-based Bayesian optimization method \cite{coKriging}.
 In this method, the posterior of the objective function assimilates both the gradient 
 and function values in a CoKriging framework \cite{derivative RKHS, coKriging}.
@@ -340,70 +350,92 @@ is analyzed numerically in Chapter \ref{chapter 3}.\\
 
 A property of the Bayesian method is that the search step can be determined using all 
 available objective and gradient values \cite{practical Bayesian, jones1998}. In addition, the search step is optimal 
-under a Bayesian metric \cite{practical Bayesian, jones1998}. The advantage of such properties can be justified
+under a Bayesian metric \cite{practical Bayesian, jones1998}. 
+The advantage of such properties can be justified
 when the objective and gradient evaluations
-are dominantly more expensive than running the optimization algorithm \cite{practical Bayesian}. Besides, the
-Baysian optimization method is provably convergent even if the gradient values are estimated
+are dominantly more expensive than the overhead of 
+optimization algorithm \cite{practical Bayesian}. Besides, my thesis proves that the
+Baysian optimization method is convergent even if the gradient values are estimated
 inexactly, which is discussed in Section \ref{sec: chap3 convergence}.
 The conclusion of Section \ref{sec: chap3 convergence} is: Under some assumptions of the objective and the inexact gradient, 
 a Bayesian optimization algorithm can find the optimum regardless of the accuracy of the gradient estimation.\\
 
 \indent To achieve a desired objective value, 
 GBO methods generally require much less iterations than DFO methods for problems with many 
-control variables \cite{opt via sim review, nonlinear program}. GBO methods can be efficiently applied to 
+control variables \cite{opt via sim review, nonlinear program}. GBO methods can be 
+efficiently applied to 
 optimization constrained by open-box simulators, because the gradient is efficiently computable by
-the adjoint method \cite{adjoint, opt via sim review}.
+the adjoint method \cite{adjoint, opt via sim review}, which is introduced in the next subsection.
 My thesis extends GBO to optimization constrained by gray-box simulation by estimating 
 the gradient using the full space-time solution.
 
 \subsection{The Adjoint Method}
-Consider a differentiable objective function constrained by a PDE modeling the conservation law.
-Using the same notation of previous sections, 
-let the objective function be $\xi(u,c)$, $c\in \mathbb{R}^d$, 
+Consider a differentiable objective function constrained by a conservation law PDE 
+\eqref{eqn: govern PDE}.
+Let the objective function be $\xi(u,c)$, $c\in \mathbb{R}^d$, 
 and let the PDE \eqref{eqn: govern PDE} be abstracted
-as $F(u,c) = 0$. The gradient $\frac{d\xi}{dc}$ can be estimated trivially by finite difference. The
+as $\mathcal{F}(u,c) = 0$. 
+$\mathcal{F}$ is a parameterized differential operator, 
+together with boundary conditions and/or initial conditions, that uniquely defines a $u$ for each $c$.
+The gradient $\frac{d\xi}{dc}$ can be estimated trivially by finite difference. The
 $i$th component of the gradient is given by
 \begin{equation}
     \left(\frac{d\xi}{dc}\right)_i \approx \frac{1}{\delta} \big( 
     \xi(u+ \Delta u_i, c+\delta e_i) - \xi(u, c) \big)\,,
+    \label{eqn: FD eg}
 \end{equation}
 where
 \begin{equation}\begin{split}
-    F(u,c)=0\,, \quad F(u+\Delta u_i, c+ \delta e_i) = 0\,.
-\end{split}\end{equation}
+    \mathcal{F}(u,c)=0\,, \quad \mathcal{F}(u+\Delta u_i, c+ \delta e_i) = 0\,.
+\end{split}
+\label{eqn: define perturb}
+\end{equation}
 $e_i$ indicates the $i$th unit Cartesian basis vector in $\mathbb{R}^d$, and $\delta>0$ indicates
-a small perturbation. Thereby $d+1$ PDE simulations are required to evaluate the gradient.\\
+a small perturbation. 
+Because \eqref{eqn: define perturb} needs to be solved for every $\delta e_i$, 
+so that the corresponding $\Delta u_i$ can be used in \eqref{eqn: FD eg},
+$d+1$ PDE simulations are required to evaluate the gradient.\\
 
 In contrast, the adjoint method evaluates the gradient using only one PDE simulation
+plus one adjoint simulation
 \cite{adjoint}.
-To see this, linearize $F(u,c)=0$ into a variational form
+To see this, linearize $\mathcal{F}(u,c)=0$ into a variational form
 \begin{equation}
-    \delta F = \frac{\partial F}{\partial u} \delta u + \frac{\partial F}{\partial c} \delta c = 0\,,
+    \delta \mathcal{F} = \frac{\partial \mathcal{F}}{\partial u} \delta u + \frac{\partial \mathcal{F}}{\partial c} \delta c = 0\,,
 \end{equation}
 which gives
 \begin{equation}
-    \frac{du}{dc} = - \left(\frac{\partial F}{\partial u}\right)^{-1} \frac{\partial F}{\partial c}
+    \frac{du}{dc} = - \left(\frac{\partial \mathcal{F}}{\partial u}\right)^{-1} \frac{\partial \mathcal{F}}{\partial c}
     \label{eqn: variational PDE}
 \end{equation}
 Using \eqref{eqn: variational PDE}, $\frac{d\xi}{dc}$ can be expressed by
-\begin{equation}
-    \frac{d\xi}{dc} = - \lambda^T \frac{\partial F}{\partial c} + \frac{\partial \xi}{\partial c}\,,
+\begin{equation}\begin{split}
+    \frac{d\xi}{dc} &= \frac{\partial \xi}{\partial u}\frac{du}{dc} + \frac{\partial \xi}{\partial c}\\
+    &= - \frac{\partial \xi}{\partial u} \left(\frac{\partial \mathcal{F}}{\partial u}\right)^{-1}
+       \frac{\partial \mathcal{F}}{\partial c} + \frac{\partial \xi}{\partial c}\\
+    &= - \lambda^T \frac{\partial \mathcal{F}}{\partial c} + \frac{\partial \xi}{\partial c}
+\end{split}
+\,,
     \label{eqn: dxidc adjoint}
 \end{equation}
 where $\lambda$, the adjoint state, is given by the adjoint equation
 \begin{equation}
-    \left(\frac{\partial F}{\partial u}\right)^T \lambda = \frac{\partial \xi}{\partial u}
+    \left(\frac{\partial \mathcal{F}}{\partial u}\right)^T \lambda = \left(\frac{\partial \xi}{\partial u}\right)^T
     \label{eqn: adjoint}
 \end{equation}
 Therefore, the gradient can be evaluated by \eqref{eqn: dxidc adjoint}
-using one simulation of $F(u,c)=0$ and one simulation of \eqref{eqn: adjoint} that 
+using one simulation of $\mathcal{F}(u,c)=0$ and one simulation of \eqref{eqn: adjoint} that 
 solves for $\lambda$. \\
 
 Adjoint methods can be categorized into continuous adjoint and discrete adjoint methods,
 depending on whether the linearization or the discretization is excuted first \cite{review adjoint geo}.
-The continous adjoint method linearizes the continuous PDE $F(u,c) = 0$ first,
-then discretizes the adjoint equation \eqref{eqn: adjoint} \cite{adjoint}. The discrete adjoint method 
-discretizes $F(u,c)=0$ first, then linearizes the discretized adjoint equation \cite{discrete adjoint}.
+The continous adjoint method linearizes the continuous PDE $\mathcal{F}(u,c) = 0$ first,
+then discretizes the adjoint equation 
+\eqref{eqn: adjoint} \cite{adjoint}. 
+Explain that (dF/du)^T in this case can be derived as another differenitial operator, with a different set of boundary conditions and/or initial conditions, that uniquely determines a lambda. Refer to papers / books that contain readable derivation of the continuosu adjoint.
+
+The discrete adjoint method 
+discretizes $\mathcal{F}(u,c)=0$ first, then linearizes the discretized adjoint equation \cite{discrete adjoint}.
 The discrete adjoint method can be implemented by automatic differentiation (AD) 
 \cite{AD review}.
 AD exploits the fact that a PDE simulation, no matter how complicated, executes a sequence

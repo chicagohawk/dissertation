@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  2 MAY 2016 13:02
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  2 MAY 2016 13:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -872,38 +872,46 @@ u-la-tions in the op-ti-miza-tion,
 Underfull \vbox (badness 6876) has occurred while \output is active []
 
  [21]
-Underfull \hbox (badness 10000) in paragraph at lines 249--253
+Underfull \hbox (badness 10000) in paragraph at lines 247--249
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 254--268
+Underfull \hbox (badness 10000) in paragraph at lines 251--255
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 256--270
 
  []
 
 [22]
-Underfull \hbox (badness 10000) in paragraph at lines 269--288
+Underfull \hbox (badness 10000) in paragraph at lines 271--290
 
  []
 
 
-Overfull \hbox (6.46225pt too wide) in paragraph at lines 289--295
+Overfull \hbox (6.46225pt too wide) in paragraph at lines 291--297
 \T1/cmr/m/n/12 when the di-men-sion of con-trol is large [[]]. This is-sue can 
 be al-le-vi-ated by in-cor-po-rat-ing
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 289--295
+Underfull \hbox (badness 10000) in paragraph at lines 291--297
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 298--321
+Underfull \hbox (badness 10000) in paragraph at lines 300--325
 
  []
 
-[23]
-Underfull \hbox (badness 10000) in paragraph at lines 322--340
+
+Underfull \vbox (badness 5652) has occurred while \output is active []
+
+ [23]
+Underfull \hbox (badness 10000) in paragraph at lines 326--340
 
  []
 
@@ -911,13 +919,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 322--340
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [24]
-Overfull \hbox (12.8015pt too wide) in paragraph at lines 341--350
-\T1/cmr/m/n/12 as-sump-tions of the ob-jec-tive and the in-ex-act gra-di-ent, a
- Bayesian op-ti-miza-tion al-go-rithm
+Underfull \hbox (badness 10000) in paragraph at lines 341--350
+
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 341--350
+Underfull \hbox (badness 10000) in paragraph at lines 351--362
 
  []
 
@@ -925,148 +932,151 @@ Underfull \hbox (badness 10000) in paragraph at lines 341--350
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [25]
-Underfull \hbox (badness 10000) in paragraph at lines 373--376
+Underfull \hbox (badness 10000) in paragraph at lines 392--398
 
  []
 
 
-Overfull \hbox (11.81711pt too wide) in paragraph at lines 377--380
+Overfull \hbox (11.81711pt too wide) in paragraph at lines 399--403
 []\T1/cmr/m/n/12 In con-trast, the ad-joint method eval-u-ates the gra-di-ent u
 s-ing only one PDE sim-u-la-tion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 397--401
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [26]
+Underfull \hbox (badness 10000) in paragraph at lines 425--429
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 402--414
-
- []
-
-[26]
-Underfull \hbox (badness 10000) in paragraph at lines 415--421
+Underfull \hbox (badness 10000) in paragraph at lines 430--443
 
  []
 
 
-Overfull \hbox (21.20279pt too wide) in paragraph at lines 443--454
+Underfull \hbox (badness 10000) in paragraph at lines 444--450
+
+ []
+
+
+Underfull \vbox (badness 2393) has occurred while \output is active []
+
+ [27]
+Overfull \hbox (21.20279pt too wide) in paragraph at lines 472--483
 \T1/cmr/m/n/12 where $\OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 ^^^[]\OMS/cmsy/m/n/12 
 g[]$ \T1/cmr/m/n/12 is called a ba-sis dic-tio-nary [[]]. For ex-am-ple, in pol
 y-no-mial ap-prox-i-ma-tions,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 443--454
+Underfull \hbox (badness 10000) in paragraph at lines 472--483
 
  []
 
-[27]
-Overfull \hbox (6.55794pt too wide) in paragraph at lines 455--472
+
+Overfull \hbox (6.55794pt too wide) in paragraph at lines 484--501
 \T1/cmr/m/n/12 [[]]. For-tu-nately, in many ap-pli-ca-tions, many bases are in-
 signif-i-cant so their co-ef-fi-cients
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 455--472
+Underfull \hbox (badness 10000) in paragraph at lines 484--501
+
+ []
+
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 502--523
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 473--494
-
- []
-
-
-Underfull \vbox (badness 5652) has occurred while \output is active []
-
- [28]
-Underfull \hbox (badness 10000) in paragraph at lines 498--524
+Underfull \hbox (badness 10000) in paragraph at lines 527--553
 
  []
 
 [29]
-Underfull \hbox (badness 10000) in paragraph at lines 560--565
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [30]
+Underfull \hbox (badness 10000) in paragraph at lines 589--594
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 566--582
+Underfull \hbox (badness 10000) in paragraph at lines 595--611
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 615--626
 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [30]
-Underfull \hbox (badness 10000) in paragraph at lines 586--597
-
- []
-
-
-Overfull \hbox (9.9646pt too wide) in paragraph at lines 598--602
+ [31]
+Overfull \hbox (9.9646pt too wide) in paragraph at lines 627--631
 \T1/cmr/m/n/12 op-ti-miza-tion be-gins by as-sum-ing that the ob-jec-tive func-
 tion is sam-pled from a stochas-tic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 606--613
+Underfull \hbox (badness 10000) in paragraph at lines 635--642
 
  []
 
-[31]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Underfull \vbox (badness 3872) has occurred while \output is active []
 
  [32]
-Overfull \hbox (0.61395pt too wide) in paragraph at lines 666--678
+Overfull \hbox (0.61395pt too wide) in paragraph at lines 695--707
 \T1/cmr/m/n/12 Bayesian ap-proach [[], []]. I re-fer to the ref-er-ence [[]] fo
 r the de-tails and a com-par-i-son
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 666--678
+Underfull \hbox (badness 10000) in paragraph at lines 695--707
 
  []
 
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 692.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [33]
-Underfull \hbox (badness 10000) in paragraph at lines 708--716
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 721.
+
+Underfull \hbox (badness 10000) in paragraph at lines 737--745
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 717--727
+Underfull \hbox (badness 10000) in paragraph at lines 746--756
 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [34]
-[35]
-Overfull \hbox (12.45134pt too wide) in paragraph at lines 785--788
+[34] [35] [36]
+Overfull \hbox (12.45134pt too wide) in paragraph at lines 814--817
 \T1/cmr/m/n/12 con-strained by gray-box con-ser-va-tion law sim-u-la-tions with
  un-known flux func-tions,
  []
 
-[36]) [37]
+[37]) [38]
 \openout2 = `chap2.aux'.
 
- (./chap2.tex [38
-
-
-
-]
+ (./chap2.tex
 Chapter 2.
 
 Underfull \vbox (badness 7722) has occurred while \output is active []
 
- [39]
+ [39
+
+
+
+]
 Overfull \hbox (3.86882pt too wide) in paragraph at lines 44--51
 \T1/cmr/m/n/12 where $\OML/cmm/m/it/12 w[]$\T1/cmr/m/n/12 's are the quadra-tur
 e weights for the space-time in-te-gra-tion. $\OMS/cmsy/m/n/12 M$ \T1/cmr/m/n/1
@@ -2222,10 +2232,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 7087 strings out of 493308
- 104342 string characters out of 6140092
- 192267 words of memory out of 5000000
- 10172 multiletter control sequences out of 15000+600000
+ 7089 strings out of 493308
+ 104375 string characters out of 6140092
+ 192289 words of memory out of 5000000
+ 10174 multiletter control sequences out of 15000+600000
  35284 words of font info for 90 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  38i,27n,39p,890b,744s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2265,7 +2275,7 @@ type1/public/cm-super/sfsl1200.pfb></usr/share/texmf/fonts/type1/public/cm-supe
 r/sfti0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr
 /share/texmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/t
 ype1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (109 pages, 2855988 bytes).
+Output written on main.pdf (109 pages, 2856892 bytes).
 PDF statistics:
  600 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
