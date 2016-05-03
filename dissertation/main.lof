@@ -1,5 +1,6 @@
 \select@language {english}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {1-1}{\ignorespaces The computational graph for \textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {eqn: elementary operation}\unskip \@@italiccorr )}}. The yellow nodes indicates the input variables, the blue node indicate the output variable, and the white nodes indicate the intermediate variables. Arrows indicate elementary operations. The begining and end nodes of each arrow indicate the independent and dependent variables.\relax }}{29}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2-1}{\ignorespaces Domain of dependence: $u(t,x)$ depends on $u$ at an earlier time within a domain of dependence. The two planes in this figure indicates the spatial solution at two adjacent timesteps. The domain of dependence can be much smaller than $\Omega $, the entire spatial domain.\relax }}{43}
 \contentsline {figure}{\numberline {2-2}{\ignorespaces An illustration of $B_u$ defined in Theorem \ref {theorem: 1}. The blue line is $u_0$ and the green dashed line is $\frac {du_0}{dx}$. $B_u$ is the set of $u_0$ where the derivative $\frac {du_0}{dx}$ has an absolute value larger than $\gamma $.\relax }}{44}

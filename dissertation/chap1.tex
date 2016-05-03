@@ -464,56 +464,69 @@ AD exploits the fact that a PDE simulation, no matter how complicated, executes 
 of elementary arithmetic operations (e.g. addition, multiplication) and elementary functions
 (e.g. $\exp$, $\sin$) \cite{AD review}. For example, consider the function
 \begin{equation}
-    y = f(x_1, x_2) = x_1 x_2 + \sin(x_1)\,.
+    \xi = f(c_1, c_2) = c_1 c_2 + \sin(c_1)\,.
     \label{eqn: eg y=fx}
 \end{equation}
 The function can be broken down into a series of elementary arithmetic operations and
 elementary functions.
 \begin{equation}\begin{split}
-    w_1 &= x_1\\
-    w_2 &= x_2\\
+    w_1 &= c_1\\
+    w_2 &= c_2\\
     w_3 &= w_1 w_2\\
     w_4 &= \sin(w_1)\\
-    y &= w_3 + w_4\;.
-\end{split}
+    \xi &= w_3 + w_4\;.
+    \end{split}
     \label{eqn: elementary operation}
 \end{equation}
-By storing the independent variables of each operation, 
+\eqref{eqn: elementary operation} can be represented by the graph in Figure \ref{fig: AD graph}.
+\begin{figure}
+    \begin{center}
+    \includegraphics[width=4cm]{../AD_tree.png}
+    \caption{The computational graph for \eqref{eqn: elementary operation}. The yellow nodes indicates
+             the input variables, the blue node indicate the output variable, and the white
+             nodes indicate the intermediate variables. Arrows indicate elementary operations.
+             The begining and end nodes of each 
+             arrow indicate the independent and dependent variables.}
+    \label{fig: AD graph}
+    \end{center}
+\end{figure}
+In the computational graph, 
 the gradient of the output with respect to the input variables 
-can be computed using the chain rule \cite{AD review}. For example,
-to compute the derivative $\dot{y} =\frac{\partial y}{\partial x_1}$ 
-\footnote{Let $\dot{z}.$ 
-denote the gradient of $z$ with respect to $x_1$, for any dependent variable $z$}
-in \eqref{eqn: eg y=fx}, 
-one can compute the derivatives with respect to $x_1$
-for every operation in \eqref{eqn: elementary operation} , 
+can be computed using the chain rule \cite{AD review}. 
+Let $\bar{z}$ 
+denote the gradient of $\xi$ with respect to $z$, for any independent or intermediate
+variable $z$ in \eqref{eqn: eg y=fx}.
+To compute the derivatives $\bar{c}_1 = \frac{\partial \xi}{\partial c_1}$ and
+$\bar{c}_2 = \frac{\partial \xi}{\partial c_2}$,
+one can propogate the derivatives backward in the computational graph, 
 \begin{equation}\begin{split}
-    \dot{w}_1 & =1\\
-    \dot{w}_2& =0\\
-    \dot{w}_3 & = w_2 \dot{w}_1 + w_1 \dot{w}_2\\
-    \dot{w}_4 & = \cos (w_1) \dot{w}_1\\
-    \dot{y} &= \dot{w}_3 + \dot{w}_4
+    \bar{w}_4 & = 1\\
+    \bar{w}_3& =1\\
+    \bar{w}_2 & = \bar{w}_3 \frac{w_3}{w_2} = 1\cdot \cdot w_1\\
+    \bar{w}_1 & = \bar{w}_4 \frac{\partial w_4}{\partial w_1} + \bar{w_3} 
+                  \frac{\partial w_3}{\partial w_1} = \cos(w_1) + w_2\\
+    \bar{c}_2 &= \bar{w}_2 = c_1\\
+    \bar{c}_1 &= \bar{w}_1 = \cos(c_1) + c_2
 \end{split}
 \label{eqn: elementary derivative}
 \end{equation}
-Because the operations in \eqref{eqn: elementary operation} are elementary, their derivatives
-\eqref{eqn: elementary derivative} can be hardwired in an AD software and are straightforward
-to compute. Subsequently, $\dot{y}$ can be computed by
-repeatedly substituting the derivatives
-\begin{equation}\begin{split}
-    \dot{y} & = \dot{w}_3 + \dot{w}_4\\
-            & = w_2 \dot{w}_1 + w_1 \dot{w}_2 + \cos (w_1) \dot{w}_1 \\
-            & = x_2 \cdot 1 + x_1 \cdot 0 + \cos(x_1) \cdot 1\\
-            & = x_2 + \cos(x_1)
-\end{split}\end{equation}
-See \cite{AD review} for a thorough review of AD. 
-There are many free AD softwares available for various languages, such as
-\emph{ADOL-C} (C, C++) \cite{adolc}, \emph{Adiff} (Matlab) \cite{adiff}, and \emph{Theano} (Python)
-\cite{theano}.\\
+The derivatives in \eqref{eqn: elementary derivative} are straightforward to compute.
+This is because every forward operation in \eqref{eqn: elementary operation} is elementary, and
+their derivatives can be hardwired in an AD software. 
+Notice each arrow is traversed for one and only one time in the backward propogation 
+\eqref{eqn: elementary derivative}. Therefore, the backward
+gradient computation has a similar cost to the forward output evaluation, regardless of
+the number of input variables.
+See \cite{AD review} for a thorough review of AD.\\
+
 
 The adjoint method has seen wide applications in many areas, including the aerodynamic design
 \cite{adjoint aerodynamics} and the petroleum reservoir control
-\cite{adjoint reservoir optimal control}. Conventionally, the adjoint method is not applicable
+\cite{adjoint reservoir optimal control}. 
+Besides, there are many free AD softwares available for various languages, such as
+\emph{ADOL-C} (C, C++) \cite{adolc}, \emph{Adiff} (Matlab) \cite{adiff}, and \emph{Theano} (Python)
+\cite{theano}.
+Unfortunately, the adjoint method is not directly applicable
 to gray-box simulations, as explained in Section \ref{sec: motivation}. 
 To break this limitation, Chapter \ref{chapter 2} develops the twin model method
 that enables the adjoint gradient computation for gray-box simulations.\\
