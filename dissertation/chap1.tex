@@ -620,6 +620,12 @@ that enables the adjoint gradient computation for gray-box simulations.\\
 
 \subsection{Adaptive Basis Construction}
 \label{sec: adaptive basis review}
+
+The unknown function $F$ in \eqref{eqn: govern PDE} can be approximated by a linear
+combination of basis function. An over-complete or
+incomplete set of bases can negatively affects the approximation due to overfitting or underfitting.
+Therefore, adaptive basis construction is needed.\\
+
 Square-integrable functions
 can be represented by the parameterization 
 \begin{equation}
