@@ -244,6 +244,7 @@ the estimated gradient for optimization is analyzed both numerically and theoret
 Given the background, I review the literature on derivative-free optimization and gradient-based optimization. In addition,
 I review the adjoint method since it is an essential ingredient for Chapter 2. Finally, I review model calibration and Bayesian optimization methods, which serve as the framework for the developments in Chapter 3.
 \subsection{Review of Optimization Methods}
+\label{sec: review optimization}
 Optimization methods can be categorized into derivative-free and gradient-based methods 
 \cite{gradfreereview}. In the sequel, I review the two types of methods.\\
 \subsubsection{Derivative-free Optimization}
@@ -394,7 +395,10 @@ $e_i$ indicates the $i$th unit Cartesian basis vector in $\mathbb{R}^d$, and $\d
 a small perturbation. 
 Because \eqref{eqn: define perturb} needs to be solved for every $\delta e_i$, 
 so that the corresponding $\Delta u_i$ can be used in \eqref{eqn: FD eg},
-$d+1$ PDE simulations are required to evaluate the gradient.\\
+$d+1$ PDE simulations are required to evaluate the gradient.
+As explained in Section \ref{sec: review optimization}, $d$ can be large in many
+control optimization problems. Therefore, it can be costly to evaluate the gradient 
+by finite difference.\\
 
 In contrast, the adjoint method evaluates the gradient using only one PDE simulation
 plus one adjoint simulation
@@ -450,12 +454,19 @@ $\mathcal{F}_d(\boldsymbol{u}, \boldsymbol{c}) = 0$, where $\mathcal{F}_d$ indic
 the discretized difference operator. Using the same derivation as \eqref{eqn: variational form}
 thru. \eqref{eqn: adjoint}, the discrete adjoint equation can be obtained
 \begin{equation}
-    \left(\frac{\partial \mathcal{F}_d}{\partial \boldsymbol{u}}\right)^T \boldsymbol{\lambda} = \left(\frac{\partial \xi}{\partial \boldsymbol{u}}\right)^T\,.
-    \label{eqn: adjoint}
+    \left(\frac{\partial \mathcal{F}_d}{\partial \boldsymbol{u}}\right)^T \boldsymbol{\lambda} = \left(\frac{\partial \xi}{\partial \boldsymbol{u}}\right)^T\,,
+    \label{eqn: adjoint discrete}
 \end{equation}
+which is a linear system of equations.
 $\left(\frac{\partial \mathcal{F}_d}{\partial \boldsymbol{u}}\right)^T$ is derived as
 another difference operator. With proper discretized boundary/initial conditions, it uniquely
-ditermines the discrete adjoint vector $\boldsymbol{\lambda}$.
+determines the discrete adjoint vector $\boldsymbol{\lambda}$, which subsequently determines the
+gradient
+\begin{equation}
+    \frac{d\xi}{d\boldsymbol{c}} = - \boldsymbol{\lambda}^T \frac{\partial \mathcal{F}_d}{\partial \boldsymbol{c}} + \frac{\partial \xi}{\partial \boldsymbol{c}}
+\,.
+    \label{eqn: dxidc adjoint discrete}
+\end{equation}
 See Chapter 1 of \cite{discrete adjoint phd} for a detailed derivation of the discrete adjoint.\\
 
 The discrete adjoint method can be implemented by automatic differentiation (AD) 
@@ -478,33 +489,34 @@ elementary functions.
     \end{split}
     \label{eqn: elementary operation}
 \end{equation}
-\eqref{eqn: elementary operation} can be represented by the graph in Figure \ref{fig: AD graph}.
+\eqref{eqn: elementary operation} can be represented by a computational 
+graph in Figure \ref{fig: AD graph}.
 \begin{figure}
     \begin{center}
     \includegraphics[width=4cm]{../AD_tree.png}
-    \caption{The computational graph for \eqref{eqn: elementary operation}. The yellow nodes indicates
-             the input variables, the blue node indicate the output variable, and the white
-             nodes indicate the intermediate variables. Arrows indicate elementary operations.
+    \caption{The computational graph for \eqref{eqn: elementary operation}. The yellow nodes indicate
+             the input variables, the blue node indicates the output variable, and the white
+             nodes indicate the intermediate variables. The arrows indicate elementary operations.
              The begining and end nodes of each 
-             arrow indicate the independent and dependent variables.}
+             arrow indicate the independent and dependent variables for each operation.}
     \label{fig: AD graph}
     \end{center}
 \end{figure}
-In the computational graph, 
+In the graph,
 the gradient of the output with respect to the input variables 
 can be computed using the chain rule \cite{AD review}. 
 Let $\bar{z}$ 
 denote the gradient of $\xi$ with respect to $z$, for any independent or intermediate
-variable $z$ in \eqref{eqn: eg y=fx}.
+variable $z$ in \eqref{eqn: elementary operation}.
 To compute the derivatives $\bar{c}_1 = \frac{\partial \xi}{\partial c_1}$ and
 $\bar{c}_2 = \frac{\partial \xi}{\partial c_2}$,
-one can propogate the derivatives backward in the computational graph, 
+one can propogate the derivatives backward in the computational graph as follows
 \begin{equation}\begin{split}
     \bar{w}_4 & = 1\\
     \bar{w}_3& =1\\
-    \bar{w}_2 & = \bar{w}_3 \frac{w_3}{w_2} = 1\cdot \cdot w_1\\
+    \bar{w}_2 & = \bar{w}_3 \frac{\partial w_3}{\partial w_2} = 1\cdot w_1\\
     \bar{w}_1 & = \bar{w}_4 \frac{\partial w_4}{\partial w_1} + \bar{w_3} 
-                  \frac{\partial w_3}{\partial w_1} = \cos(w_1) + w_2\\
+                  \frac{\partial w_3}{\partial w_1} = 1\cdot \cos(w_1) +1\cdot w_2\\
     \bar{c}_2 &= \bar{w}_2 = c_1\\
     \bar{c}_1 &= \bar{w}_1 = \cos(c_1) + c_2
 \end{split}
@@ -512,17 +524,21 @@ one can propogate the derivatives backward in the computational graph,
 \end{equation}
 The derivatives in \eqref{eqn: elementary derivative} are straightforward to compute.
 This is because every forward operation in \eqref{eqn: elementary operation} is elementary, and
-their derivatives can be hardwired in an AD software. 
-Notice each arrow is traversed for one and only one time in the backward propogation 
+their derivatives can be hardwired in AD softwares. 
+Notice each arrow in Figure \ref{fig: AD graph} is traversed for one and only one time in the backward propogation 
 \eqref{eqn: elementary derivative}. Therefore, the backward
-gradient computation has a similar cost to the forward output evaluation, regardless of
-the number of input variables.
+gradient computation has a similar cost as the forward output computation, regardless of
+the number of input variables. Because a PDE simulation can be viewed as 
+performing a sequence of elementary operations, 
+AD can be used to evaluate the discrete adjoint.
 See \cite{AD review} for a thorough review of AD.\\
 
 
-The adjoint method has seen wide applications in many areas, including the aerodynamic design
-\cite{adjoint aerodynamics} and the petroleum reservoir control
-\cite{adjoint reservoir optimal control}. 
+The adjoint method has seen wide applications in optimization problems constrained by 
+conservation law simulations, such as 
+airfoil design problems \cite{adjoint aerodynamics, adjoint aerodynamics 2, 
+adjoint aerodynamics AD, discrete adjoint phd} and petroleum reservoir management problems
+\cite{adjoint reservoir optimal control, review adjoint geo, adjoint well place}.
 Besides, there are many free AD softwares available for various languages, such as
 \emph{ADOL-C} (C, C++) \cite{adolc}, \emph{Adiff} (Matlab) \cite{adiff}, and \emph{Theano} (Python)
 \cite{theano}.

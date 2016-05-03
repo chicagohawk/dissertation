@@ -69,10 +69,25 @@ Jameson, A.
 \newblock {\em Journal of Scientific Computing},
 3(3):233-260, 1988.
 
+\bibitem{adjoint aerodynamics 2}
+Anderson, W. K., and Venkatakrishnan, V.
+\newblock Aerodynamic Design Optimization on Unstructured Grids with a Continuous Adjoint Formulation. 
+\newblock{\em Computers and Fluids}, 28(4):443-480, 1999.
+
+\bibitem{adjoint aerodynamics AD}
+Renaud, J. E. 
+\newblock Automatic Differentiation in Robust Optimization. 
+\newblock{\em AIAA Journal}, 35(6):1072-1079, 1997.
+
 \bibitem{review adjoint geo}
 Plessix, R. E. 
 \newblock A Review of the Adjoint-state Method for Computing the Gradient of a Functional with Geophysical Applications. 
 \newblock{\em Geophysical Journal International}, 167(2):495-503, 2006.
+
+\bibitem{adjoint well place}
+Zandvliet, M., Handels, M., van Essen, G., Brouwer, R., and Jansen, J. D.
+\newblock Adjoint-based Well-placement Optimization under Production Constraints. 
+\newblock{\em SPE Journal}, 13(04):392-399, 2008.
 
 \bibitem{discrete adjoint}
 Giles, M. B., Duta, M. C., M-uacute, J. D., ller, and Pierce, N. A. 
