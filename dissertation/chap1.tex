@@ -246,7 +246,8 @@ I review the adjoint method since it is an essential ingredient for Chapter 2. F
 \subsection{Review of Optimization Methods}
 \label{sec: review optimization}
 Optimization methods can be categorized into derivative-free and gradient-based methods 
-\cite{gradfreereview}. In the sequel, I review the two types of methods.\\
+\cite{gradfreereview}, depending on whether the gradient information is used. 
+In the sequel, I review the two types of methods.\\
 \subsubsection{Derivative-free Optimization}
 \label{section: DFO}
 Derivative-free optimization (DFO) requires only the availability of objective
@@ -601,9 +602,13 @@ can be computed, for all $t=1, \cdots , T$.\\
 
 The adjoint method has seen wide applications in optimization problems constrained by 
 conservation law simulations, such as in
-airfoil design problems \cite{adjoint aerodynamics, adjoint aerodynamics 2, 
-adjoint aerodynamics AD, discrete adjoint phd} and in petroleum reservoir management problems
-\cite{adjoint reservoir optimal control, review adjoint geo, adjoint well place}.
+airfoil design \cite{adjoint aerodynamics, adjoint aerodynamics 2, 
+adjoint aerodynamics AD}, adaptive mesh refinement
+\cite{discrete adjoint phd}, injection policy optimization in petroleum reservoirs
+\cite{adjoint reservoir optimal control}, 
+history matching in reservoir geophysics
+\cite{review adjoint geo}, and optimal well placement in reservoir management 
+\cite{adjoint well place}.
 Besides, there are many free AD softwares available for various languages, such as
 \emph{ADOL-C} (C, C++) \cite{adolc}, \emph{Adiff} (Matlab) \cite{adiff}, and \emph{Theano} (Python)
 \cite{theano}.
@@ -611,6 +616,7 @@ Unfortunately, the adjoint method is not directly applicable
 to gray-box simulations, as explained in Section \ref{sec: motivation}. 
 To break this limitation, Chapter \ref{chapter 2} develops the twin model method
 that enables the adjoint gradient computation for gray-box simulations.\\
+
 
 \subsection{Adaptive Basis Construction}
 \label{sec: adaptive basis review}
