@@ -528,16 +528,81 @@ their derivatives can be hardwired in AD softwares.
 Notice each arrow in Figure \ref{fig: AD graph} is traversed for one and only one time in the backward propogation 
 \eqref{eqn: elementary derivative}. Therefore, the backward
 gradient computation has a similar cost as the forward output computation, regardless of
-the number of input variables. Because a PDE simulation can be viewed as 
-performing a sequence of elementary operations, 
-AD can be used to evaluate the discrete adjoint.
+the number of input variables. 
 See \cite{AD review} for a thorough review of AD.\\
 
+Because a PDE simulation can be viewed as 
+performing a sequence of elementary operations, 
+AD can be used to evaluate the discrete adjoint.
+Consider a discretized PDE simulation that at each timestep solves
+\begin{equation}
+    \mathcal{F}_{t+1} = \mathcal{F}(\boldsymbol{x}_t, \boldsymbol{x}_{t+1}, \boldsymbol{c}_{t+1})=0\,,
+    \label{eqn: residual PDE eg}
+\end{equation}
+for $t=0, \cdots, T-1$, where $\boldsymbol{x}_t$ and $\boldsymbol{c}_t$ are
+the state and control variables at the $t$th timestep. 
+AD can be used to compute the gradient of an objective function
+$$\xi = \xi(\boldsymbol{x}_0 , \cdots, \boldsymbol{x}_T; \boldsymbol{c}_1, \cdots 
+\boldsymbol{c}_{T})$$ 
+to the control variables.
+To see this, consider the evaluation of \eqref{eqn: residual PDE eg} using an AD software. 
+The gradients $\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{x}_t}$, 
+$\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{x}_{t+1}}$, and
+$\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{c}_{t+1}}$, for
+$t=0, \cdots, T-1$, are automatically computable. Therefore, one can obtain
+\begin{equation}
+    \begin{split}
+        \frac{\partial \boldsymbol{x}_{t+1}}{\partial \boldsymbol{x}_t} &=
+        - \left(\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{x}_{t+1}}\right)^{-1}
+        \left(\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{x}_t}\right)\\
+        \frac{\partial \boldsymbol{x}_{t+1}}{\partial \boldsymbol{c}_{t+1}} &=
+        -\left(\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{x}_{t+1}}\right)^{-1}
+        \left(\frac{\partial \mathcal{F}_{t+1}}{\partial\boldsymbol{c}_{t+1}}\right)\,.
+    \end{split}
+    \label{eqn: elements for markov graph}
+\end{equation}
+Therefore a computational graph, Figure \ref{fig: chap1 graph 1},
+can be constructed using the chain rule. The graph enables the evaluation of all
+$\frac{\partial \boldsymbol{x}_t}{\partial \boldsymbol{c}_{t-i}}$, for $t=1, \cdots, T$
+and $i=0, \cdots, t-1$.
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.99\textwidth}
+        \centering
+        \includegraphics[width=7cm]{../markovChain.png}
+        \caption{The computational graph for \eqref{eqn: residual PDE eg}, which is constructed
+                 by \eqref{eqn: elements for markov graph}. The yellow
+                 nodes indicate the input variables.}
+        \label{fig: chap1 graph 1}
+    \end{subfigure}
+    \begin{subfigure}[t]{.99\textwidth}
+        \centering
+        \includegraphics[width=7cm]{../markovChain2.png}
+        \caption{The computational graph for evaluating the objective function $\xi$.
+                 The blue node indicates the output variable.}
+        \label{fig: chap1 graph 2}
+    \end{subfigure}
+    \caption{Computational graphs for the PDE simulation and objective evaluation.}
+\end{center}\end{figure}
+Given the solutions $\boldsymbol{x}_t$'s and the controls $\boldsymbol{c}_t$'s, 
+the evaluation of $\xi$ is nothing but overlaying the graph by an additional 
+layer of computations, shown in Figure \ref{fig: chap1 graph 2}.
+Because $\frac{\partial \xi}{\partial \boldsymbol{x}_t}$'s and 
+$\frac{\partial \xi}{\partial \boldsymbol{c}_t}$'s can be obtained by AD, the gradient
+\begin{equation} 
+    \frac{d\xi}{d \boldsymbol{c}_t}= \frac{\partial \xi}{\partial \boldsymbol{c}_t} + 
+    \frac{\partial \xi}{\partial \boldsymbol{x}_t}\frac{\partial \boldsymbol{x}_t}{\partial 
+       \boldsymbol{c}_t} +
+    \frac{\partial \xi}{\partial \boldsymbol{x}_{t+1}} \frac{\partial \boldsymbol{x}_{t+1}}{\partial
+       \boldsymbol{c}_t} + \cdots +
+    \frac{\partial \xi}{\partial \boldsymbol{x}_{T}} \frac{\partial \boldsymbol{x}_{T}}{\partial
+       \boldsymbol{c}_t}
+\end{equation}
+can be computed, for all $t=1, \cdots , T$.\\
 
 The adjoint method has seen wide applications in optimization problems constrained by 
-conservation law simulations, such as 
+conservation law simulations, such as in
 airfoil design problems \cite{adjoint aerodynamics, adjoint aerodynamics 2, 
-adjoint aerodynamics AD, discrete adjoint phd} and petroleum reservoir management problems
+adjoint aerodynamics AD, discrete adjoint phd} and in petroleum reservoir management problems
 \cite{adjoint reservoir optimal control, review adjoint geo, adjoint well place}.
 Besides, there are many free AD softwares available for various languages, such as
 \emph{ADOL-C} (C, C++) \cite{adolc}, \emph{Adiff} (Matlab) \cite{adiff}, and \emph{Theano} (Python)
