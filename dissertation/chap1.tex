@@ -629,8 +629,8 @@ Therefore, adaptive basis construction is needed.\\
 Square-integrable functions
 can be represented by the parameterization
 \footnote{
-    The square integrable functions form an inner product space with inner product given by
-    \cite{functional analysis}
+    By definition, the square 
+    integrable functions form a pre-Hilbert space with inner product given by
     $$<f,g> = \int_A \overline{f(x)}g(x) dx\,,$$ where 
     \begin{itemize}
         \item $f$ and $g$ are square integrable functions,
@@ -639,7 +639,7 @@ can be represented by the parameterization
     \end{itemize}
     It can be shown that square integrable functions is complete 
     under the metric induced by the inner product, thus is a Hilbert space \cite{functional analysis}.
-    Any square integrable function can be represented by 
+    Any member function can be represented by 
     a finite or countably infinite number of basis functions of the Hilbert space
     \cite{functional analysis}.
 } \cite{functional analysis}
@@ -649,14 +649,14 @@ can be represented by the parameterization
 \end{equation}
 where $\phi_i$'s are the basis functions, $\alpha_i$'s are the coefficients, and $i$
 indices the basis. For example, 
-a bivariate function can be represented by monomials
+a bivariate function can be represented by monomials (Weierstrass approximation 
+theorem \cite{functional analysis})
 \begin{equation*}
     1,\,  u_1,\, u_1^2,\,
     u_2,\, u_1 u_2,\,  u_1^2 u_2, \,
     u_2^2,\,  u_1 u_2^2,\,  u_1^2 u_2^2,\, \cdots\,.
 \end{equation*}
-
-I didn't know that all square integrable functions can be represented exactly using a infinite series of the same basis. What kind of basis is sufficient? Is that a famous theorem? Citation please
+on any real interval $[a,b]$.\\
 
 Let $\mathcal{A}$ be a non-empty finite subset of $\mathbb{N}$,
 $\tilde{F}$ can be approximated using a subset of the bases, 
@@ -665,7 +665,7 @@ $\tilde{F}$ can be approximated using a subset of the bases,
     \label{eqn: linear param truncate}
 \end{equation}
 where $\{\phi_i\}_{i\in \mathcal{A}}$ is called a basis dictionary \cite{match pursuit}. 
-For example, in polynomial approximations, the basis dictionary usually consists of
+For example, in polynomial approximations, the basis dictionary can consists of
 the basis whose total polynomial degree does not exceed $p\in \mathbb{N}$ \cite{PCE}.
 Given a basis dictionary, the coefficients can be determined by projection \cite{PCE}, 
 such that the error between the approximation
