@@ -462,11 +462,56 @@ The discrete adjoint method can be implemented by automatic differentiation (AD)
 \cite{AD review}.
 AD exploits the fact that a PDE simulation, no matter how complicated, executes a sequence
 of elementary arithmetic operations (e.g. addition, multiplication) and elementary functions
-(e.g. $\exp$, $\sin$) \cite{AD review}. By storing the operations in addition to their output values, 
-$\frac{d\xi}{d c}$ can be computed using the chain rule that propogates the gradient 
-from $\xi$ to $c$ \cite{AD review}. \\
+(e.g. $\exp$, $\sin$) \cite{AD review}. For example, consider the function
+\begin{equation}
+    y = f(x_1, x_2) = x_1 x_2 + \sin(x_1)\,.
+    \label{eqn: eg y=fx}
+\end{equation}
+The function can be broken down into a series of elementary arithmetic operations and
+elementary functions.
+\begin{equation}\begin{split}
+    w_1 &= x_1\\
+    w_2 &= x_2\\
+    w_3 &= w_1 w_2\\
+    w_4 &= \sin(w_1)\\
+    y &= w_3 + w_4\;.
+\end{split}
+    \label{eqn: elementary operation}
+\end{equation}
+By storing the independent variables of each operation, 
+the gradient of the output with respect to the input variables 
+can be computed using the chain rule \cite{AD review}. For example,
+to compute the derivative $\dot{y} =\frac{\partial y}{\partial x_1}$ 
+\footnote{Let $\dot{z}.$ 
+denote the gradient of $z$ with respect to $x_1$, for any dependent variable $z$}
+in \eqref{eqn: eg y=fx}, 
+one can compute the derivatives with respect to $x_1$
+for every operation in \eqref{eqn: elementary operation} , 
+\begin{equation}\begin{split}
+    \dot{w}_1 & =1\\
+    \dot{w}_2& =0\\
+    \dot{w}_3 & = w_2 \dot{w}_1 + w_1 \dot{w}_2\\
+    \dot{w}_4 & = \cos (w_1) \dot{w}_1\\
+    \dot{y} &= \dot{w}_3 + \dot{w}_4
+\end{split}
+\label{eqn: elementary derivative}
+\end{equation}
+Because the operations in \eqref{eqn: elementary operation} are elementary, their derivatives
+\eqref{eqn: elementary derivative} can be hardwired in an AD software and are straightforward
+to compute. Subsequently, $\dot{y}$ can be computed by
+repeatedly substituting the derivatives
+\begin{equation}\begin{split}
+    \dot{y} & = \dot{w}_3 + \dot{w}_4\\
+            & = w_2 \dot{w}_1 + w_1 \dot{w}_2 + \cos (w_1) \dot{w}_1 \\
+            & = x_2 \cdot 1 + x_1 \cdot 0 + \cos(x_1) \cdot 1\\
+            & = x_2 + \cos(x_1)
+\end{split}\end{equation}
+See \cite{AD review} for a thorough review of AD. 
+There are many free AD softwares available for various languages, such as
+\emph{ADOL-C} (C, C++) \cite{adolc}, \emph{Adiff} (Matlab) \cite{adiff}, and \emph{Theano} (Python)
+\cite{theano}.\\
 
-The adjoint method has seen proliferated applications in many areas, including the aerodynamic design
+The adjoint method has seen wide applications in many areas, including the aerodynamic design
 \cite{adjoint aerodynamics} and the petroleum reservoir control
 \cite{adjoint reservoir optimal control}. Conventionally, the adjoint method is not applicable
 to gray-box simulations, as explained in Section \ref{sec: motivation}. 

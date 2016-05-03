@@ -94,6 +94,21 @@ Schneider, R.
 \newblock Applications of the Discrete Adjoint Method in Computational Fluid Dynamics.
 \newblock {\em Doctoral Dissertation, The University of Leeds}, 2006.
 
+% Adjoint softwares ====================================
+\bibitem{adolc}
+Walther, A. and Griewank, A.
+\newblock Getting Started with ADOL-C. 
+\newblock{\em In U. Naumann und O. Schenk, Combinatorial Scientific Computing, Chapman-Hall CRC Computational Science}, pp. 181-202, 2012.
+
+\bibitem{adiff}
+McIlhagga, W.
+\newblock{ http://www.mathworks.com/matlabcentral/fileexchange/26807-automatic-differentiation-with-matlab-objects }
+
+\bibitem{theano}
+Bergstra, J., Breuleux, O., Bastien, F., Lamblin, P., Pascanu, R., Desjardins, G., Turian, J., Warde-Farley, D., and Bengio, Y. 
+\newblock{Theano: A CPU and GPU Math Expression Compiler},
+\newblock{\em Proceedings of the Python for Scientific Computing Conference}, Austin, TX , 2010.
+
 % Adaptive Basis ========================================
 \bibitem{PCE}
 Ghanem, R. G., and Spanos, P. D. 
