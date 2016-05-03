@@ -493,5 +493,10 @@ Armijo, L.
 \newblock Minimization of Functions Having Lipschitz Continuous First Partial Derivatives.
 \newblock {\em Pacific Journal of Mathematics}, 16(1):1-3, 1966.
 
+\bibitem{functional analysis}
+Taylor, A. E., and Lay, D. C. 
+\newblock Introduction to Functional Analysis.
+\newblock{vol. 2, \em{Wiley}, New York, 1958.}
+
 
 \end{thebibliography}

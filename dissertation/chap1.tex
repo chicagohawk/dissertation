@@ -627,7 +627,22 @@ incomplete set of bases can negatively affects the approximation due to overfitt
 Therefore, adaptive basis construction is needed.\\
 
 Square-integrable functions
-can be represented by the parameterization 
+can be represented by the parameterization
+\footnote{
+    The square integrable functions form an inner product space with inner product given by
+    \cite{functional analysis}
+    $$<f,g> = \int_A \overline{f(x)}g(x) dx\,,$$ where 
+    \begin{itemize}
+        \item $f$ and $g$ are square integrable functions,
+        \item $\overline{f(x)}$ is the complex conjugate of $f(x)$, and
+        \item $A$ is the set over which the integral is defined.
+    \end{itemize}
+    It can be shown that square integrable functions is complete 
+    under the metric induced by the inner product, thus is a Hilbert space \cite{functional analysis}.
+    Any square integrable function can be represented by 
+    a finite or countably infinite number of basis functions of the Hilbert space
+    \cite{functional analysis}.
+} \cite{functional analysis}
 \begin{equation}
     \tilde{F}(\cdot) = \sum_{i\in \mathbb{N}} {\alpha_i} \phi_i(\cdot)\,,
     \label{eqn: linear param general}
@@ -640,6 +655,9 @@ a bivariate function can be represented by monomials
     u_2,\, u_1 u_2,\,  u_1^2 u_2, \,
     u_2^2,\,  u_1 u_2^2,\,  u_1^2 u_2^2,\, \cdots\,.
 \end{equation*}
+
+I didn't know that all square integrable functions can be represented exactly using a infinite series of the same basis. What kind of basis is sufficient? Is that a famous theorem? Citation please
+
 Let $\mathcal{A}$ be a non-empty finite subset of $\mathbb{N}$,
 $\tilde{F}$ can be approximated using a subset of the bases, 
 \begin{equation}
