@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  3 MAY 2016 15:44
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  3 MAY 2016 21:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1076,39 +1076,33 @@ Underfull \hbox (badness 10000) in paragraph at lines 666--677
  []
 
 [32]
-Overfull \hbox (6.55794pt too wide) in paragraph at lines 678--695
-\T1/cmr/m/n/12 [[]]. For-tu-nately, in many ap-pli-ca-tions, many bases are in-
-signif-i-cant so their co-ef-fi-cients
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 678--695
+Underfull \hbox (badness 10000) in paragraph at lines 685--700
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 696--717
+Underfull \hbox (badness 10000) in paragraph at lines 701--722
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 721--747
+Underfull \hbox (badness 10000) in paragraph at lines 726--752
 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1675) has occurred while \output is active []
 
  [33]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [34]
-Underfull \hbox (badness 10000) in paragraph at lines 783--788
+Underfull \hbox (badness 10000) in paragraph at lines 788--793
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 789--805
+Underfull \hbox (badness 10000) in paragraph at lines 794--810
 
  []
 
@@ -1116,18 +1110,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 789--805
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [35]
-Underfull \hbox (badness 10000) in paragraph at lines 809--820
+Underfull \hbox (badness 10000) in paragraph at lines 814--825
 
  []
 
 
-Overfull \hbox (9.9646pt too wide) in paragraph at lines 821--825
+Overfull \hbox (9.9646pt too wide) in paragraph at lines 826--830
 \T1/cmr/m/n/12 op-ti-miza-tion be-gins by as-sum-ing that the ob-jec-tive func-
 tion is sam-pled from a stochas-tic
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 829--836
+Underfull \hbox (badness 10000) in paragraph at lines 834--841
 
  []
 
@@ -1135,28 +1129,28 @@ Underfull \hbox (badness 10000) in paragraph at lines 829--836
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [37]
-Overfull \hbox (0.61395pt too wide) in paragraph at lines 889--901
+Overfull \hbox (0.61395pt too wide) in paragraph at lines 894--906
 \T1/cmr/m/n/12 Bayesian ap-proach [[], []]. I re-fer to the ref-er-ence [[]] fo
 r the de-tails and a com-par-i-son
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 889--901
+Underfull \hbox (badness 10000) in paragraph at lines 894--906
 
  []
 
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 915.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 920.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [38]
-Underfull \hbox (badness 10000) in paragraph at lines 931--939
+Underfull \hbox (badness 10000) in paragraph at lines 936--944
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 940--950
+Underfull \hbox (badness 10000) in paragraph at lines 945--955
 
  []
 
@@ -1165,7 +1159,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [39]
 [40]
-Overfull \hbox (12.45134pt too wide) in paragraph at lines 1008--1011
+Overfull \hbox (12.45134pt too wide) in paragraph at lines 1013--1016
 \T1/cmr/m/n/12 con-strained by gray-box con-ser-va-tion law sim-u-la-tions with
  un-known flux func-tions,
  []
@@ -2378,7 +2372,7 @@ r/sfsl1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti0800.pfb></usr
 /share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/t
 ype1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/type1/public/cm-super
 /sftt1200.pfb>
-Output written on main.pdf (113 pages, 2935751 bytes).
+Output written on main.pdf (113 pages, 2935863 bytes).
 PDF statistics:
  622 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
