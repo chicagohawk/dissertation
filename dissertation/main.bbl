@@ -130,9 +130,24 @@ Ghanem, R. G., and Spanos, P. D.
 \newblock {Stochastic Finite Elements: a Spectral Approach.}
 \newblock{\em Courier Corporation}, 2003.
 
+\bibitem{Smolyak}
+Smolyak, S. A. 
+\newblock Interpolation and Quadrature formulas for the classes $W_s^a$ and $E_s^a$. 
+\newblock{\em Dokl. Akad. Nauk SSSR}, vol.131:1028-1031, 1960.
+
+\bibitem{L1 basis pursuit}
+Chen, S. S., Donoho, D. L., and Saunders, M. A. 
+\newblock{Atomic Decomposition by Basis Pursuit.}
+\newblock{\em SIAM Review}, 43(1):129-159, 2001.
+
+\bibitem{L2 frame}
+Daubechies, I. 
+\newblock{Time-frequency Localization Operators: a Geometric Phase Space Approach.}
+\newblock{\em Information Theory, IEEE Transactions on}, 34(4):605-612, 1988.
+
 \bibitem{global sensitivity analysis}
 Saltelli, A., Chan, K., and Scott, E. M. 
-\newblock {Sensitivity analysis}
+\newblock {Sensitivity Analysis}
 \newblock{ vol. 1, New York, Wiley}, 2000.
 
 \bibitem{match pursuit}
@@ -217,7 +232,7 @@ Torczon, V.
 \bibitem{trust region review}
 Conn, A. R., Gould, N. I., and Toint, P. L. 
 \newblock Trust Region Methods.
-\newblock \em{SIAM}, vol. 1, 2000.
+\newblock{ \em SIAM}, vol. 1, 2000.
 
 \bibitem{linear trust region}
 Powell, M.J.
