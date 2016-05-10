@@ -309,6 +309,22 @@ OpenFOAM,
 Aspen,
 \newblock{\em http://www.aspentech.com/products/aspenONE/}
 
+% Calibration without parameteric uncertainty =============================
+\bibitem{non param calibrate 1}
+Chen, W., Xiong, Y., Tsui, K. L., and Wang, S. 
+\newblock A Design-driven Validation Approach Using Bayesian Prediction Models. 
+\newblock {\em Journal of Mechanical Design}, 130(2):021101, 2008.
+
+\bibitem{non param calibrate 2}
+Wang, S., Tsui, K. L., and Chen, W., 
+\newblock Bayesian Validation of Computer Models.
+\newblock {\em Technometrics}, 51(4):439–451, 2009.
+
+\bibitem{non param calibrate 3}
+Qian, P. Z., and Wu, C. J. 
+\newblock Bayesian Hierarchical Modeling for Integrating Low-accuracy and High-accuracy Experiments. 
+\newblock{\em Technometrics}, 50(2):192-204, 2008.
+
 % Bayesian calibration and optimization ===================================
 \bibitem{derivative RKHS}
 Zhou, D. X. 
@@ -513,5 +529,12 @@ Taylor, A. E., and Lay, D. C.
 \newblock Introduction to Functional Analysis.
 \newblock{\em vol. 2, Wiley, New York}, 1958.
 
+\bibitem{fluent}
+\newblock Ansys Fluent Theory Guide. 
+\newblock {\em ANSYS Inc.}, USA, 2011.
+
+\bibitem{cfx}
+\newblock{ANSYS CFX-solver Theory Guide.}
+\newblock{ \em ANSYS CFX Release}, 11, 69-118, 2012.
 
 \end{thebibliography}

@@ -149,7 +149,7 @@ A suitable parameterization for $\tilde{F}$ will be chosen that takes into accou
 Theorem \ref{theorem: 1}.
 Section \ref{sec: adaptive basis} develops a procedure that adaptively refines the
 parameterization. The procedure adopts a greedy search of the best refinement
-at every iterate and refrains from overfitting.
+at every iteration and refrains from overfitting.
 Section \ref{sec: twin algo} summarizes the algorithm for training the twin model.
 Section \ref{sec: trunc error} presents a numerical shortcut for \eqref{eqn: twin min mismatch} 
 that is more computationally efficient.
@@ -160,7 +160,7 @@ Finally, Section \ref{sec: chap 2 summary} summarizes the chapter.\\
 
 \subsection{Parameterization}
 \label{sec: flux param}
-Functions can be parameterized by a linear combination of basis functions.
+Functions can be parameterized by a linear combination of basis functions \cite{functional analysis}.
 Firstly, consider the case when $\tilde{F}$ is univariate. 
 There are many types of basis
 functions to parameterize a univariate function, such as polynomial basis, Fourier basis, and
@@ -684,7 +684,7 @@ dictionary for addition, according to \eqref{eqn: basis significance}.
 If the addition indeed reduces the cross validation error, the candidate is appended
 to the dictionary; otherwise it is rejected. 
 If the basis is appended, the coefficients are updated by minimizing the solution mismatch, which can be
-implemented by the Broyden-Fletcher-Goldfarb-Shannon (BFGS) algorithm.
+implemented by the Broyden-Fletcher-Goldfarb-Shannon (BFGS) algorithm \cite{quasiNewton}.
 The backward step finds the most promising
 candidate in the current dictionary for deletion. 
 If the deletion reduces the cross validation error, the candidate
@@ -696,9 +696,9 @@ coefficients as the output.\\
 
 The algorithm requires to train multiple twin models at each iteration. For
 $k=2$, $6$ twin models are trained if both the forward and the backward step are acceptive.
-In practice, the trained coefficients at the last iterate usually provide good initial guess
-for the next iterate. Nonetheless, the algorithm can be costly if the dictionary turns out
-to have a high cardinality which results in a large number of iterates before the dictionary 
+In practice, the trained coefficients at the last iteration usually provide good initial guess
+for the next iteration. Nonetheless, the algorithm can be costly if the dictionary turns out
+to have a high cardinality which results in a large number of iterations before the dictionary 
 construction completes. Therefore, a numerical shortcut is provided in Section 
 \ref{sec: trunc error} that significantly reduces the cost.\\
 
@@ -833,11 +833,10 @@ can be solved by stochastic gradient descent, Algorithm \ref{alg: 2}.\\
 \label{alg: 2}
 \end{algorithm}
 
-$\lambda>0$ is a tunable step size. Usually $\lambda$ is tuned by experience to increase
-convergence speed while avoiding divergence.
-In practice, it is beneficial to
-compute the gradient
-against more than one grid points (called a ``mini-batch'') at each iterate. This is because
+$\lambda>0$ is a tunable step size. $\lambda$ can tuned manually to 
+increase convergence speed while avoiding divergence \cite{stochastic search}.
+In practice, it is beneficial to compute the gradient
+against more than one grid points (called a ``mini-batch'') at each iteration. This is because
 the code can take advantage of vectorization libraries rather than computing the residual 
 at each grid point separately.\\
 

@@ -6,13 +6,12 @@
 \contentsline {subsection}{\numberline {1.3.1}Review of Optimization Methods}{22}
 \contentsline {subsubsection}{Derivative-free Optimization}{22}
 \contentsline {subsubsection}{Gradient-based Optimization}{24}
-\contentsline {subsection}{\numberline {1.3.2}The Adjoint Method}{26}
-\contentsline {subsection}{\numberline {1.3.3}Adaptive Basis Construction}{31}
-\contentsline {subsection}{\numberline {1.3.4}Model Calibration}{34}
-\contentsline {subsection}{\numberline {1.3.5}Bayesian Optimization}{36}
-\contentsline {section}{\numberline {1.4}Notations}{40}
-\contentsline {section}{\numberline {1.5}Thesis Objectives}{42}
-\contentsline {section}{\numberline {1.6}Outline}{42}
+\contentsline {subsubsection}{Bayesian Optimization}{26}
+\contentsline {subsection}{\numberline {1.3.2}The Adjoint Method}{29}
+\contentsline {subsection}{\numberline {1.3.3}Adaptive Basis Construction}{35}
+\contentsline {section}{\numberline {1.4}Notations}{38}
+\contentsline {section}{\numberline {1.5}Thesis Objectives}{40}
+\contentsline {section}{\numberline {1.6}Outline}{40}
 \contentsline {chapter}{\numberline {2}Estimate the Gradient by Using the Space-time Solution}{43}
 \contentsline {section}{\numberline {2.1}Approach}{43}
 \contentsline {subsection}{\numberline {2.1.1}Parameterization}{47}

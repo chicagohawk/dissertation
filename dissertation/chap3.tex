@@ -31,16 +31,24 @@ In addition, the simulators for the twin and gray-box models may use different
 numerical schemes, so the $\tilde{F}$ that yields the minimal solution mismatch may not
 be exactly $F$.
 It is difficult to identify the various sources of errors and unrealistic to quantify all the
-errors separately. Instead, my thesis treats the gradient error as a whole 
-as a model inadequacy. The model inadequacy is then calibrated using a Bayesian approach.\\
+errors separately. Instead, my thesis models the gradient error as its entirety without 
+distinguishing the sources of errors.\\
+%by model inadequacy. 
+%Model inadequacy relates to the fact that models are barely perfect.
+%A model may not exactly reflect the true, underlying process
+%no matter what parameters it takes.
+%The model inadequacy is then calibrated using a Bayesian approach.\\
 
 Given a gray-box solution, the trained twin model is deterministic. 
 Assume the numerical schemes of the gray-box simulator to be deterministic too.
 Then the gradient error is deterministic. Besides, the gray-box solutions are
 generally correlated for different controls. Thus the twin models and their gradient 
 estimation errors are also correlated.
-The deterministic and correlated error can be treated as model inadequacy as discussed
-in Section \ref{sec: model calibration}. Let $\nabla\xi$ be the true gradient,
+The deterministic and correlated error can be modeled as a realization of Gaussian process
+\cite{non param calibrate 1, non param calibrate 2, non param calibrate 3}.
+%as model inadequacy as discussed
+%in Section \ref{sec: model calibration}. 
+Let $\nabla\xi$ be the true gradient,
 $\xi_{\tilde{\nabla}}$ be the estimated gradient \footnote{
 $\tilde{\xi}(c)$ is the objective evaluation provided by a twin model 
 trained using the gray-box solution at $c$. $\xi_{\tilde{\nabla}}(c)$ is the adjoint
@@ -49,8 +57,10 @@ is another gradient, $\nabla \tilde{\xi}$, which can be evaluated by finite diff
 Usually $\nabla \tilde{\xi}\neq \xi_{\tilde{\nabla}}$. Notice
 $\xi_{\tilde{\nabla}}$ may not be a conservative vector field.}, and
 $\xi_{\tilde{\nabla}i}$ be its $i$th component.
-The relationship between $\nabla \xi$ and $\xi_{\tilde{\nabla}}$
-is modeled by the model inadequacy formulation \eqref{eqn: model calibration},
+The relationship between $\nabla \xi$ and $\xi_{\tilde{\nabla}}$ can be modeled by 
+\cite{non param calibrate 1, non param calibrate 2, non param calibrate 3}
+
+%is modeled by the model inadequacy formulation \eqref{eqn: model calibration},
 \begin{equation}
     \left.\xi_{\tilde{\nabla}i}\right. 
     = \left. \nabla \xi_i\right. + 
@@ -59,9 +69,7 @@ is modeled by the model inadequacy formulation \eqref{eqn: model calibration},
 \end{equation}
 for $i=1,\cdots, d$. \eqref{eqn: gradient model inadequacy} has
 the idiosyncratic noise term removed 
-because $\nabla \xi$ and $\xi_{\tilde{\nabla}}$ are deterministic. It also 
-sets the regression parameter, $\rho$ in \eqref{eqn: model calibration},
-to be $1$ for computational simplicity.\\
+because $\nabla \xi$ and $\xi_{\tilde{\nabla}}$ are deterministic.\\
 
 Gaussian processes are adopted to model the terms in \eqref{eqn: gradient model inadequacy}. 
 In particular, I made the following assumptions.
