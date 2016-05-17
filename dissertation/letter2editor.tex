@@ -1,0 +1,282 @@
+\documentclass[a4paper,twoside]{article}
+\usepackage{amsmath, amsthm, graphicx, amssymb, wrapfig, fullpage, subfigure, array}
+\usepackage[font=sl, labelfont={sf}, margin=1cm]{caption}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\renewcommand{\headrulewidth}{1pt} % no line in header area
+\fancyhead{} % clear all footer fields
+\fancyhead[LE,RO]{\thepage}           % page number in "outer" position of footer line
+\fancyhead[RE,LO]{\textbf{\textit{Author's response to reviewers,  JCOMP-D-15-01065}}} % other info in "inner" position of footer line
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{ragged2e}
+\hyphenpenalty=1000
+
+\DeclareMathOperator{\e}{e}
+\begin{document}
+\setcounter{page}{1}
+
+\textcolor{white}{1}
+
+\vspace{1cm}
+\centering
+\textbf{Author's response to reviewers} \\
+\vspace{1cm}
+Journal of Computational Physics\\
+JCOMP-D-15-01065\\
+\vspace{.5cm}
+Adjoint-based Gradient Estimation
+Using the Space-time Solutions\\
+of Unknown Conservation Law Simulations\\
+\vspace{.5cm}
+Han Chen, Qiqi Wang\\
+\vspace{.5cm}
+Department of Aeronautics and Astronautics, Massachusetts Institute of Technology,\\ Cambridge, MA, 02139, USA\\
+\vspace{.5cm}
+Corresponding author's email: voila@mit.edu\\
+
+\justify
+\noindent\makebox[\linewidth]{\rule{.75\paperwidth}{0.4pt}}\\
+
+We are truly grateful to the reviewer for their time, effort, and insightful comments. 
+We thank the associate editor Prof. Nicholas Zabaras for his effort in reviewing this manuscript.
+We believe,
+we have addressed all the issues raised by the reviewers in the revised paper. The following are the detailed
+and itemized response to the reviewer's comments along with the information on where the corresponding changes have
+been made in the revised paper.\\
+
+\noindent\makebox[\linewidth]{\rule{.75\paperwidth}{0.4pt}}\\
+
+\emph{\textbf{Comment 1:
+The main point of problem considered in this paper is to estimate the unknown flux. The flux function will be modelled as a linear combination of some basis functions, which means that the choice of the basis functions should be based on the properties of the flux functions. So I am wondering that it is possible to summarize some general properties of the flux functions and give some suggestions on the choice of basis functions accordingly. In the 1-D example, the flux function is monotonically increasing for the specified range of the velocity, but not monotonically increasing in general.}}\\
+
+There are many types of basis functions to parameterize a function, such as polynomial basis,
+Fourier basis, and wavelet basis.
+In this paper, we explain that a good choice for the basis is the sigmoid function.
+There are two reasons for such a choice.\\
+
+Firstly, we have Theorem 1 that studies on which domain of $u$ 
+can the twin-model flux's derivative $\frac{\partial \tilde{F}}{\partial u}$ match the gray-box
+flux's derivative, $\frac{\partial {F}}{\partial u}$, for a one-equation PDEs with one spatial
+dimension. We prove that if the two solutions match, 
+then it is guaranteed that  $\frac{\partial \tilde{F}}{\partial u}$  and
+ $\frac{\partial {F}}{\partial u}$ match in a finite-supported domain
+$B_u$ where the gray-box solution exists and has large enough variation. 
+For PDEs having more-than-one equation and/or more-than-one spatial dimension,
+we expect (without proof) such a domain also has a finite support.
+In addition, if the solution is discretized, we hold the belief (without proof) that they may 
+match better on a domain where the gray-box discretized solution is more densely sampled.
+Therefore, a suitable basis function should allow local refinements on a certain domain. 
+``Global'' basis, such as polynomial and Fourier,
+does not satisfy this requirement.
+A type of basis that allows local refinment is the wavelet basis.\\
+
+Secondly, if the twin model flux $\tilde{F}$ and the gray-box model flux $F$
+are off by a constant, i.e. $\tilde{F} = F+a$, then $\frac{\partial \tilde{F}}{\partial u}=
+\frac{\partial {F}}{\partial u}$. Thus the solution of the twin model and the gray-box
+model to any initial value problem will be the same. In addition, the solutions to any adjoint
+equation, with any objective function, will be the same. As a result, the gradient estimated
+by the twin model will be the true gradient. Therefore, $\frac{\partial \tilde{F}}{\partial u}$,
+instead of $\tilde{F}$, should be approximated. So the basis for univariate $\tilde{F}$ shall be
+chosen as the indefinite integral of the regular basis functions. 
+The indefinite integral of wavelet is sigmoid function.\\
+
+Based on these two reasons, we recommend sigmoid functions as the bases of univariate twin-model 
+fluxes. For multivariate fluxes, the tensor product of sigmoid functions are recommended in this
+paper.\\
+
+In the older version of our paper, we explained that the monotonicity of a flux can be enforced
+by setting the coefficients of all sigmoid bases to be positive. The monotonicity is 
+not generally applicable, so we removed such discussion in our revised version.\\
+
+\emph{\textbf{Comment 2:
+To approximate the flux function, a range of the value of the physical quantities needs to be specified. It is not mentioned in the paper how such a range should be determined. I think it is an importance issue. First, the flux function will be defined on this range, which means that this range is related to the number of coefficients for a good approximation. Second, if the range is 1 2 too small, the twin model may fail when it generates a value that is out of the range.}}\\
+
+The comment involves two issues. The first issue is how to determine the range of solution
+on which $\tilde{F}$ will be defined. A range that is too wide may result in unnecessary 
+coefficients and possibly introduce overfitting. 
+A range that is too narrow may undermine the flux estimation
+accuracy and possibly introduce underfitting.
+The second issue is how many bases shall be used, where to specify the bases
+(corresponds to $\frac{\eta}{2^j}$ in the sigmoid basis),
+and how to specify the resolution of the bases (corresponds to $j$ in the sigmoid basis).
+The two issues are closely related because they both reflect the fact that
+the bases shall be determined adaptively according to the gray-box solution.\\
+
+In the revised version of our paper, we address the two issues all together by introducing
+an adaptive basis construction scheme.\\
+
+Bases can be determined adaptively through methods like Lasso regularization 
+\cite{Lasso variable selection},
+matching pursuit \cite{match pursuit}, and basis pursuit \cite{L1 basis pursuit}. 
+In the revised paper, we review such methods in Section 
+3.2. Such methods select a subset of ``significant'' bases from a basis dictionary (the 
+definition of basis dictionary is in Section 3.2). 
+Conventionally, the dictionary needs to be fixed and pre-determined, with the belief that it is a 
+superset of the significant bases.
+This can be problematic we are unable to ensure, a prior, that a fixed and pre-determined dictionary 
+contains all the significant bases for approximating the unknown flux function.\\
+
+To address this issue, methods have been devised that construct the dictionary adaptively. 
+Our revised paper adopts the approach proposed in \cite{adaptive basis 1} and \cite{adaptive basis 2}.
+Starting from some trivial bases, 
+a dictionary is built up progressively by iterating over a forward step and a backward step.
+The forward step searches over a candidate set of bases, and adds the significant ones 
+to the dictionary.
+The backward step searches over the current dictionary, and removes the 
+insignificant ones from the dictionary.
+The iteration stops only when no alternation is made to the dictionary or when some criterion
+achieves a target value.\\
+
+To enable the forward-backward procedure, three elements are developed in Section 4.3:
+1) A formulation is provided to efficiently assess the significance of each candidate basis.
+The assessment requires only a numerical quadrature, without extra conservation law simulations.
+2) A concept of the a sigmoid basis' ``neighborhood'' is developed. 
+The neighborhood defines the the candidate bases at each forward step.
+3) A criterion based on cross validation is devised that determines when to add or remove a 
+candidate basis in the forward or backward step. The complete algorithm is summarized in
+Section 4.4.\\
+
+Section 5.1 demonstrates the adaptability of the selected bases in a numerical example. The 
+adaptive scheme enables more accurate gradient estimation compared with an ad hoc set of bases.
+Therefore, we believe the two issues raised by the reviewer have been addressed after the revision.\\
+
+\emph{\textbf{Comment 3:
+The mismatch M is nothing but the distance the real solution and the model solution, which should be defined with respect to the norm used for the spatial discretization of the real solution.}}\\
+
+In the older version of our paper, the solution mismatch is defined as
+$$
+    \mathcal{M} = \frac{1}{T} \sum_{i=1}^N \sum_{j=1}^M \left(\tilde{\boldsymbol{u}}_{ij}
+    - \boldsymbol{u}_{ij}\right)^2 \Delta t_j |\Delta \boldsymbol{x}_i|\,.
+$$
+The notations are described in the beginning of the revised paper. 
+In the revised version, the solution mismatch is defined more compactly and more generally as
+\begin{equation*}
+    \mathcal{M} = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \big( \tilde{\boldsymbol{u}}_{ij}
+     -\boldsymbol{u}_{ij}\big)^2 \,,
+    \label{eqn: solution mismatch}
+\end{equation*}
+where $w_{ij}$'s are the space-time quadrature weights. Unfortunately, we had a typo
+in defining the solution mismatch in the return bend numerical example:
+we defined mistakenly the solution mismatch to be
+$$
+    \mathcal{M} = w_\rho \|\tilde{\rho}_\infty - \rho_\infty\|^2 
+    + w_u \|\tilde{u}_\infty - u_\infty\|^2 
+    + w_v \|\tilde{v}_\infty - v_\infty\|^2
+    +w_E \|\tilde{E}_\infty - E_\infty\|^2\,.
+$$
+Indeed, $\|\cdot\|$ should be $\|\cdot\|_Q$, the norm with respect to the quadrature associated with 
+the spatial discretization, which is in line with our definition of $\mathcal{M}$.
+In the revised paper we correct the mistake. We apologize for the typo in the older version.\\
+
+
+\emph{\textbf{Comment 4:
+The authors proposed an intuitive choice for the weight constants in the M given in equation (29). Mathematically speaking, as long as the weights are positive number, they are equivalent. I am not sure the advantage of the intuitive choices.}}\\
+
+There can be more-than-one equations in a conservation law. For example, in
+the return bend numerical example, we have equations for the density, the
+x- and y-directional momentums (or velocities), 
+and the energy density. The solution mismatch, $\mathcal{M}$, is a combination of the mismatches
+of all these quantities. 
+Therefore, a positive weight shall be assigned to each of the mismatches in defining $\mathcal{M}$.\\
+
+Different choices of the weight results in different $\tilde{F}$ and different gradient estimation.
+To see this, we view $\mathcal{M}$ as a function of $\tilde{F}$ and the weight $w$, i.e.
+$\mathcal{M} = \mathcal{M}(\tilde{F}, w)$. Given a $w$, the trained twin model approximately satisfies
+$\left.\frac{\partial \mathcal{M}}{\partial \tilde{F}}\right|_w = 0$. Therefore,
+we obtain by variation that
+$$
+    \delta \tilde{F} = - \left(\frac{\partial^2 \mathcal{M}}{\partial \tilde{F}^2}\right)^{-1}
+    \left(\frac{\partial^2 \mathcal{M}}{\partial \tilde{F}\partial w}\right) \delta w\,.
+$$
+Besides, the estimated gradient $G\equiv \frac{\partial \tilde{\xi}}{\partial c}$ 
+is a function of $\tilde{F}$.
+Denote the variation of the estimated gradient by
+$$
+    \delta G = \frac{dG}{d\tilde{F}} \delta \tilde{F}\,.
+$$
+Thereby,
+\begin{equation*}
+    \delta G = - \frac{dG}{d\tilde{F}} \left( \frac{\partial^2 \mathcal{M}}{\partial \tilde{F}^2} \right)^{-1} \left( \frac{\partial^2 \mathcal{M}}{\partial \tilde{F} \partial w} \right) \delta w 
+    \equiv - \Lambda \delta w
+\end{equation*}
+The estimated gradient indeed depends on the choice of $w$.
+In theory, this linear relationship enables one to choose an optimal $w$ depending on her goal. 
+For example, if the goal is to minimize the sensitivity of $G$ with respect to $w$, 
+we may choose a $w$ that minimizes $\|\Lambda^T \Lambda\|$, where $\|\cdot\|$ indicates the
+induced norm. In practice, however, it can be costly to find such an optimal weight due to 
+the Hessian in the formulation of $\Lambda$.\\
+
+In the older version,
+we first set $\tilde{F}$ as some randomly guessed functions, then obtained an ensemble of solution
+mismatches for different physical quantities. The weights were set to be the 
+inverse of the ensemble-averaged solution mismatches.
+For example, in the return bend numerical example, the weights for the density, velocities, and
+the energy density were chosen as
+\begin{equation*}
+    w_\rho = \frac{1}{\Big< \|\tilde{\boldsymbol{\rho}}_\infty - \boldsymbol{\rho}_\infty\|_Q^2 \Big>}\,,
+    \; 
+    w_u = \frac{1}{\Big< \|\tilde{\boldsymbol{u}}_\infty - \boldsymbol{u}_\infty\|_Q^2 \Big>}\,,
+    \;
+    w_v = \frac{1}{\Big< \|\tilde{\boldsymbol{v}}_\infty - \boldsymbol{v}_\infty\|_Q^2 \Big>}\,,
+    \;
+    w_E = \frac{1}{\Big< \|\tilde{\boldsymbol{E}}_\infty - \boldsymbol{E}_\infty\|_Q^2 \Big>}\,.
+\end{equation*}
+In the revised version, we set the weights as the normalization constants.
+It is observed that our older treatment slightly increases the converging 
+speed in training the twin model,
+although the trained twin model gives similar estimated gradient. We are unable to justify the
+advantage of each choice. Therefore we specify the weights simply as the normalization constants
+to avoid possible confusions. It remains a future work to study the choices and the effects
+of the weights.\\
+
+
+\emph{\textbf{Additional note:}}
+We will also submit another paper, 
+\emph{Twin-model Enhanced Bayesian Optimization Constrained by Gray-box Conservation Law Simulations},
+as a companion paper.
+The companion paper will utilize
+the estimated gradient, obtained through the twin model developed in this paper, 
+to enhance the Bayesian optimization performance. 
+
+
+
+\begin{thebibliography}{9}
+
+\bibitem{Lasso variable selection}
+Tibshirani, R.
+\newblock Regression Shrinkage and Selection via the Lasso.
+\newblock {\em Journal of the Royal Statistical Society}, Series B (Methodological):267-288, 1996.
+
+\bibitem{match pursuit}
+Mallat, S. G., and Zhang, Z.
+\newblock{ Matching Pursuits with Time-Frequency Dictionaries.}
+\newblock{\em Signal Processing, IEEE Transactions on}, 41(12):3397-3415, 1993.
+
+\bibitem{L1 basis pursuit}
+Chen, S. S., Donoho, D. L., and Saunders, M. A.
+\newblock{Atomic Decomposition by Basis Pursuit.}
+\newblock{\em SIAM Review}, 43(1):129-159, 2001.
+
+\bibitem{adaptive basis 1}
+Jekabsons, G.
+\newblock Adaptive Basis Function Construction: an Approach for Adaptive Building of Sparse Polynomial Regression Models.
+\newblock {\em INTECH Open Access Publisher}, 2010.
+
+\bibitem{adaptive basis 2}
+Blatman, G., and Sudret, B.
+\newblock Sparse Polynomial Chaos Expansions and Adaptive Stochastic Finite Elements Using a Regression Approach.
+\newblock {\em Comptes Rendus M$\check{\textrm{e}}$canique}, 336(6):518-523, 2008.
+
+\bibitem{cross validation}
+Geisser, S.
+\newblock {Predictive inference},
+\newblock {\em CRC press}, vol. 55, 1993.
+
+\end{thebibliography}
+
+
+\end{document}
+
