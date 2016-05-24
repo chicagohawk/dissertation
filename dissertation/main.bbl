@@ -125,6 +125,18 @@ Bergstra, J., Breuleux, O., Bastien, F., Lamblin, P., Pascanu, R., Desjardins, G
 \newblock{\em Proceedings of the Python for Scientific Computing Conference}, Austin, TX , 2010.
 
 % Adaptive Basis ========================================
+\bibitem{real analysis}
+Royden, H. L., and Fitzpatrick, P. 
+\newblock{Real Analysis.}
+\newblock{\em Vol. 198, No. 8. New York: Macmillan}, 1988.
+
+
+\bibitem{regression book}
+Draper, N. R., Smith, H., and Pownell, E. 
+\newblock{Applied Regression Analysis.}
+\newblock{\em Vol. 3, New York: Wiley}, 1966.
+
+
 \bibitem{PCE}
 Ghanem, R. G., and Spanos, P. D. 
 \newblock {Stochastic Finite Elements: a Spectral Approach.}

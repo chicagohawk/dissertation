@@ -29,14 +29,23 @@
 \citation{adjoint}
 \citation{adjoint}
 \citation{AD review}
+\citation{adjoint}
 \newlabel{eqn: 1D conceptual}{{1.2}{18}}
 \newlabel{eqn: 1D conceptual no shock}{{1.3}{18}}
 \newlabel{eqn: 1D conceptual inferred}{{1.4}{18}}
+\citation{adjoint}
+\newlabel{eqn: gradient temp 1}{{1.5}{19}}
+\newlabel{eqn: adjoint temp true}{{1.6}{19}}
+\newlabel{eqn: gradient temp 2}{{1.7}{19}}
+\newlabel{eqn: adjoint temp infer}{{1.8}{19}}
 \citation{openfoam}
 \citation{aspen}
 \citation{fluent}
 \citation{cfx}
 \citation{reservoir sim book}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Problem Formulation}{21}}
+\newlabel{sec: formulation}{{1.2}{21}}
+\newlabel{eqn: objective prototype}{{1.9}{21}}
 \citation{derivative RKHS}
 \citation{convergen EI}
 \citation{practical Bayesian}
@@ -44,11 +53,10 @@
 \citation{grad coKriging}
 \citation{KennedyOhagan1}
 \citation{KennedyOhagan2}
-\@writefile{toc}{\contentsline {section}{\numberline {1.2}Problem Formulation}{21}}
-\newlabel{sec: formulation}{{1.2}{21}}
-\newlabel{eqn: objective prototype}{{1.5}{21}}
-\newlabel{eqn: govern PDE}{{1.6}{21}}
 \citation{gradfreereview}
+\newlabel{eqn: govern PDE}{{1.10}{22}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.3}Literature Review}{22}}
+\newlabel{section: literature}{{1.3}{22}}
 \citation{gradfreereview}
 \citation{gradfreereview}
 \citation{trust region review}
@@ -60,12 +68,6 @@
 \citation{Alexandrov trust region}
 \citation{trustregionconn}
 \citation{trustregionwild}
-\@writefile{toc}{\contentsline {section}{\numberline {1.3}Literature Review}{22}}
-\newlabel{section: literature}{{1.3}{22}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.1}Review of Optimization Methods}{22}}
-\newlabel{sec: review optimization}{{1.3.1}{22}}
-\@writefile{toc}{\contentsline {subsubsection}{Derivative-free Optimization}{22}}
-\newlabel{section: DFO}{{1.3.1}{22}}
 \citation{Branch and Bound}
 \citation{evolution review}
 \citation{practical Bayesian}
@@ -82,6 +84,10 @@
 \citation{Locatelli}
 \citation{jones1998}
 \citation{GP bandit}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.1}Review of Optimization Methods}{23}}
+\newlabel{sec: review optimization}{{1.3.1}{23}}
+\@writefile{toc}{\contentsline {subsubsection}{Derivative-free Optimization}{23}}
+\newlabel{section: DFO}{{1.3.1}{23}}
 \citation{gradfreereview}
 \citation{gradfreereview}
 \citation{derivative RKHS}
@@ -109,6 +115,8 @@
 \citation{trust region inexact grad}
 \citation{trust region global}
 \citation{trust region inexact grad}
+\@writefile{toc}{\contentsline {subsubsection}{Gradient-based Optimization}{24}}
+\newlabel{section: GBO}{{1.3.1}{24}}
 \citation{opt via sim review}
 \citation{nonlinear program}
 \citation{stogo 1}
@@ -126,8 +134,6 @@
 \citation{cuckoo}
 \citation{grad particle swarm}
 \citation{grad particle swarm}
-\@writefile{toc}{\contentsline {subsubsection}{Gradient-based Optimization}{24}}
-\newlabel{section: GBO}{{1.3.1}{24}}
 \citation{coKriging}
 \citation{derivative RKHS}
 \citation{coKriging}
@@ -152,15 +158,16 @@
 \citation{practical Bayesian}
 \citation{review EI}
 \citation{jones1998}
+\@writefile{toc}{\contentsline {subsubsection}{Bayesian Optimization}{26}}
+\newlabel{section: bayes opt}{{1.3.1}{26}}
 \citation{practical Bayesian}
 \citation{review EI}
 \citation{jones1998}
 \citation{GP book}
 \citation{GP book}
-\@writefile{toc}{\contentsline {subsubsection}{Bayesian Optimization}{26}}
-\newlabel{section: bayes opt}{{1.3.1}{26}}
-\newlabel{stochastic process}{{1.7}{26}}
 \citation{GP book}
+\newlabel{stochastic process}{{1.11}{27}}
+\newlabel{eqn: posterior formulation}{{1.13}{27}}
 \citation{GP book}
 \citation{GP book}
 \citation{GP book}
@@ -169,8 +176,6 @@
 \citation{practical Bayesian}
 \citation{jones1998}
 \citation{practical Bayesian}
-\newlabel{eqn: posterior formulation}{{1.9}{27}}
-\newlabel{eqn: Matern kernel}{{1.10}{27}}
 \citation{GP bandit}
 \citation{practical Bayesian}
 \citation{review EI}
@@ -186,13 +191,13 @@
 \citation{review EI}
 \citation{jones1998}
 \citation{prob of improve}
+\newlabel{eqn: Matern kernel}{{1.14}{28}}
 \citation{prob of improve}
 \citation{review EI}
 \citation{Locatelli}
 \citation{GP bandit}
 \citation{practical Bayesian}
 \citation{stogo 2}
-\newlabel{eqn: EI}{{1.12}{28}}
 \citation{PhD review constraint}
 \citation{penalty method}
 \citation{augmented lagrangian method}
@@ -200,35 +205,37 @@
 \citation{EIC}
 \citation{IECI}
 \citation{PhD review constraint}
+\newlabel{eqn: EI}{{1.16}{29}}
 \citation{derivative RKHS}
 \citation{grad coKriging}
 \citation{KennedyOhagan2}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.2}The Adjoint Method}{29}}
-\newlabel{eqn: FD eg}{{1.14}{29}}
 \citation{adjoint}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.2}The Adjoint Method}{30}}
+\newlabel{eqn: FD eg}{{1.18}{30}}
+\newlabel{eqn: define perturb}{{1.19}{30}}
 \citation{review adjoint geo}
 \citation{adjoint}
 \citation{intro adjoint}
-\newlabel{eqn: define perturb}{{1.15}{30}}
-\newlabel{eqn: variational form}{{1.16}{30}}
-\newlabel{eqn: variational PDE}{{1.17}{30}}
-\newlabel{eqn: dxidc adjoint}{{1.18}{30}}
-\newlabel{eqn: adjoint}{{1.19}{30}}
 \citation{discrete adjoint}
+\newlabel{eqn: variational form}{{1.20}{31}}
+\newlabel{eqn: variational PDE}{{1.21}{31}}
+\newlabel{eqn: dxidc adjoint}{{1.22}{31}}
+\newlabel{eqn: adjoint}{{1.23}{31}}
 \citation{discrete adjoint phd}
 \citation{AD review}
 \citation{AD review}
-\newlabel{eqn: adjoint discrete}{{1.20}{31}}
-\newlabel{eqn: dxidc adjoint discrete}{{1.21}{31}}
-\newlabel{eqn: eg y=fx}{{1.22}{31}}
 \citation{AD review}
-\@writefile{lof}{\contentsline {figure}{\numberline {1-1}{\ignorespaces The computational graph for \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces \ref  {eqn: elementary operation}\unskip \@@italiccorr )}}. The yellow nodes indicate the input variables, the blue node indicates the output variable, and the white nodes indicate the intermediate variables. The arrows indicate elementary operations. The begining and end nodes of each arrow indicate the independent and dependent variables for each operation.\relax }}{32}}
+\newlabel{eqn: adjoint discrete}{{1.24}{32}}
+\newlabel{eqn: dxidc adjoint discrete}{{1.25}{32}}
+\newlabel{eqn: eg y=fx}{{1.26}{32}}
+\newlabel{eqn: elementary operation}{{1.27}{32}}
+\citation{AD review}
+\@writefile{lof}{\contentsline {figure}{\numberline {1-1}{\ignorespaces The computational graph for \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces \ref  {eqn: elementary operation}\unskip \@@italiccorr )}}. The yellow nodes indicate the input variables, the blue node indicates the output variable, and the white nodes indicate the intermediate variables. The arrows indicate elementary operations. The begining and end nodes of each arrow indicate the independent and dependent variables for each operation.\relax }}{33}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig: AD graph}{{1-1}{32}}
-\newlabel{eqn: elementary operation}{{1.23}{32}}
-\citation{AD review}
-\newlabel{eqn: elementary derivative}{{1.24}{33}}
-\newlabel{eqn: residual PDE eg}{{1.25}{33}}
+\newlabel{fig: AD graph}{{1-1}{33}}
+\newlabel{eqn: elementary derivative}{{1.28}{33}}
+\newlabel{eqn: residual PDE eg}{{1.29}{34}}
+\newlabel{eqn: elements for markov graph}{{1.30}{34}}
 \citation{adjoint aerodynamics}
 \citation{adjoint aerodynamics 2}
 \citation{adjoint aerodynamics AD}
@@ -239,30 +246,29 @@
 \citation{adolc}
 \citation{adiff}
 \citation{theano}
-\newlabel{eqn: elements for markov graph}{{1.26}{34}}
-\newlabel{fig: chap1 graph 1}{{1-2a}{34}}
-\newlabel{sub@fig: chap1 graph 1}{{a}{34}}
-\newlabel{fig: chap1 graph 2}{{1-2b}{34}}
-\newlabel{sub@fig: chap1 graph 2}{{b}{34}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1-2}{\ignorespaces Computational graphs for the PDE simulation and objective evaluation.\relax }}{34}}
+\citation{real analysis}
+\citation{regression book}
+\newlabel{fig: chap1 graph 1}{{1-2a}{35}}
+\newlabel{sub@fig: chap1 graph 1}{{a}{35}}
+\newlabel{fig: chap1 graph 2}{{1-2b}{35}}
+\newlabel{sub@fig: chap1 graph 2}{{b}{35}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1-2}{\ignorespaces Computational graphs for the PDE simulation and objective evaluation.\relax }}{35}}
+\citation{real analysis}
+\citation{wavelet mallat}
+\citation{real analysis}
 \citation{functional analysis}
-\citation{functional analysis}
-\citation{functional analysis}
-\citation{functional analysis}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.3}Adaptive Basis Construction}{35}}
-\newlabel{sec: adaptive basis review}{{1.3.3}{35}}
-\newlabel{eqn: linear param general}{{1.28}{35}}
 \citation{match pursuit}
 \citation{PCE}
 \citation{PCE}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.3}Adaptive Basis Construction}{36}}
+\newlabel{sec: adaptive basis review}{{1.3.3}{36}}
+\newlabel{eqn: linear param general}{{1.33}{36}}
+\newlabel{eqn: linear param truncate}{{1.34}{36}}
 \citation{L1 basis pursuit}
 \citation{L2 frame}
 \citation{match pursuit}
 \citation{PCE}
 \citation{PCE}
-\citation{Smolyak}
-\newlabel{eqn: linear param truncate}{{1.29}{36}}
-\newlabel{eqn: least squares demo}{{1.30}{36}}
 \citation{PCE}
 \citation{L1 basis pursuit}
 \citation{match pursuit}
@@ -297,17 +303,18 @@
 \citation{adaptive basis 1}
 \citation{adaptive basis 2}
 \citation{adaptive basis 3}
+\newlabel{eqn: least squares demo}{{1.35}{37}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.4}Notations}{38}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.5}Thesis Objectives}{40}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.6}Outline}{40}}
 \@setckpt{chap1}{
 \setcounter{page}{42}
-\setcounter{equation}{30}
+\setcounter{equation}{35}
 \setcounter{enumi}{3}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
 \setcounter{enumiv}{0}
-\setcounter{footnote}{7}
+\setcounter{footnote}{4}
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{1}

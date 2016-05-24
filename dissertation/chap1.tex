@@ -126,19 +126,52 @@ for values of $u$ that appeared in the solution,
 by using indefinite integral. Let $\tilde{F}$ be the approximation for $F$.
 An alternative conservation law can be proposed
 \begin{equation}
-    \frac{\partial \tilde{u}}{\partial t} + \frac{\partial \tilde{F}(\tilde{u})}{\partial \tilde{u}} = c\,,\quad
+    \frac{\partial \tilde{u}}{\partial t} + \frac{\partial \tilde{F}(\tilde{u})}{\partial x} = c\,,\quad
     x \in [0,1] \;, \;\; t\in[0,1]\,,
     \label{eqn: 1D conceptual inferred}
 \end{equation}
 that approximates the true but unknown conservation law \eqref{eqn: 1D conceptual}, where
 $\tilde{u}$ is the solution associated with $\tilde{F}$, in the following sense: If $\tilde{F}$ and $F$ are off by a constant $a$, i.e.
 $\tilde{F} = F+a$,
-then $\frac{\partial F(u)}{\partial u} = \frac{\partial (F(u)+a)}{\partial u} = \frac{\partial \tilde{F}(u)}{\partial u}$;
+then $\frac{d F(u)}{d u} = \frac{d (F(u)+a)}{d u} = \frac{d \tilde{F}(u)}{d u}$;
 therefore, the solutions of \eqref{eqn: 1D conceptual} 
 and \eqref{eqn: 1D conceptual inferred}  to any initial value
-problem will be the same.
-In addition, the solutions to any adjoint equation, with any objective function, will be the same. As a result, the gradient computed 
-by the adjoint equation of \eqref{eqn: 1D conceptual inferred} will be the true gradient, and therefore can drive
+problem will be the same. 
+The gradient of any objective function $\xi(c) \equiv \xi(u(c),c)$ can
+be obtained by the adjoint method \cite{adjoint}. The gradient is
+\begin{equation}
+    \frac{d\xi}{dc} = \int_{0}^1 \int_{0}^1 \left(\frac{\partial \xi}{\partial c} + \lambda\right) dx dt\,,
+    \label{eqn: gradient temp 1}
+\end{equation}
+where $\lambda$, the adjoint solution, satisfies
+\begin{equation}
+    \frac{\partial \lambda}{\partial t} + \frac{\partial }{\partial x}\left(\lambda \frac{dF}{du}\right)
+    = - \frac{\partial \xi}{\partial u} \,.
+    \label{eqn: adjoint temp true}
+\end{equation}
+In \eqref{eqn: adjoint temp true}, $\frac{dF}{du}$ and $\frac{\partial \xi}{\partial u}$
+are defined on the solution 
+$u$ of \eqref{eqn: 1D conceptual no shock} \cite{adjoint}.
+Similarly, the gradient of $\tilde{\xi}(c) \equiv \xi(\tilde{u}(c),c)$ is
+\begin{equation}
+    \frac{d\tilde{\xi}}{dc} = \int_{0}^1 \int_{0}^1 \left(\frac{\partial \xi}{\partial c} + \tilde{\lambda}\right) dx dt\,,
+    \label{eqn: gradient temp 2}
+\end{equation}
+where $\tilde{\lambda}$, the adjoint solution, satisfies
+\begin{equation}
+    \frac{\partial \tilde{\lambda}}{\partial t} + \frac{\partial }{\partial x}\left(\tilde{\lambda} \frac{d\tilde{F}}{d{u}}\right)
+    = - \frac{\partial \xi}{\partial {u}}\,.
+    \label{eqn: adjoint temp infer}
+\end{equation}
+In \eqref{eqn: adjoint temp infer}, $\frac{d\tilde{F}}{du}$ and $\frac{\partial \xi}{\partial u}$
+are defined on the solution
+$\tilde{u}$ of \eqref{eqn: 1D conceptual inferred}. 
+If the two solutions, $u$ and $\tilde{u}$, are the same, and if 
+$\frac{dF}{du} = \frac{d\tilde{F}}{du}$ on the solution, then the adjoint solutions, 
+$\lambda$ and $\tilde{\lambda}$ will be the same.
+As a result, the gradients, \eqref{eqn: gradient temp 1} and \eqref{eqn: gradient temp 2}, will be 
+the same.
+Therefore $\frac{d\tilde{\xi}}{dc}$ can drive
 the optimization constrained by \eqref{eqn: 1D conceptual}.
 A simulator for the approximated conservation law is named \textbf{twin model}, since it behaves as an adjoint-enabled
 twin of the original simulator.
@@ -359,8 +392,10 @@ achieve near-optimality. The effect of iteration reduction
 is analyzed numerically in Chapter \ref{chapter 3}.\\
 
 A property of the Bayesian method is that the search step can be determined using all 
-available objective and gradient values \cite{practical Bayesian, jones1998}. In addition, the search step is optimal 
-under a Bayesian metric \cite{practical Bayesian, jones1998}. 
+available objective and gradient values \cite{practical Bayesian, jones1998}. In addition, 
+given the current knowledge of the objective function which is represented in Bayesian probability,
+the search step is optimal under a particular metric such as the expected improvement metric
+\cite{practical Bayesian, jones1998}. 
 The advantage of such properties can be justified
 when the objective and gradient evaluations
 are dominantly more expensive than the overhead of 
@@ -615,7 +650,8 @@ discretizes $\mathcal{F}(u,c)=0$ first. After the discretization, $u$ and $c$ be
 vectors $\boldsymbol{u}$ and $\boldsymbol{c}$.
 $\boldsymbol{u}$ is defined implicitly by the system
 $\mathcal{F}_d(\boldsymbol{u}, \boldsymbol{c}) = 0$, where $\mathcal{F}_d$ indicates
-the discretized difference operator. Using the same derivation as \eqref{eqn: variational form}
+the discretized difference operator, a nonlinear function whose output is of the same dimension as its
+first input $\boldsymbol{u}$. Using the same derivation as \eqref{eqn: variational form}
 thru. \eqref{eqn: adjoint}, the discrete adjoint equation can be obtained
 \begin{equation}
     \left(\frac{\partial \mathcal{F}_d}{\partial \boldsymbol{u}}\right)^T \boldsymbol{\lambda} = \left(\frac{\partial \xi}{\partial \boldsymbol{u}}\right)^T\,,
@@ -623,7 +659,8 @@ thru. \eqref{eqn: adjoint}, the discrete adjoint equation can be obtained
 \end{equation}
 which is a linear system of equations.
 $\left(\frac{\partial \mathcal{F}_d}{\partial \boldsymbol{u}}\right)^T$ is derived as
-another difference operator. With proper discretized boundary/initial conditions, it uniquely
+another difference operator, a function whose output is a square matrix. It contains the
+discretized boundary and initial conditions, and uniquely
 determines the discrete adjoint vector $\boldsymbol{\lambda}$, which subsequently determines the
 gradient
 \begin{equation}
@@ -687,7 +724,8 @@ one can propogate the derivatives backward in the computational graph as follows
 \label{eqn: elementary derivative}
 \end{equation}
 The derivatives in \eqref{eqn: elementary derivative} are straightforward to compute.
-This is because every forward operation in \eqref{eqn: elementary operation} is elementary, and
+This is because every forward operation in \eqref{eqn: elementary operation} is among 
+a small library of elementary operations, and
 their derivatives can be hardwired in AD softwares. 
 Notice each arrow in Figure \ref{fig: AD graph} is traversed once and only once in the backward propogation 
 \eqref{eqn: elementary derivative}. Therefore, the backward
@@ -697,38 +735,47 @@ See \cite{AD review} for a thorough review of AD.\\
 
 Because a PDE simulation can be viewed as 
 performing a sequence of elementary operations, 
-AD can be used to evaluate the discrete adjoint.
-Consider a discretized PDE simulation that at each timestep solves
+AD can be used to evaluate the discrete adjoint. Consider the PDE 
+$\mathcal{F}(u,c)=0$ in \eqref{eqn: define perturb}, where $u$ is space-time dependent.
+After space-time discretization, one obtain a set of timestepwise equations
 \begin{equation}
-    \mathcal{F}_{t+1} = \mathcal{F}(\boldsymbol{x}_t, \boldsymbol{x}_{t+1}, \boldsymbol{c}_{t+1})=0\,,
+    \mathcal{F}_{t+1} = \mathcal{F}(\boldsymbol{u}_t, \boldsymbol{u}_{t+1}, \boldsymbol{c}_{t+1})=0\,,
     \label{eqn: residual PDE eg}
 \end{equation}
-for $t=0, \cdots, T-1$, where $\boldsymbol{x}_t$ and $\boldsymbol{c}_t$ are
-the state and control variables at the $t$th timestep. 
+for $t=0, \cdots, T-1$, where $\boldsymbol{u}_t$ and $\boldsymbol{c}_t$ are
+the state and control variables at the $t$th timestep. Here $\mathcal{F}$ is redefined as 
+a function whose output has the same dimension as $\boldsymbol{u}_0$ through $\boldsymbol{u}_T$.
+The equation uniquely determines $\boldsymbol{u}_1$ and $\boldsymbol{u}_T$ given $\boldsymbol{u}_0$. 
 AD can be used to compute the gradient of an objective function
-$$\xi = \xi(\boldsymbol{x}_0 , \cdots, \boldsymbol{x}_T; \boldsymbol{c}_1, \cdots 
+$$\xi = \xi(\boldsymbol{u}_0 , \cdots, \boldsymbol{u}_T; \boldsymbol{c}_1, \cdots 
 \boldsymbol{c}_{T})$$ 
 to the control variables.
 To see this, consider the evaluation of \eqref{eqn: residual PDE eg} using an AD software. 
-The gradients $\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{x}_t}$, 
-$\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{x}_{t+1}}$, and
+The gradients $\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{u}_t}$, 
+$\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{u}_{t+1}}$, and
 $\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{c}_{t+1}}$, for
-$t=0, \cdots, T-1$, are automatically computable. Therefore, one can obtain
+$t=0, \cdots, T-1$, can be computed from the functional form of $\mathcal{F}$. Therefore, one can obtain
 \begin{equation}
     \begin{split}
-        \frac{\partial \boldsymbol{x}_{t+1}}{\partial \boldsymbol{x}_t} &=
-        - \left(\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{x}_{t+1}}\right)^{-1}
-        \left(\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{x}_t}\right)\\
-        \frac{\partial \boldsymbol{x}_{t+1}}{\partial \boldsymbol{c}_{t+1}} &=
-        -\left(\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{x}_{t+1}}\right)^{-1}
+        \frac{\partial \boldsymbol{u}_{t+1}}{\partial \boldsymbol{u}_t} &=
+        - \left(\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{u}_{t+1}}\right)^{-1}
+        \left(\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{u}_t}\right)\\
+        \frac{\partial \boldsymbol{u}_{t+1}}{\partial \boldsymbol{c}_{t+1}} &=
+        -\left(\frac{\partial \mathcal{F}_{t+1}}{\partial \boldsymbol{u}_{t+1}}\right)^{-1}
         \left(\frac{\partial \mathcal{F}_{t+1}}{\partial\boldsymbol{c}_{t+1}}\right)\,.
     \end{split}
     \label{eqn: elements for markov graph}
 \end{equation}
 Therefore a computational graph, Figure \ref{fig: chap1 graph 1},
 can be constructed using the chain rule. The graph enables the evaluation of all
-$\frac{\partial \boldsymbol{x}_t}{\partial \boldsymbol{c}_{t-i}}$, for $t=1, \cdots, T$
-and $i=0, \cdots, t-1$.
+$\frac{\partial \boldsymbol{u}_t}{\partial \boldsymbol{c}_{t-i}}$, for $t=1, \cdots, T$
+and $i=0, \cdots, t-1$, because
+\begin{equation}
+    \frac{\partial \boldsymbol{u}_t}{\partial \boldsymbol{c}_{t-i}} 
+    = \left(\frac{\partial \boldsymbol{u}_t}{\partial \boldsymbol{u}_{t-1}}\right)\cdots
+    \left(\frac{\partial \boldsymbol{u}_{t-i+1}}{\partial \boldsymbol{u}_{t-i}}\right)
+    \left(\frac{\partial \boldsymbol{u}_{t-i}}{\partial \boldsymbol{c}_{t-i}}\right)
+\end{equation}
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.99\textwidth}
         \centering
@@ -747,18 +794,18 @@ and $i=0, \cdots, t-1$.
     \end{subfigure}
     \caption{Computational graphs for the PDE simulation and objective evaluation.}
 \end{center}\end{figure}
-Given the solutions $\boldsymbol{x}_t$'s and the controls $\boldsymbol{c}_t$'s, 
+Given the solutions $\boldsymbol{u}_t$'s and the controls $\boldsymbol{c}_t$'s, 
 the evaluation of $\xi$ is nothing but overlaying the graph by an additional 
 layer of computations, shown in Figure \ref{fig: chap1 graph 2}.
-Because $\frac{\partial \xi}{\partial \boldsymbol{x}_t}$'s and 
+Because $\frac{\partial \xi}{\partial \boldsymbol{u}_t}$'s and 
 $\frac{\partial \xi}{\partial \boldsymbol{c}_t}$'s can be obtained by AD, the gradient
 \begin{equation} 
     \frac{d\xi}{d \boldsymbol{c}_t}= \frac{\partial \xi}{\partial \boldsymbol{c}_t} + 
-    \frac{\partial \xi}{\partial \boldsymbol{x}_t}\frac{\partial \boldsymbol{x}_t}{\partial 
+    \frac{\partial \xi}{\partial \boldsymbol{u}_t}\frac{\partial \boldsymbol{u}_t}{\partial 
        \boldsymbol{c}_t} +
-    \frac{\partial \xi}{\partial \boldsymbol{x}_{t+1}} \frac{\partial \boldsymbol{x}_{t+1}}{\partial
+    \frac{\partial \xi}{\partial \boldsymbol{u}_{t+1}} \frac{\partial \boldsymbol{u}_{t+1}}{\partial
        \boldsymbol{c}_t} + \cdots +
-    \frac{\partial \xi}{\partial \boldsymbol{x}_{T}} \frac{\partial \boldsymbol{x}_{T}}{\partial
+    \frac{\partial \xi}{\partial \boldsymbol{u}_{T}} \frac{\partial \boldsymbol{u}_{T}}{\partial
        \boldsymbol{c}_t}
 \end{equation}
 can be computed, for all $t=1, \cdots , T$.\\
@@ -920,33 +967,40 @@ that enables the adjoint gradient computation for gray-box simulations.\\
 \label{sec: adaptive basis review}
 
 The unknown function $F$ in \eqref{eqn: govern PDE} can be approximated by a linear
-combination of basis functions. An over-complete or
-incomplete set of bases can negatively affect the approximation due to overfitting or underfitting.
+combination of basis functions \cite{real analysis}. An over-complete or
+incomplete set of bases can negatively affect the approximation due to overfitting or underfitting
+\cite{regression book}.
 Therefore, adaptive basis construction is needed.\\
 
-Square-integrable functions
-can be represented by the parameterization\footnote{
-    By definition, the square 
-    integrable functions form a pre-Hilbert space with inner product given by
-    $$<f,g> = \int_A \overline{f(x)}g(x) dx\,,$$ where 
-    \begin{itemize}
-        \item $f$ and $g$ are square integrable functions,
-        \item $\overline{f(x)}$ is the complex conjugate of $f(x)$, and
-        \item $A$ is the set over which the integral is defined.
-    \end{itemize}
-    It can be shown that square integrable functions are complete 
-    under the metric induced by the inner product, thus is a Hilbert space \cite{functional analysis}.
-    Any member function can be represented by 
-    a finite or countably infinite number of basis functions of the Hilbert space
-    \cite{functional analysis}.
-} \cite{functional analysis}
+Consider the problem of function approximation in a bounded domain. Square-integrable functions
+can be represented by the linear combination of a set of basis functions \cite{real analysis},
+$\{\phi\}_{i\in \mathbb{N}}$, such as 
+the polynomial basis, Fourier basis, and the wavelet basis \cite{wavelet mallat}. 
+
+%\footnote{
+%    By definition, the square 
+%    integrable functions form a pre-Hilbert space with inner product given by
+%    $$<f,g> = \int_A \overline{f(x)}g(x) dx\,,$$ where 
+%    \begin{itemize}
+%        \item $f$ and $g$ are square integrable functions,
+%        \item $\overline{f(x)}$ is the complex conjugate of $f(x)$, and
+%        \item $A$ is the set over which the integral is defined.
+%    \end{itemize}
+%    It can be shown that square integrable functions are complete 
+%    under the metric induced by the inner product, thus is a Hilbert space \cite{functional analysis}.
+%    Any member function can be represented by 
+%    a finite or countably infinite number of basis functions of the Hilbert space
+%    \cite{functional analysis}.
+%} \cite{functional analysis}
 \begin{equation}
-    \tilde{F}(\cdot) = \sum_{i\in \mathbb{N}} {\alpha_i} \phi_i(\cdot)\,,
+    F(\cdot) = \sum_{i\in \mathbb{N}} {\alpha_i} \phi_i(\cdot)\,,
     \label{eqn: linear param general}
 \end{equation}
 where $\phi_i$'s are linearly-independent basis functions, $\alpha_i$'s are the coefficients, and $i$
-indices the basis. For example, 
-a bivariate function can be represented by monomials (Weierstrass approximation 
+indices the basis. For a rigorous development of function approximation and basis functions,
+I refer to the book \cite{real analysis}.\\
+
+For example, a bivariate function can be represented by monomials (Weierstrass approximation 
 theorem \cite{functional analysis})
 \begin{equation*}
     1,\,  u_1,\, u_1^2,\,
@@ -956,9 +1010,9 @@ theorem \cite{functional analysis})
 on any real interval $[a,b]$.\\
 
 Let $\mathcal{A}$ be a non-empty finite subset of $\mathbb{N}$,
-$\tilde{F}$ can be approximated using a subset of bases, 
+$F$ can be approximated using a subset of bases, 
 \begin{equation}
-    \tilde{F}(\cdot) \approx \sum_{i\in \mathcal{A}} {\alpha_i} \phi_i(\cdot)\,,
+    F(\cdot) \approx \sum_{i\in \mathcal{A}} {\alpha_i} \phi_i(\cdot)\,,
     \label{eqn: linear param truncate}
 \end{equation}
 where $\{\phi_i\}_{i\in \mathcal{A}}$ is called a basis dictionary \cite{match pursuit}. 
@@ -981,29 +1035,31 @@ optimizes the coefficients,
 so the twin model serves as a proxy of the gray-box model. Details are discussed in 
 Section \ref{sec: flux param}.\\
 
-If the dictionary is pre-determined without using any evaluation of the underlying function,
+If the dictionary is pre-determined,
+% without using any evaluation of the underlying function,
 its cardinality can increase as the number of variables increases, and
 as the basis complexity increases \cite{PCE}.
 For example, for $d$-variate polynomial basis, the total number of bases 
 is $d^p$ if one bounds the polynomial degree of each variable by $p$; and 
-is $\binom{p+d}{d}$ if one bounds the total degree by $p$ \cite{PCE}.
-For piecewise linear basis,
-one can approximate the function using
-Smolyak's sparse grid with
-$\mathcal{O}\left( n(\log n)^{d-1} \right)$ bases\footnote{
-To be precise, if the underlying function has bounded mixed second derivatives
-$D^{\boldsymbol{\beta}} \cdot = \frac{\partial^{|\boldsymbol{\beta}|_1}\cdot }{\partial
-u_1^{\beta_1} \cdots \partial u_d^{\beta_d}}$ for $|\boldsymbol{\beta}|_\infty\le 2$,
-and is defined in a $d$-dimensional unit cube, then the error between
-the underlying function $\tilde{F}$ and the approximation $\hat{\tilde{F}}$ is 
-$\left\| \tilde{F} - \hat{\tilde{F}} \right\|_{L_2} = \mathcal{O}(4^{-n} n^{d-1})$
-\cite{Smolyak}.}, where $n$ is the number of univariate basis for each variable.\\
+is $\binom{p+d}{d}$ if one bounds the total degree by $p$ \cite{PCE}.\\
+%For piecewise linear basis,
+%one can approximate the function using
+%Smolyak's sparse grid with
+%$\mathcal{O}\left( n(\log n)^{d-1} \right)$ bases\footnote{
+%To be precise, if the underlying function has bounded mixed second derivatives
+%$D^{\boldsymbol{\beta}} \cdot = \frac{\partial^{|\boldsymbol{\beta}|_1}\cdot }{\partial
+%u_1^{\beta_1} \cdots \partial u_d^{\beta_d}}$ for $|\boldsymbol{\beta}|_\infty\le 2$,
+%and is defined in a $d$-dimensional unit cube, then the error between
+%the underlying function $\tilde{F}$ and the approximation $\hat{\tilde{F}}$ is 
+%$\left\| \tilde{F} - \hat{\tilde{F}} \right\|_{L_2} = \mathcal{O}(4^{-n} n^{d-1})$
+%\cite{Smolyak}.}, where $n$ is the number of univariate basis for each variable.\\
 
 
 In many applications, 
 one may deliver a similarly accurate approximation by 
 using a much smaller subset of the dictionary as the bases
-than using the full dictionary \cite{PCE, L1 basis pursuit, match pursuit, Lasso variable selection}.
+than using all the basis functions in the 
+dictionary \cite{PCE, L1 basis pursuit, match pursuit, Lasso variable selection}.
 To exploit the sparse structure, only significant bases shall be selected, and
 the selection process shall be adaptive depending on the values of function evaluations.
 There are several methods that adaptively determine the sparsity, such as Lasso regularization
@@ -1012,6 +1068,7 @@ pursuit \cite{match pursuit}, and basis pursuit \cite{L1 basis pursuit}.
 Lasso regularization adds a penalty $\lambda
 \sum_{i\in\mathcal{A}}|\alpha_i|$
 to the approximation error, where $\lambda>0$ is a tunable parameter \cite{Lasso variable selection}. 
+The larger $\lambda$ is, the sparser the basis functions will be.
 In this way, Lasso balances the approximation error and the number of non-zero
 coefficients \cite{Lasso variable selection}.
 Matching pursuit adopts a greedy, stepwise approach \cite{match pursuit}.
@@ -1032,16 +1089,15 @@ The definition of complexity is basis-dependent. For example, the complexity for
 polynomial basis can be its total polynomial degree; and the complexity for
 wavelet basis can be its finest resolution \cite{wavelet mallat}. Here the ``complexity'' is
 discussed in a general sense. } 
-of the significant ones are unknown a prior.
+of the significant bases are unknown a prior.
 To address this issue, methods have been devised that construct an adaptive dictionary
 \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
-Although different in details, such methods share the same approach: Starting from some trivial
-bases\footnote{
+Although different in details, such methods share the same approach: In the beginning, some trivial
+bases are given as inputs.
 For example, the starting basis can be $1$ for polynomial basis \cite{adaptive basis 1}.
-The starting bases serve as seeds from which more complex bases grow. See \cite{adaptive basis 1,
-adaptive basis 2, adaptive basis 3} for more details of the heuristics. The problem will be 
-revisited in Section \ref{sec: adaptive basis} and \ref{sec: twin algo}.}, 
-a dictionary is built up progressively 
+The starting bases serve as seeds from which more complex bases grow. I refer to 
+\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3} for more details of the heuristics. 
+Then a dictionary is built up progressively 
 by iterating over a forward step and a backward step
 \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
 The forward step searches over a candidate set of bases, and appends the significant ones 
@@ -1101,7 +1157,7 @@ The general notations are declared here.
 
 
 \section{Thesis Objectives}
-Based the motiviation and literature review, we find a need to enable adjoint
+Based the motiviation and literature review, we find it important to to enable adjoint
 gradient computation for gray-box conservation law simulations. We also need to 
 exploit the estimated gradient to optimize more efficiently, 
 especially for problems with many control variables. 
@@ -1118,14 +1174,16 @@ To summarize, the objectives of my thesis are
 
 
 \section{Outline}
-In the sequel, my thesis is organized as follows. Chapter \ref{chapter 2}  devises a method to estimate the gradient of an
-objective function constrained by a gray-box simulation, at a cost independent of the gradient's dimensionality. 
+My thesis is organized as follows. Chapter \ref{chapter 2}  describes a method to estimate the gradient of an
+objective function constrained by a gray-box simulation, at a cost independent of the dimensionality
+of the gradient. 
 This is achieved through firstly training a twin model, then applying the adjoint method to the trained twin model.
 To train the twin model, a solution mismatch metric is presented. The metric
 is used for the training of twin models.  In addition, an adaptive basis construction scheme 
-is developed. By summarizing the developments, a twin model algorithm is presented. Furthermore,
-a truncation error metric and a pre-train step is developed in order to reduce the computational cost.
-Finally, the twin model algorithm is demonstrated in several numerical examples.
+is developed to approximate the unknown components in the twin model. 
+Based on the developments, the algorithm for constructing the twin model is summarized.
+Furthermore, methods for reducing the computational cost for training the twin model is
+discussed. Finally, the twin model algorithm is demonstrated in several numerical examples.
 Chapter \ref{chapter 3} develops an efficient global optimization method by using the twin-model gradient obtained
 from Chapter \ref{chapter 2}.
 In Chapter \ref{chapter 3}, the twin-model gradient is modeled stochastically by the Gaussian process.

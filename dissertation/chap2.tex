@@ -7,19 +7,44 @@
 \chapter{Estimate the Gradient by Using the Space-time Solution}
 \label{chapter 2}
 This chapter develops a method to estimate the gradient by using the space-time solution
-of gray-box conservation law simulations.
-An example, equation \eqref{eqn: conservation law}, has
-been given in Section \ref{sec: motivation} to illustrate why such estimation is possible
-when the conservation law involves only one equation and one dimensional space.
-In this example, the derivative of the flux can be first interpolated by using the
-discretized gray-box solution;
-then the adjoint method is applied to the inferred conservation law \eqref{eqn: 1D conceptual inferred}
-to estimate the gradient. This chapter develops a more general
+of gray-box conservation law simulations.\\
+
+Chapter \ref{chap 1} considered a code which simulates a conservation law 
+\eqref{eqn: 1D conceptual} with an unknown $F$,
+\begin{equation*}\begin{split}
+    &\frac{\partial u}{\partial t} + \frac{\partial F(u)}{\partial x} = c\,,\quad
+    x \in [0,1] \;, \;\; t\in[0,1]\,,
+    \label{eqn: 1D conceptual repeat}
+\end{split}\end{equation*}
+with proper initial and boundary conditions, for a control variable
+$c$.
+Such simulator is named gray-box, and its discretized space-time solution is named gray-box solution. 
+It is explained that $F$ can be approximated up to 
+a constant for values of $u$
+that appeared in the gray-box solution, by using the gray-box solution.
+Therefore, a twin model that simulates \eqref{eqn: 1D conceptual inferred},
+\begin{equation*}
+    \frac{\partial \tilde{u}}{\partial t} + \frac{\partial \tilde{F}(\tilde{u})}{\partial x} = c\,,\quad
+    x \in [0,1] \;, \;\; t\in[0,1]\,,
+    \label{eqn: 1D conceptual inferred repeat}
+\end{equation*}
+can be obtained, where $\tilde{F}$ is the approximated flux. 
+The adjoint method can be applied to the twin model to estimate the gradient of 
+any objective function with respect to $c$. 
+It is explained that the adjoint gradient of the twin model can drive the optimization of 
+the objective function constrained by the gray-box model.\\
+
+The example above involves only one equation and one dimensional space.
+This chapter develops a more general
 procedure suitable for systems of equations and for problems with a spatial dimension greater than one.
 
 \section{Approach}
 \label{infer}
 Consider a gray-box simulator that solves the PDE \eqref{eqn: govern PDE}, 
+\begin{equation*}\begin{split}
+    \frac{\partial u}{\partial t}+ \nabla \cdot \big( D F(u) \big) = q(u,c)\,,
+\end{split}
+\end{equation*}
 a system of $k$ equations, for $u(t,x)$ with $t\in[0,T]$
 and $x\in\Omega$. The PDE has an unknown flux $F$, but known source term $q$, and
 known initial and boundary conditions.
@@ -32,20 +57,33 @@ My thesis introduces an open-box simulator solving another PDE, namely the twin 
 \end{equation}
 which is a system of $k$ equations
 with the same source term and the same initial and boundary conditions. 
+Recall from Chapter \ref{chap 1} that a simulator is open-box if the condition
+\begin{itemize}
+    \item the adjoint is unavailable, and is impractical to implement into the source code.
+\end{itemize}
+is violated.
 Equation \eqref{eqn: govern twin model}
 differs from \eqref{eqn: govern PDE} in its flux. For simplicity, 
-let the open-box simulator use the same space-time
-discretization, and let its discretized solution be $\tilde{\boldsymbol{u}}$.
+let the solution of the open-box simulator, $\tilde{\boldsymbol{u}}$, be defined on the same space-time
+grid of the gray-box simulator.
 Define the solution mismatch
 \begin{equation}
     \mathcal{M}(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \big( \tilde{\boldsymbol{u}}_{ij}
      -\boldsymbol{u}_{ij}\big)^2 \,,
     \label{eqn: solution mismatch}
 \end{equation}
-where $w_{ij}$'s are the quadrature weights for the space-time integration.
-$\mathcal{M}$ approximates the space-time integration of the continous solutions' mismatch,\\
-$\mathcal{M} \approx \int_{0}^T\int_\Omega \big(\tilde{u}(t,x) - u(t,x)\big)^2 \, \textrm{d}x\,\textrm{d}t$.
-Given a set $\mathcal{S}_F$ consisted of all possible guesses for $F$,
+where $i=1,\cdots, M$ are the indices for time grid, and $j=1,\cdots, N$ are the indices for the space grid.
+$w_{ij}$'s are the quadrature weights for the space-time integration. 
+For example, if a uniform Cartesian space-time grid is used, the quadrature weights equal a constant.
+More generally, the quadrature weights are defined with respect to the space-time integration, so
+$\mathcal{M}$ approximates the space-time integration of the continous solutions' mismatch,
+\begin{equation}
+\mathcal{M} \approx \int_{0}^T\int_\Omega \big(\tilde{u}(t,x) - u(t,x)\big)^2 \, \textrm{d}x\,\textrm{d}t
+\end{equation}
+Notice that $\mathcal{M}$ solely depends on
+$\tilde{F}$ through the twin model solution $\tilde{\boldsymbol{u}}$ given the 
+quadrature weights and the grid-box solution.
+Given a function space $\mathcal{S}_F$,
 I propose to infer a flux $\tilde{F}$ such that the mismatch between
 $\boldsymbol{u}$ and $\tilde{\boldsymbol{u}}$ is minimized, i.e.
 \begin{equation}
@@ -57,37 +95,37 @@ The choice for $\mathcal{S}_F$ will be discussed later in Section \ref{sec: flux
 can be solved by gradient-based methods. Once $\mathcal{M}$ is minimized, the adjoint
 method can be applied to the twin model to estimate the gradient.\\
 
-The key to inferring the flux is to leverage the gray-box space-time solution.
-Its inferrability can be 
-loosely explained by the following reasonings. Firstly,
-the conserved quantity $u$ in \eqref{eqn: govern PDE} depends on
-$u$ in a previous time only inside a domain of dependence, illustrated in Figure \ref{fig: locality}.
-Similarly, in discretized PDE simulation, the solution at any gridpoint only depends on a
-numerical domain of dependence.
-Besides, in a PDE simulation, a one-step time marching at any gridpoint can be viewed as
-a mapping whose input only involves the numerical domain of dependence.
-Because the number of state variables in the numerical domain of dependence can be small, 
-inference of the mapping is potentially feasible.
-Secondly, the space-time solution at every space-time gridpoint can be viewed
-as a sample for this mapping. 
-Because the scale of space-time discretization in a conservation law simulation is usually large,
-a large number of samples are available for the inference, thus
-making the inference potentially accurate.\\
+%The key to inferring the flux is to leverage the gray-box space-time solution.
+%Its inferrability can be 
+%loosely explained by the following reasonings. Firstly,
+%the conserved quantity $u$ in \eqref{eqn: govern PDE} depends on
+%$u$ in a previous time only inside a domain of dependence, illustrated in Figure \ref{fig: locality}.
+%Similarly, in discretized PDE simulation, the solution at any gridpoint only depends on a
+%numerical domain of dependence.
+%Besides, in a PDE simulation, a one-step time marching at any gridpoint can be viewed as
+%a mapping whose input only involves the numerical domain of dependence.
+%Because the number of state variables in the numerical domain of dependence can be small, 
+%inference of the mapping is potentially feasible.
+%Secondly, the space-time solution at every space-time gridpoint can be viewed
+%as a sample for this mapping. 
+%Because the scale of space-time discretization in a conservation law simulation is usually large,
+%a large number of samples are available for the inference, thus
+%making the inference potentially accurate.\\
+%
+%\begin{figure}[Htbp]\begin{center}
+%    \includegraphics[height=3.4cm]{../locality.png}
+%    \caption{Domain of dependence: 
+%             $u(t,x)$
+%             depends on $u$ at an earlier time within a
+%             domain of dependence. The two planes in this figure indicates the spatial 
+%             solution at two adjacent timesteps.
+%             The domain of dependence can be much smaller
+%             than $\Omega$, the entire spatial domain.}
+%    \label{fig: locality}
+%\end{center}\end{figure}
 
-\begin{figure}[Htbp]\begin{center}
-    \includegraphics[height=3.4cm]{../locality.png}
-    \caption{Domain of dependence: 
-             $u(t,x)$
-             depends on $u$ at an earlier time within a
-             domain of dependence. The two planes in this figure indicates the spatial 
-             solution at two adjacent timesteps.
-             The domain of dependence can be much smaller
-             than $\Omega$, the entire spatial domain.}
-    \label{fig: locality}
-\end{center}\end{figure}
-
-The inferrability is difficult to prove.
-However, it can be partially justified by the following theorem
+What is the inferrability. I can not prove the inferrability in general.
+However, the inferrability can be partially justified by the following theorem
 for PDEs with $k=1$ and one dimensional space.
 \begin{theorem}
     Consider two PDEs
@@ -403,7 +441,7 @@ $\boldsymbol{\phi}_{\mathcal{A}^\prime}$ is
     {\alpha}_{i} {\phi}_{i} \right)\,,
 \end{equation}
 Clearly $\mathcal{M}^*(\mathcal{A}^\prime) \le \mathcal{M}^*(\mathcal{A})$.
-Define the ``mismatch improvement'' to be
+Define a ``mismatch improvement'' to be
 \begin{equation}
     \Delta \mathcal{M}^*\left(\mathcal{A}, l\right) = \mathcal{M}^*(\mathcal{A}) - 
     \mathcal{M}^*(\mathcal{A}^\prime)
@@ -425,6 +463,7 @@ $\frac{d\mathcal{M}}{d\tilde{F}}$ is also a function of $u\in\mathbb{R}^k$.
 As discussed in the previous sections, $\frac{d \mathcal{M}}{d\tilde{F}}$ is non-zero only in a
 domain where there is solution. Thus \eqref{eqn: taylor expansion} 
 can be integrated by quadrature only over a bounded domain.
+For example, for a uniform Cartesian space-time grid, the quadrature weights equal to a constant.
 The absolute value of the coefficient for $\alpha_l$,
 \begin{equation}
     s_l(\mathcal{A}) \equiv \left|\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}

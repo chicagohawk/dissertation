@@ -6,7 +6,14 @@
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Leveraging the Twin Model for Bayesian Optimization}
 \label{chapter 3}
-This chapter develops a Bayesian optimization framework to solve \eqref{eqn: objective prototype}.
+This chapter develops a Bayesian optimization framework to solve \eqref{eqn: objective prototype},
+\begin{equation*}\begin{split}
+    c^* &= \argmax_{c_{\min}\le  c \le c_{\max}}\; \xi(\boldsymbol{u},c) \\
+    \xi(\boldsymbol{u},c) &= \sum_{i=1}^M \sum_{j=1}^N w_{ij} f(\boldsymbol{u}_{ij},c; t_i,x_j)
+    \approx \int_0^T \int_\Omega f(u,c; t,x)d\boldsymbol{x} d t%\\
+    %\textrm{s.t.} \; &\; c_{\min}\le  c \le c_{\max}\,,
+    \label{eqn: objective prototype}
+\end{split}\,.\end{equation*}
 The estimated gradient, provided by the twin model, is utilized 
 to improve the optimization performance. The goal is to reduce the number of gray-box 
 simulations required to achieve a desired objective evaluation, as well as
@@ -253,8 +260,16 @@ the log marginal likelihood has the closed form
 which can be optimized efficiently using GBO methods such as StoGo, 
 as discussed in Section \ref{section: GBO}. Given the joint distribution
 \eqref{eqn: joint dis}, the posterior of $\xi(c)$, for any $c\in \mathbb{R}^d$, 
-can be obtained by \eqref{eqn: posterior formulation}.\\
-
+can be obtained by \eqref{eqn: posterior formulation},
+\begin{equation*}\begin{split}
+    \tilde{m}(c) & 
+    = m(c) + K(c,\underline{c}_n)K(\underline{c}_n,\underline{c}_n)^{-1}
+    \left(\xi(\underline{c}_n) - m(\underline{c}_n)\right)\\
+    \tilde{K}(c, c^\prime)&=
+    K(c,c^\prime) - K(c,\underline{c}_n) K(\underline{c}_n, \underline{c}_n)^{-1} K(\underline{c}_n,c^\prime)
+\end{split}\,.
+\label{eqn: posterior formulation}
+\end{equation*}
 Using the posterior, the acquisition function, $\rho(c)$, can be constructed and optimized
 to find the next evaluation point. My thesis will use the expected improvement acquisition function.
 See Section \ref{section: bayes opt} for the details.
