@@ -15,14 +15,14 @@
 \contentsline {chapter}{\numberline {2}Estimate the Gradient by Using the Space-time Solution}{43}
 \contentsline {section}{\numberline {2.1}Approach}{44}
 \contentsline {subsection}{\numberline {2.1.1}Parameterization}{48}
-\contentsline {subsection}{\numberline {2.1.2}Elements for Adaptive Basis Construction}{53}
-\contentsline {subsection}{\numberline {2.1.3}Algorithm}{58}
-\contentsline {subsection}{\numberline {2.1.4}Minimizing the Truncation Error}{60}
-\contentsline {section}{\numberline {2.2}Numerical Results}{63}
-\contentsline {subsection}{\numberline {2.2.1}Buckley-Leverett Equation}{64}
-\contentsline {subsection}{\numberline {2.2.2}Navier-Stokes Flow}{65}
-\contentsline {subsection}{\numberline {2.2.3}Polymer Injection in Petroleum Reservoir}{68}
-\contentsline {section}{\numberline {2.3}Chapter Summary}{75}
+\contentsline {subsection}{\numberline {2.1.2}Elements for Adaptive Basis Construction}{54}
+\contentsline {subsection}{\numberline {2.1.3}Algorithm}{59}
+\contentsline {subsection}{\numberline {2.1.4}Minimizing the Truncation Error}{61}
+\contentsline {section}{\numberline {2.2}Numerical Results}{64}
+\contentsline {subsection}{\numberline {2.2.1}Buckley-Leverett Equation}{65}
+\contentsline {subsection}{\numberline {2.2.2}Navier-Stokes Flow}{66}
+\contentsline {subsection}{\numberline {2.2.3}Polymer Injection in Petroleum Reservoir}{69}
+\contentsline {section}{\numberline {2.3}Chapter Summary}{76}
 \contentsline {chapter}{\numberline {3}Leveraging the Twin Model for Bayesian Optimization}{77}
 \contentsline {section}{\numberline {3.1}Approach}{78}
 \contentsline {subsection}{\numberline {3.1.1}Modeling the Objective and Gradient by Gaussian Processes}{78}

@@ -262,13 +262,18 @@ self-similarity \cite{wavelet mallat}:
     &f(u) \in V_j \Leftrightarrow f(u-\frac{\eta}{2^j}) \in V_{j},
                     \; j\in \mathbb{Z},\, \eta\in \mathbb{Z}
 \end{split}\end{equation*}
-The function space $V_j$ is spanned by a set of wavelet bases \cite{wavelet mallat}
+The function space $V_j$ is spanned by a set of orthonormal bases called the wavelet
+\cite{wavelet mallat}
 \begin{equation}
     \hat{\phi}_{j,\eta}(u) = 2^{j/2} \hat{\phi}(2^j u-\eta) \,,\quad \eta \in \mathbb{Z}
     \label{eqn: self similar wavelet}
 \end{equation}
-where $\hat{\phi}$ is called the mother wavelet satisfying 
-$\hat{\phi}(u) \rightarrow 0$ for $ u \rightarrow -\infty $ and $\infty$.
+where $\hat{\phi}$ is called the mother wavelet.
+%satisfying $\hat{\phi}(u) \rightarrow 0$ for $ u \rightarrow -\infty $ and $\infty$.
+The equation \eqref{eqn: self similar wavelet} is called the self-similar property, 
+because any basis $\hat{\phi}_{j,\eta}$ can be obtained through a translation and a dilation 
+of the mother wavelet $\hat{\phi}$, where $j$ is called the dilation parameter and $\eta$
+is called the translation parameter.
 An example mother wavelet, the Meyer wavelet, is shown in Figure \ref{fig: meyer}.\\
 
 \begin{figure}[Htbp]\begin{center}
@@ -278,7 +283,7 @@ An example mother wavelet, the Meyer wavelet, is shown in Figure \ref{fig: meyer
 \end{center}\end{figure}
 
 As discussed in the beginning of this chapter, only the derivative of $F$, rather than 
-$F$ itself, is expected to be inferred.
+$F$ itself, can be inferred.
 If $\frac{d \tilde{F}}{du}$ is parameterized by the wavelet bases, 
 $\tilde{F}$ shall be parameterized by the indefinite integrals of the wavelets, i.e.
 \begin{equation}
@@ -287,18 +292,37 @@ $\tilde{F}$ shall be parameterized by the indefinite integrals of the wavelets, 
 \end{equation}
 $\phi_{j,\eta}$'s are sigmoid functions which satisfy
 \begin{equation}
+    \frac{d\phi_{j,\eta}}{du} = \hat{\phi}\,,
+\end{equation}
+and
+\begin{equation}
     \phi_{j,\eta}(u) = \left\{
         \begin{split}
             0,&\; u\rightarrow -\infty\\
             1,&\; u\rightarrow \infty
         \end{split}\right.
 \end{equation}
-It's easy to show $\phi_{j,\eta}$ also satisfies self-similarity, and can be 
-represented by a mother sigmoid $\phi$,
+due to the normality of the wavelet.\\
+
+Let 
 \begin{equation}
-    {\phi}_{j,\eta}(u) = {\phi}(2^j u-\eta) \,,\quad j\in \mathbb{Z} \,,\;\eta \in \mathbb{Z}
+    \phi(u) = \int_{-\infty}^u \hat{\phi}(u^\prime) du^\prime\,,
+    \label{eqn: integral wavelet basis}
+\end{equation}
+then
+\begin{equation}
+    \phi(2^j u-\eta) = \int_{-\infty}^{2^j u-\eta} \hat{\phi}(u^\prime) du^\prime
+    = \int_{-\infty}^{u} \hat{\phi} (2^j u^\prime - \eta) du^\prime=
+    \int_{-\infty}^u \hat{\phi}_{j,\eta} (u^\prime) du^\prime
+    \label{eqn: transform integral wavelet}
+\end{equation}
+\eqref{eqn: integral wavelet} and \eqref{eqn: transform integral wavelet} show that
+$\phi_{j,\eta}$ satisfies the self-similarity property
+\begin{equation}
+    {\phi}_{j,\eta}(u) = {\phi}(2^j u-\eta) \,,\quad j\in \mathbb{Z} \,,\;\eta \in \mathbb{Z}\,,
     \label{eqn: self similar sigmoid}
 \end{equation}
+where $\phi$ is called the ``mother sigmoid''.\\
 
 \begin{figure}[Htbp]\begin{center}
     \includegraphics[width=5cm, height=4cm]{../basis_combined.png}
@@ -308,16 +332,15 @@ represented by a mother sigmoid $\phi$,
 \end{center}\end{figure}
 
 
-There are many types of sigmoid functions.
+There are many choices of sigmoid functions for $\phi$.
 My thesis will use the logistic sigmoid function as the mother sigmoid,
 \begin{equation}
     \phi(u) = \frac{1}{1+ e^{-u}}\,.
     \label{eqn: logistic sigmoid}
 \end{equation}
-
 If $\tilde{F}$ is univariate, the logistic sigmoids $\phi_{j,\eta}$'s are used as the bases.
 If $\tilde{F}$ is multivariate, the basis can be formed by the tensor product 
-of univariate sigmoids,
+of univariate sigmoids \cite{functional analysis},
 \begin{equation}
     \phi_{\boldsymbol{j}, \boldsymbol{\eta}} (u_1, \cdots, u_k) = \phi_{j_1, \eta_1}(u_1)\cdots
     \phi_{j_k, \eta_k}(u_k)\,,
@@ -325,15 +348,18 @@ of univariate sigmoids,
 \end{equation}
 where $\boldsymbol{j}=(j_1, \cdots, j_k)\in \mathbb{Z}^k$, 
 $\boldsymbol{\eta} = (\eta_1, \cdots, \eta_k) \in \mathbb{Z}^k$. To sum up,
-\begin{equation}
-    \tilde{F}(\cdot) = \sum_{\boldsymbol{j}, \boldsymbol{\eta}} 
+$\tilde{F}$ can be expressed by
+$$
+    \sum_{\boldsymbol{j}\in \mathbb{Z}^k, \boldsymbol{\eta}\in \mathbb{Z}^k} 
                        \alpha_{\boldsymbol{j}, \boldsymbol{\eta}}
                        \phi_{\boldsymbol{j}, \boldsymbol{\eta}} (\cdot)\,,
-    \label{eqn: linear expansion}
-\end{equation}
-where $\alpha$'s are the coefficients of the bases. A systematic procedure for choosing
-a set of $\{\boldsymbol{j}, \boldsymbol{\eta}\}$
-is presented in Section \ref{sec: adaptive basis}.
+    %\label{eqn: linear expansion}
+$$
+where $\alpha$'s are the coefficients of the bases. However, there are infinite number of bases involved
+in this expression, making the expression infeasible for the computer. To address this issue,
+a systematic procedure for choosing
+a suitable subset of the bases %$\{\boldsymbol{j}, \boldsymbol{\eta}\}$
+will be presented in Section \ref{sec: adaptive basis}.
 \\
 
 For illustration, consider a numerical example where the gray-box model solves the 1-D Buckley-Leverett equation
