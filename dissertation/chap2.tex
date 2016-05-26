@@ -21,7 +21,7 @@ $c$.
 Such simulator is named gray-box, and its discretized space-time solution is named gray-box solution. 
 It is explained that $F$ can be approximated up to 
 a constant for values of $u$
-that appeared in the gray-box solution, by using the gray-box solution.
+that appeared in the gray-box solution, by utilizing the gray-box solution.
 Therefore, a twin model that simulates \eqref{eqn: 1D conceptual inferred},
 \begin{equation*}
     \frac{\partial \tilde{u}}{\partial t} + \frac{\partial \tilde{F}(\tilde{u})}{\partial x} = c\,,\quad
@@ -29,9 +29,9 @@ Therefore, a twin model that simulates \eqref{eqn: 1D conceptual inferred},
     \label{eqn: 1D conceptual inferred repeat}
 \end{equation*}
 can be obtained, where $\tilde{F}$ is the approximated flux. 
-The adjoint method can be applied to the twin model to estimate the gradient of 
+It is also explained that the adjoint method can be applied to the twin model to estimate the gradient of 
 any objective function with respect to $c$. 
-It is explained that the adjoint gradient of the twin model can drive the optimization of 
+Finally, it is envisioned that the adjoint gradient of the twin model can drive the optimization of 
 the objective function constrained by the gray-box model.\\
 
 The example above involves only one equation and one dimensional space.
@@ -55,13 +55,8 @@ My thesis introduces an open-box simulator solving another PDE, namely the twin 
 \end{split}
 \label{eqn: govern twin model}
 \end{equation}
-which is a system of $k$ equations
+which is also a system of $k$ equations
 with the same source term and the same initial and boundary conditions. 
-Recall from Chapter \ref{chap 1} that a simulator is open-box if the condition
-\begin{itemize}
-    \item the adjoint is unavailable, and is impractical to implement into the source code.
-\end{itemize}
-is violated.
 Equation \eqref{eqn: govern twin model}
 differs from \eqref{eqn: govern PDE} in its flux. For simplicity, 
 let the solution of the open-box simulator, $\tilde{\boldsymbol{u}}$, be defined on the same space-time
@@ -82,7 +77,7 @@ $\mathcal{M}$ approximates the space-time integration of the continous solutions
 \end{equation}
 Notice that $\mathcal{M}$ solely depends on
 $\tilde{F}$ through the twin model solution $\tilde{\boldsymbol{u}}$ given the 
-quadrature weights and the grid-box solution.
+quadrature weights and the gray-box solution.
 Given a function space $\mathcal{S}_F$,
 I propose to infer a flux $\tilde{F}$ such that the mismatch between
 $\boldsymbol{u}$ and $\tilde{\boldsymbol{u}}$ is minimized, i.e.
@@ -91,9 +86,29 @@ $\boldsymbol{u}$ and $\tilde{\boldsymbol{u}}$ is minimized, i.e.
     \label{eqn: twin min mismatch}
 \end{equation}
 The choice for $\mathcal{S}_F$ will be discussed later in Section \ref{sec: flux param} and
-\ref{sec: adaptive basis}. Because the twin model is open-box, \eqref{eqn: twin min mismatch}
-can be solved by gradient-based methods. Once $\mathcal{M}$ is minimized, the adjoint
-method can be applied to the twin model to estimate the gradient.\\
+\ref{sec: adaptive basis}. By setting the $F$ in \eqref{eqn: govern twin model} to be $\tilde{F}^*$,
+one obtain a ``trained'' twin-model equation
+\begin{equation}\begin{split}
+    \frac{\partial \tilde{u}}{\partial t}+ \nabla \cdot \big(D \tilde{F}^*(\tilde{u})\big) = q(\tilde{u},c)\,,
+\end{split}
+\label{eqn: govern twin model trained}
+\end{equation}
+Let $\tilde{\boldsymbol{u}}^*$ be the space-time solution of the twin model governed by \eqref{eqn: govern twin model trained}.
+The adjoint method can be applied to compute the gradient of $\tilde{\boldsymbol{u}}$ with respect
+to $\tilde{F}$. Therefore, the gradient of $\mathcal{M}$ with respect to $\tilde{F}$ can be obtained through 
+\eqref{eqn: solution mismatch} according to
+\begin{equation}
+    \frac{d\mathcal{M}}{d\tilde{F}} = \frac{d\mathcal{M}}{d\tilde{\boldsymbol{u}}} \frac{d\tilde{\boldsymbol{u}}}{d\tilde{F}}
+    \label{eqn: estimated gradient temp}
+\end{equation}
+Using the gradient \eqref{eqn: estimated gradient temp}, the optimization problem, \eqref{eqn: twin min mismatch},
+can be solved by gradient-based methods.
+Finally, given $\tilde{F}^*$, $\tilde{\boldsymbol{u}}^*$ depends on $c$. 
+The gradient of any objective function $\xi(\tilde{\boldsymbol{u}}^*, c)$ with respect to $c$
+can be obtained by applying the adjoint method to the trained twin model.
+The gradient $\frac{d \xi(\tilde{\boldsymbol{u}}^*, c)}{dc}$ can drive the gradient-based optimization of 
+$\xi({\boldsymbol{u}}, c)$, where ${\boldsymbol{u}}$ is the gray-box space-time solution.\\
+
 
 %The key to inferring the flux is to leverage the gray-box space-time solution.
 %Its inferrability can be 
@@ -125,10 +140,14 @@ method can be applied to the twin model to estimate the gradient.\\
 %\end{center}\end{figure}
 
 
-The key to inferring $F$ in \eqref{eqn: 1D conceptual} is to leverage the gray-box space-time solution.
-I can not prove the inferrability for the general form \eqref{eqn: 1D conceptual}.
-Instead, the inferrability can be partially justified by the following theorem
-for PDEs with $k=1$ and one dimensional space.
+The key to inferring $F$ is to leverage the gray-box space-time solution.
+I can not prove the inferrability for the general form \eqref{eqn: govern PDE}
+\begin{equation*}\begin{split}
+    \frac{\partial u}{\partial t}+ \nabla \cdot \big( D F(u) \big) = q(u,c)\,,
+\end{split}
+\end{equation*}
+However, the inferrability can be partially justified by the following theorem
+if \eqref{eqn: govern PDE} has only one equation, has one dimensional space, $q=0$, and $D=1$.
 \begin{theorem}
     Consider two PDEs
     \begin{equation}
@@ -139,7 +158,8 @@ for PDEs with $k=1$ and one dimensional space.
         \frac{\partial \tilde{u}}{\partial t} + \frac{\partial \tilde{F}(\tilde{u})}{\partial x} = 0\,,
         \label{eqn: easy 2}
     \end{equation}
-    with the same initial condition $u(0,x) = u_0(x)$, and $x\in \mathbb{R}$. $u_0$ is bounded, differentiable, 
+    with the same initial condition $u(0,x) = u_0(x)$. The spatial domain is $(-\infty, \infty)$. 
+    The function $u_0$ is bounded, differentiable, 
     Lipschitz continuous with constant $L_u$, 
     and has a finite support. $F$ and $\tilde{F}$ are both twice-differentiable and Lipschtiz 
     continuous with constant $L_F$.
@@ -164,13 +184,18 @@ for PDEs with $k=1$ and one dimensional space.
 The proof is given in Appendix \ref{proof 1}.
 An illustration of $B_u$ is given in Figure \ref{fig: excitedDomain}.
 Several observations can be made from Theorem \ref{theorem: 1}.
-Firstly, if the solutions of \eqref{eqn: easy 1} and \eqref{eqn: easy 2} match closely, then
-the derivatives of their flux functions must match closely in $B_u$. 
+Firstly, if the solutions of \eqref{eqn: easy 1} and \eqref{eqn: easy 2} match closely 
+$\left(|\tilde{u}(t,x)-u(t,x)| < \delta\right)$, then
+the derivatives of their flux functions must match closely in $B_u$ $\left(\left|\frac{d\tilde{F}}{du} - \frac{dF}{du}\right| < 
+\epsilon\right)$. 
 Secondly, the conclusion 
-can only be drawn for $u\in B_u$ where the initial condition has coverage and has large enough
-variation. For more general problems involving 1) systems of equations, 2) higher spatial dimensions, 
-and 3) discretization,
-the inferrability is difficult to show theoretically. Instead, it will be demonstrated numerically.\\
+can only be drawn for values of $u$ which appeared in the initial condition $\left(u\in \left\{u_0(x)\, \textrm{for all } \, x\in \mathbb{R}\right\}\right)$, 
+and where the initial condition has large enough slope $\left(\left|\frac{du_0}{dx}\right|\ge \gamma > 0\right)$.
+Thirdly, only the derivatives of the fluxes are guaranteed to match $\left(\left|\frac{d\tilde{F}}{du} - \frac{dF}{du}\right| < \epsilon\right)$,
+rather than the fluxes themselves. 
+%For the general form \eqref{eqn: govern PDE} which 1) has systems of equations, 2) has higher spatial dimensions, 
+%and 3) only discretized space-time solution is available,
+%the inferrability is difficult to show theoretically. Instead, it will be demonstrated numerically.\\
 
 \begin{figure}[htbp]
     \begin{center}
@@ -183,39 +208,47 @@ the inferrability is difficult to show theoretically. Instead, it will be demons
 \end{figure}
 
 The remainder of this chapter is organized as follows.
-Section \ref{sec: flux param} discusses the choices of $\mathcal{S}_F$ occurred
-in \eqref{eqn: twin min mismatch}.
-A suitable parameterization for $\tilde{F}$ will be chosen that takes into account the observations from
-Theorem \ref{theorem: 1}.
-Section \ref{sec: adaptive basis} develops a procedure that adaptively refines the
-parameterization. The procedure adopts a greedy search of the best refinement
-at every iteration and refrains from overfitting.
-Section \ref{sec: twin algo} summarizes the algorithm for training the twin model.
-Section \ref{sec: trunc error} presents a numerical shortcut for \eqref{eqn: twin min mismatch} 
-that is more computationally efficient.
-Section \ref{sec: twin numerical results} demonstrates the algorithm in several numerical examples.
-Finally, Section \ref{sec: chap 2 summary} summarizes the chapter.\\
+\begin{itemize}
+    \item Section \ref{sec: flux param} discusses the choices of $\mathcal{S}_F$ occurred
+    in \eqref{eqn: twin min mismatch}.
+%A suitable parameterization for $\tilde{F}$ will be chosen that takes into account the observations from
+%Theorem \ref{theorem: 1}.
+    \item Section \ref{sec: adaptive basis} develops a procedure that adaptively refines the
+    parameterization. 
+%The procedure adopts a greedy search of the best refinement
+%at every iteration and refrains from overfitting.
+    \item Section \ref{sec: twin algo} summarizes the algorithm for training the twin model.
+    \item Section \ref{sec: trunc error} presents a numerical shortcut for \eqref{eqn: twin min mismatch} 
+    that is more computationally efficient.
+    \item Section \ref{sec: twin numerical results} demonstrates the algorithm in several numerical examples.
+    \item Section \ref{sec: chap 2 summary} summarizes the chapter.\\
+\end{itemize}
 
 
 
 \subsection{Parameterization}
 \label{sec: flux param}
-Functions can be parameterized by a linear combination of basis functions \cite{functional analysis}.
+As discussed in Section \ref{sec: adaptive basis review}, 
+$F$ can be parameterized by a linear combination of basis functions.
 Firstly, consider the case when $\tilde{F}$ is univariate. 
 There are many types of basis
 functions to parameterize a univariate function, such as polynomial basis, Fourier basis, and
-wavelet basis. 
+wavelet basis \cite{wavelet mallat}. 
 Based on the observations from Theorem \ref{theorem: 1}, $\tilde{F}$ and $F$
 are expected to match only on a domain of $u$ 
-where the gray-box space-time solution exists and has large variation. Besides, $\tilde{F}$ may match 
-$F$ better on a domain where the gray-box discretized solution $\boldsymbol{u}$ is more densely sampled.
+where the gray-box space-time solution appeared and has large enough slope.
+%Besides, $\tilde{F}$ may match 
+%$F$ better on a domain where the gray-box discretized solution $\boldsymbol{u}$ is more densely sampled.
 Therefore, an ideal parameterization should 
-admit local refinements so $\tilde{F}$ can match $F$ better at some domain;
-similarly, it should allow local dropouts when bases are redundant at some domain. 
-This section presents a choice of the parameterization for $\tilde{F}$ that allows such 
-local refinements, while a procedure for basis refinement is given in the next section.\\
+admit local refinements so $\tilde{F}$ can match $F$ better at some domain.
+%similarly, it should allow local dropouts when some bases are unnecessary at some domain. 
+Another observation from Theorem \ref{theorem: 1} is that $F$ can only be estimated up to 
+a constant.
+This section presents a choice of the parameterization for $\tilde{F}$ that takes into account
+such considerations.\\
 
-A parameterization that allows local refinements and local dropouts is the wavelet.
+A parameterization that allows local refinements and local dropouts is the wavelet parameterization
+\cite{wavelet mallat}.
 Wavelet is the basis developed for multi-resolution analysis (MRA) \cite{wavelet mallat}.
 MRA is an increasing sequence of closed function spaces $\{V_j\}_{j\in \mathbb{Z}}$,
 $$\cdots \subset V_{-1} \subset V_0 \subset V_1 \subset \cdots \,,$$
