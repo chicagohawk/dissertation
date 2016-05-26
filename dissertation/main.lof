@@ -4,7 +4,7 @@
 \contentsline {figure}{\numberline {1-2}{\ignorespaces Computational graphs for the PDE simulation and objective evaluation.\relax }}{35}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2-1}{\ignorespaces An illustration of $B_u$ defined in Theorem \ref {theorem: 1}. The blue line is $u_0$ and the green dashed line is $\frac {du_0}{dx}$. $B_u$ is the set of $u_0$ where the derivative $\frac {du_0}{dx}$ has an absolute value larger than $\gamma $.\relax }}{47}
-\contentsline {figure}{\numberline {2-2}{\ignorespaces An example of mother wavelet, the Meyer wavelet.\relax }}{49}
+\contentsline {figure}{\numberline {2-2}{\ignorespaces An example mother wavelet, the Meyer wavelet.\relax }}{49}
 \contentsline {figure}{\numberline {2-3}{\ignorespaces Red line: the integral \textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {eqn: integral wavelet}\unskip \@@italiccorr )}} of the Meyer wavelet. Black line: the logistic sigmoid function.\relax }}{49}
 \contentsline {figure}{\numberline {2-4}{\ignorespaces An ad hoc set of bases\relax }}{51}
 \contentsline {figure}{\numberline {2-5}{\ignorespaces Space time solutions.\relax }}{51}

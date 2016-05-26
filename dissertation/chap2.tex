@@ -247,37 +247,40 @@ a constant.
 This section presents a choice of the parameterization for $\tilde{F}$ that takes into account
 such considerations.\\
 
-A parameterization that allows local refinements and local dropouts is the wavelet parameterization
+A parameterization that allows local refinements is the wavelet parameterization
 \cite{wavelet mallat}.
-Wavelet is the basis developed for multi-resolution analysis (MRA) \cite{wavelet mallat}.
-MRA is an increasing sequence of closed function spaces $\{V_j\}_{j\in \mathbb{Z}}$,
+The wavelet is a set of basis functions
+developed for multi-resolution analysis (MRA) \cite{wavelet mallat}.
+MRA introduces an increasing sequence of closed function spaces $\{V_j\}_{j\in \mathbb{Z}}$,
 $$\cdots \subset V_{-1} \subset V_0 \subset V_1 \subset \cdots \,,$$
-which can approximate functions with increasing resolutions as $j$ increases.
+%which can approximate functions with increasing resolutions as $j$ increases 
+\cite{wavelet mallat}.
 For univariate MRA, $V_j$'s satisfy the following properties known as
-self-similarity:
+self-similarity \cite{wavelet mallat}:
 \begin{equation*}\begin{split}
     &f(u) \in V_j \Leftrightarrow f(2u) \in V_{j+1}, \; j\in \mathbb{Z}\\
     &f(u) \in V_j \Leftrightarrow f(u-\frac{\eta}{2^j}) \in V_{j},
                     \; j\in \mathbb{Z},\, \eta\in \mathbb{Z}
 \end{split}\end{equation*}
-The wavelet bases for $V_j$ are given by
+The function space $V_j$ is spanned by a set of wavelet bases \cite{wavelet mallat}
 \begin{equation}
     \hat{\phi}_{j,\eta}(u) = 2^{j/2} \hat{\phi}(2^j u-\eta) \,,\quad \eta \in \mathbb{Z}
     \label{eqn: self similar wavelet}
 \end{equation}
 where $\hat{\phi}$ is called the mother wavelet satisfying 
 $\hat{\phi}(u) \rightarrow 0$ for $ u \rightarrow -\infty $ and $\infty$.
-An example mother wavelet, the Meyer wavelet, is shown in Figure \ref{fig: meyer}.
+An example mother wavelet, the Meyer wavelet, is shown in Figure \ref{fig: meyer}.\\
+
 \begin{figure}[Htbp]\begin{center}
     \includegraphics[width=5cm, height=4cm]{../meyer_2.png}
-    \caption{An example of mother wavelet, the Meyer wavelet.}
+    \caption{An example mother wavelet, the Meyer wavelet.}
     \label{fig: meyer}
 \end{center}\end{figure}
 
-
-Because the gray-box model is unchanged by adding a constant to ${F}$,
-the derivative of $\tilde{F}$, instead of $\tilde{F}$ itself, should be approximated.
-Thereby, the bases for $\tilde{F}$ shall be chosen as the integrals of the wavelets, i.e.
+As discussed in the beginning of this chapter, only the derivative of $F$, rather than 
+$F$ itself, is expected to be inferred.
+If $\frac{d \tilde{F}}{du}$ is parameterized by the wavelet bases, 
+$\tilde{F}$ shall be parameterized by the indefinite integrals of the wavelets, i.e.
 \begin{equation}
     \phi_{j,\eta}(u) = \int_{-\infty}^u \hat{\phi}_{j,\eta}(u^\prime) du^\prime\,.
     \label{eqn: integral wavelet}
