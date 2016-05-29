@@ -349,20 +349,22 @@ of univariate sigmoids \cite{functional analysis},
 where $\boldsymbol{j}=(j_1, \cdots, j_k)\in \mathbb{Z}^k$, 
 $\boldsymbol{\eta} = (\eta_1, \cdots, \eta_k) \in \mathbb{Z}^k$. To sum up,
 $\tilde{F}$ can be expressed by
-$$
-    \sum_{\boldsymbol{j}\in \mathbb{Z}^k, \boldsymbol{\eta}\in \mathbb{Z}^k} 
+\begin{equation}
+    \tilde{F} = \sum_{\boldsymbol{j}\in \mathbb{Z}^k, \boldsymbol{\eta}\in \mathbb{Z}^k} 
                        \alpha_{\boldsymbol{j}, \boldsymbol{\eta}}
-                       \phi_{\boldsymbol{j}, \boldsymbol{\eta}} (\cdot)\,,
-    %\label{eqn: linear expansion}
-$$
-where $\alpha$'s are the coefficients of the bases. However, there are infinite number of bases involved
-in this expression, making the expression infeasible for the computer. To address this issue,
+                       \phi_{\boldsymbol{j}, \boldsymbol{\eta}}\,,
+    \label{eqn: linear expansion}
+\end{equation}
+where $\alpha$'s are the coefficients of the bases. There are infinite number of bases involved
+in this expression, making it infeasible to be implemented in the computer. To address this issue,
 a systematic procedure for choosing
 a suitable subset of the bases %$\{\boldsymbol{j}, \boldsymbol{\eta}\}$
 will be presented in Section \ref{sec: adaptive basis}.
 \\
 
-For illustration, consider a numerical example where the gray-box model solves the 1-D Buckley-Leverett equation
+In the remaining part of the section, a numerical example is given to illustrate the inference
+of $F$ by using the sigmoid parameterization.
+Consider a gray-box model solving the 1-D Buckley-Leverett equation
 \cite{Buckley Leverett}
 \begin{equation}
     \frac{\partial u}{\partial t} + \frac{\partial}{\partial x}\Big(\underbrace{
@@ -370,9 +372,9 @@ For illustration, consider a numerical example where the gray-box model solves t
     \label{eqn: Buckley-Leverett}
 \end{equation}
 with the initial condition $u(0,x)=u_0(x)$ and the periodic boundary condition $u(t,0)=u(t,1)$. 
-Let $0 \le u_0(x) \le 1$ for all $x\in [0,1]$. This is because the 
-Buckley-Leverett equation models the two-phase porous media flow where $u$ stands for the
+The Buckley-Leverett equation models the two-phase porous media flow where $u$ stands for the
 saturation of a phase, and the saturation is always positive and no larger than one.
+so $0 \le u_0(x) \le 1$ for all $x\in [0,1]$. 
 $c\in \mathbb{R}$ is a constant-valued control. $F$ is assumed unknown and is inferred by a twin model.
 The twin model solves 
 \begin{equation}
