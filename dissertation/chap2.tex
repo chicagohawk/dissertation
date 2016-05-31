@@ -562,23 +562,28 @@ elements that lead to the implementation of the algorithm in Figure \ref{fig: ou
 Firstly, a formulation is provided to efficiently assess the 
 significance of each candidate basis; Secondly, 
 the neighborhood of a sigmoid basis is defined;
-Thirdly, a metric is devised that determines when to add or remove a candidate basis.
-The three elements are employed to build the twin model algorithm in Section \ref{sec: twin algo}.\\
+Thirdly, a metric is developed that determines when to add or remove a candidate basis.\\
+%The three elements are employed to build the twin model algorithm in Section \ref{sec: twin algo}.\\
 
+Firstly, a formulation is developed to efficiently assess the significance of the candidate basis.
 Given a basis dictionary $\boldsymbol{\phi}_\mathcal{A} = 
 \{\phi_i\}_{i\in \mathcal{A}}$, define the ``minimal mismatch''
 \begin{equation}
     \mathcal{M}^*(\mathcal{A}) = \min_{\boldsymbol{\alpha}_\mathcal{A} \in \mathbb{R}^{|\mathcal{A}|}}
     \mathcal{M}\left( \sum_{i\in \mathcal{A}}
     {\alpha}_i {\phi}_i \right)\,,
+    \label{eqn: minimal mismatch}
 \end{equation}
 to be the minimal solution mismatch \eqref{eqn: solution mismatch} if $\tilde{F}$ were parameterized
-by $\boldsymbol{\phi}_\mathcal{A}$. $\mathcal{A}$ is a set containing $\{\boldsymbol{j},
-\boldsymbol{\eta}\}$'s.
+by $\boldsymbol{\phi}_\mathcal{A}$.
+$\mathcal{A}$ is a finite set containing $\{\boldsymbol{j},
+\boldsymbol{\eta}\}$'s, the dilation and translation parameters of the sigmoid bases.
+Given the gray-box solution, the minimal mismatch 
+is a function of $\mathcal{A}$.
 $\boldsymbol{\alpha}_{\mathcal{A}} = \{\alpha_i\}_{i\in \mathcal{A}}$ is the coefficient for 
 $\boldsymbol{\phi}_\mathcal{A}$. 
 Let $\boldsymbol{\alpha}_{\mathcal{A}}^* =\{\alpha_i^*\}_{i\in \mathcal{A}}$
-be the optimal coefficients, and let
+be the optimal coefficients that solves \eqref{eqn: minimal mismatch}, and let
 $\tilde{F}^*_\mathcal{A} = \sum_{i\in \mathcal{A}} \alpha^*_i \phi_i$.
 Consider appending $\boldsymbol{\phi}_{\mathcal{A}}$ 
 by an additional basis
@@ -593,8 +598,10 @@ $\boldsymbol{\phi}_{\mathcal{A}^\prime}$ is
     \mathcal{M}\left( \sum_{i\in \mathcal{A}^\prime}
     {\alpha}_{i} {\phi}_{i} \right)\,,
 \end{equation}
-Clearly $\mathcal{M}^*(\mathcal{A}^\prime) \le \mathcal{M}^*(\mathcal{A})$.
-Define a ``mismatch improvement'' to be
+Because $\boldsymbol{\phi}_{\mathcal{A}}$ is a subset of $\boldsymbol{\phi}_{\mathcal{A}^\prime}$, 
+it's obvious that 
+$\mathcal{M}^*(\mathcal{A}^\prime) \le \mathcal{M}^*(\mathcal{A})$. 
+Define the ``mismatch improvement'' to be
 \begin{equation}
     \Delta \mathcal{M}^*\left(\mathcal{A}, l\right) = \mathcal{M}^*(\mathcal{A}) - 
     \mathcal{M}^*(\mathcal{A}^\prime)
