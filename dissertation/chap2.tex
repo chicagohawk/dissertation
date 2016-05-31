@@ -386,8 +386,7 @@ The twin model solves
 with the same $c$ and the same initial and boundary conditions. Parameterize $\tilde{F}$ by
 the sigmoid bases \eqref{eqn: self similar sigmoid}
 \begin{equation}
-    \tilde{F} = \sum_{{j}\in A\subset \mathbb{Z}^k, {\eta}\in B\subset
-                       \mathbb{Z}^k} 
+    \tilde{F} = \sum_{{\left\{j, \eta\right\}}\in A\subset \mathbb{Z}^k\times \mathbb{Z}^k} 
                        \alpha_{{j}, {\eta}}
                        \phi_{{j}, {\eta}}\,,
     \label{eqn: linear expansion finite}
@@ -395,7 +394,7 @@ the sigmoid bases \eqref{eqn: self similar sigmoid}
 \eqref{eqn: linear expansion finite} differs from 
 \eqref{eqn: linear expansion} in that a finite number of basis functions are used so
 the parameterization can be implemented in the computer. In this section, the bases used
-in the parameterization, represented by the set $A$ and $B$ in \eqref{eqn: linear expansion finite},
+in the parameterization, represented by the set $A$ in \eqref{eqn: linear expansion finite},
 are chosen ad hoc. Howevever, the bases shall satisfy the following requirement:
 On values of $u$ that appeared in the gray-box solution, 
 there should be at least one basis that has non-zero gradient (sigmoid's gradient 
@@ -403,9 +402,29 @@ is always non-zero, I don't know how to express 'large enough gradient' accurate
 the gradient is non-zero but very small in such values of $u$, the inference will be ill-posed.
 I have difficulty explaining this rigorously).
 Otherwise, the $\frac{dF}{du}$ in such values of $u$ can not be represented.
-Figure \ref{fig: sigmoid basis ad hoc} shows an example of the chosen bases.
-To ensure the well-posedness of \eqref{eqn: twin min mismatch}, an 
-ad hoc $L_1$ regularization on $\alpha$ is used in minimizing $\mathcal{M}$.\\
+Figure \ref{fig: sigmoid basis ad hoc} shows an example set of bases used in this section.
+To ensure the well-posedness of \eqref{eqn: twin min mismatch}, the
+$L_1$ regularization on $\alpha$ is applied in minimizing $\mathcal{M}$. To sum up, 
+$F$ is inferred by solving the following minimization problem,
+\begin{equation}
+    \boldsymbol{\alpha}^* = \argmin_{\alpha_{j, \eta}\in \mathbb{R}} \left(
+    \sum_{i=1}^M \sum_{j=1}^N w_{ij} \big( \tilde{\boldsymbol{u}}_{ij}
+     -\boldsymbol{u}_{ij}\big)^2
+ + \lambda\left\|\boldsymbol{\alpha}\right\|_{L_1} \right)
+    \,,
+    \label{eqn: solution mismatch L1 norm}
+\end{equation}
+where $\boldsymbol{\alpha} = \left\{\alpha_{j,k}\right\}_{\left\{j,k\right\}\in A}$, 
+$\left\|\cdot\right\|_{L_1}$ is the $L_1$ norm, and
+$\tilde{\boldsymbol{u}}$ is the twin-model space-time solution that depends on the value of
+$\boldsymbol{\alpha}$.
+$\lambda>0$ is a tunable parameter for
+the $L_1$ regularization. As the value of $\lambda$ increases, more entries in $\boldsymbol{\alpha}$
+will be suppressed to zero
+\cite{Lasso variable selection}. In this section, I set $\lambda=0.01$. As explained above, the
+minimization problem \eqref{eqn: solution mismatch L1 norm} can be solved by a gradient-based
+method. In this section, the problem is solved by the L-BFGS method \cite{LBFGS}, using the
+NLopt package \cite{nlopt}.
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=5cm]{../fixed_basis_eg.png}
@@ -414,11 +433,12 @@ ad hoc $L_1$ regularization on $\alpha$ is used in minimizing $\mathcal{M}$.\\
     \end{center}
 \end{figure}
 
-Figure \ref{fig: leftcol} shows the discretized space-time solution of \eqref{eqn: Buckley-Leverett}
-for $x\in[0,1], \, t\in[0,1]$ and $c=0$. 
-The solution is used to train a twin model according to \eqref{eqn: twin min mismatch}.
-The discretized space-time solution of the trained twin model is shown in 
-Figure \ref{fig: rightcol}.\\
+Figure \ref{fig: leftcol} shows the gray-box space-time solution
+on $x\in[0,1], \, t\in[0,1]$ for $c=0$. 
+The solution is used to train a twin model according to \eqref{eqn: solution mismatch L1 norm}.
+The twin-model space-time solution is shown in 
+Figure \ref{fig: rightcol}. The twin-model solution matches the gray-box solution, which indicates that
+the twin model has been trained successfully.\\
 
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.4\textwidth}
@@ -433,45 +453,55 @@ Figure \ref{fig: rightcol}.\\
         \caption{Trained twin model.}
         \label{fig: rightcol}
     \end{subfigure}
-    \caption{Space time solutions.}
+    \caption{Space-time solutions.}
 \end{center}\end{figure}
 
-Once a twin model is trained, its adjoint can be used for gradient estimation.
-Consider an objective function 
+After training the twin model, the adjoint method can be applied to the twin model
+to obtain the gradient of an objective function $\xi$ to 
+$c$. The gradient 
+$\frac{d\xi(\tilde{\boldsymbol{u}}, c)}{dc}$ approximates $\frac{d\xi(\boldsymbol{u}, c)}{dc}$
+for the value of $c$ on which the twin model is trained.
+Consider the objective function 
 \begin{equation}
-    \xi(c) \equiv \int_{x=0}^1 \big(u(1,x; c) - \frac{1}{2}\big)^2 \,\textrm{d}x\,.
+    \xi(c) \equiv \int_{x=0}^1 \left(u(1,x; c) - \frac{1}{2}\right)^2 \,\textrm{d}x\,.
     \label{eqn: objective ad hoc}
 \end{equation}
-Its gradient $\frac{d\xi}{dc}$ can be estimated by the trained twin model.
 Figure \ref{fig: objective ad hoc} shows the objective function, evaluated using 
 the gray-box model and the trained twin model. It is observed that the gradients of $\xi$
-match closely at $c=0$, i.e. the control where the twin model is trained.\\
+match closely at $c=0$ where the twin model is trained.\\
 
 \begin{figure}[htbp]\begin{center}
     \includegraphics[width=6.5cm]{../J_twin_vs_primal.png}
     \caption{The objective function $\xi$ evaluated by either the gray-box model
-             or the trained twin model.}
+             and the trained twin model.}
     \label{fig: objective ad hoc}
 \end{center}\end{figure}
 
-In addition to the gradient estimation, the inferred $\tilde{F}$ is examined.
-If different solutions are used in the training, it is expected
-that the trained twin model  will also be different.
+The inferred $\tilde{F}$ is compared to the true $F$. Because $\tilde{F}$ is trained by
+the gray-box space-time solution, and because the gray-box space-time solution depends on
+the initial condition $u_0(x)$, it is expected
+that the trained $\tilde{F}$ depends on $u_0(x)$. 
 Figure \ref{fig: combine 3} shows the training results for three different initial conditions.
-Some observations can be made: 1) As expected, $\tilde{F}$ can differ from $F$ by a constant without
-affecting $\mathcal{M}$; 2) $\frac{d\tilde{F}}{du}$ matches $\frac{dF}{du}$ only in a
-domain of $u$ where the solution exists (indicated by the green area);
-3) Sometimes the bases seem redundant thus can be safely dropped out. The issue seems particularly 
-important in the third column, where most bases are suppressed;
-4) Sometime the bases seem too coarse thus may be refined in order to reduce the minimal $\mathcal{M}$. 
-The issue seems particularly important in the first column, where $\frac{d\tilde{F}}{du}$ exhibits
-a wavy deviation from $\frac{dF}{du}$. 
-Addressing these issues systematically is crucial to the rigorous development of
-the twin model method.\\
+Some observations can be made: 1) As expected, the inferred 
+$\tilde{F}$ can differ from $F$ by a constant, as 
+indicated by the second row of Figure \ref{fig: combine 3}; 
+2) $\frac{d\tilde{F}}{du}$ matches $\frac{dF}{du}$ only in a
+domain of $u$ where the solution exists, as indicated by the green area in the third row of
+Figure \ref{fig: combine 3};
+3) $\frac{d\tilde{F}}{du}$ does not match $\frac{dF}{du}$ outside the green area, indicating that
+some bases are redundant thus can be safely dropped out from the parameterization of $\tilde{F}$
+in \eqref{eqn: linear expansion finite}.
+The issue can be seen clearly in the third column of Figure \ref{fig: combine 3};
+4) In some regions of $u$, the bases are too coarse. The issue is particularly important 
+in the plot at the bottom-left corner, where $\frac{d\tilde{F}}{du}$ exhibits
+a wavy deviation from $\frac{dF}{du}$. At such regions of $u$, the bases may be refined to
+yield a more accurate approximation of $F$.
+Addressing these issues in a systematic way is crucial to the rigorous development of
+the twin model method. This topic is discussed in the next section.\\
 
 \begin{figure}[htbp]
 \begin{center}
-    \includegraphics[width=13cm]{../combine_3_inits.png}
+    \includegraphics[width=16cm]{../combine_3_inits.png}
     \caption{The first row shows the three different initial conditions used to generate
              the gray-box space-time solution. The second row compares the trained $\tilde{F}$ 
              (blue) and the Buckley-Leverett $F$ (red). The third row compares
@@ -485,11 +515,40 @@ the twin model method.\\
 
 \subsection{Elements for Adaptive Basis Construction}
 \label{sec: adaptive basis}
+This section addresses the problem of adaptively choosing a finite set of basis functions
+for the parameterization of $\tilde{F}$.
+The heuristics for the adaptive basis construction has been discussed in Section
+\ref{sec: adaptive basis review}. It has been explained that candidate bases, namely the basis
+dictionary, shall not be pre-determined. The bases can be chosen adaptively using 
+the following iterative approach \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}. 
+In the beginning, some trivial
+bases are given as inputs.
+Then a dictionary is built up progressively 
+by iterating over a forward step and a backward step
+\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
+The forward step searches over a candidate set of bases, and appends the most useful bases 
+to the dictionary
+\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
+The backward step searches over the current dictionary, and removes the 
+unnecessary bases from the dictionary
+\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
+The iteration stops only when no alternation is made to the dictionary or when a criterion, such
+as a targeted approximation accuracy,
+is achieved, without bounding the basis complexity a prior
+\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}. \\
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[height=8cm]{../algo1_2.png}
+        \caption{The outline of the algorithm for training a twin model with an adaptive basis.}
+        \label{fig: outline heuristics}
+    \end{center}
+\end{figure}
+
 This section develops several key 
 elements that lead to the adaptive basis construction for twin models.
-The heuristics for the adaptive basis construction, discussed in Section
-\ref{sec: adaptive basis review}, are applied to build up a basis dictionary consisted of
-only the significant candidates. The section is organized as follows:
+
+The section is organized as follows:
 Firstly, a formulation is provided to efficiently assess the 
 significance of each candidate basis; Secondly, 
 the neighborhood of a sigmoid basis is defined;

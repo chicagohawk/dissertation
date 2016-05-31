@@ -230,6 +230,11 @@ Nocedal, J.
 \newblock Updating Quasi-Newton Matrices with Limited Storage. 
 \newblock {\em Mathematics of computation}, 35(151):773-782, 1980.
 
+\bibitem{nlopt}
+S. G. Johnson, 
+\newblock The NLopt Nonlinear-optimization Package,.
+\newblock {\em http://ab-initio.mit.edu/nlopt}
+
 % Lasso
 \bibitem{Lasso variable selection}
 Tibshirani, R. 
@@ -320,6 +325,7 @@ OpenFOAM,
 \bibitem{aspen}
 Aspen,
 \newblock{\em http://www.aspentech.com/products/aspenONE/}
+
 
 % Calibration without parameteric uncertainty =============================
 \bibitem{non param calibrate 1}

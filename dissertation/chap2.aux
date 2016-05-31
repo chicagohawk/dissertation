@@ -43,142 +43,163 @@
 \newlabel{eqn: Buckley-Leverett}{{2.19}{51}}
 \newlabel{eqn: Buckley-Leverett twin}{{2.20}{51}}
 \newlabel{eqn: linear expansion finite}{{2.21}{51}}
+\citation{Lasso variable selection}
+\citation{LBFGS}
+\citation{nlopt}
+\newlabel{eqn: solution mismatch L1 norm}{{2.22}{52}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-4}{\ignorespaces An ad hoc set of bases\relax }}{52}}
 \newlabel{fig: sigmoid basis ad hoc}{{2-4}{52}}
-\newlabel{eqn: objective ad hoc}{{2.22}{52}}
 \newlabel{fig: leftcol}{{2-5a}{53}}
 \newlabel{sub@fig: leftcol}{{a}{53}}
 \newlabel{fig: rightcol}{{2-5b}{53}}
 \newlabel{sub@fig: rightcol}{{b}{53}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-5}{\ignorespaces Space time solutions.\relax }}{53}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-6}{\ignorespaces The objective function $\xi $ evaluated by either the gray-box model or the trained twin model.\relax }}{53}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-5}{\ignorespaces Space-time solutions.\relax }}{53}}
+\newlabel{eqn: objective ad hoc}{{2.23}{53}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-6}{\ignorespaces The objective function $\xi $ evaluated by either the gray-box model and the trained twin model.\relax }}{53}}
 \newlabel{fig: objective ad hoc}{{2-6}{53}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-7}{\ignorespaces The first row shows the three different initial conditions used to generate the gray-box space-time solution. The second row compares the trained $\mathaccentV {tilde}07E{F}$ (blue) and the Buckley-Leverett $F$ (red). The third row compares the trained $\frac  {d\mathaccentV {tilde}07E{F}}{du}$ (blue) and the Buckley-Leverett $\frac  {dF}{du}$ (red). The green background highlights the domain of $u$ where the gray-box space-time solution exists.\relax }}{54}}
-\newlabel{fig: combine 3}{{2-7}{54}}
+\citation{adaptive basis 1}
+\citation{adaptive basis 2}
+\citation{adaptive basis 3}
+\citation{adaptive basis 1}
+\citation{adaptive basis 2}
+\citation{adaptive basis 3}
+\citation{adaptive basis 1}
+\citation{adaptive basis 2}
+\citation{adaptive basis 3}
+\citation{adaptive basis 1}
+\citation{adaptive basis 2}
+\citation{adaptive basis 3}
+\citation{adaptive basis 1}
+\citation{adaptive basis 2}
+\citation{adaptive basis 3}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Elements for Adaptive Basis Construction}{54}}
 \newlabel{sec: adaptive basis}{{2.1.2}{54}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-7}{\ignorespaces The first row shows the three different initial conditions used to generate the gray-box space-time solution. The second row compares the trained $\mathaccentV {tilde}07E{F}$ (blue) and the Buckley-Leverett $F$ (red). The third row compares the trained $\frac  {d\mathaccentV {tilde}07E{F}}{du}$ (blue) and the Buckley-Leverett $\frac  {dF}{du}$ (red). The green background highlights the domain of $u$ where the gray-box space-time solution exists.\relax }}{55}}
+\newlabel{fig: combine 3}{{2-7}{55}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-8}{\ignorespaces The outline of the algorithm for training a twin model with an adaptive basis.\relax }}{56}}
+\newlabel{fig: outline heuristics}{{2-8}{56}}
 \citation{weight selection}
-\newlabel{eqn: mismatch improvement}{{2.25}{55}}
-\newlabel{eqn: taylor expansion}{{2.26}{55}}
-\newlabel{eqn: basis significance}{{2.27}{55}}
-\newlabel{fig: basis 0}{{2-8a}{56}}
-\newlabel{sub@fig: basis 0}{{a}{56}}
-\newlabel{fig: basis 1}{{2-8b}{56}}
-\newlabel{sub@fig: basis 1}{{b}{56}}
-\newlabel{fig: basis 2}{{2-8c}{56}}
-\newlabel{sub@fig: basis 2}{{c}{56}}
-\newlabel{fig: basis 3}{{2-8d}{56}}
-\newlabel{sub@fig: basis 3}{{d}{56}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-8}{\ignorespaces An illustration of the tuple representation and the corresponding univariate sigmoid.\relax }}{56}}
-\newlabel{eqn: neighborhood 1D}{{2.28}{56}}
-\newlabel{fig: basis neighbor}{{2-9a}{57}}
-\newlabel{sub@fig: basis neighbor}{{a}{57}}
-\newlabel{fig: union neighbor}{{2-9b}{57}}
-\newlabel{sub@fig: union neighbor}{{b}{57}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-9}{\ignorespaces Neighborhood for univariate bases. $(a)$ shows the neighborhood (blue) of a single basis (red). $(b)$ shows the neighborhood (blue) of several bases (red). The left column represents the basis on the $\left (j, \frac  {\eta }{2^j}\right )$ plane, and the right column shows the actual basis $\phi _{j,\eta }$.\relax }}{57}}
-\newlabel{eqn: neighborhood kD}{{2.29}{57}}
+\newlabel{eqn: mismatch improvement}{{2.26}{57}}
+\newlabel{eqn: taylor expansion}{{2.27}{57}}
+\newlabel{eqn: basis significance}{{2.28}{57}}
+\newlabel{fig: basis 0}{{2-9a}{58}}
+\newlabel{sub@fig: basis 0}{{a}{58}}
+\newlabel{fig: basis 1}{{2-9b}{58}}
+\newlabel{sub@fig: basis 1}{{b}{58}}
+\newlabel{fig: basis 2}{{2-9c}{58}}
+\newlabel{sub@fig: basis 2}{{c}{58}}
+\newlabel{fig: basis 3}{{2-9d}{58}}
+\newlabel{sub@fig: basis 3}{{d}{58}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-9}{\ignorespaces An illustration of the tuple representation and the corresponding univariate sigmoid.\relax }}{58}}
+\newlabel{eqn: neighborhood 1D}{{2.29}{58}}
+\newlabel{eqn: neighborhood kD}{{2.30}{58}}
 \citation{cross validation}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-10}{\ignorespaces The discretized gray-box solution is shuffled into $3$ sets, each indicated by a color.\relax }}{58}}
-\newlabel{fig: shuffle}{{2-10}{58}}
-\newlabel{eqn: cross validation}{{2.31}{59}}
-\newlabel{eqn: cross validation mismatch}{{2.32}{59}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}Algorithm}{59}}
-\newlabel{sec: twin algo}{{2.1.3}{59}}
+\newlabel{fig: basis neighbor}{{2-10a}{59}}
+\newlabel{sub@fig: basis neighbor}{{a}{59}}
+\newlabel{fig: union neighbor}{{2-10b}{59}}
+\newlabel{sub@fig: union neighbor}{{b}{59}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-10}{\ignorespaces Neighborhood for univariate bases. $(a)$ shows the neighborhood (blue) of a single basis (red). $(b)$ shows the neighborhood (blue) of several bases (red). The left column represents the basis on the $\left (j, \frac  {\eta }{2^j}\right )$ plane, and the right column shows the actual basis $\phi _{j,\eta }$.\relax }}{59}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-11}{\ignorespaces The discretized gray-box solution is shuffled into $3$ sets, each indicated by a color.\relax }}{60}}
+\newlabel{fig: shuffle}{{2-11}{60}}
+\newlabel{eqn: cross validation}{{2.32}{60}}
+\newlabel{eqn: cross validation mismatch}{{2.33}{61}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}Algorithm}{61}}
+\newlabel{sec: twin algo}{{2.1.3}{61}}
 \citation{quasiNewton}
-\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces Training twin model with adaptive basis construction.\relax }}{60}}
-\newlabel{alg: train twin}{{1}{60}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.4}Minimizing the Truncation Error}{61}}
-\newlabel{sec: trunc error}{{2.1.4}{61}}
-\newlabel{eqn: residual}{{2.34}{62}}
-\newlabel{eqn: truncation error}{{2.35}{62}}
-\newlabel{eqn: minimize truncation error}{{2.36}{62}}
-\newlabel{eqn: basis significance 2}{{2.37}{62}}
-\newlabel{eqn: pre train validation error}{{2.38}{62}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces Training twin model with adaptive basis construction.\relax }}{62}}
+\newlabel{alg: train twin}{{1}{62}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.4}Minimizing the Truncation Error}{63}}
+\newlabel{sec: trunc error}{{2.1.4}{63}}
+\newlabel{eqn: residual}{{2.35}{64}}
+\newlabel{eqn: truncation error}{{2.36}{64}}
+\newlabel{eqn: minimize truncation error}{{2.37}{64}}
+\newlabel{eqn: basis significance 2}{{2.38}{64}}
+\newlabel{eqn: pre train validation error}{{2.39}{64}}
 \citation{contractive system}
-\newlabel{eqn: contractive}{{2.41}{63}}
-\newlabel{theorem: 2}{{2}{63}}
+\newlabel{eqn: contractive}{{2.42}{65}}
+\newlabel{theorem: 2}{{2}{65}}
 \citation{stochastic search}
-\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Minimizing the integrated truncation error by stochastic gradient descent.\relax }}{64}}
-\newlabel{alg: 2}{{2}{64}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.2}Numerical Results}{64}}
-\newlabel{sec: twin numerical results}{{2.2}{64}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Buckley-Leverett Equation}{65}}
-\newlabel{sec: chap 2 BL}{{2.2.1}{65}}
-\newlabel{fig: basis pnt 1}{{2-11a}{65}}
-\newlabel{sub@fig: basis pnt 1}{{a}{65}}
-\newlabel{fig: basis pnt 2}{{2-11b}{65}}
-\newlabel{sub@fig: basis pnt 2}{{b}{65}}
-\newlabel{fig: basis pnt 3}{{2-11c}{65}}
-\newlabel{sub@fig: basis pnt 3}{{c}{65}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-11}{\ignorespaces The basis dictionary for the three solutions in Figure \ref  {fig: combine 3}.\relax }}{65}}
-\newlabel{fig: basis pnt}{{2-11}{65}}
-\newlabel{fig: grad BL 1}{{2-12a}{66}}
-\newlabel{sub@fig: grad BL 1}{{a}{66}}
-\newlabel{fig: grad BL 2}{{2-12b}{66}}
-\newlabel{sub@fig: grad BL 2}{{b}{66}}
-\newlabel{fig: grad BL 3}{{2-12c}{66}}
-\newlabel{sub@fig: grad BL 3}{{c}{66}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-12}{\ignorespaces The errors of estimated gradients for the three solutions.\relax }}{66}}
-\newlabel{fig: adap basis grad err BL}{{2-12}{66}}
-\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces The integrated errors of the estimated gradients for the three solutions.\relax }}{66}}
-\newlabel{table: BL grad error}{{2.1}{66}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Navier-Stokes Flow}{66}}
-\newlabel{sec: chap2 num example NS}{{2.2.2}{66}}
-\newlabel{NSeqn}{{2.44}{66}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Minimizing the integrated truncation error by stochastic gradient descent.\relax }}{66}}
+\newlabel{alg: 2}{{2}{66}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}Numerical Results}{66}}
+\newlabel{sec: twin numerical results}{{2.2}{66}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Buckley-Leverett Equation}{67}}
+\newlabel{sec: chap 2 BL}{{2.2.1}{67}}
+\newlabel{fig: basis pnt 1}{{2-12a}{67}}
+\newlabel{sub@fig: basis pnt 1}{{a}{67}}
+\newlabel{fig: basis pnt 2}{{2-12b}{67}}
+\newlabel{sub@fig: basis pnt 2}{{b}{67}}
+\newlabel{fig: basis pnt 3}{{2-12c}{67}}
+\newlabel{sub@fig: basis pnt 3}{{c}{67}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-12}{\ignorespaces The basis dictionary for the three solutions in Figure \ref  {fig: combine 3}.\relax }}{67}}
+\newlabel{fig: basis pnt}{{2-12}{67}}
+\newlabel{fig: grad BL 1}{{2-13a}{68}}
+\newlabel{sub@fig: grad BL 1}{{a}{68}}
+\newlabel{fig: grad BL 2}{{2-13b}{68}}
+\newlabel{sub@fig: grad BL 2}{{b}{68}}
+\newlabel{fig: grad BL 3}{{2-13c}{68}}
+\newlabel{sub@fig: grad BL 3}{{c}{68}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-13}{\ignorespaces The errors of estimated gradients for the three solutions.\relax }}{68}}
+\newlabel{fig: adap basis grad err BL}{{2-13}{68}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces The integrated errors of the estimated gradients for the three solutions.\relax }}{68}}
+\newlabel{table: BL grad error}{{2.1}{68}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Navier-Stokes Flow}{68}}
+\newlabel{sec: chap2 num example NS}{{2.2.2}{68}}
+\newlabel{NSeqn}{{2.45}{68}}
 \citation{state eqns}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-13}{\ignorespaces The return bend geometry and the mesh for the simulation.\relax }}{67}}
-\newlabel{fig: NS mesh}{{2-13}{67}}
-\newlabel{state equation}{{2.46}{67}}
-\newlabel{eqn: mass flux}{{2.48}{68}}
-\newlabel{NS state equations}{{2.49}{68}}
-\newlabel{NS mismatch}{{2.2.2}{68}}
-\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1170}}{69}}
-\newlabel{sub@fig: graysol Ubend}{{}{69}}
-\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1175}}{69}}
-\newlabel{sub@fig: errsol Ubend}{{}{69}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-14}{\ignorespaces Left column: an example gray-box solution for a given geometry. Right column: the solution mismatch after training a twin model.\relax }}{69}}
-\newlabel{fig: grayErrSol Ubend}{{2-14}{69}}
-\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces The error of the gradient estimation, in percentage.\relax }}{69}}
-\newlabel{tab: idea gas gradient}{{2.2}{69}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Polymer Injection in Petroleum Reservoir}{69}}
-\newlabel{sec: chap 2 reservoir}{{2.2.3}{69}}
-\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1188}}{70}}
-\newlabel{sub@fig: graysol Ubend}{{}{70}}
-\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1193}}{70}}
-\newlabel{sub@fig: errsol Ubend}{{}{70}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-15}{\ignorespaces The gray-box state equation (right column) and the trained state equation (left column). The gray-box model uses either the ideal gas equation (first row) or the Reclich-Kwong equation (second row). The convex hull of the gray-box solution is shown by the dashed red line.\relax }}{70}}
-\newlabel{fig: state err Ubend}{{2-15}{70}}
-\newlabel{fig: geo grad}{{2-16a}{71}}
-\newlabel{sub@fig: geo grad}{{a}{71}}
-\newlabel{fig: geo grad perturb}{{2-16b}{71}}
-\newlabel{sub@fig: geo grad perturb}{{b}{71}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-16}{\ignorespaces A comparison of the estimated gradient and the true gradient.\relax }}{71}}
-\newlabel{fig: geo grad all}{{2-16}{71}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-17}{\ignorespaces Water flooding in petroleum reservoir engineering (courtesy from PetroWiki).\relax }}{72}}
-\newlabel{fig: polymer sketch}{{2-17}{72}}
-\newlabel{eqn: two phase polymer}{{2.50}{72}}
-\newlabel{eqn: darcy law}{{2.51}{72}}
-\newlabel{eqn: polymer sol mismatch}{{2.52}{73}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-18}{\ignorespaces The geometry of the petroleum reservoir.\relax }}{73}}
-\newlabel{fig: reservoir 3D mesh}{{2-18}{73}}
-\newlabel{eqn: chap2 reservoir xi day 50}{{2.53}{73}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1363}}{74}}
-\newlabel{sub@fig: reservoir 3D untrained}{{}{74}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1369}}{74}}
-\newlabel{sub@fig: reservoir 3D untrained}{{a}{74}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1375}}{74}}
-\newlabel{sub@fig: reservoir 3D untrained}{{b}{74}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-19}{\ignorespaces The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. \relax }}{74}}
-\newlabel{fig: reservoir 3D solutions}{{2-19}{74}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-20}{\ignorespaces The gradient of $\xi $ with respect to rates at the two injectors. The lines indicate the gradients estimated by the twin model, while the stars indicate the true gradient evaluated by finite difference.\relax }}{75}}
-\newlabel{fig: reservoir 3D gradient}{{2-20}{75}}
-\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces The error of estimated gradient at day $2$, $16$, $30$, and $44$, in percentage.\relax }}{75}}
-\newlabel{tab: reservoir 3D grad error}{{2.3}{75}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Chapter Summary}{76}}
-\newlabel{sec: chap 2 summary}{{2.3}{76}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-14}{\ignorespaces The return bend geometry and the mesh for the simulation.\relax }}{69}}
+\newlabel{fig: NS mesh}{{2-14}{69}}
+\newlabel{state equation}{{2.47}{69}}
+\newlabel{eqn: mass flux}{{2.49}{70}}
+\newlabel{NS state equations}{{2.50}{70}}
+\newlabel{NS mismatch}{{2.2.2}{70}}
+\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1229}}{71}}
+\newlabel{sub@fig: graysol Ubend}{{}{71}}
+\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1234}}{71}}
+\newlabel{sub@fig: errsol Ubend}{{}{71}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-15}{\ignorespaces Left column: an example gray-box solution for a given geometry. Right column: the solution mismatch after training a twin model.\relax }}{71}}
+\newlabel{fig: grayErrSol Ubend}{{2-15}{71}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces The error of the gradient estimation, in percentage.\relax }}{71}}
+\newlabel{tab: idea gas gradient}{{2.2}{71}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Polymer Injection in Petroleum Reservoir}{71}}
+\newlabel{sec: chap 2 reservoir}{{2.2.3}{71}}
+\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1247}}{72}}
+\newlabel{sub@fig: graysol Ubend}{{}{72}}
+\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1252}}{72}}
+\newlabel{sub@fig: errsol Ubend}{{}{72}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-16}{\ignorespaces The gray-box state equation (right column) and the trained state equation (left column). The gray-box model uses either the ideal gas equation (first row) or the Reclich-Kwong equation (second row). The convex hull of the gray-box solution is shown by the dashed red line.\relax }}{72}}
+\newlabel{fig: state err Ubend}{{2-16}{72}}
+\newlabel{fig: geo grad}{{2-17a}{73}}
+\newlabel{sub@fig: geo grad}{{a}{73}}
+\newlabel{fig: geo grad perturb}{{2-17b}{73}}
+\newlabel{sub@fig: geo grad perturb}{{b}{73}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-17}{\ignorespaces A comparison of the estimated gradient and the true gradient.\relax }}{73}}
+\newlabel{fig: geo grad all}{{2-17}{73}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-18}{\ignorespaces Water flooding in petroleum reservoir engineering (courtesy from PetroWiki).\relax }}{74}}
+\newlabel{fig: polymer sketch}{{2-18}{74}}
+\newlabel{eqn: two phase polymer}{{2.51}{74}}
+\newlabel{eqn: darcy law}{{2.52}{74}}
+\newlabel{eqn: polymer sol mismatch}{{2.53}{75}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-19}{\ignorespaces The geometry of the petroleum reservoir.\relax }}{75}}
+\newlabel{fig: reservoir 3D mesh}{{2-19}{75}}
+\newlabel{eqn: chap2 reservoir xi day 50}{{2.54}{75}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1422}}{76}}
+\newlabel{sub@fig: reservoir 3D untrained}{{}{76}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1428}}{76}}
+\newlabel{sub@fig: reservoir 3D untrained}{{a}{76}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1434}}{76}}
+\newlabel{sub@fig: reservoir 3D untrained}{{b}{76}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-20}{\ignorespaces The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. \relax }}{76}}
+\newlabel{fig: reservoir 3D solutions}{{2-20}{76}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-21}{\ignorespaces The gradient of $\xi $ with respect to rates at the two injectors. The lines indicate the gradients estimated by the twin model, while the stars indicate the true gradient evaluated by finite difference.\relax }}{77}}
+\newlabel{fig: reservoir 3D gradient}{{2-21}{77}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces The error of estimated gradient at day $2$, $16$, $30$, and $44$, in percentage.\relax }}{77}}
+\newlabel{tab: reservoir 3D grad error}{{2.3}{77}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Chapter Summary}{78}}
+\newlabel{sec: chap 2 summary}{{2.3}{78}}
 \@setckpt{chap2}{
-\setcounter{page}{77}
-\setcounter{equation}{53}
+\setcounter{page}{79}
+\setcounter{equation}{54}
 \setcounter{enumi}{3}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
@@ -192,7 +213,7 @@
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{20}
+\setcounter{figure}{21}
 \setcounter{table}{3}
 \setcounter{savepage}{3}
 \setcounter{parentequation}{0}

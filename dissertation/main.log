@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  31 MAY 2016 09:33
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  31 MAY 2016 11:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -711,28 +711,28 @@ Overfull \hbox (2.19876pt too wide) in paragraph at lines 12--12
 i-tions used to gen-er-ate 
  []
 
+[9
 
-Overfull \hbox (18.70573pt too wide) in paragraph at lines 13--13
+]
+Overfull \hbox (18.70573pt too wide) in paragraph at lines 14--14
  [][] []\T1/cmr/m/n/12 An il-lus-tra-tion of the tu-ple rep-re-sen-ta-tion and 
 the cor-re-spond-ing uni-vari-ate 
  []
 
-[9
 
-]
-Overfull \hbox (12.44481pt too wide) in paragraph at lines 20--20
+Overfull \hbox (12.44481pt too wide) in paragraph at lines 21--21
  [][] []\T1/cmr/m/n/12 The gray-box state equa-tion (right col-umn) and the tra
 ined state equa-tion 
  []
 
 
-Overfull \hbox (17.8184pt too wide) in paragraph at lines 22--22
+Overfull \hbox (17.8184pt too wide) in paragraph at lines 23--23
  [][] []\T1/cmr/m/n/12 Water flood-ing in petroleum reser-voir en-gi-neer-ing (
 cour-tesy from PetroWiki). []  
  []
 
 
-Overfull \hbox (2.56734pt too wide) in paragraph at lines 29--29
+Overfull \hbox (2.56734pt too wide) in paragraph at lines 30--30
  [][] []\T1/cmr/m/n/12 A com-par-i-son of the op-ti-mized $\OML/cmm/m/it/12 u\O
 T1/cmr/m/n/12 (\OML/cmm/m/it/12 t \OT1/cmr/m/n/12 = 1\OML/cmm/m/it/12 ; x\OT1/c
 mr/m/n/12 )$ \T1/cmr/m/n/12 af-ter $\OT1/cmr/m/n/12 20$ \T1/cmr/m/n/12 gray-box
@@ -740,10 +740,10 @@ mr/m/n/12 )$ \T1/cmr/m/n/12 af-ter $\OT1/cmr/m/n/12 20$ \T1/cmr/m/n/12 gray-box
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1194) has occurred while \output is active []
 
  [10]
-Overfull \hbox (9.46022pt too wide) in paragraph at lines 32--32
+Overfull \hbox (9.46022pt too wide) in paragraph at lines 33--33
  \T1/cmr/m/n/12 Bayesian op-ti-miza-tion. The red lines are ob-tained by the va
 nilla Bayesian 
  []
@@ -1237,10 +1237,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 231--249
  []
 
 [47 <../excitedDomain.png (PNG copy)>]
-Overfull \hbox (1.75217pt too wide) in paragraph at lines 250--255
-\T1/cmr/m/n/12 (MRA) [[]]. MRA in-tro-duces an in-creas-ing se-quence of closed
- func-tion spaces $\OMS/cmsy/m/n/12 f\OML/cmm/m/it/12 V[]\OMS/cmsy/m/n/12 g[]$\
-T1/cmr/m/n/12 , 
+Overfull \hbox (2.4921pt too wide) in paragraph at lines 255--260
+\T1/cmr/m/n/12 [[]]. For uni-vari-ate MRA, $\OML/cmm/m/it/12 V[]$\T1/cmr/m/n/12
+ 's sat-isfy the fol-low-ing prop-er-ties known as self-similarity
  []
 
 
@@ -1249,7 +1248,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 270--278
  []
 
 
-Underfull \vbox (badness 2573) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [48]
 <../meyer_2.png, id=196, 203.159pt x 163.812pt>
@@ -1298,153 +1297,177 @@ ry con-di-tion $\OML/cmm/m/it/12 u\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 t; \OT1/cmr
 /m/n/12 0) =
  []
 
-<../fixed_basis_eg.png, id=207, 355.5684pt x 294.8616pt>
-File: ../fixed_basis_eg.png Graphic file (type png)
-
-<use ../fixed_basis_eg.png>
-Package pdftex.def Info: ../fixed_basis_eg.png used on input line 411.
-(pdftex.def)             Requested size: 142.26378pt x 117.97403pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [51]
-Underfull \hbox (badness 10000) in paragraph at lines 417--422
+<../fixed_basis_eg.png, id=210, 355.5684pt x 294.8616pt>
+File: ../fixed_basis_eg.png Graphic file (type png)
+
+<use ../fixed_basis_eg.png>
+Package pdftex.def Info: ../fixed_basis_eg.png used on input line 430.
+(pdftex.def)             Requested size: 142.26378pt x 117.97403pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 436--442
 
  []
 
 <../leftcol.png, id=211, 510.9489pt x 443.0151pt>
 File: ../leftcol.png Graphic file (type png)
  <use ../leftcol.png>
-Package pdftex.def Info: ../leftcol.png used on input line 426.
+Package pdftex.def Info: ../leftcol.png used on input line 446.
 (pdftex.def)             Requested size: 142.26378pt x 123.3471pt.
 
 <../rightcol.png, id=212, 508.0581pt x 440.1243pt>
 File: ../rightcol.png Graphic file (type png)
  <use ../rightcol.png>
-Package pdftex.def Info: ../rightcol.png used on input line 432.
+Package pdftex.def Info: ../rightcol.png used on input line 452.
 (pdftex.def)             Requested size: 142.26378pt x 123.24068pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 444--449
+[52 <../fixed_basis_eg.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 468--472
 
  []
 
-<../J_twin_vs_primal.png, id=213, 554.3109pt x 377.9721pt>
+<../J_twin_vs_primal.png, id=216, 554.3109pt x 377.9721pt>
 File: ../J_twin_vs_primal.png Graphic file (type png)
 
 <use ../J_twin_vs_primal.png>
-Package pdftex.def Info: ../J_twin_vs_primal.png used on input line 451.
+Package pdftex.def Info: ../J_twin_vs_primal.png used on input line 474.
 (pdftex.def)             Requested size: 184.9429pt x 126.10957pt.
- [52 <../fixed_basis_eg.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 457--471
+
+Underfull \hbox (badness 10000) in paragraph at lines 480--501
 
  []
 
-<../combine_3_inits.png, id=217, 1647.0333pt x 848.4498pt>
+[53 <../leftcol.png (PNG copy)> <../rightcol.png (PNG copy)> <../J_twin_vs_prim
+al.png>] <../combine_3_inits.png, id=221, 1647.0333pt x 848.4498pt>
 File: ../combine_3_inits.png Graphic file (type png)
 
 <use ../combine_3_inits.png>
-Package pdftex.def Info: ../combine_3_inits.png used on input line 474.
-(pdftex.def)             Requested size: 369.88582pt x 190.54341pt.
- [53 <../leftcol.png (PNG copy)> <../rightcol.png (PNG copy)> <../J_twin_vs_pri
-mal.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 488--498
+Package pdftex.def Info: ../combine_3_inits.png used on input line 504.
+(pdftex.def)             Requested size: 455.24408pt x 234.509pt.
 
+Overfull \hbox (21.62408pt too wide) in paragraph at lines 504--510
+ [] 
  []
 
 
-Underfull \vbox (badness 6445) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 518--539
 
- [54 <../combine_3_inits.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 556--560
+ []
 
+[54] [55 <../combine_3_inits.png (PNG copy)>]
+<../algo1_2.png, id=229, 1656.1875pt x 883.3pt>
+File: ../algo1_2.png Graphic file (type png)
+ <use ../algo1_2.png>
+Package pdftex.def Info: ../algo1_2.png used on input line 542.
+(pdftex.def)             Requested size: 426.78262pt x 227.62204pt.
+
+Overfull \hbox (13.94981pt too wide) in paragraph at lines 548--550
+[]\T1/cmr/m/n/12 This sec-tion de-vel-ops sev-eral key el-e-ments that lead to 
+the adap-tive ba-sis con-struc-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 551--557
+
+ []
+
+[56 <../algo1_2.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 615--619
+
+ []
+
+<../basis_0.png, id=233, 731.3724pt x 297.7524pt>
+File: ../basis_0.png Graphic file (type png)
+ <use ../basis_0.png>
+Package pdftex.def Info: ../basis_0.png used on input line 635.
+(pdftex.def)             Requested size: 213.39566pt x 86.87755pt.
+
+Overfull \hbox (5.25992pt too wide) in paragraph at lines 635--636
+ [][] 
+ []
+
+<../basis_1.png, id=234, 731.3724pt x 297.7524pt>
+File: ../basis_1.png Graphic file (type png)
+ <use ../basis_1.png>
+Package pdftex.def Info: ../basis_1.png used on input line 641.
+(pdftex.def)             Requested size: 213.39566pt x 86.87755pt.
+
+Overfull \hbox (5.25992pt too wide) in paragraph at lines 641--642
+ [][] 
+ []
+
+<../basis_3.png, id=235, 731.3724pt x 297.7524pt>
+File: ../basis_3.png Graphic file (type png)
+ <use ../basis_3.png>
+Package pdftex.def Info: ../basis_3.png used on input line 647.
+(pdftex.def)             Requested size: 213.39566pt x 86.87755pt.
+
+Overfull \hbox (5.25992pt too wide) in paragraph at lines 647--648
+ [][] 
+ []
+
+<../basis_6.png, id=236, 731.3724pt x 297.7524pt>
+File: ../basis_6.png Graphic file (type png)
+ <use ../basis_6.png>
+Package pdftex.def Info: ../basis_6.png used on input line 653.
+(pdftex.def)             Requested size: 213.39566pt x 86.87755pt.
+
+Overfull \hbox (5.25992pt too wide) in paragraph at lines 653--654
+ [][] 
+ []
+
+
+Underfull \hbox (badness 2762) in paragraph at lines 657--657
+[]\T1/cmss/m/sl/12 Figure 2-9: |\T1/cmr/m/sl/12 An il-lus-tra-tion of the tu-pl
+e rep-re-sen-ta-tion and the
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [55]
-<../basis_0.png, id=229, 731.3724pt x 297.7524pt>
-File: ../basis_0.png Graphic file (type png)
- <use ../basis_0.png>
-Package pdftex.def Info: ../basis_0.png used on input line 576.
-(pdftex.def)             Requested size: 213.39566pt x 86.87755pt.
-
-Overfull \hbox (5.25992pt too wide) in paragraph at lines 576--577
- [][] 
- []
-
-<../basis_1.png, id=230, 731.3724pt x 297.7524pt>
-File: ../basis_1.png Graphic file (type png)
- <use ../basis_1.png>
-Package pdftex.def Info: ../basis_1.png used on input line 582.
-(pdftex.def)             Requested size: 213.39566pt x 86.87755pt.
-
-Overfull \hbox (5.25992pt too wide) in paragraph at lines 582--583
- [][] 
- []
-
-<../basis_3.png, id=231, 731.3724pt x 297.7524pt>
-File: ../basis_3.png Graphic file (type png)
- <use ../basis_3.png>
-Package pdftex.def Info: ../basis_3.png used on input line 588.
-(pdftex.def)             Requested size: 213.39566pt x 86.87755pt.
-
-Overfull \hbox (5.25992pt too wide) in paragraph at lines 588--589
- [][] 
- []
-
-<../basis_6.png, id=232, 731.3724pt x 297.7524pt>
-File: ../basis_6.png Graphic file (type png)
- <use ../basis_6.png>
-Package pdftex.def Info: ../basis_6.png used on input line 594.
-(pdftex.def)             Requested size: 213.39566pt x 86.87755pt.
-
-Overfull \hbox (5.25992pt too wide) in paragraph at lines 594--595
- [][] 
- []
-
-
-Underfull \hbox (badness 2762) in paragraph at lines 598--598
-[]\T1/cmss/m/sl/12 Figure 2-8: |\T1/cmr/m/sl/12 An il-lus-tra-tion of the tu-pl
-e rep-re-sen-ta-tion and the
- []
-
-
-Overfull \hbox (2.35335pt too wide) in paragraph at lines 643--643
+ [57]
+Overfull \hbox (2.35335pt too wide) in paragraph at lines 702--702
 [] 
  []
 
-
-Underfull \vbox (badness 2753) has occurred while \output is active []
-
- [56 <../basis_0.png> <../basis_1.png> <../basis_3.png> <../basis_6.png>]
 <../basis_neighbor.png, id=241, 731.3724pt x 297.7524pt>
 File: ../basis_neighbor.png Graphic file (type png)
 
 <use ../basis_neighbor.png>
-Package pdftex.def Info: ../basis_neighbor.png used on input line 652.
+Package pdftex.def Info: ../basis_neighbor.png used on input line 711.
 (pdftex.def)             Requested size: 284.52756pt x 115.83673pt.
 
 <../basis_neighbor_2.png, id=242, 731.3724pt x 297.7524pt>
 File: ../basis_neighbor_2.png Graphic file (type png)
 
 <use ../basis_neighbor_2.png>
-Package pdftex.def Info: ../basis_neighbor_2.png used on input line 658.
+Package pdftex.def Info: ../basis_neighbor_2.png used on input line 717.
 (pdftex.def)             Requested size: 284.52756pt x 115.83673pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \hbox (badness 1997) in paragraph at lines 727--727
+[]\T1/cmss/m/sl/12 Figure 2-10: |\T1/cmr/m/sl/12 Neigh-bor-hood for uni-vari-at
+e bases. $\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ \T1/cmr/m/sl/12
+ shows the
+ []
 
- [57 <../basis_neighbor.png> <../basis_neighbor_2.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 677--678
+[58 <../basis_0.png> <../basis_1.png> <../basis_3.png> <../basis_6.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 736--737
 
  []
 
-<../shuffle_1.png, id=247, 374.39874pt x 597.23125pt>
+<../shuffle_1.png, id=250, 374.39874pt x 597.23125pt>
 File: ../shuffle_1.png Graphic file (type png)
  <use ../shuffle_1.png>
-Package pdftex.def Info: ../shuffle_1.png used on input line 691.
+Package pdftex.def Info: ../shuffle_1.png used on input line 750.
 (pdftex.def)             Requested size: 91.04872pt x 145.23393pt.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 708.
+
+Underfull \vbox (badness 6477) has occurred while \output is active []
+
+ [59 <../basis_neighbor.png> <../basis_neighbor_2.png>]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 767.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
@@ -1452,374 +1475,374 @@ File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [58 <../shuffle_1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 723--729
+ [60 <../shuffle_1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 782--788
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 732--734
+Underfull \hbox (badness 10000) in paragraph at lines 791--793
 
  []
 
 
-Overfull \hbox (17.62482pt too wide) detected at line 794
+Overfull \hbox (17.62482pt too wide) detected at line 853
 [][] 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [59]
-Underfull \hbox (badness 10000) in paragraph at lines 797--819
+ [61]
+Underfull \hbox (badness 10000) in paragraph at lines 856--878
 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [60]
-Underfull \hbox (badness 10000) in paragraph at lines 820--827
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 830--841
-
- []
-
-[61]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [62]
-Underfull \hbox (badness 10000) in paragraph at lines 884--892
+Underfull \hbox (badness 10000) in paragraph at lines 879--886
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 893--896
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 929--936
+Underfull \hbox (badness 10000) in paragraph at lines 889--900
 
  []
 
 [63]
-Overfull \hbox (17.62482pt too wide) detected at line 957
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [64]
+Underfull \hbox (badness 10000) in paragraph at lines 943--951
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 952--955
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 988--995
+
+ []
+
+[65]
+Overfull \hbox (17.62482pt too wide) detected at line 1016
 [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 959--965
+Underfull \hbox (badness 10000) in paragraph at lines 1018--1024
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 975--984
+Underfull \hbox (badness 10000) in paragraph at lines 1034--1043
 
  []
 
-[64]
-Overfull \hbox (11.59625pt too wide) in paragraph at lines 985--990
-[]\T1/cmr/m/n/12 Figure 2-11[] shows the se-lected bases for the three so-lu-ti
+[66]
+Overfull \hbox (11.59625pt too wide) in paragraph at lines 1044--1049
+[]\T1/cmr/m/n/12 Figure 2-12[] shows the se-lected bases for the three so-lu-ti
 ons in Fig-ure 2-7[], re-spec-tively,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 985--990
+Underfull \hbox (badness 10000) in paragraph at lines 1044--1049
 
  []
 
-<../basis_pnt_1.png, id=273, 414.8298pt x 294.1389pt>
+<../basis_pnt_1.png, id=280, 414.8298pt x 294.1389pt>
 File: ../basis_pnt_1.png Graphic file (type png)
  <use ../basis_pnt_1.png>
-Package pdftex.def Info: ../basis_pnt_1.png used on input line 994.
+Package pdftex.def Info: ../basis_pnt_1.png used on input line 1053.
 (pdftex.def)             Requested size: 128.0374pt x 90.78265pt.
 
-<../basis_pnt_2.png, id=274, 414.8298pt x 294.1389pt>
+<../basis_pnt_2.png, id=281, 414.8298pt x 294.1389pt>
 File: ../basis_pnt_2.png Graphic file (type png)
  <use ../basis_pnt_2.png>
-Package pdftex.def Info: ../basis_pnt_2.png used on input line 1000.
+Package pdftex.def Info: ../basis_pnt_2.png used on input line 1059.
 (pdftex.def)             Requested size: 128.0374pt x 90.78265pt.
 
-<../basis_pnt_3.png, id=275, 414.8298pt x 294.1389pt>
+<../basis_pnt_3.png, id=282, 414.8298pt x 294.1389pt>
 File: ../basis_pnt_3.png Graphic file (type png)
  <use ../basis_pnt_3.png>
-Package pdftex.def Info: ../basis_pnt_3.png used on input line 1006.
+Package pdftex.def Info: ../basis_pnt_3.png used on input line 1065.
 (pdftex.def)             Requested size: 128.0374pt x 90.78265pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err_mod.png, id=276, 
+</home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err_mod.png, id=283, 
 578.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err_mod.png Grap
 hic file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err_mod.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/1_a
-dj_err_mod.png used on input line 1021.
+dj_err_mod.png used on input line 1080.
 (pdftex.def)             Requested size: 136.57338pt x 116.64888pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png, id=277, 578.
+</home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png, id=284, 578.
 16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png Graphic 
 file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/6_a
-dj_err.png used on input line 1027.
+dj_err.png used on input line 1086.
 (pdftex.def)             Requested size: 136.57338pt x 116.64888pt.
 
-</home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err_mod.png, id=278, 
+</home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err_mod.png, id=285, 
 578.16pt x 542.025pt>
 File: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err_mod.png Grap
 hic file (type png)
 
 <use /home/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err_mod.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/mirror/final/paper1/7_a
-dj_err_mod.png used on input line 1033.
+dj_err_mod.png used on input line 1092.
 (pdftex.def)             Requested size: 136.57338pt x 116.64888pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1041--1046
+Underfull \hbox (badness 10000) in paragraph at lines 1100--1105
 
  []
 
-[65 <../basis_pnt_1.png (PNG copy)> <../basis_pnt_2.png> <../basis_pnt_3.png>]
+[67 <../basis_pnt_1.png (PNG copy)> <../basis_pnt_2.png> <../basis_pnt_3.png>]
 </home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/mesh/spline
-.png, id=284, 383.031pt x 265.2309pt>
+.png, id=292, 383.031pt x 265.2309pt>
 File: /home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/mesh/s
 pline.png Graphic file (type png)
 
 <use /home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/mesh/sp
 line.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/numpad/test/ns_cases_sp
-line/results/mesh/spline.png used on input line 1072.
+line/results/mesh/spline.png used on input line 1131.
 (pdftex.def)             Requested size: 298.75394pt x 206.88734pt.
- [66 </home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err_mod.png (PNG
+ [68 </home/voila/Documents/2014GRAD/mirror/final/paper1/1_adj_err_mod.png (PNG
  copy)> </home/voila/Documents/2014GRAD/mirror/final/paper1/6_adj_err.png> </ho
 me/voila/Documents/2014GRAD/mirror/final/paper1/7_adj_err_mod.png>]
 Underfull \vbox (badness 2809) has occurred while \output is active []
 
- [67 </home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/mesh/s
+ [69 </home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/mesh/s
 pline.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1130--1134
+Underfull \hbox (badness 10000) in paragraph at lines 1189--1193
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1142--1144
+Underfull \hbox (badness 10000) in paragraph at lines 1201--1203
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1155--1165
+Underfull \hbox (badness 10000) in paragraph at lines 1214--1224
 
  []
 
-<../graysol_Ubend.png, id=295, 349.0641pt x 428.5611pt>
+<../graysol_Ubend.png, id=302, 349.0641pt x 428.5611pt>
 File: ../graysol_Ubend.png Graphic file (type png)
 
 <use ../graysol_Ubend.png>
-Package pdftex.def Info: ../graysol_Ubend.png used on input line 1169.
+Package pdftex.def Info: ../graysol_Ubend.png used on input line 1228.
 (pdftex.def)             Requested size: 185.40256pt x 227.62204pt.
- <../err_Ubend.png, id=296, 402.5439pt x 461.8053pt>
+ <../err_Ubend.png, id=303, 402.5439pt x 461.8053pt>
 File: ../err_Ubend.png Graphic file (type png)
 
 <use ../err_Ubend.png>
-Package pdftex.def Info: ../err_Ubend.png used on input line 1174.
+Package pdftex.def Info: ../err_Ubend.png used on input line 1233.
 (pdftex.def)             Requested size: 198.41527pt x 227.62204pt.
- <../state_eqn_vdw.png, id=297, 565.8741pt x 289.08pt>
+ <../state_eqn_vdw.png, id=304, 565.8741pt x 289.08pt>
 File: ../state_eqn_vdw.png Graphic file (type png)
 
 <use ../state_eqn_vdw.png>
-Package pdftex.def Info: ../state_eqn_vdw.png used on input line 1187.
+Package pdftex.def Info: ../state_eqn_vdw.png used on input line 1246.
 (pdftex.def)             Requested size: 278.48093pt x 142.26378pt.
 
-<../state_eqn_rk.png, id=298, 565.8741pt x 289.08pt>
+<../state_eqn_rk.png, id=305, 565.8741pt x 289.08pt>
 File: ../state_eqn_rk.png Graphic file (type png)
  <use ../state_eqn_rk.png>
-Package pdftex.def Info: ../state_eqn_rk.png used on input line 1192.
+Package pdftex.def Info: ../state_eqn_rk.png used on input line 1251.
 (pdftex.def)             Requested size: 278.48093pt x 142.26378pt.
 
 Underfull \vbox (badness 5147) has occurred while \output is active []
 
- [68]
+ [70]
 </home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux_geo
-_grad/geo_grad_0_spline.png, id=302, 367.1316pt x 447.3513pt>
+_grad/geo_grad_0_spline.png, id=309, 367.1316pt x 447.3513pt>
 File: /home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflu
 x_geo_grad/geo_grad_0_spline.png Graphic file (type png)
 
 <use /home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux
 _geo_grad/geo_grad_0_spline.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/numpad/test/ns_cases_sp
-line/results/outflux_geo_grad/geo_grad_0_spline.png used on input line 1211.
+line/results/outflux_geo_grad/geo_grad_0_spline.png used on input line 1270.
 (pdftex.def)             Requested size: 175.12877pt x 213.39566pt.
 
 </home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux_geo
-_grad/perturb_0.png, id=303, 371.4678pt x 442.2924pt>
+_grad/perturb_0.png, id=310, 371.4678pt x 442.2924pt>
 File: /home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflu
 x_geo_grad/perturb_0.png Graphic file (type png)
 
 <use /home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux
 _geo_grad/perturb_0.png>
 Package pdftex.def Info: /home/voila/Documents/2014GRAD/numpad/test/ns_cases_sp
-line/results/outflux_geo_grad/perturb_0.png used on input line 1223.
+line/results/outflux_geo_grad/perturb_0.png used on input line 1282.
 (pdftex.def)             Requested size: 179.22643pt x 213.39566pt.
 
-Overfull \hbox (15.75891pt too wide) in paragraph at lines 1236--1271
+Overfull \hbox (15.75891pt too wide) in paragraph at lines 1295--1330
  [] 
  []
 
 
-Overfull \hbox (7.15433pt too wide) in paragraph at lines 1278--1283
+Overfull \hbox (7.15433pt too wide) in paragraph at lines 1337--1342
 \T1/cmr/m/n/12 Water flood-ing is a tech-nique to en-hance the sec-ondary re-co
 v-ery in petroleum reser-voirs,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1278--1283
+Underfull \hbox (badness 10000) in paragraph at lines 1337--1342
 
  []
 
 
-</home/voila/Documents/mrst-2015b/results/waterflooding.png, id=304, 401.5pt x 
+</home/voila/Documents/mrst-2015b/results/waterflooding.png, id=311, 401.5pt x 
 275.0275pt>
 File: /home/voila/Documents/mrst-2015b/results/waterflooding.png Graphic file (
 type png)
  <use /home/voila/Documents/mrst-2015b/results/waterflooding.png>
 Package pdftex.def Info: /home/voila/Documents/mrst-2015b/results/waterflooding
-.png used on input line 1286.
+.png used on input line 1345.
 (pdftex.def)             Requested size: 170.71652pt x 116.94179pt.
 
-[69 <../graysol_Ubend.png (PNG copy)> <../err_Ubend.png (PNG copy)>] [70 <../st
-ate_eqn_vdw.png> <../state_eqn_rk.png>] [71 </home/voila/Documents/2014GRAD/num
+[71 <../graysol_Ubend.png (PNG copy)> <../err_Ubend.png (PNG copy)>] [72 <../st
+ate_eqn_vdw.png> <../state_eqn_rk.png>] [73 </home/voila/Documents/2014GRAD/num
 pad/test/ns_cases_spline/results/outflux_geo_grad/geo_grad_0_spline.png> </home
 /voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux_geo_grad/
 perturb_0.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1309--1321
+Underfull \hbox (badness 10000) in paragraph at lines 1368--1380
 
  []
 
 
-Overfull \hbox (8.4206pt too wide) in paragraph at lines 1322--1328
+Overfull \hbox (8.4206pt too wide) in paragraph at lines 1381--1387
 []\T1/cmr/m/it/12 PSim\T1/cmr/m/n/12 , the sim-u-la-tor afore-men-tioned in Sec
 -tion 1.1[], is used as the gray-box sim-u-la-tor,
  []
 
 
-Overfull \hbox (8.34099pt too wide) in paragraph at lines 1322--1328
+Overfull \hbox (8.34099pt too wide) in paragraph at lines 1381--1387
 \T1/cmr/m/n/12 which uses the IM-PES time march-ing, i.e. im-plicit in pres-sur
 e and ex-plicit in sat-u-ra-tion,
  []
 
-[72 </home/voila/Documents/mrst-2015b/results/waterflooding.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1333--1335
+[74 </home/voila/Documents/mrst-2015b/results/waterflooding.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1392--1394
 
  []
 
 
-Overfull \hbox (1.4329pt too wide) in paragraph at lines 1342--1350
+Overfull \hbox (1.4329pt too wide) in paragraph at lines 1401--1409
 \T1/cmr/m/n/12 re-spec-tively. Af-ter the train-ing, the twin-model so-lu-tion 
 matches the gray-box so-lu-tion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1342--1350
+Underfull \hbox (badness 10000) in paragraph at lines 1401--1409
 
  []
 
 
-</home/voila/Documents/mrst-2015b/results/grid.png, id=322, 474.573pt x 307.549
+</home/voila/Documents/mrst-2015b/results/grid.png, id=330, 474.573pt x 307.549
 pt>
 File: /home/voila/Documents/mrst-2015b/results/grid.png Graphic file (type png)
 
  <use /home/voila/Documents/mrst-2015b/results/grid.png>
 Package pdftex.def Info: /home/voila/Documents/mrst-2015b/results/grid.png used
- on input line 1353.
+ on input line 1412.
 (pdftex.def)             Requested size: 219.52278pt x 142.26378pt.
 
-</home/voila/Documents/mrst-2015b/results/iso_sW_notrain_2D.png, id=323, 410.33
+</home/voila/Documents/mrst-2015b/results/iso_sW_notrain_2D.png, id=331, 410.33
 3pt x 289.883pt>
 File: /home/voila/Documents/mrst-2015b/results/iso_sW_notrain_2D.png Graphic fi
 le (type png)
 
 <use /home/voila/Documents/mrst-2015b/results/iso_sW_notrain_2D.png>
 Package pdftex.def Info: /home/voila/Documents/mrst-2015b/results/iso_sW_notrai
-n_2D.png used on input line 1362.
+n_2D.png used on input line 1421.
 (pdftex.def)             Requested size: 201.37798pt x 142.26378pt.
 
-</home/voila/Documents/mrst-2015b/results/iso_sW_gray_2D.png, id=324, 419.166pt
+</home/voila/Documents/mrst-2015b/results/iso_sW_gray_2D.png, id=332, 419.166pt
  x 290.686pt>
 File: /home/voila/Documents/mrst-2015b/results/iso_sW_gray_2D.png Graphic file 
 (type png)
 
 <use /home/voila/Documents/mrst-2015b/results/iso_sW_gray_2D.png>
 Package pdftex.def Info: /home/voila/Documents/mrst-2015b/results/iso_sW_gray_2
-D.png used on input line 1368.
+D.png used on input line 1427.
 (pdftex.def)             Requested size: 205.15009pt x 142.26378pt.
 
-</home/voila/Documents/mrst-2015b/results/iso_sW_twin_2D.png, id=325, 412.742pt
+</home/voila/Documents/mrst-2015b/results/iso_sW_twin_2D.png, id=333, 412.742pt
  x 293.095pt>
 File: /home/voila/Documents/mrst-2015b/results/iso_sW_twin_2D.png Graphic file 
 (type png)
 
 <use /home/voila/Documents/mrst-2015b/results/iso_sW_twin_2D.png>
 Package pdftex.def Info: /home/voila/Documents/mrst-2015b/results/iso_sW_twin_2
-D.png used on input line 1374.
+D.png used on input line 1433.
 (pdftex.def)             Requested size: 200.33708pt x 142.26378pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1386--1397
+Underfull \hbox (badness 10000) in paragraph at lines 1445--1456
 
  []
 
 
 Underfull \vbox (badness 1107) has occurred while \output is active []
 
- [73 </home/voila/Documents/mrst-2015b/results/grid.png>] [74 </home/voila/Docu
+ [75 </home/voila/Documents/mrst-2015b/results/grid.png>] [76 </home/voila/Docu
 ments/mrst-2015b/results/iso_sW_notrain_2D.png> </home/voila/Documents/mrst-201
 5b/results/iso_sW_gray_2D.png> </home/voila/Documents/mrst-2015b/results/iso_sW
 _twin_2D.png>]
-</home/voila/Documents/mrst-2015b/results/grad_2D.png, id=337, 499.466pt x 307.
+</home/voila/Documents/mrst-2015b/results/grad_2D.png, id=344, 499.466pt x 307.
 549pt>
 File: /home/voila/Documents/mrst-2015b/results/grad_2D.png Graphic file (type p
 ng)
  <use /home/voila/Documents/mrst-2015b/results/grad_2D.png>
 Package pdftex.def Info: /home/voila/Documents/mrst-2015b/results/grad_2D.png u
-sed on input line 1400.
+sed on input line 1459.
 (pdftex.def)             Requested size: 227.62204pt x 140.16026pt.
 
-Overfull \hbox (24.21349pt too wide) in paragraph at lines 1425--1439
+Overfull \hbox (24.21349pt too wide) in paragraph at lines 1484--1498
 \T1/cmr/m/n/12 one di-men-sional space. To en-able the train-ing com-pu-ta-tion
 -ally, a sig-moid pa-ram-e-ter-i-za-tion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1425--1439
+Underfull \hbox (badness 10000) in paragraph at lines 1484--1498
 
  []
 
 
 Underfull \vbox (badness 6927) has occurred while \output is active []
 
- [75 </home/voila/Documents/mrst-2015b/results/grad_2D.png (PNG copy)>]
-Overfull \hbox (1.87631pt too wide) in paragraph at lines 1440--1452
+ [77 </home/voila/Documents/mrst-2015b/results/grad_2D.png (PNG copy)>]
+Overfull \hbox (1.87631pt too wide) in paragraph at lines 1499--1511
 []\T1/cmr/m/n/12 The pro-posed twin model al-go-rithm has a wide ap-pli-ca-bil-
 ity, which is demon-strated
  []
 
 
-Overfull \hbox (3.71718pt too wide) in paragraph at lines 1440--1452
+Overfull \hbox (3.71718pt too wide) in paragraph at lines 1499--1511
 \T1/cmr/m/n/12 on a va-ri-ety of nu-mer-i-cal ex-am-ples. The first ex-am-ple i
 s the Buckley-Leverett equa-tion,
  []
 
 
-Overfull \hbox (2.08981pt too wide) in paragraph at lines 1440--1452
+Overfull \hbox (2.08981pt too wide) in paragraph at lines 1499--1511
 \T1/cmr/m/n/12 sur-face ge-om-e-try. The third ex-am-ple is the petroleum reser
 -voir with poly-mer in-jec-tion,
  []
 
-) [76]
+) [78]
 \openout2 = `chap3.aux'.
 
  (./chap3.tex
@@ -1843,7 +1866,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 32--48
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [77
+ [79
 
 
 
@@ -1852,18 +1875,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 76--80
 
  []
 
-[78]
+[80]
 Overfull \hbox (28.06322pt too wide) in paragraph at lines 86--89
 []$\OML/cmm/m/it/12 ^^O[]; []  ; ^^O[]$ \T1/cmr/m/n/12 are re-al-iza-tions of z
 ero-mean sta-tion-ary Gaus-sian pro-cesses with co-vari-ances
  []
 
-[79]
+[81]
 Underfull \hbox (badness 10000) in paragraph at lines 175--177
 
  []
 
-[80]
+[82]
 Overfull \hbox (15.12077pt too wide) in paragraph at lines 259--259
 [] 
  []
@@ -1881,8 +1904,8 @@ Overfull \hbox (17.62482pt too wide) detected at line 309
 
 Underfull \vbox (badness 1424) has occurred while \output is active []
 
- [81]
-<../opt_framework_2.png, id=362, 448.5558pt x 441.0879pt>
+ [83]
+<../opt_framework_2.png, id=369, 448.5558pt x 441.0879pt>
 File: ../opt_framework_2.png Graphic file (type png)
 
 <use ../opt_framework_2.png>
@@ -1904,7 +1927,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 338--364
 
  []
 
-[82] [83 <../opt_framework_2.png (PNG copy)>]
+[84] [85 <../opt_framework_2.png (PNG copy)>]
 Underfull \hbox (badness 10000) in paragraph at lines 365--384
 
  []
@@ -1912,7 +1935,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 365--384
 
 Underfull \vbox (badness 5652) has occurred while \output is active []
 
- [84]
+ [86]
 
 Package amsmath Warning: Cannot use `split' here;
 (amsmath)                trying to recover with `aligned' on input line 397.
@@ -1927,7 +1950,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 448--449
 
  []
 
-[85]
+[87]
 Overfull \hbox (5.45757pt too wide) in paragraph at lines 461--466
 \T1/cmr/m/n/12 Al-go-rithm 3[] can find the max-i-mum re-gard-less of the ac-cu
 -racy of the gra-di-ent es-ti-ma-tion
@@ -1943,30 +1966,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 487--489
 
  []
 
-<../opt_source.png, id=377, 534.798pt x 411.939pt>
+<../opt_source.png, id=384, 534.798pt x 411.939pt>
 File: ../opt_source.png Graphic file (type png)
  <use ../opt_source.png>
 Package pdftex.def Info: ../opt_source.png used on input line 496.
 (pdftex.def)             Requested size: 199.16928pt x 153.41446pt.
 
-<../LD_utx.png, id=378, 532.6299pt x 404.712pt>
+<../LD_utx.png, id=385, 532.6299pt x 404.712pt>
 File: ../LD_utx.png Graphic file (type png)
  <use ../LD_utx.png>
 Package pdftex.def Info: ../LD_utx.png used on input line 502.
 (pdftex.def)             Requested size: 199.16928pt x 151.33435pt.
- [86]
+ [88]
 Overfull \hbox (4.59383pt too wide) in paragraph at lines 510--519
 \T1/cmr/m/n/12 by ei-ther the twin-model Bayesian op-ti-miza-tion and the vanil
 la Bayesian op-ti-miza-tion[],
  []
 
-<../finalutx.png, id=384, 516.7305pt x 383.7537pt>
+<../finalutx.png, id=391, 516.7305pt x 383.7537pt>
 File: ../finalutx.png Graphic file (type png)
  <use ../finalutx.png>
 Package pdftex.def Info: ../finalutx.png used on input line 521.
 (pdftex.def)             Requested size: 233.31503pt x 179.2517pt.
 
-<../opt_BL.png, id=385, 465.4188pt x 279.6849pt>
+<../opt_BL.png, id=392, 465.4188pt x 279.6849pt>
 File: ../opt_BL.png Graphic file (type png)
  <use ../opt_BL.png>
 Package pdftex.def Info: ../opt_BL.png used on input line 531.
@@ -1976,9 +1999,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 551--562
 
  []
 
-[87 <../opt_source.png> <../LD_utx.png (PNG copy)>] [88 <../finalutx.png (PNG c
+[89 <../opt_source.png> <../LD_utx.png (PNG copy)>] [90 <../finalutx.png (PNG c
 opy)> <../opt_BL.png>]
-<../Ubend_combined_new.png, id=394, 976.3677pt x 479.8728pt>
+<../Ubend_combined_new.png, id=401, 976.3677pt x 479.8728pt>
 File: ../Ubend_combined_new.png Graphic file (type png)
 
 <use ../Ubend_combined_new.png>
@@ -1989,14 +2012,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 575--583
 
  []
 
-<../Ubend_combined_new_2.png, id=395, 555.0336pt x 414.1071pt>
+<../Ubend_combined_new_2.png, id=402, 555.0336pt x 414.1071pt>
 File: ../Ubend_combined_new_2.png Graphic file (type png)
 
 <use ../Ubend_combined_new_2.png>
 Package pdftex.def Info: ../Ubend_combined_new_2.png used on input line 585.
 (pdftex.def)             Requested size: 256.0748pt x 191.05394pt.
 
-<../NS_compute_time.png, id=396, 541.3023pt x 413.3844pt>
+<../NS_compute_time.png, id=403, 541.3023pt x 413.3844pt>
 File: ../NS_compute_time.png Graphic file (type png)
 
 <use ../NS_compute_time.png>
@@ -2007,13 +2030,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 603--608
 
  []
 
-[89 <../Ubend_combined_new.png (PNG copy)>] [90 <../Ubend_combined_new_2.png (P
+[91 <../Ubend_combined_new.png (PNG copy)>] [92 <../Ubend_combined_new_2.png (P
 NG copy)> <../NS_compute_time.png (PNG copy)>]
 Underfull \hbox (badness 10000) in paragraph at lines 615--622
 
  []
 
-<../reservoir_perm.png, id=403, 770.88pt x 770.077pt>
+<../reservoir_perm.png, id=411, 770.88pt x 770.077pt>
 File: ../reservoir_perm.png Graphic file (type png)
 
 <use ../reservoir_perm.png>
@@ -2027,7 +2050,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 630--642
 
 Underfull \vbox (badness 2277) has occurred while \output is active []
 
- [91 <../reservoir_perm.png>] <../reservoir_5d_obj.png, id=409, 525.4029pt x 39
+ [93 <../reservoir_perm.png>] <../reservoir_5d_obj.png, id=416, 525.4029pt x 39
 7.485pt>
 File: ../reservoir_5d_obj.png Graphic file (type png)
 
@@ -2035,7 +2058,7 @@ File: ../reservoir_5d_obj.png Graphic file (type png)
 Package pdftex.def Info: ../reservoir_5d_obj.png used on input line 644.
 (pdftex.def)             Requested size: 213.3963pt x 162.18143pt.
 
-<../reservoir_profit_t.png, id=410, 586.8324pt x 442.2924pt>
+<../reservoir_profit_t.png, id=417, 586.8324pt x 442.2924pt>
 File: ../reservoir_profit_t.png Graphic file (type png)
 
 <use ../reservoir_profit_t.png>
@@ -2052,14 +2075,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 655--670
 
  []
 
-[92 <../reservoir_5d_obj.png (PNG copy)> <../reservoir_profit_t.png>]
-<../optinj.png, id=415, 449.68pt x 337.26pt>
+[94 <../reservoir_5d_obj.png (PNG copy)> <../reservoir_profit_t.png>]
+<../optinj.png, id=422, 449.68pt x 337.26pt>
 File: ../optinj.png Graphic file (type png)
  <use ../optinj.png>
 Package pdftex.def Info: ../optinj.png used on input line 684.
 (pdftex.def)             Requested size: 213.39436pt x 162.18143pt.
 
-<../reservoir_obj_grad_descent.png, id=416, 586.8324pt x 442.2924pt>
+<../reservoir_obj_grad_descent.png, id=423, 586.8324pt x 442.2924pt>
 File: ../reservoir_obj_grad_descent.png Graphic file (type png)
 
 <use ../reservoir_obj_grad_descent.png>
@@ -2089,7 +2112,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 699--712
 
  []
 
-[93] [94 <../optinj.png (PNG copy)> <../reservoir_obj_grad_descent.png (PNG cop
+[95] [96 <../optinj.png (PNG copy)> <../reservoir_obj_grad_descent.png (PNG cop
 y)>]
 Overfull \hbox (2.0069pt too wide) in paragraph at lines 713--729
 []\T1/cmr/m/n/12 The pro-posed op-ti-miza-tion method is demon-strated on sev-e
@@ -2101,10 +2124,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 713--729
 
  []
 
-) [95]
+) [97]
 \openout2 = `chap4.aux'.
 
- (./chap4.tex [96
+ (./chap4.tex [98
 
 
 
@@ -2132,7 +2155,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 34--66
 
  []
 
-[97]
+[99]
 Overfull \hbox (21.56284pt too wide) in paragraph at lines 67--88
 \T1/cmr/m/n/12 hy-per pa-ram-e-ters are es-ti-mated by max-i-mum like-li-hood. 
 I present a Bayesian op-ti-miza-tion
@@ -2146,7 +2169,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 67--88
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [98]
+ [100]
 Overfull \hbox (4.8617pt too wide) in paragraph at lines 97--99
 []\T1/cmr/m/n/12 a Gaus-sian pro-cess model of the twin-model gra-di-ent and a 
 Bayesian op-ti-miza-tion
@@ -2157,7 +2180,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 104--127
 
  []
 
-[99]) [100]
+[101]) [102]
 \openout2 = `appa.aux'.
 
  (./appa.tex
@@ -2172,7 +2195,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 12--16
 
  []
 
-[101
+[103
 
 
 
@@ -2184,15 +2207,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 32--34
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [102]
+ [104]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [103]
+ [105]
 Underfull \hbox (badness 10000) in paragraph at lines 96--99
 
  []
 
-<../sketch2.png, id=454, 507.3354pt x 342.5598pt>
+<../sketch2.png, id=461, 507.3354pt x 342.5598pt>
 File: ../sketch2.png Graphic file (type png)
  <use ../sketch2.png>
 Package pdftex.def Info: ../sketch2.png used on input line 101.
@@ -2207,7 +2230,7 @@ Overfull \hbox (35.5435pt too wide) detected at line 129
 \OMS/cmsy/m/n/10 M ^^T []  \OML/cmm/m/it/10 :[]
  []
 
-[104 <../sketch2.png>]
+[106 <../sketch2.png>]
 
 Package amsmath Warning: Cannot use `split' here;
 (amsmath)                trying to recover with `aligned' on input line 145.
@@ -2238,10 +2261,10 @@ Overfull \hbox (71.25493pt too wide) detected at line 185
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [105]
+ [107]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [106]
+ [108]
 Overfull \hbox (8.11273pt too wide) in paragraph at lines 304--304
 [] 
  []
@@ -2249,7 +2272,7 @@ Overfull \hbox (8.11273pt too wide) in paragraph at lines 304--304
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [107]
+ [109]
 Underfull \hbox (badness 10000) in paragraph at lines 304--306
 
  []
@@ -2270,14 +2293,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 339--361
 
  []
 
-[108]) [109]
+[110]) [111]
 \openout2 = `biblio.aux'.
 
- (./biblio.tex (./main.bbl [110
+ (./biblio.tex (./main.bbl [112
 
 
 
-] [111] [112]
+] [113] [114]
 Underfull \hbox (badness 1742) in paragraph at lines 171--174
 []\T1/cmr/m/n/12 Friedman, J. H.   An Overview of Pre-dic-tive Learn-ing and Fu
 nc-tion
@@ -2295,29 +2318,29 @@ Underfull \hbox (badness 3179) in paragraph at lines 229--232
 Stor-age.
  []
 
-[113]
-Underfull \hbox (badness 1152) in paragraph at lines 266--269
+[115]
+Underfull \hbox (badness 1152) in paragraph at lines 271--274
 \T1/cmr/m/n/12 Trust-region Al-go-rithms for Derivative-free Op-ti-miza-tion.  
 \T1/cmr/m/it/12 SIAM Re-view\T1/cmr/m/n/12 ,
  []
 
-[114] [115]
-Underfull \hbox (badness 1546) in paragraph at lines 452--455
+[116] [117]
+Underfull \hbox (badness 1546) in paragraph at lines 458--461
 []$[]$\T1/cmr/m/n/12 ilinskas, J.  Branch and Bound with Sim-pli-cial Par-ti-ti
 ons for Global
  []
 
-[116] [117])) [118] (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux)
+[118] [119])) [120] (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux)
 (./chap2.aux) (./chap3.aux) (./chap4.aux) (./appa.aux) (./biblio.aux))
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 7142 strings out of 493308
- 105497 string characters out of 6140092
- 191667 words of memory out of 5000000
- 10225 multiletter control sequences out of 15000+600000
+ 7150 strings out of 493308
+ 105647 string characters out of 6140092
+ 191698 words of memory out of 5000000
+ 10232 multiletter control sequences out of 15000+600000
  35284 words of font info for 90 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  38i,27n,39p,867b,744s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2358,9 +2381,9 @@ r/sfsl1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti0800.pfb></usr
 /share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/t
 ype1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/type1/public/cm-super
 /sftt1200.pfb>
-Output written on main.pdf (118 pages, 2939226 bytes).
+Output written on main.pdf (120 pages, 3039298 bytes).
 PDF statistics:
- 637 PDF objects out of 1000 (max. 8388607)
+ 644 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 276 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 281 words of extra memory for PDF output out of 10000 (max. 10000000)
 
