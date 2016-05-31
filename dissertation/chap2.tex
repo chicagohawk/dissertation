@@ -658,16 +658,20 @@ For example, for a uniform Cartesian space-time grid, the quadrature weights are
 \\
 
 Secondly, a compact representation of the sigmoid bases is introduced.
-The univariate basis function, $\phi_{j,\eta}$ in
-\eqref{eqn: self similar sigmoid}, is represented by a tuple $(j, \frac{\eta}{2^j})$,
-where $j$ can be viewed as the ``resolution'', and $\frac{\eta}{2^j}$ is
+A univariate basis function,
+\begin{equation*}
+    {\phi}_{j,\eta}(u) = {\phi}(2^j u-\eta) \,,\quad j\in \mathbb{Z} \,,\;\eta \in \mathbb{Z}\,,
+    \label{eqn: self similar sigmoid}
+\end{equation*}
+can be represented by a tuple $(j, \frac{\eta}{2^j})$,
+where $j$ is the dilation parameter, and $\frac{\eta}{2^j}$ is
 the center of the basis.
-Similarly, the $k$-variate basis function, $\phi_{\boldsymbol{j}, \boldsymbol{\eta}}$ in
-\eqref{eqn: tensor basis}, is represented by a tuple $\left(\boldsymbol{j}, \,
+Similarly, a $k$-variate basis function, $\phi_{\boldsymbol{j}, \boldsymbol{\eta}}$ in
+\eqref{eqn: tensor basis}, can be represented by a tuple $\left(\boldsymbol{j}, \,
 \frac{\boldsymbol{\eta}}{2^{\boldsymbol{j}}}\right) 
 = \left(\{j_1,\cdots, j_k\}, \, \left\{\frac{\eta_1}{2^{j_1}}, \cdots, \frac{\eta_k}{2^{j_k}}\right\}\right)$.
-Thus, a sigmoid can be represented by a point in a $2k$-dimensional space.
-The representation is illustrated in Figure \ref{fig: basis 0} thru. \ref{fig: basis 3} 
+Thus, a sigmoid function can be visualized by a point in a $2k$-dimensional space,
+which is illustrated in Figure \ref{fig: basis 0} thru. \ref{fig: basis 3} 
 for the univariate case.
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.48\textwidth}
@@ -698,7 +702,7 @@ for the univariate case.
 \end{center}\end{figure}
 
 Using this representation, define the ``neighborhood'' of a univariate sigmoid 
-$(j,\frac{\eta}{2^j})$ to be 
+$(j,\frac{\eta}{2^j})$ to be a set of the sigmoid bases:
 \begin{equation}
     \mathcal{N}\left[ \left(j,\frac{\eta}{2^j}\right) \right]
     = \left\{ 
