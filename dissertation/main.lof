@@ -7,7 +7,7 @@
 \contentsline {figure}{\numberline {2-2}{\ignorespaces An example mother wavelet, the Meyer wavelet.\relax }}{49}
 \contentsline {figure}{\numberline {2-3}{\ignorespaces Red line: the integral \textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {eqn: integral wavelet}\unskip \@@italiccorr )}} of the Meyer wavelet. Black line: the logistic sigmoid function.\relax }}{50}
 \contentsline {figure}{\numberline {2-4}{\ignorespaces An ad hoc set of bases\relax }}{52}
-\contentsline {figure}{\numberline {2-5}{\ignorespaces Space time solutions.\relax }}{52}
+\contentsline {figure}{\numberline {2-5}{\ignorespaces Space time solutions.\relax }}{53}
 \contentsline {figure}{\numberline {2-6}{\ignorespaces The objective function $\xi $ evaluated by either the gray-box model or the trained twin model.\relax }}{53}
 \contentsline {figure}{\numberline {2-7}{\ignorespaces The first row shows the three different initial conditions used to generate the gray-box space-time solution. The second row compares the trained $\mathaccentV {tilde}07E{F}$ (blue) and the Buckley-Leverett $F$ (red). The third row compares the trained $\frac {d\mathaccentV {tilde}07E{F}}{du}$ (blue) and the Buckley-Leverett $\frac {dF}{du}$ (red). The green background highlights the domain of $u$ where the gray-box space-time solution exists.\relax }}{54}
 \contentsline {figure}{\numberline {2-8}{\ignorespaces An illustration of the tuple representation and the corresponding univariate sigmoid.\relax }}{56}
