@@ -76,7 +76,7 @@
 \newlabel{sec: adaptive basis}{{2.1.2}{54}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-7}{\ignorespaces The first row shows the three different initial conditions used to generate the gray-box space-time solution. The second row compares the trained $\mathaccentV {tilde}07E{F}$ (blue) and the Buckley-Leverett $F$ (red). The third row compares the trained $\frac  {d\mathaccentV {tilde}07E{F}}{du}$ (blue) and the Buckley-Leverett $\frac  {dF}{du}$ (red). The green background highlights the domain of $u$ where the gray-box space-time solution exists.\relax }}{55}}
 \newlabel{fig: combine 3}{{2-7}{55}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-8}{\ignorespaces The outline of the algorithm for training a twin model with an adaptive basis.\relax }}{56}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-8}{\ignorespaces The outline of the algorithm for training a twin model with an adaptive basis. $\boldsymbol  {\phi }$ is the basis dictionary, $\boldsymbol  {\phi }_0$ is the initial basis dictionary, $\boldsymbol  {\alpha }$ indicates the bases' coefficients. As explained in the previous section, the solution mismatch is a function that depends on $u$ and $\mathaccentV {tilde}07E{F}$, where $\mathaccentV {tilde}07E{F}$ depends on the bases $\boldsymbol  {\phi }$ and its coefficients $\boldsymbol  {\alpha }$.\relax }}{56}}
 \newlabel{fig: outline heuristics}{{2-8}{56}}
 \citation{weight selection}
 \newlabel{eqn: mismatch improvement}{{2.26}{57}}
@@ -92,16 +92,16 @@
 \newlabel{sub@fig: basis 3}{{d}{58}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-9}{\ignorespaces An illustration of the tuple representation and the corresponding univariate sigmoid.\relax }}{58}}
 \newlabel{eqn: neighborhood 1D}{{2.29}{58}}
-\newlabel{eqn: neighborhood kD}{{2.30}{58}}
-\citation{cross validation}
 \newlabel{fig: basis neighbor}{{2-10a}{59}}
 \newlabel{sub@fig: basis neighbor}{{a}{59}}
 \newlabel{fig: union neighbor}{{2-10b}{59}}
 \newlabel{sub@fig: union neighbor}{{b}{59}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-10}{\ignorespaces Neighborhood for univariate bases. $(a)$ shows the neighborhood (blue) of a single basis (red). $(b)$ shows the neighborhood (blue) of several bases (red). The left column represents the basis on the $\left (j, \frac  {\eta }{2^j}\right )$ plane, and the right column shows the actual basis $\phi _{j,\eta }$.\relax }}{59}}
+\newlabel{eqn: neighborhood kD}{{2.30}{59}}
+\citation{cross validation}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-11}{\ignorespaces The discretized gray-box solution is shuffled into $3$ sets, each indicated by a color.\relax }}{60}}
 \newlabel{fig: shuffle}{{2-11}{60}}
-\newlabel{eqn: cross validation}{{2.32}{60}}
+\newlabel{eqn: cross validation}{{2.32}{61}}
 \newlabel{eqn: cross validation mismatch}{{2.33}{61}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}Algorithm}{61}}
 \newlabel{sec: twin algo}{{2.1.3}{61}}
@@ -153,9 +153,9 @@
 \newlabel{eqn: mass flux}{{2.49}{70}}
 \newlabel{NS state equations}{{2.50}{70}}
 \newlabel{NS mismatch}{{2.2.2}{70}}
-\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1229}}{71}}
+\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1239}}{71}}
 \newlabel{sub@fig: graysol Ubend}{{}{71}}
-\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1234}}{71}}
+\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1244}}{71}}
 \newlabel{sub@fig: errsol Ubend}{{}{71}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-15}{\ignorespaces Left column: an example gray-box solution for a given geometry. Right column: the solution mismatch after training a twin model.\relax }}{71}}
 \newlabel{fig: grayErrSol Ubend}{{2-15}{71}}
@@ -163,9 +163,9 @@
 \newlabel{tab: idea gas gradient}{{2.2}{71}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Polymer Injection in Petroleum Reservoir}{71}}
 \newlabel{sec: chap 2 reservoir}{{2.2.3}{71}}
-\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1247}}{72}}
+\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1257}}{72}}
 \newlabel{sub@fig: graysol Ubend}{{}{72}}
-\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1252}}{72}}
+\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1262}}{72}}
 \newlabel{sub@fig: errsol Ubend}{{}{72}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-16}{\ignorespaces The gray-box state equation (right column) and the trained state equation (left column). The gray-box model uses either the ideal gas equation (first row) or the Reclich-Kwong equation (second row). The convex hull of the gray-box solution is shown by the dashed red line.\relax }}{72}}
 \newlabel{fig: state err Ubend}{{2-16}{72}}
@@ -183,11 +183,11 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {2-19}{\ignorespaces The geometry of the petroleum reservoir.\relax }}{75}}
 \newlabel{fig: reservoir 3D mesh}{{2-19}{75}}
 \newlabel{eqn: chap2 reservoir xi day 50}{{2.54}{75}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1422}}{76}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1432}}{76}}
 \newlabel{sub@fig: reservoir 3D untrained}{{}{76}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1428}}{76}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1438}}{76}}
 \newlabel{sub@fig: reservoir 3D untrained}{{a}{76}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1434}}{76}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1444}}{76}}
 \newlabel{sub@fig: reservoir 3D untrained}{{b}{76}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-20}{\ignorespaces The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. \relax }}{76}}
 \newlabel{fig: reservoir 3D solutions}{{2-20}{76}}

@@ -518,12 +518,11 @@ the twin model method. This topic is discussed in the next section.\\
 This section addresses the problem of adaptively choosing a finite set of basis functions
 for the parameterization of $\tilde{F}$.
 The heuristics for the adaptive basis construction has been discussed in Section
-\ref{sec: adaptive basis review}. It has been explained that candidate bases, namely the basis
-dictionary, shall not be pre-determined. The bases can be chosen adaptively using 
+\ref{sec: adaptive basis review}. It has been explained that the candidate bases, namely the basis
+dictionary, can be chosen adaptively using 
 the following iterative approach \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}. 
-In the beginning, some trivial
-bases are given as inputs.
-Then a dictionary is built up progressively 
+Starting from an initial set of basis functions $\boldsymbol{\phi}_0$,
+the basis dictionary $\boldsymbol{\phi}$ is built up progressively 
 by iterating over a forward step and a backward step
 \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
 The forward step searches over a candidate set of bases, and appends the most useful bases 
@@ -534,26 +533,37 @@ unnecessary bases from the dictionary
 \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
 The iteration stops only when no alternation is made to the dictionary or when a criterion, such
 as a targeted approximation accuracy,
-is achieved, without bounding the basis complexity a prior
-\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}. \\
+is achieved \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}. My thesis applies 
+this approach to the adaptive construction of the bases for the parameterization of $\tilde{F}$,
+which is sketched in Figure \ref{fig: outline heuristics}.\\
 
 \begin{figure}
     \begin{center}
-        \includegraphics[height=8cm]{../algo1_2.png}
-        \caption{The outline of the algorithm for training a twin model with an adaptive basis.}
+        \includegraphics[height=6cm]{../algo1_2.png}
+        \caption{The outline of the algorithm for training a twin model with an adaptive basis.
+                 $\boldsymbol{\phi}$ is the basis dictionary, $\boldsymbol{\phi}_0$ is the 
+                 initial basis dictionary, $\boldsymbol{\alpha}$ indicates the bases' coefficients.
+                 As explained in the previous section, the solution mismatch is a function that depends
+                 on $u$ and $\tilde{F}$, where $\tilde{F}$ depends on the bases $\boldsymbol{\phi}$
+                 and its coefficients $\boldsymbol{\alpha}$.} 
         \label{fig: outline heuristics}
     \end{center}
 \end{figure}
 
+(I think you will question the Figure \ref{fig: outline heuristics}. For example, you may ask 
+what does "no more basis is needed" mean? I have to say that 
+this figure is only a sketch of the complete twin model
+algorithm presented in the next section. I want the reader to have an overall idea of the motivation of
+why I talks about things like ``the significance of a basis'' in the following. 
+I can only discuss the details in the following part of the section. 
+Do you have a better idea how to explain this figure clearly in a high level?)
 This section develops several key 
-elements that lead to the adaptive basis construction for twin models.
-
-The section is organized as follows:
+elements that lead to the implementation of the algorithm in Figure \ref{fig: outline heuristics}.
 Firstly, a formulation is provided to efficiently assess the 
 significance of each candidate basis; Secondly, 
 the neighborhood of a sigmoid basis is defined;
 Thirdly, a metric is devised that determines when to add or remove a candidate basis.
-The three elements are then employed to build the twin model algorithm in Section \ref{sec: twin algo}.\\
+The three elements are employed to build the twin model algorithm in Section \ref{sec: twin algo}.\\
 
 Given a basis dictionary $\boldsymbol{\phi}_\mathcal{A} = 
 \{\phi_i\}_{i\in \mathcal{A}}$, define the ``minimal mismatch''
