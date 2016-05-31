@@ -597,6 +597,7 @@ $\boldsymbol{\phi}_{\mathcal{A}^\prime}$ is
     = \min_{\boldsymbol{\alpha}_{\mathcal{A}^\prime} \in \mathbb{R}^{|\mathcal{A}|+1}}
     \mathcal{M}\left( \sum_{i\in \mathcal{A}^\prime}
     {\alpha}_{i} {\phi}_{i} \right)\,,
+    \label{eqn: append minimal mismatch}
 \end{equation}
 Because $\boldsymbol{\phi}_{\mathcal{A}}$ is a subset of $\boldsymbol{\phi}_{\mathcal{A}^\prime}$, 
 it's obvious that 
@@ -607,23 +608,36 @@ Define the ``mismatch improvement'' to be
     \mathcal{M}^*(\mathcal{A}^\prime)
     \label{eqn: mismatch improvement}
 \end{equation} 
+Let $\boldsymbol{\alpha}^*_{\mathcal{A}^\prime} = \left\{
+\hat{\boldsymbol{\alpha}}^*_{\mathcal{A}}, \, \alpha_l^*
+\right\}$ be the optimal coefficients that solves \eqref{eqn: append minimal mismatch}.
 Approximate \eqref{eqn: mismatch improvement} by Taylor expansion, we get
-\begin{equation}
-    \Delta\mathcal{M}^*\left(\mathcal{A}, l\right) 
-    \approx -\left(\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
+\begin{equation}\begin{split}
+    \Delta\mathcal{M}^*\left(\mathcal{A}, l\right) &
+    = \mathcal{M} \left( \boldsymbol{\alpha}^*_{\mathcal{A}} \cdot \boldsymbol{\phi}_{\mathcal{A}}\right)
+    - \mathcal{M} \left( \hat{\boldsymbol{\alpha}}^*_{\mathcal{A}} \cdot \boldsymbol{\phi}_{\mathcal{A}}
+    + \alpha_l^* \phi_l
+    \right)\\
+    &\approx 
+    \mathcal{M} \left( \boldsymbol{\alpha}^*_{\mathcal{A}} \cdot \boldsymbol{\phi}_{\mathcal{A}}\right) 
+    - \mathcal{M} \left( \hat{\boldsymbol{\alpha}}^*_{\mathcal{A}} \cdot \boldsymbol{\phi}_{\mathcal{A}}
+    \right)
+    -\left(\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
     \right|_{\tilde{F}_\mathcal{A}^*} \phi_l
-    \; \textrm{d} u \right) \alpha_l \,,
+    \; \textrm{d} u \right) \alpha_l^*\\
+    &\approx -\left(\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
+    \right|_{\tilde{F}_\mathcal{A}^*} \phi_l
+    \; \textrm{d} u \right) \alpha_l^* \,,
     \label{eqn: taylor expansion}
-\end{equation}
+\end{split}\end{equation}
 where $\frac{d\mathcal{M}}{d\tilde{F}}$ is the derivative of $\mathcal{M}(\tilde{F})$ 
 with respect to $\tilde{F}$, evaluated on $\tilde{F} = \tilde{F}^*_\mathcal{A}$.
-For a twin model consisted of a system of $k$ equations,
-$\tilde{F}$ is a function of $u\in\mathbb{R}^k$, thus 
-$\frac{d\mathcal{M}}{d\tilde{F}}$ is also a function of $u\in\mathbb{R}^k$.
-As discussed in the previous sections, $\frac{d \mathcal{M}}{d\tilde{F}}$ is non-zero only in a
-domain where there is solution. Thus \eqref{eqn: taylor expansion} 
-can be integrated by quadrature only over a bounded domain.
-For example, for a uniform Cartesian space-time grid, the quadrature weights equal to a constant.
+(I am not sure how to justify $\boldsymbol{\alpha}^*_{\mathcal{A}} \approx 
+\hat{\boldsymbol{\alpha}}^*_{\mathcal{A}}$. Without this approximation, \eqref{eqn: taylor expansion} 
+will be much more costly to evaluate, because \eqref{eqn: append minimal mismatch} 
+must be solved for every
+candidate $\phi_l$ in order to evaluate $\Delta \mathcal{M}^*$. Using this approximation, \eqref{eqn: append minimal mismatch} does not need to
+be solved. Do you have a better way of explaining this?)
 The absolute value of the coefficient for $\alpha_l$,
 \begin{equation}
     s_l(\mathcal{A}) \equiv \left|\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
@@ -634,7 +648,16 @@ estimates the significance of the basis $\phi_l$ \cite{weight selection}.
 If there are multiple candidate bases, \eqref{eqn: basis significance} can be used to rank their 
 significance.\\
 
-In the sequel, a compact representation of the sigmoid bases is introduced.
+For a twin model consisted of a system of $k$ equations,
+$\tilde{F}$ is a function of $u\in\mathbb{R}^k$, thus 
+$\frac{d\mathcal{M}}{d\tilde{F}}$ is also a function of $u\in\mathbb{R}^k$.
+As discussed in the previous sections, $\frac{d \mathcal{M}}{d\tilde{F}}$ is non-zero only in a
+domain where there is solution. Thus \eqref{eqn: taylor expansion} 
+can be computed by numerical quadrature over the bounded domain.
+For example, for a uniform Cartesian space-time grid, the quadrature weights are equal to a constant.
+\\
+
+Secondly, a compact representation of the sigmoid bases is introduced.
 The univariate basis function, $\phi_{j,\eta}$ in
 \eqref{eqn: self similar sigmoid}, is represented by a tuple $(j, \frac{\eta}{2^j})$,
 where $j$ can be viewed as the ``resolution'', and $\frac{\eta}{2^j}$ is
