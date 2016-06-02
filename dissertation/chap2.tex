@@ -818,8 +818,8 @@ T_2 &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_3, \cdots, \bold
 T_k &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_2, \cdots, \boldsymbol{u}_{k-1})
 \label{eqn: cross validation}
 \end{split}\end{equation}
-In the third step, each trained twin model is validated on the remaining set. In particular,
-the solution mismatch for the validation set is computed, as shown in 
+In the third step, each trained twin model is validated, by computing
+the solution mismatch on the remaining set of the gray-box solution, as shown in 
 \eqref{eqn: cross validation mismatch}.
 \begin{equation}\begin{split}
     \mathcal{M}_1 &= \texttt{MismatchValidation}\left( T_1 , \boldsymbol{u}_1\right)\\
@@ -834,15 +834,15 @@ The mean value of validation errors,
     + \mathcal{M}_k\right)
 \end{equation}
 measures the performance of the basis dictionary. A basis shall be added to or removed from
-the dictionary only if such action reduces $\overline{\mathcal{M}}$. In practice, cross validation
-proliferates the computational cost. 
-Therefore, a small $k$ is preferrable if cost is a concern. 
+the dictionary only if such action reduces $\overline{\mathcal{M}}$. Because the cross valiation
+involves $k$ twin models, it increases the computational cost.
+Therefore, a small $k$ is preferrable.
 All the numerical examples in the thesis use $k=2$.\\
 
 \subsection{Algorithm}
 \label{sec: twin algo}
 Based upon the developments in the previous sections, a twin model algorithm 
-with adaptive basis construction is devised.\\
+with adaptive basis construction is developed based on Figure \ref{fig: outline heuristics}. \\
 
 \begin{algorithm}[H]
 \begin{algorithmic}[1]
@@ -909,9 +909,10 @@ with adaptive basis construction is devised.\\
 Algorithm \ref{alg: train twin} adopts the heuristics of the forward-backward iteration
 discussed in Section \ref{sec: adaptive basis review}.
 The algorithm starts from training a twin model using 
-a simple basis dictionary. Usually the starting
-dictionary contains one basis for each dimension with very low resolution.
-Details of the choice are given in Section 
+a starting basis dictionary. 
+%Usually the starting
+%dictionary contains one basis for each dimension with very low resolution.
+The choice of the starting basis dictionary is given in Section 
 \ref{sec: twin numerical results} along with numerical examples.
 The main part of the algorithm iterates over a forward step (line 3-9) and a backward step (line
 10-19). The forward step firstly finds the most promising candidate in the neighborhood of the current
