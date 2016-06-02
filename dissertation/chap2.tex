@@ -713,12 +713,13 @@ $(j,\frac{\eta}{2^j})$ to be a set of the sigmoid bases:
 \end{equation}
 The neighborhood contains 1) a basis 
 $\left( j+1, \frac{\eta}{2^j} \right)$ 
-with an increment of resolution; and
+whose dilation parameter is incremented by one; and
 2) two basis $\left( j, \frac{\eta\pm 1}{2^j} \right)$
-with the same resolution but a marginal shift of center.
+whose dilation parameter keeps the same but the translation parameter is incremented by $\pm 1$.
 For illustration, the neighborhood of $\left(0,\frac{0}{2^0}\right)$
 is shown in Figure \ref{fig: basis neighbor}.
-Similarly, define the neighborhood of a multivariate sigmoid to be
+The definition can be extended to the multivariate sigmoid. 
+The neighborhood of a multivariate sigmoid is defined to be
 \begin{equation}\begin{split}
     &\mathcal{N}
     \left[
@@ -744,7 +745,8 @@ Similarly, define the neighborhood of a multivariate sigmoid to be
             \right) \bigg\}\,,
     \label{eqn: neighborhood kD}
 \end{split}\end{equation}
-which consists of $k$ bases with incremental resolution, and $2k$ bases with center shifts.
+which consists of $k$ bases whose dilation parameters are incremented by $1$, 
+and $2k$ bases whose translation parameters are incremented by $\pm 1$.
 It is easy to see that a basis $(\boldsymbol{j}_0, \frac{\boldsymbol{\eta}_0}{2^{\boldsymbol{j}_0}})$ 
 can be connected to any basis $(\boldsymbol{j}, \frac{\boldsymbol{\eta}}{2^{\boldsymbol{j}}})$ 
 with $\boldsymbol{j} \ge \boldsymbol{j}_0$ through a chain
