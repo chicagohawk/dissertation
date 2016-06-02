@@ -749,7 +749,9 @@ which consists of $k$ bases whose dilation parameters are incremented by $1$,
 and $2k$ bases whose translation parameters are incremented by $\pm 1$.
 It is easy to see that a basis $(\boldsymbol{j}_0, \frac{\boldsymbol{\eta}_0}{2^{\boldsymbol{j}_0}})$ 
 can be connected to any basis $(\boldsymbol{j}, \frac{\boldsymbol{\eta}}{2^{\boldsymbol{j}}})$ 
-with $\boldsymbol{j} \ge \boldsymbol{j}_0$ through a chain
+with $\boldsymbol{j} \ge \boldsymbol{j}_0$ \footnote{ Define $\boldsymbol{j} \ge \boldsymbol{j}_0$
+to be $\boldsymbol{j}_i \ge \boldsymbol{j}^\prime$ for all $i=1, \cdots, k$.}
+through a chain
 of neighborhoods.
 \begin{figure}[Htbp]\begin{center}
     \begin{subfigure}[p]{1.\textwidth}
@@ -773,14 +775,18 @@ of neighborhoods.
              and the right column shows the actual basis $\phi_{j,\eta}$.}
 \end{center}\end{figure}
 In addition, define the neighborhood of multiple sigmoid functions to be the union
-of each individual's neighborhood, as illustrated by Figure \ref{fig: union neighbor}.
+of the neighborhoods of all member sigmoid, \eqref{eqn: multiple neighbor}. The neighborhood of multiple sigmoid functions
+is illustrated in Figure \ref{fig: union neighbor}.
 \begin{equation}
     \mathcal{N}\left[(\boldsymbol{j}_1, \frac{\boldsymbol{\eta}_1}{2^{\boldsymbol{j}_1}} ), \cdots, 
     ( \boldsymbol{j}_n, \frac{\boldsymbol{\eta}_n}{2^{\boldsymbol{j}_n}}) \right]
     = \mathcal{N}\left[(\boldsymbol{j}_1, \frac{\boldsymbol{\eta}_1}{2^{\boldsymbol{j}_1}})\right]\bigcup \cdots 
       \bigcup \mathcal{N}\left[(\boldsymbol{j}_n, \frac{\boldsymbol{\eta}_n}{2^{\boldsymbol{j}_n}})\right]\,.
+\label{eqn: multiple neighbor}
 \end{equation}\\
 
+Thirdly, a criterion is developed to determine whether a basis should be added or removed from
+the basis dictionary. 
 Although the mismatch improvement, $\Delta \mathcal{M}^*\left(\mathcal{A}, l\right)$, is always
 non-negative, it is inadvisable to cram the basis dictionary with too many bases,
 otherwise a twin model can be overfitted.
@@ -788,21 +794,22 @@ Therefore, a criterion is required to determine if a candidate basis shall be ad
 removed from the basis dictionary. This can be achieved by cross validation,
 in particular, $k$-fold cross validation \cite{cross validation}.
 Given a basis dictionary, the $k$-fold cross validation proceeds in the following three steps:
-Firstly, the gray-box solution $\boldsymbol{u}$ is shuffled randomly into $k$ disjoint sets
+In the first step, the gray-box solution $\boldsymbol{u}$ is shuffled randomly into $k$ disjoint sets
 $\left\{\boldsymbol{u}_1 , \boldsymbol{u}_2, \cdots, \boldsymbol{u}_k\right\}$.
-An illustration for $k=2$ is shown in Figure \ref{fig: shuffle}.
+An illustration for $k=3$ is shown in Figure \ref{fig: shuffle}.
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=3.2cm]{../shuffle_1.png}
         \caption{The discretized 
-                 gray-box solution is shuffled into $3$ sets, each indicated by a color.}
+                 gray-box solution is shuffled into $3$ sets, each indicated by a color. 
+                 Each block stands for the state variable on a space-time grid point.}
         \label{fig: shuffle}
     \end{center}
 \end{figure}
 
-Secondly, $k$ twin models who share the same basis dictionary 
-are trained so their space-time solutions match
-all but one sets, shown in \eqref{eqn: cross validation}.
+In the second step, $k$ twin models are initialized using the same basis dictionary.
+The $k$ twin models are trained so that their space-time solutions match
+all but one sets of the gray-box solution, as shown in \eqref{eqn: cross validation}, where
 $T_i$ indicates the $i$th twin model.
 \begin{equation}\begin{split}
 T_1 &= \texttt{TrainTwinModel}(\boldsymbol{u}_2, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
@@ -811,7 +818,7 @@ T_2 &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_3, \cdots, \bold
 T_k &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_2, \cdots, \boldsymbol{u}_{k-1})
 \label{eqn: cross validation}
 \end{split}\end{equation}
-Thirdly, each trained twin model is validated on the remaining set. In particular,
+In the third step, each trained twin model is validated on the remaining set. In particular,
 the solution mismatch for the validation set is computed, as shown in 
 \eqref{eqn: cross validation mismatch}.
 \begin{equation}\begin{split}
