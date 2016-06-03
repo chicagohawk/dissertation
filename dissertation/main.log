@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  2 JUN 2016 12:22
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  3 JUN 2016 04:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1530,6 +1530,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 933--940
  []
 
 
+Overfull \hbox (0.29288pt too wide) in paragraph at lines 943--954
+\T1/cmr/m/n/12 so-lu-tion mis-match be bounded by the in-te-grated trun-ca-tion
+ er-ror. Fi-nally, a stochas-tic
+ []
+
+
+Overfull \hbox (11.00896pt too wide) in paragraph at lines 943--954
+\T1/cmr/m/n/12 gra-di-ent de-scent ap-proach is adopted that ef-fi-ciently min-
+i-mizes the in-te-grated trun-ca-tion
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 943--954
 
  []
@@ -2404,7 +2416,7 @@ r/sfsl1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti0800.pfb></usr
 /share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/t
 ype1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/type1/public/cm-super
 /sftt1200.pfb>
-Output written on main.pdf (122 pages, 3055077 bytes).
+Output written on main.pdf (122 pages, 3055021 bytes).
 PDF statistics:
  651 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

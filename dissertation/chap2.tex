@@ -916,10 +916,10 @@ The choice of the starting basis dictionary is given in Section
 \ref{sec: twin numerical results} along with numerical examples.
 The main part of the algorithm iterates over a forward step (line 3-9) and a backward step (line
 10-19). The forward step firstly finds the most promising candidate in the neighborhood of the current
-dictionary for addition, according to \eqref{eqn: basis significance}.
-If the addition indeed reduces the cross validation error, the candidate is appended
+dictionary that is added to the dictionary, using \eqref{eqn: basis significance}.
+If the addition indeed reduces the cross validation error, the candidate is added 
 to the dictionary; otherwise it is rejected. 
-If the basis is appended, the coefficients are updated by minimizing the solution mismatch, which can be
+If the basis is added, the coefficients are updated by minimizing the solution mismatch, which can be
 implemented by the Broyden-Fletcher-Goldfarb-Shannon (BFGS) algorithm \cite{quasiNewton}.
 The backward step finds the most promising
 candidate in the current dictionary for deletion. 
@@ -934,17 +934,17 @@ The algorithm requires to train multiple twin models at each iteration. For
 $k=2$, $6$ twin models are trained if both the forward and the backward step are acceptive.
 In practice, the trained coefficients at the last iteration usually provide good initial guess
 for the next iteration. Nonetheless, the algorithm can be costly if the dictionary turns out
-to have a high cardinality which results in a large number of iterations before the dictionary 
-construction completes. Therefore, a numerical shortcut is provided in Section 
+to have a large number of bases, which results in a large number of iterations. 
+To address this issue, a numerical shortcut is provided in Section 
 \ref{sec: trunc error} that significantly reduces the cost.\\
 
 \subsection{Minimizing the Truncation Error}
 \label{sec: trunc error}
 In the previous sections, a twin model is trained to minimize the solution mismatch.
-The training can be expensive. Because the minimization
-of the solution mismatch, coupled with the adaptive basis construction, can require
-a large number of solution mismatch evaluations, and each evaluation involves one
-twin model simulation. To reduce the computational cost, a ``pre-training'' step is proposed
+The training can be expensive: In the algorithm \ref{alg: train twin}, each iterate
+(addition and deletion) requires $2k$ minimizations
+of the solution mismatch; and each minimization requires at least one twin-model simulation.
+To reduce the computational cost, a ``pre-training'' step is proposed
 where an ``integrated truncation error'' is minimized. 
 A pre-trained twin model is then ``fine tuned'' to minimize the solution mismatch.
 The applicability of the pre-training is studied; in particular, I study
