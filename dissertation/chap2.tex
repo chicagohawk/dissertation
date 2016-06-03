@@ -940,17 +940,21 @@ To address this issue, a numerical shortcut is provided in Section
 
 \subsection{Minimizing the Truncation Error}
 \label{sec: trunc error}
-In the previous sections, a twin model is trained to minimize the solution mismatch.
+In the previous sections, the twin model method was developed. The method infers the unknown
+$F$ in a gray-box simulator by training a twin model to minimize the space-time solution mismatch.
 The training can be expensive: In the algorithm \ref{alg: train twin}, each iterate
-(addition and deletion) requires $2k$ minimizations
+(the addition and deletion of a basis) requires $2k$ minimizations
 of the solution mismatch; and each minimization requires at least one twin-model simulation.
-To reduce the computational cost, a ``pre-training'' step is proposed
-where an ``integrated truncation error'' is minimized. 
-A pre-trained twin model is then ``fine tuned'' to minimize the solution mismatch.
-The applicability of the pre-training is studied; in particular, I study
-under what condition can the solution mismatch be bounded by the integrated truncation error.
-Finally, a stochastic gradient descent approach is adopted that efficiently 
-minimizes the integrated truncation error.\\
+Instead of the solution mismatch, this section develops another metric to minimize in order
+to reduce the computational cost.\\
+
+%To reduce the computational cost, a ``pre-training'' step is proposed
+%where an ``integrated truncation error'' is minimized. 
+%A pre-trained twin model is then ``fine tuned'' to minimize the solution mismatch.
+%The applicability of the pre-training is studied; in particular, I study
+%under what condition can the solution mismatch be bounded by the integrated truncation error.
+%Finally, a stochastic gradient descent approach is adopted that efficiently 
+%minimizes the integrated truncation error.\\
 
 
 Define

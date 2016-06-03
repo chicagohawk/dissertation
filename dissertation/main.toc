@@ -19,7 +19,7 @@
 \contentsline {subsection}{\numberline {2.1.3}Algorithm}{62}
 \contentsline {subsection}{\numberline {2.1.4}Minimizing the Truncation Error}{64}
 \contentsline {section}{\numberline {2.2}Numerical Results}{67}
-\contentsline {subsection}{\numberline {2.2.1}Buckley-Leverett Equation}{68}
+\contentsline {subsection}{\numberline {2.2.1}Buckley-Leverett Equation}{67}
 \contentsline {subsection}{\numberline {2.2.2}Navier-Stokes Flow}{69}
 \contentsline {subsection}{\numberline {2.2.3}Polymer Injection in Petroleum Reservoir}{72}
 \contentsline {section}{\numberline {2.3}Chapter Summary}{79}
