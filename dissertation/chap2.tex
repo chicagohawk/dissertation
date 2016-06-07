@@ -1095,10 +1095,15 @@ reduces the computational cost of the forward-backward iteration. The second ste
 the minimization of $\mathcal{M}$, by using the basis dictionary obtained from the first step.
 Although the full space-time simulation of the twin model is required in the minimization,
 it does not involve any iteration on the basis selection. To sum up, the two-step procedure
-allows the separation of the basis selection and the twin model simulation,
-therefore is computationally preferrable.\\
+allows the separation of the basis selection and the minimization of the solution mismatch,
+therefore is computationally preferrable.
 
-In the following, a sufficient condition under which the bound exists is provided
+(I want to study a condition under which the two-step procedure is justified. 
+If $\mathcal{M}$ is bounded by $\mathcal{T}$ by
+a constant, then a small $\mathcal{T}$ guarantees a small $\mathcal{M}$. So the basis dictionary
+obtained by the minimization of $\mathcal{T}$ can be used to minimization $\mathcal{M}$.
+I'm not sure how should I explain this accurately. Or should I remove the following theorem?)
+In the following, a sufficient condition under which $\mathcal{M}$ is provided
 by Theorem \ref{theorem: 2}.\\
 
 \begin{theorem}

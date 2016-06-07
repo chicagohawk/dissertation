@@ -121,10 +121,10 @@
 \newlabel{eqn: pre train validation error}{{2.39}{66}}
 \@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Training a twin model by minimizing the integrated truncation error.\relax }}{67}}
 \newlabel{alg: train twin trunc}{{2}{67}}
-\citation{contractive system}
 \newlabel{eqn: contractive}{{2.42}{68}}
-\newlabel{theorem: 2}{{2}{68}}
+\citation{contractive system}
 \citation{stochastic search}
+\newlabel{theorem: 2}{{2}{69}}
 \@writefile{loa}{\contentsline {algocf}{\numberline {3}{\ignorespaces Minimizing the integrated truncation error by stochastic gradient descent.\relax }}{69}}
 \newlabel{alg: 2}{{3}{69}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.2}Numerical Results}{70}}
@@ -154,22 +154,20 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {2-14}{\ignorespaces The return bend geometry and the mesh for the simulation.\relax }}{72}}
 \newlabel{fig: NS mesh}{{2-14}{72}}
 \newlabel{NSeqn}{{2.45}{72}}
-\newlabel{state equation}{{2.47}{72}}
 \citation{state eqns}
+\newlabel{state equation}{{2.47}{73}}
 \newlabel{eqn: mass flux}{{2.49}{73}}
 \newlabel{NS state equations}{{2.50}{73}}
 \newlabel{NS mismatch}{{2.2.2}{73}}
-\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1377}}{74}}
+\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1382}}{74}}
 \newlabel{sub@fig: graysol Ubend}{{}{74}}
-\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1382}}{74}}
+\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1387}}{74}}
 \newlabel{sub@fig: errsol Ubend}{{}{74}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-15}{\ignorespaces Left column: an example gray-box solution for a given geometry. Right column: the solution mismatch after training a twin model.\relax }}{74}}
 \newlabel{fig: grayErrSol Ubend}{{2-15}{74}}
-\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces The error of the gradient estimation, in percentage.\relax }}{74}}
-\newlabel{tab: idea gas gradient}{{2.2}{74}}
-\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1395}}{75}}
+\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1400}}{75}}
 \newlabel{sub@fig: graysol Ubend}{{}{75}}
-\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1400}}{75}}
+\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1405}}{75}}
 \newlabel{sub@fig: errsol Ubend}{{}{75}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-16}{\ignorespaces The gray-box state equation (right column) and the trained state equation (left column). The gray-box model uses either the ideal gas equation (first row) or the Reclich-Kwong equation (second row). The convex hull of the gray-box solution is shown by the dashed red line.\relax }}{75}}
 \newlabel{fig: state err Ubend}{{2-16}{75}}
@@ -179,6 +177,8 @@
 \newlabel{sub@fig: geo grad perturb}{{b}{76}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-17}{\ignorespaces A comparison of the estimated gradient and the true gradient.\relax }}{76}}
 \newlabel{fig: geo grad all}{{2-17}{76}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces The error of the gradient estimation, in percentage.\relax }}{77}}
+\newlabel{tab: idea gas gradient}{{2.2}{77}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Polymer Injection in Petroleum Reservoir}{77}}
 \newlabel{sec: chap 2 reservoir}{{2.2.3}{77}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-18}{\ignorespaces Water flooding in petroleum reservoir engineering (courtesy from PetroWiki).\relax }}{77}}
@@ -186,25 +186,25 @@
 \newlabel{eqn: two phase polymer}{{2.51}{77}}
 \newlabel{eqn: darcy law}{{2.52}{77}}
 \newlabel{eqn: polymer sol mismatch}{{2.53}{78}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-19}{\ignorespaces The geometry of the petroleum reservoir.\relax }}{78}}
-\newlabel{fig: reservoir 3D mesh}{{2-19}{78}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1570}}{79}}
-\newlabel{sub@fig: reservoir 3D untrained}{{}{79}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1576}}{79}}
-\newlabel{sub@fig: reservoir 3D untrained}{{a}{79}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1582}}{79}}
-\newlabel{sub@fig: reservoir 3D untrained}{{b}{79}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-20}{\ignorespaces The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. \relax }}{79}}
-\newlabel{fig: reservoir 3D solutions}{{2-20}{79}}
-\newlabel{eqn: chap2 reservoir xi day 50}{{2.54}{80}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-21}{\ignorespaces The gradient of $\xi $ with respect to rates at the two injectors. The lines indicate the gradients estimated by the twin model, while the stars indicate the true gradient evaluated by finite difference.\relax }}{80}}
-\newlabel{fig: reservoir 3D gradient}{{2-21}{80}}
-\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces The error of estimated gradient at day $2$, $16$, $30$, and $44$, in percentage.\relax }}{80}}
-\newlabel{tab: reservoir 3D grad error}{{2.3}{81}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Chapter Summary}{81}}
-\newlabel{sec: chap 2 summary}{{2.3}{81}}
+\newlabel{eqn: chap2 reservoir xi day 50}{{2.54}{78}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-19}{\ignorespaces The geometry of the petroleum reservoir.\relax }}{79}}
+\newlabel{fig: reservoir 3D mesh}{{2-19}{79}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces The error of estimated gradient at day $2$, $16$, $30$, and $44$, in percentage.\relax }}{79}}
+\newlabel{tab: reservoir 3D grad error}{{2.3}{79}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Chapter Summary}{79}}
+\newlabel{sec: chap 2 summary}{{2.3}{79}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1575}}{80}}
+\newlabel{sub@fig: reservoir 3D untrained}{{}{80}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1581}}{80}}
+\newlabel{sub@fig: reservoir 3D untrained}{{a}{80}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1587}}{80}}
+\newlabel{sub@fig: reservoir 3D untrained}{{b}{80}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-20}{\ignorespaces The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. \relax }}{80}}
+\newlabel{fig: reservoir 3D solutions}{{2-20}{80}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-21}{\ignorespaces The gradient of $\xi $ with respect to rates at the two injectors. The lines indicate the gradients estimated by the twin model, while the stars indicate the true gradient evaluated by finite difference.\relax }}{81}}
+\newlabel{fig: reservoir 3D gradient}{{2-21}{81}}
 \@setckpt{chap2}{
-\setcounter{page}{82}
+\setcounter{page}{83}
 \setcounter{equation}{54}
 \setcounter{enumi}{3}
 \setcounter{enumii}{0}

@@ -21,9 +21,9 @@
 \contentsline {figure}{\numberline {2-16}{\ignorespaces The gray-box state equation (right column) and the trained state equation (left column). The gray-box model uses either the ideal gas equation (first row) or the Reclich-Kwong equation (second row). The convex hull of the gray-box solution is shown by the dashed red line.\relax }}{75}
 \contentsline {figure}{\numberline {2-17}{\ignorespaces A comparison of the estimated gradient and the true gradient.\relax }}{76}
 \contentsline {figure}{\numberline {2-18}{\ignorespaces Water flooding in petroleum reservoir engineering (courtesy from PetroWiki).\relax }}{77}
-\contentsline {figure}{\numberline {2-19}{\ignorespaces The geometry of the petroleum reservoir.\relax }}{78}
-\contentsline {figure}{\numberline {2-20}{\ignorespaces The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. \relax }}{79}
-\contentsline {figure}{\numberline {2-21}{\ignorespaces The gradient of $\xi $ with respect to rates at the two injectors. The lines indicate the gradients estimated by the twin model, while the stars indicate the true gradient evaluated by finite difference.\relax }}{80}
+\contentsline {figure}{\numberline {2-19}{\ignorespaces The geometry of the petroleum reservoir.\relax }}{79}
+\contentsline {figure}{\numberline {2-20}{\ignorespaces The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. \relax }}{80}
+\contentsline {figure}{\numberline {2-21}{\ignorespaces The gradient of $\xi $ with respect to rates at the two injectors. The lines indicate the gradients estimated by the twin model, while the stars indicate the true gradient evaluated by finite difference.\relax }}{81}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3-1}{\ignorespaces The flowchart of Algorithm \ref {alg: bayes opt twin}.\relax }}{89}
 \contentsline {figure}{\numberline {3-2}{\ignorespaces Optimized results for the Buckley-Leverett equation.\relax }}{93}
