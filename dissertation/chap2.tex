@@ -941,7 +941,8 @@ To address this issue, a numerical shortcut is provided in Section
 \subsection{Minimizing the Truncation Error}
 \label{sec: trunc error}
 In the previous sections, the twin model method was developed. The method infers the unknown
-$F$ in a gray-box simulator by training a twin model to minimize the space-time solution mismatch.
+$F$ in a gray-box simulator by training a twin model to minimize the metric of
+space-time solution mismatch.
 The training can be expensive: In the algorithm \ref{alg: train twin}, each iterate
 (the addition and deletion of a basis) requires $2k$ minimizations
 of the solution mismatch; and each minimization requires at least one twin-model simulation.
@@ -959,37 +960,54 @@ to reduce the computational cost.\\
 
 Define
 \begin{equation}
-    \tau = \frac{\partial u}{\partial t} 
+    \tau := \frac{\partial u}{\partial t} 
     + \nabla \cdot \big(D \tilde{F}(u)\big) - q(u,c)\,,
     \label{eqn: residual}
 \end{equation}
-which is the residual if the gray-box PDE's solution is plugged in the twin-model PDE 
-\eqref{eqn: govern twin model}. Let its discretization be $\boldsymbol{\tau}$.
-For simplicity, assume the gray-box simulator and its twin model use the same space-time 
-discretization. 
-$\boldsymbol{\tau}$ can be obtained by plugging the discretized gray-box solution in the
-twin model simulator.
+to be the residual of the twin-model PDE \eqref{eqn: govern twin model},
+\begin{equation*}\begin{split}
+    \frac{\partial \tilde{u}}{\partial t}+ \nabla \cdot \big(D \tilde{F}(\tilde{u})\big) = q(\tilde{u},c)\,,
+\end{split}
+\end{equation*}
+by plugging in the
+solution of $u$ of the gray-box PDE \eqref{eqn: govern PDE}
+\begin{equation*}\begin{split}
+    \frac{\partial u}{\partial t}+ \nabla \cdot \big( D F(u) \big) = q(u,c)\,.
+\end{split}
+\end{equation*}
+%Let its twin-model discretization be $\boldsymbol{\tau}$ (I think this is not clearly explained, 
+%but can't find a good way of expressing this).
+Assume the gray-box simulator and its twin model use the same space-time grid. 
+Define $\boldsymbol{\tau}$ to be the discretized residual obtained by plugging the discretized 
+gray-box solution into the twin-model simulator.
 Define the integrated truncation error to be
 \begin{equation}
     \mathcal{T}(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \boldsymbol{\tau}_{ij}^2 \,,
     \label{eqn: truncation error}
 \end{equation}
-where $w_{ij}$ are the same quadrature weights as in \eqref{eqn: solution mismatch}. 
-$i,j$ are the indices for time and space discretization as in the previous sections.
-I propose to pre-train a twin model using Algorithm \ref{alg: train twin} with $\mathcal{M}$
-replaced by $\mathcal{T}$. In other words, in the pre-training step, the coefficients are determined by
+where $w_{ij}$ are the quadrature weights defined in \eqref{eqn: solution mismatch}. 
+$i,j$ are the indices for time and space grid.\\
+
+The previous section discussed that the minimization of $\mathcal{M}$ can be computationally expensive.
+To reduce the computational cost, I propose to train a twin model 
+by minimizing the integrated truncation error.
+In other words, the coefficients of a twin model can be determined by
 \begin{equation}
     \alpha_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}}
     \alpha_i \phi_i\right)\,.
     \label{eqn: minimize truncation error}
 \end{equation}
-Besides, the estimator for the significance of a candidate basis, $s_l(\mathcal{A})$, is replaced by 
+
+\eqref{eqn: minimize truncation error} can be solved using algorithm \ref{alg: train twin} by
+replace $\mathcal{M}$ with $\mathcal{T}$. As a consequence, in the algorithm  \ref{alg: train twin}, 
+the estimator for the 
+significance of a candidate basis, $s_l(\mathcal{A})$, is replaced by 
 \begin{equation}
     s_l^t(\mathcal{A}) \equiv \left|\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{T}}{d \tilde{F}}
     \right|_{\tilde{F}_\mathcal{A}^*} \phi_l \; \textrm{d} u \right|\,.
     \label{eqn: basis significance 2}
 \end{equation}
-Finally, the validation error, $\overline{\mathcal{M}}$, is replaced by
+In addition, the validation error, $\overline{\mathcal{M}}$, is replaced by
 \begin{equation}
     \overline{\mathcal{T}} = \frac{1}{k}\left( \mathcal{T}_1 + \mathcal{T}_2 + \cdots + 
     \mathcal{T}_k\right)\,,
@@ -1000,15 +1018,87 @@ where
     \mathcal{T}_i = \texttt{IntegratedTruncationError}(T_i, \boldsymbol{u}_i)\,.
 \end{equation}
 for $i=1, \cdots, k$.
-Using the pre-trained basis dictionary $\phi^t_{\mathcal{A}}$,
-the twin model is then fine tuned by minimizing the 
-solution mismatch, where $\alpha^t_{\mathcal{A}}$ is used as the initial guess and is adjusted 
-according to \eqref{eqn: twin min mismatch}. 
-For a simulation with implicit schemes, the residual and the integrated truncation error 
-are cheaper to evaluate than the solution mismatch, thereby the benefit of the pre-train. \\
+To sum up, \eqref{eqn: minimize truncation error} can be solved by the following algorithm.
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\REQUIRE{Initial basis dictionary $\boldsymbol{\phi}_\mathcal{A}$, 
+        coefficients $\alpha_{\mathcal{A}}^t= \mathbf{0}$},
+        Validation error $\overline{\mathcal{T}}_0 = \infty$,
+        Gray-box solution $\boldsymbol{u}$.
+\STATE Minimize solution mismatch 
+       $
+           \alpha^t_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
+       $ 
+\LOOP 
+\STATE Find $\phi_{l}\in \mathcal{N}(\boldsymbol{\phi}_{\mathcal{A}}) \backslash 
+       \boldsymbol{\phi}_{\mathcal{A}}$ with the maximal $s_l^t(\mathcal{A})$ \\
+       $\mathcal{A} \leftarrow 
+       \mathcal{A} \bigcup \{l\}$, $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow 
+       \boldsymbol{\phi}_{\mathcal{A}}
+       \bigcup \{\phi_{l}\}$, $\alpha^t_l = 0$,
+       $\alpha^t_{\mathcal{A}} \leftarrow \{\alpha^t_{\mathcal{A}}, \alpha^t_l\}$
+\STATE Compute $\overline{\mathcal{T}}$ by $k$-fold cross validation.
+\IF {$\overline{\mathcal{T}} < \overline{\mathcal{T}}_0$} 
+    \STATE $\overline{\mathcal{T}}_0\leftarrow \overline{\mathcal{T}}$\\
+       $
+           \alpha^t_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
+       $
+\ELSE \STATE 
+       $\mathcal{A} \leftarrow 
+       \mathcal{A} \backslash \{l\}$, $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow 
+       \boldsymbol{\phi}_{\mathcal{A}}
+       \backslash \{\phi_{l}\}$, $\alpha^t_{\mathcal{A}} \leftarrow \alpha^t_{\mathcal{A}} \backslash 
+       \{\alpha^t_l\}$
+      \textbf{break}
+\ENDIF
+\STATE Find $\phi_{l^\prime}\in 
+       \boldsymbol{\phi}_{\mathcal{A}}$ with the least $s_{l^\prime}^t(\mathcal{A})$  \\
+\IF {${l^\prime} \neq {l}$}
+\STATE  
+       $\mathcal{A} \leftarrow 
+       \mathcal{A} \backslash \{l^\prime\}$,
+       $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow \boldsymbol{\phi}_{\mathcal{A}}
+        \backslash\{\phi_{l^\prime}\}$, 
+       $\alpha^t_{\mathcal{A}} \leftarrow \alpha^t_{\mathcal{A}}\backslash \{\alpha^t_{l^\prime}\}$
+\STATE Compute $\overline{\mathcal{T}}$ by $k$-fold cross validation.
+\IF{  $\overline{\mathcal{T}} < \overline{\mathcal{T}}_0$ }
+\STATE $\overline{\mathcal{T}}_0 \leftarrow \overline{\mathcal{T}}$\\
+       $
+           \alpha^t_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
+       $
+\ELSE \STATE
+       $\mathcal{A} \leftarrow \mathcal{A}\bigcup \{l^\prime\}$,
+       $\phi_{\mathcal{A}}\leftarrow \phi_{\mathcal{A}} 
+       \bigcup \{\phi_{l^\prime}\}$, $\alpha^t_{\mathcal{A}} \leftarrow 
+       \alpha^t_{\mathcal{A}}\bigcup \{\alpha^t_{l^\prime}\}$
+\ENDIF
+\ENDIF
+\ENDLOOP
+\ENSURE $\mathcal{A}$, $\phi_{\mathcal{A}}$, $\alpha^t_{\mathcal{A}}$.
+\end{algorithmic}
+\caption{Training a twin model by minimizing the integrated truncation error.}
+\label{alg: train twin trunc}
+\end{algorithm}
 
-However, $\mathcal{M}$ may not be bounded by
-$\mathcal{T}$. A sufficient condition under which the bound exists is provided
+
+Using algorithm \ref{alg: train twin trunc}, a two-step
+procedure is proposed to train the twin model. In the first step, the twin model
+is pre-trained using algorithm \ref{alg: train twin trunc}.
+In the second step, the $\phi_{\mathcal{A}}$, obtained from algorithm 
+\ref{alg: train twin trunc}, is used as the basis dictionary.
+Its coefficients, $\alpha_\mathcal{A}^t$, are fine tuned by minimizing the 
+solution mismatch $\mathcal{M}$.\\
+
+The benefit of the two-step procedure is as follows:
+The first step does not involve the full space-time simulation of the twin model, thereby 
+reduces the computational cost of the forward-backward iteration. The second step only involves 
+the minimization of $\mathcal{M}$, by using the basis dictionary obtained from the first step.
+Although the full space-time simulation of the twin model is required in the minimization,
+it does not involve any iteration on the basis selection. To sum up, the two-step procedure
+allows the separation of the basis selection and the twin model simulation,
+therefore is computationally preferrable.\\
+
+In the following, a sufficient condition under which the bound exists is provided
 by Theorem \ref{theorem: 2}.\\
 
 \begin{theorem}
