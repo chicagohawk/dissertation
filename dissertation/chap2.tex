@@ -1090,20 +1090,20 @@ Its coefficients, $\alpha_\mathcal{A}^t$, are fine tuned by minimizing the
 solution mismatch $\mathcal{M}$.\\
 
 The benefit of the two-step procedure is as follows:
-The first step does not involve the full space-time simulation of the twin model, thereby 
-reduces the computational cost of the forward-backward iteration. The second step only involves 
+The first step does not involve the full space-time simulation of the twin model, because
+the solution mismatch $\mathcal{M}$ is replaced by the integrated truncation error $\mathcal{T}$.
+Thereby the computational cost of the forward-backward iteration is reduced.
+The second step only involves 
 the minimization of $\mathcal{M}$, by using the basis dictionary obtained from the first step.
-Although the full space-time simulation of the twin model is required in the minimization,
-it does not involve any iteration on the basis selection. To sum up, the two-step procedure
+Although the full space-time simulation of the twin model is required in the minimization
+of $\mathcal{M}$,
+the second step does not involve any iteration on the basis selection. To sum up, the two-step procedure
 allows the separation of the basis selection and the minimization of the solution mismatch,
-therefore is computationally preferrable.
+therefore is computationally preferrable.\\
 
-(I want to study a condition under which the two-step procedure is justified. 
-If $\mathcal{M}$ is bounded by $\mathcal{T}$ by
-a constant, then a small $\mathcal{T}$ guarantees a small $\mathcal{M}$. So the basis dictionary
-obtained by the minimization of $\mathcal{T}$ can be used to minimization $\mathcal{M}$.
-I'm not sure how should I explain this accurately. Or should I remove the following theorem?)
-In the following, a sufficient condition under which $\mathcal{M}$ is provided
+However, the minimization of $\mathcal{T}$ does not guarantee a bounded $\mathcal{M}$.
+In the following, I study the condition under which $\mathcal{M}$ can be bounded by $\mathcal{T}$.
+A sufficient condition for the bound is provided
 by Theorem \ref{theorem: 2}.\\
 
 \begin{theorem}
@@ -1138,42 +1138,43 @@ by Theorem \ref{theorem: 2}.\\
     for any $v\in \mathbb{R}^N$.
     \label{theorem: 2}
 \end{theorem}
-The proof is given in Appendix \ref{proof 2}. If the twin model is a contractive dynamical 
+The proof is given in Appendix \ref{proof 2}. The theorem implies that,
+if the twin model is a contractive dynamical 
 system \cite{contractive system}, as given by \eqref{eqn: contractive}, then the
 solution mismatch can be bounded by the integrated truncation error. In contrast, 
 the bound may not exist for non-contractive dynamical systems, for example for systems 
-that exhibit bifurcation. It is a future work to further investigate the applicability of the pre-training
-theoretically, in particular, to investigate the necessary and sufficient condition for the bound. 
-My thesis will explore the usefulness of the pre-training by several numerical test cases.\\
+that exhibit bifurcation \cite{dynamical system}. It is a future work to further investigate the applicability of the pre-training
+theoretically, in particular, to investigate the necessary and sufficient condition for the bound. \\
 
-Because the residual $\boldsymbol{\tau}$ can be evaluated explicitly given the gray-box
-solution, 
-the evaluation can be decoupled for different space-time grid points $\{i,j\}$. By viewing
-the truncation error at each $\{i,j\}$ as a stochastic sample, \eqref{eqn: minimize truncation error}
-can be solved by stochastic gradient descent, Algorithm \ref{alg: 2}.\\
-\begin{algorithm}[htbp]
-\begin{algorithmic}[1]
-    \REQUIRE $\alpha = \alpha_0$
-    \FOR{$(i,j)=(1,1)$ \TO $(M,N)$ }
-         \IF {not converged}
-             \STATE $\alpha \leftarrow \alpha -\lambda w_{ij}\left.\frac{\partial }{\partial \alpha} 
-             \boldsymbol{\tau_{ij}} \right.$
-         \ELSE
-             \STATE \textbf{break}
-         \ENDIF
-    \ENDFOR
-    \ENSURE $\alpha$
-\end{algorithmic}
-\caption{Minimizing the integrated truncation error by stochastic gradient descent.}
-\label{alg: 2}
-\end{algorithm}
-
-$\lambda>0$ is a tunable step size. $\lambda$ can tuned manually to 
-increase convergence speed while avoiding divergence \cite{stochastic search}.
-In practice, it is beneficial to compute the gradient
-against more than one grid points (called a ``mini-batch'') at each iteration. This is because
-the code can take advantage of vectorization libraries rather than computing the residual 
-at each grid point separately.\\
+%Because the residual $\boldsymbol{\tau}$ can be evaluated explicitly given the gray-box
+%solution, 
+%the evaluation can be decoupled for different space-time grid points $\{i,j\}$ 
+%(Do you have a better way to expressing this?). By viewing
+%the truncation error at each $\{i,j\}$ as a stochastic sample, \eqref{eqn: minimize truncation error}
+%can be solved by stochastic gradient descent, Algorithm \ref{alg: 2}.\\
+%\begin{algorithm}[htbp]
+%\begin{algorithmic}[1]
+%    \REQUIRE $\alpha = \alpha_0$
+%    \FOR{$(i,j)=(1,1)$ \TO $(M,N)$ }
+%         \IF {not converged}
+%             \STATE $\alpha \leftarrow \alpha -\lambda w_{ij}\left.\frac{\partial }{\partial \alpha} 
+%             \boldsymbol{\tau_{ij}} \right.$
+%         \ELSE
+%             \STATE \textbf{break}
+%         \ENDIF
+%    \ENDFOR
+%    \ENSURE $\alpha$
+%\end{algorithmic}
+%\caption{Minimizing the integrated truncation error by stochastic gradient descent.}
+%\label{alg: 2}
+%\end{algorithm}
+%
+%$\lambda>0$ is a tunable step size. $\lambda$ can tuned manually to 
+%increase convergence speed while avoiding divergence \cite{stochastic search}.
+%In practice, it is beneficial to compute the gradient
+%against more than one grid points (called a ``mini-batch'') at each iteration. This is because
+%the code can take advantage of vectorization libraries rather than computing the residual 
+%at each grid point separately.\\
 
 
 \section{Numerical Results}

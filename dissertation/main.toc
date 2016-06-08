@@ -18,11 +18,11 @@
 \contentsline {subsection}{\numberline {2.1.2}Elements for Adaptive Basis Construction}{54}
 \contentsline {subsection}{\numberline {2.1.3}Algorithm}{62}
 \contentsline {subsection}{\numberline {2.1.4}Minimizing the Truncation Error}{64}
-\contentsline {section}{\numberline {2.2}Numerical Results}{70}
-\contentsline {subsection}{\numberline {2.2.1}Buckley-Leverett Equation}{70}
+\contentsline {section}{\numberline {2.2}Numerical Results}{69}
+\contentsline {subsection}{\numberline {2.2.1}Buckley-Leverett Equation}{69}
 \contentsline {subsection}{\numberline {2.2.2}Navier-Stokes Flow}{71}
-\contentsline {subsection}{\numberline {2.2.3}Polymer Injection in Petroleum Reservoir}{77}
-\contentsline {section}{\numberline {2.3}Chapter Summary}{79}
+\contentsline {subsection}{\numberline {2.2.3}Polymer Injection in Petroleum Reservoir}{74}
+\contentsline {section}{\numberline {2.3}Chapter Summary}{80}
 \contentsline {chapter}{\numberline {3}Leveraging the Twin Model for Bayesian Optimization}{83}
 \contentsline {section}{\numberline {3.1}Approach}{84}
 \contentsline {subsection}{\numberline {3.1.1}Modeling the Objective and Gradient by Gaussian Processes}{84}
