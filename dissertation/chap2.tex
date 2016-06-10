@@ -1311,7 +1311,7 @@ using quadratic B-spline.\\
 The flow is governed by Navier-Stokes equations.
 Let $\rho$, $u$, $v$, $E$, and $p$ denote the density, Cartesian velocity components, 
 total energy, and pressure.
-The steady-state Navier-Stokes equation is
+The steady-state Navier-Stokes equation is \cite{aero book}
 \begin{equation}
     \frac{\partial}{\partial x} 
     \begin{pmatrix}
@@ -1338,13 +1338,14 @@ where
     + \frac{\partial v}{\partial y}\right)\right)\\
     \sigma_{xy}&=\mu\left(\frac{\partial u}{\partial y} + \frac{\partial v}{\partial x}\right)
 \end{split}\,.\end{equation}
-The Navier-Stokes equation requires an additional equation, the state equation, for closure.
+The Navier-Stokes equation requires an additional equation, the state equation, for closure 
+\cite{aero book}.
 The state equation has the form
 \begin{equation}
     p = p(U, \rho)\,,
     \label{state equation}
 \end{equation}
-where $U$ denotes the internal energy per unit volume,
+where $U$ denotes the internal energy per unit volume \cite{aero book},
 \begin{equation}
     U = \rho\left(E-\frac{1}{2}(u^2+v^2)\right)\,.
 \end{equation}
@@ -1367,7 +1368,7 @@ to the red control points' coordinates.
 \\
 
 Two state equations are tested: the ideal gas equation and the Redlich-Kwong equation, 
-given by
+given by \cite{aero book, Redlich Kwong}
 \begin{equation}\begin{split}
     p_{ig} &= (\gamma-1) U\\
     p_{rk} &= \frac{(\gamma-1)U}{1-b_{rk}\rho} - 

@@ -32,6 +32,12 @@ Alvarado, V., and Manrique, E.
 \newblock{\em Energies}, 3(9):1529-1575, 2010.
 
 % Aerodynamic control ====================================
+% aerodynamic book
+\bibitem{aero book}
+Anderson Jr, J. D. 
+\newblock{ Fundamentals of Aerodynamics.} 
+\newblock {\em Tata McGraw-Hill Education,} 1985.
+
 % return bend optimization
 \bibitem{ubend rans opt 1}
 Verstraete, T., Coletti, F., Bulle, J., Vanderwielen, T., and Arts, T.  
