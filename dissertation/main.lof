@@ -15,15 +15,15 @@
 \contentsline {figure}{\numberline {2-10}{\ignorespaces Neighborhood for univariate bases. $(a)$ shows the neighborhood (blue) of a single basis (red). $(b)$ shows the neighborhood (blue) of several bases (red). The left column represents the basis on the $\left (j, \frac {\eta }{2^j}\right )$ plane, and the right column shows the actual basis $\phi _{j,\eta }$.\relax }}{60}
 \contentsline {figure}{\numberline {2-11}{\ignorespaces The discretized gray-box solution is shuffled into $3$ sets, each indicated by a color. Each block stands for the state variable on a space-time grid point.\relax }}{61}
 \contentsline {figure}{\numberline {2-12}{\ignorespaces The basis dictionary for the three solutions in Figure \ref {fig: combine 3}.\relax }}{70}
-\contentsline {figure}{\numberline {2-13}{\ignorespaces The errors of estimated gradients for the three solutions.\relax }}{70}
-\contentsline {figure}{\numberline {2-14}{\ignorespaces The return bend geometry and the mesh for the simulation.\relax }}{71}
+\contentsline {figure}{\numberline {2-13}{\ignorespaces The errors of estimated gradients for the three solutions.\relax }}{71}
+\contentsline {figure}{\numberline {2-14}{\ignorespaces The return bend geometry and the mesh for the simulation.\relax }}{72}
 \contentsline {figure}{\numberline {2-15}{\ignorespaces Left column: an example gray-box solution for a given geometry. Right column: the solution mismatch after training a twin model.\relax }}{74}
 \contentsline {figure}{\numberline {2-16}{\ignorespaces The gray-box state equation (right column) and the trained state equation (left column). The gray-box model uses either the ideal gas equation (first row) or the Reclich-Kwong equation (second row). The convex hull of the gray-box solution is shown by the dashed red line.\relax }}{75}
 \contentsline {figure}{\numberline {2-17}{\ignorespaces A comparison of the estimated gradient and the true gradient.\relax }}{76}
-\contentsline {figure}{\numberline {2-18}{\ignorespaces Water flooding in petroleum reservoir engineering (courtesy from PetroWiki).\relax }}{76}
-\contentsline {figure}{\numberline {2-19}{\ignorespaces The geometry of the petroleum reservoir.\relax }}{78}
-\contentsline {figure}{\numberline {2-20}{\ignorespaces The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. \relax }}{79}
-\contentsline {figure}{\numberline {2-21}{\ignorespaces The gradient of $\xi $ with respect to rates at the two injectors. The lines indicate the gradients estimated by the twin model, while the stars indicate the true gradient evaluated by finite difference.\relax }}{80}
+\contentsline {figure}{\numberline {2-18}{\ignorespaces Water flooding in petroleum reservoir engineering (courtesy from PetroWiki).\relax }}{77}
+\contentsline {figure}{\numberline {2-19}{\ignorespaces The geometry of the petroleum reservoir.\relax }}{79}
+\contentsline {figure}{\numberline {2-20}{\ignorespaces The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. \relax }}{80}
+\contentsline {figure}{\numberline {2-21}{\ignorespaces The gradient of $\xi $ with respect to rates at the two injectors. The lines indicate the gradients estimated by the twin model, while the stars indicate the true gradient evaluated by finite difference.\relax }}{81}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3-1}{\ignorespaces The flowchart of Algorithm \ref {alg: bayes opt twin}.\relax }}{89}
 \contentsline {figure}{\numberline {3-2}{\ignorespaces Optimized results for the Buckley-Leverett equation.\relax }}{93}

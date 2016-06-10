@@ -1186,18 +1186,22 @@ several numerical examples.
 \subsection{Buckley-Leverett Equation}
 \label{sec: chap 2 BL}
 Section \ref{sec: flux param} has applied a sigmoid parameterization to the gray-box model
-governed by the Buckley-Leverett equation \eqref{eqn: Buckley-Leverett}.
+governed by the Buckley-Leverett equation \eqref{eqn: Buckley-Leverett}
+\begin{equation*}
+    \frac{\partial u}{\partial t} + \frac{\partial}{\partial x}\Big({
+    \frac{u^2}{1+ 2(1-u)^2}} \Big) = c\,,
+\end{equation*}
 In this section, the same problem is studied but using the adaptive basis construction developed 
 in Section \ref{sec: twin algo} and \ref{sec: trunc error}. 
 The initial dictionary, $\boldsymbol{\phi}_{\mathcal{A}}$, is selected to contain a single basis
 $\left(0, \frac{0}{2^0}\right)$. Clearly the choice is not unique. 
 As long as the
-initial basis has a low resolution and is centered around $\left[u_{\min}, u_{\max}\right]$,
-Algorithm \ref{alg: train twin} shall build the dictionary adaptively.\\
+initial basis has a low resolution and is centered inside $\left[u_{\min}, u_{\max}\right]$,
+Algorithm \ref{alg: train twin} is able to build the dictionary adaptively.\\
 
 Figure \ref{fig: basis pnt} shows the selected bases
-for the three solutions in Figure \ref{fig: combine 3}, respectively, by using
-the pre-train step.
+for the three solutions in Figure \ref{fig: combine 3}, respectively, obtained by 
+algorithm \ref{alg: train twin trunc}.
 As $\left[u_{\min}, u_{\max}\right]$ shrinks, the dictionary's cardinality reduces and
 the resolution increases. \\
 
@@ -1224,9 +1228,22 @@ the resolution increases. \\
     \label{fig: basis pnt}
 \end{center}\end{figure}
 
-Consider a time-space-dependent control $c=c(t,x)$ in \eqref{eqn: Buckley-Leverett} and 
-\eqref{eqn: Buckley-Leverett twin}. The gradient of $\xi$, \eqref{eqn: objective ad hoc}, is
-estimated using the trained twin model. The estimated gradients are compared with the true adjoint
+Consider a time-space-dependent control $c=c(t,x)$ in \eqref{eqn: Buckley-Leverett} 
+\begin{equation*}
+    \frac{\partial u}{\partial t} + \frac{\partial}{\partial x}\Big(
+    \frac{u^2}{1+ 2(1-u)^2} \Big) = c\,,
+\end{equation*}
+and 
+\eqref{eqn: Buckley-Leverett twin}
+\begin{equation*}
+    \frac{\partial \tilde{u}}{\partial t} + \frac{\partial}{\partial x}\tilde{F}(\tilde{u})
+    = c\,.
+\end{equation*}
+The gradient of $\xi$, \eqref{eqn: objective ad hoc}, 
+\begin{equation*}
+    \xi(c) \equiv \int_{x=0}^1 \left(u(1,x; c) - \frac{1}{2}\right)^2 \,\textrm{d}x\,,
+\end{equation*}
+can be estimated by the trained twin model. The estimated gradients are compared with the true adjoint
 gradients of the gray-box model, and the errors are shown in Figure \ref{fig: adap basis grad err BL}.\\
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.32\textwidth}
@@ -1253,9 +1270,13 @@ gradients of the gray-box model, and the errors are shown in Figure \ref{fig: ad
 
 The adaptive basis construction improves the accuracy of the gradient estimation.
 Table \ref{table: BL grad error} shows the integrated gradient error 
-\footnote{The gradient error is integrated using the same quadrature rule as in 
-\eqref{eqn: solution mismatch}.} by using either the
-ad hoc bases in Figure \ref{fig: sigmoid basis ad hoc} or by using the bases constructed adaptively.\\
+\begin{equation*}
+    \sum_{i=1}^M \sum_{j=1}^N w_{ij} \big( \tilde{\boldsymbol{u}}_{ij}
+     -\boldsymbol{u}_{ij}\big)^2 \,,
+\end{equation*}
+by using either the
+ad hoc bases shown in Figure \ref{fig: sigmoid basis ad hoc},
+or by using the bases constructed adaptively.\\
 \begin{center}
     \begin{tabular}{|c|c|c|c|}
        \hline\hline
