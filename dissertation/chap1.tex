@@ -659,7 +659,7 @@ thru. \eqref{eqn: adjoint}, the discrete adjoint equation can be obtained
 \end{equation}
 which is a linear system of equations.
 $\left(\frac{\partial \mathcal{F}_d}{\partial \boldsymbol{u}}\right)^T$ is derived as
-another difference operator, a function whose output is a square matrix. It contains the
+another difference operator which is a square matrix. It contains the
 discretized boundary and initial conditions, and uniquely
 determines the discrete adjoint vector $\boldsymbol{\lambda}$, which subsequently determines the
 gradient
@@ -1081,15 +1081,15 @@ which is equivalently reformulated and efficiently solved as a linear programmin
 \cite{L1 basis pursuit}.\\
 
 Conventionally, the dictionary for the sparse approximation needs to
-be pre-determined, with the belief that the dictionary is a superset of the significant bases
-\cite{adaptive basis 2}. 
-This can be problematic because 
-the maximum complexity\footnote{
-The definition of complexity is basis-dependent. For example, the complexity for
-polynomial basis can be its total polynomial degree; and the complexity for
-wavelet basis can be its finest resolution \cite{wavelet mallat}. Here the ``complexity'' is
-discussed in a general sense. } 
-of the significant bases are unknown a prior.
+be pre-determined, with the belief that the dictionary is a superset of the required bases
+for an accurate approximation \cite{adaptive basis 2}. 
+This can be problematic because the required bases are unknown a prior.
+%the maximum complexity\footnote{
+%The definition of complexity is basis-dependent. For example, the complexity for
+%polynomial basis can be its total polynomial degree; and the complexity for
+%wavelet basis can be its finest resolution \cite{wavelet mallat}. Here the ``complexity'' is
+%discussed in a general sense. } 
+%of the significant bases are unknown a prior.
 To address this issue, methods have been devised that construct an adaptive dictionary
 \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
 Although different in details, such methods share the same approach: In the beginning, some trivial

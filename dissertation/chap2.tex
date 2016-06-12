@@ -58,23 +58,25 @@ My thesis introduces an open-box simulator solving another PDE, namely the twin 
 which is also a system of $k$ equations
 with the same source term and the same initial and boundary conditions. 
 Equation \eqref{eqn: govern twin model}
-differs from \eqref{eqn: govern PDE} in its flux. For simplicity, 
-let the solution of the open-box simulator, $\tilde{\boldsymbol{u}}$, be defined on the same space-time
-grid of the gray-box simulator.
-Define the solution mismatch
+differs from \eqref{eqn: govern PDE} in its flux. 
+For simplicity,
+let the solution of the open-box simulator, $\tilde{\boldsymbol{u}}$, be defined on the same 
+spatial grid points and time steps of the gray-box simulator.
+The space-time integration of the mismatch of $u$ and $\tilde{u}$ can be written as
+\begin{equation}
+    \int_{0}^T\int_\Omega \big(\tilde{u}(t,x) - u(t,x)\big)^2 \, \textrm{d}x\,\textrm{d}t
+    \label{eqn: cont sol mismatch}
+\end{equation}
+The mismatch, \eqref{eqn: cont sol mismatch}, can be approximated by using $\boldsymbol{u}$ and 
+$\tilde{\boldsymbol{u}}$.
 \begin{equation}
     \mathcal{M}(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \big( \tilde{\boldsymbol{u}}_{ij}
      -\boldsymbol{u}_{ij}\big)^2 \,,
     \label{eqn: solution mismatch}
 \end{equation}
 where $i=1,\cdots, M$ are the indices for time grid, and $j=1,\cdots, N$ are the indices for the space grid.
-$w_{ij}$'s are the quadrature weights for the space-time integration. 
+$w_{ij}$'s are the quadrature weights defined with respect to \eqref{eqn: cont sol mismatch}. 
 For example, if a uniform Cartesian space-time grid is used, the quadrature weights equal a constant.
-More generally, the quadrature weights are defined with respect to the space-time integration, so
-$\mathcal{M}$ approximates the space-time integration of the continous solutions' mismatch,
-\begin{equation}
-\mathcal{M} \approx \int_{0}^T\int_\Omega \big(\tilde{u}(t,x) - u(t,x)\big)^2 \, \textrm{d}x\,\textrm{d}t
-\end{equation}
 Notice that $\mathcal{M}$ solely depends on
 $\tilde{F}$ through the twin model solution $\tilde{\boldsymbol{u}}$ given the 
 quadrature weights and the gray-box solution.
@@ -141,13 +143,15 @@ $\xi({\boldsymbol{u}}, c)$, where ${\boldsymbol{u}}$ is the gray-box space-time 
 
 
 The key to inferring $F$ is to leverage the gray-box space-time solution.
-I can not prove the inferrability for the general form \eqref{eqn: govern PDE}
+For example, the following theorem shows what aspect of $F$ can be inferred from the
+solution of a special form of \eqref{eqn: 1D conceptual},
 \begin{equation*}\begin{split}
-    \frac{\partial u}{\partial t}+ \nabla \cdot \big( D F(u) \big) = q(u,c)\,,
+    \frac{\partial u}{\partial t}+ \nabla \cdot \big( F(u) \big) = q(u,c)\,,
 \end{split}
 \end{equation*}
-However, the inferrability can be partially justified by the following theorem
-if \eqref{eqn: govern PDE} has only one equation, has one dimensional space, $q=0$, and $D=1$.
+if the spatial dimension is 1.
+%However, the inferrability can be partially justified by the following theorem
+%if \eqref{eqn: govern PDE} has only one equation, has one dimensional space, $q=0$, and $D=1$.
 \begin{theorem}
     Consider two PDEs
     \begin{equation}
@@ -165,9 +169,9 @@ if \eqref{eqn: govern PDE} has only one equation, has one dimensional space, $q=
     continuous with constant $L_F$.
     Let 
     $$
-    B_u \equiv \left\{ u\left| u=u_0(x) \; \emph{that satisfies} 
-    \;\left|\frac{du_0}{dx}\right|\ge \gamma > 0
-    \,,\; \emph{for all} \; x\in \mathbb{R}\right.
+    B_u \equiv \left\{ u\left| u=u_0(x) \; \emph{for}
+    \; x \in \mathbb{R} \; \emph{that satisfies}\; \left|\frac{du_0}{dx}\right|\ge \gamma > 0
+    \,,\right.
     \right\}
     \subseteq \mathbb{R}\,.
     $$
@@ -175,14 +179,21 @@ if \eqref{eqn: govern PDE} has only one equation, has one dimensional space, $q=
     We have:\\
     For any $\epsilon >0$, there exist $\delta>0$ and $T>0$ such that 
     \begin{itemize}
-        \item if $|\tilde{u}(t,x)-u(t,x)| < \delta$ for any $x\in \mathbb{R}$ and $t\in [0,T]$, then
+        \item if $|\tilde{u}(t,x)-u(t,x)| < \delta$ for all $x\in \mathbb{R}$ and $t\in [0,T]$, then
               $\left|\frac{d\tilde{F}}{du} - \frac{dF}{du}\right| < 
-               \epsilon $ for any $u\in B_u\,.$
+               \epsilon $ for all $u\in B_u\,.$
     \end{itemize}
     \label{theorem: 1}
 \end{theorem}
-The proof is given in Appendix \ref{proof 1}.
-An illustration of $B_u$ is given in Figure \ref{fig: excitedDomain}.
+The proof is given in Appendix \ref{proof 1}. $B_u$ consists of the value of $u$ that 
+appears in the initial condition $u_0(x)$. In addition, on such value of $u$, the 
+initial condition must satisfy $\left|\frac{du_0}{dx}\right|\ge \gamma > 0$.
+An example of $B_u$ is given in Figure \ref{fig: excitedDomain}.
+The initial condition $u_0$ and its derivative $\frac{du_0}{dx}$ are indicated by the
+solid blue and the dashed green lines. Given the value of $\gamma$, 
+$B_u$ is shown on the right vertical axis which consists of values of $u$ that appear in $u_0$
+and satisfy $\left|\frac{du_0}{dx}\right|\ge \gamma > 0$.\\
+
 Several observations can be made from Theorem \ref{theorem: 1}.
 Firstly, if the solutions of \eqref{eqn: easy 1} and \eqref{eqn: easy 2} match closely 
 $\left(|\tilde{u}(t,x)-u(t,x)| < \delta\right)$, then
@@ -207,23 +218,30 @@ rather than the fluxes themselves.
     \end{center}
 \end{figure}
 
+Compared to the surrogate modeling of the output $\xi$ \cite{surrogate review}, the advantage of
+the twin-model approach lies in the usage of the ``big data'', the space-time solution, generated from
+gray-box PDE solvers. The usage of the big data may lead to more accurate modeling of $F$ and more
+accurate predictions of $\xi$ with fewer runs of the gray-box simulation.\\
+
 The remainder of this chapter is organized as follows.
-\begin{itemize}
-    \item Section \ref{sec: flux param} discusses the choices of $\mathcal{S}_F$ occurred
-    in \eqref{eqn: twin min mismatch}.
+Section \ref{sec: flux param} discusses the choices of the function space, $\mathcal{S}_F$, 
+that appeared in \eqref{eqn: twin min mismatch}.
 %A suitable parameterization for $\tilde{F}$ will be chosen that takes into account the observations from
 %Theorem \ref{theorem: 1}.
-    \item Section \ref{sec: adaptive basis} develops a procedure that adaptively refines the
-    parameterization. 
+A choice of the basis functions, the sigmoid functions, 
+is introduced to parameterize $\tilde{F}$. By using a fixed set of basis functions, the sigmoid basis
+is demonstrated in a numerical example.
+Section \ref{sec: adaptive basis} develops a procedure that adaptively refines the
+basis functions. 
 %The procedure adopts a greedy search of the best refinement
 %at every iteration and refrains from overfitting.
-    \item Section \ref{sec: twin algo} summarizes the algorithm for training the twin model.
-    \item Section \ref{sec: trunc error} presents a numerical shortcut for \eqref{eqn: twin min mismatch} 
-    that is more computationally efficient.
-    \item Section \ref{sec: twin numerical results} demonstrates the algorithm in several numerical examples.
-    \item Section \ref{sec: chap 2 summary} summarizes the chapter.\\
-\end{itemize}
-
+Section \ref{sec: twin algo} summarizes the developments in the previous two sections and
+gives an algorithm for training the twin model. To reduce the computational cost of the
+algorithm, Section \ref{sec: trunc error} presents a numerical 
+shortcut for \eqref{eqn: twin min mismatch} that is more computationally efficient. The
+numerical shortcut minimizes the integrated truncation error instead of the solution mismatch.
+Section \ref{sec: twin numerical results} demonstrates the algorithm in several numerical examples.
+Finally, section \ref{sec: chap 2 summary} summarizes the chapter.\\
 
 
 \subsection{Parameterization}
@@ -1390,7 +1408,8 @@ The solution mismatch, \eqref{eqn: solution mismatch}, is given by
 \end{split}\end{equation*}
 where $w_\rho$, $w_u$, $w_v$, and $w_E$ are non-dimensionalization constants.
 Figure \ref{fig: grayErrSol Ubend} shows the gray-box solution and the solution mismatch
-after training the twin model \footnote{Both the solution and the mismatch are normalized.}.
+after training the twin model.
+%\footnote{Both the solution and the mismatch are normalized.}.
 Figure \ref{fig: state err Ubend} compares the true state equation and the corresponding trained 
 state equation, where the convex hull of $({U}_\infty, \rho_\infty)$, the internal energy
 and the density of the gray-box solution,

@@ -522,6 +522,12 @@ Gelbart, M. A.
 \newblock {\em Doctoral Dissertation}, Harvard University, 2015.
 
 % Others ===================================================
+% surrogate methods
+\bibitem{surrogate review}
+Queipo, N. V., Haftka, R. T., Shyy, W., Goel, T., Vaidyanathan, R., and Tucker, P. K. 
+\newblock{Surrogate-based Analysis and Optimization.}
+\newblock{\em Progress in Aerospace Sciences}, 41(1), 1-28, 2005.
+
 % BSIM
 \bibitem{hanmaster} 
 Chen, H. 

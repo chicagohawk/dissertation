@@ -9,14 +9,15 @@
 \@writefile{toc}{\contentsline {section}{\numberline {2.1}Approach}{44}}
 \newlabel{infer}{{2.1}{44}}
 \newlabel{eqn: govern twin model}{{2.1}{44}}
-\newlabel{eqn: solution mismatch}{{2.2}{44}}
+\newlabel{eqn: cont sol mismatch}{{2.2}{44}}
+\newlabel{eqn: solution mismatch}{{2.3}{45}}
 \newlabel{eqn: twin min mismatch}{{2.4}{45}}
 \newlabel{eqn: govern twin model trained}{{2.5}{45}}
 \newlabel{eqn: estimated gradient temp}{{2.6}{45}}
 \newlabel{eqn: easy 1}{{2.7}{46}}
 \newlabel{eqn: easy 2}{{2.8}{46}}
 \newlabel{theorem: 1}{{1}{46}}
-\citation{wavelet mallat}
+\citation{surrogate review}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-1}{\ignorespaces An illustration of $B_u$ defined in Theorem \ref  {theorem: 1}. The blue line is $u_0$ and the green dashed line is $\frac  {du_0}{dx}$. $B_u$ is the set of $u_0$ where the derivative $\frac  {du_0}{dx}$ has an absolute value larger than $\gamma $.\relax }}{47}}
 \newlabel{fig: excitedDomain}{{2-1}{47}}
 \citation{wavelet mallat}
@@ -26,29 +27,30 @@
 \citation{wavelet mallat}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Parameterization}{48}}
 \newlabel{sec: flux param}{{2.1.1}{48}}
-\newlabel{eqn: self similar wavelet}{{2.9}{48}}
+\citation{wavelet mallat}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-2}{\ignorespaces An example mother wavelet, the Meyer wavelet.\relax }}{49}}
 \newlabel{fig: meyer}{{2-2}{49}}
+\newlabel{eqn: self similar wavelet}{{2.9}{49}}
 \newlabel{eqn: integral wavelet}{{2.10}{49}}
-\newlabel{eqn: integral wavelet basis}{{2.13}{49}}
-\citation{functional analysis}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-3}{\ignorespaces Red line: the integral \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces \ref  {eqn: integral wavelet}\unskip \@@italiccorr )}} of the Meyer wavelet. Black line: the logistic sigmoid function.\relax }}{50}}
 \newlabel{fig: sigmoid}{{2-3}{50}}
+\newlabel{eqn: integral wavelet basis}{{2.13}{50}}
 \newlabel{eqn: transform integral wavelet}{{2.14}{50}}
 \newlabel{eqn: self similar sigmoid}{{2.15}{50}}
-\newlabel{eqn: logistic sigmoid}{{2.16}{50}}
-\newlabel{eqn: tensor basis}{{2.17}{50}}
+\citation{functional analysis}
 \citation{Buckley Leverett}
+\newlabel{eqn: logistic sigmoid}{{2.16}{51}}
+\newlabel{eqn: tensor basis}{{2.17}{51}}
 \newlabel{eqn: linear expansion}{{2.18}{51}}
 \newlabel{eqn: Buckley-Leverett}{{2.19}{51}}
-\newlabel{eqn: Buckley-Leverett twin}{{2.20}{51}}
-\newlabel{eqn: linear expansion finite}{{2.21}{51}}
 \citation{Lasso variable selection}
 \citation{LBFGS}
 \citation{nlopt}
+\newlabel{eqn: Buckley-Leverett twin}{{2.20}{52}}
+\newlabel{eqn: linear expansion finite}{{2.21}{52}}
 \newlabel{eqn: solution mismatch L1 norm}{{2.22}{52}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-4}{\ignorespaces An ad hoc set of bases\relax }}{52}}
-\newlabel{fig: sigmoid basis ad hoc}{{2-4}{52}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-4}{\ignorespaces An ad hoc set of bases\relax }}{53}}
+\newlabel{fig: sigmoid basis ad hoc}{{2-4}{53}}
 \newlabel{fig: leftcol}{{2-5a}{53}}
 \newlabel{sub@fig: leftcol}{{a}{53}}
 \newlabel{fig: rightcol}{{2-5b}{53}}
@@ -72,20 +74,19 @@
 \citation{adaptive basis 3}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-6}{\ignorespaces The objective function $\xi $ evaluated by either the gray-box model and the trained twin model.\relax }}{54}}
 \newlabel{fig: objective ad hoc}{{2-6}{54}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Elements for Adaptive Basis Construction}{54}}
-\newlabel{sec: adaptive basis}{{2.1.2}{54}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-7}{\ignorespaces The first row shows the three different initial conditions used to generate the gray-box space-time solution. The second row compares the trained $\mathaccentV {tilde}07E{F}$ (blue) and the Buckley-Leverett $F$ (red). The third row compares the trained $\frac  {d\mathaccentV {tilde}07E{F}}{du}$ (blue) and the Buckley-Leverett $\frac  {dF}{du}$ (red). The green background highlights the domain of $u$ where the gray-box space-time solution exists.\relax }}{55}}
 \newlabel{fig: combine 3}{{2-7}{55}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-8}{\ignorespaces The outline of the algorithm for training a twin model with an adaptive basis. $\boldsymbol  {\phi }$ is the basis dictionary, $\boldsymbol  {\phi }_0$ is the initial basis dictionary, $\boldsymbol  {\alpha }$ indicates the bases' coefficients. As explained in the previous section, the solution mismatch is a function that depends on $u$ and $\mathaccentV {tilde}07E{F}$, where $\mathaccentV {tilde}07E{F}$ depends on the bases $\boldsymbol  {\phi }$ and its coefficients $\boldsymbol  {\alpha }$.\relax }}{56}}
 \newlabel{fig: outline heuristics}{{2-8}{56}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Elements for Adaptive Basis Construction}{56}}
+\newlabel{sec: adaptive basis}{{2.1.2}{56}}
 \newlabel{eqn: minimal mismatch}{{2.24}{57}}
 \newlabel{eqn: append minimal mismatch}{{2.25}{57}}
 \newlabel{eqn: mismatch improvement}{{2.26}{57}}
-\newlabel{eqn: taylor expansion}{{2.27}{57}}
 \citation{weight selection}
+\newlabel{eqn: taylor expansion}{{2.27}{58}}
 \newlabel{eqn: basis significance}{{2.28}{58}}
 \newlabel{eqn: self similar sigmoid}{{2.1.2}{58}}
-\newlabel{eqn: neighborhood 1D}{{2.29}{58}}
 \newlabel{fig: basis 0}{{2-9a}{59}}
 \newlabel{sub@fig: basis 0}{{a}{59}}
 \newlabel{fig: basis 1}{{2-9b}{59}}
@@ -95,14 +96,15 @@
 \newlabel{fig: basis 3}{{2-9d}{59}}
 \newlabel{sub@fig: basis 3}{{d}{59}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-9}{\ignorespaces An illustration of the tuple representation and the corresponding univariate sigmoid.\relax }}{59}}
-\newlabel{eqn: neighborhood kD}{{2.30}{59}}
-\newlabel{eqn: multiple neighbor}{{2.31}{59}}
+\newlabel{eqn: neighborhood 1D}{{2.29}{59}}
 \newlabel{fig: basis neighbor}{{2-10a}{60}}
 \newlabel{sub@fig: basis neighbor}{{a}{60}}
 \newlabel{fig: union neighbor}{{2-10b}{60}}
 \newlabel{sub@fig: union neighbor}{{b}{60}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-10}{\ignorespaces Neighborhood for univariate bases. $(a)$ shows the neighborhood (blue) of a single basis (red). $(b)$ shows the neighborhood (blue) of several bases (red). The left column represents the basis on the $\left (j, \frac  {\eta }{2^j}\right )$ plane, and the right column shows the actual basis $\phi _{j,\eta }$.\relax }}{60}}
+\newlabel{eqn: neighborhood kD}{{2.30}{60}}
 \citation{cross validation}
+\newlabel{eqn: multiple neighbor}{{2.31}{61}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-11}{\ignorespaces The discretized gray-box solution is shuffled into $3$ sets, each indicated by a color. Each block stands for the state variable on a space-time grid point.\relax }}{61}}
 \newlabel{fig: shuffle}{{2-11}{61}}
 \newlabel{eqn: cross validation}{{2.32}{62}}
@@ -162,15 +164,15 @@
 \newlabel{eqn: mass flux}{{2.49}{73}}
 \newlabel{NS state equations}{{2.50}{73}}
 \newlabel{NS mismatch}{{2.2.2}{73}}
-\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1405}}{74}}
+\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1424}}{74}}
 \newlabel{sub@fig: graysol Ubend}{{}{74}}
-\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1410}}{74}}
+\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1429}}{74}}
 \newlabel{sub@fig: errsol Ubend}{{}{74}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-15}{\ignorespaces Left column: an example gray-box solution for a given geometry. Right column: the solution mismatch after training a twin model.\relax }}{74}}
 \newlabel{fig: grayErrSol Ubend}{{2-15}{74}}
-\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1423}}{75}}
+\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1442}}{75}}
 \newlabel{sub@fig: graysol Ubend}{{}{75}}
-\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1428}}{75}}
+\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1447}}{75}}
 \newlabel{sub@fig: errsol Ubend}{{}{75}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-16}{\ignorespaces The gray-box state equation (right column) and the trained state equation (left column). The gray-box model uses either the ideal gas equation (first row) or the Reclich-Kwong equation (second row). The convex hull of the gray-box solution is shown by the dashed red line.\relax }}{75}}
 \newlabel{fig: state err Ubend}{{2-16}{75}}
@@ -196,11 +198,11 @@
 \newlabel{tab: reservoir 3D grad error}{{2.3}{79}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.3}Chapter Summary}{79}}
 \newlabel{sec: chap 2 summary}{{2.3}{79}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1598}}{80}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1617}}{80}}
 \newlabel{sub@fig: reservoir 3D untrained}{{}{80}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1604}}{80}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1623}}{80}}
 \newlabel{sub@fig: reservoir 3D untrained}{{a}{80}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1610}}{80}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 1629}}{80}}
 \newlabel{sub@fig: reservoir 3D untrained}{{b}{80}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-20}{\ignorespaces The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. \relax }}{80}}
 \newlabel{fig: reservoir 3D solutions}{{2-20}{80}}
@@ -213,7 +215,7 @@
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
 \setcounter{enumiv}{0}
-\setcounter{footnote}{2}
+\setcounter{footnote}{1}
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{2}
