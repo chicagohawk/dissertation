@@ -244,7 +244,7 @@ Section \ref{sec: twin numerical results} demonstrates the algorithm in several 
 Finally, section \ref{sec: chap 2 summary} summarizes the chapter.\\
 
 
-\subsection{Parameterization}
+\subsection{Choice of Basis Functions}
 \label{sec: flux param}
 As discussed in Section \ref{sec: adaptive basis review}, 
 $F$ can be parameterized by a linear combination of basis functions.
@@ -356,9 +356,13 @@ My thesis will use the logistic sigmoid function as the mother sigmoid,
     \phi(u) = \frac{1}{1+ e^{-u}}\,.
     \label{eqn: logistic sigmoid}
 \end{equation}
-If $\tilde{F}$ is univariate, the logistic sigmoids $\phi_{j,\eta}$'s are used as the bases.
-If $\tilde{F}$ is multivariate, the basis can be formed by the tensor product 
-of univariate sigmoids \cite{functional analysis},
+If $\tilde{F}$ is univariate, the logistic sigmoids $\phi_{j,\eta}$'s, for
+$j\in \mathbb{Z}$ and $\eta \in \mathbb{Z}$, are used as the bases.
+If $\tilde{F}$ is $k$-variate, the basis can be formed by the tensor product 
+of the univariate basis \cite{functional analysis} 
+($\phi_{j_1,\eta_1}, \cdots, \phi_{j_k, \eta_k}$, for
+$j_1\in \mathbb{Z}, \eta_1\in \mathbb{Z} , \cdots, j_k \in \mathbb{Z}, \eta_k \in \mathbb{Z}$).
+In other words, the basis can be
 \begin{equation}
     \phi_{\boldsymbol{j}, \boldsymbol{\eta}} (u_1, \cdots, u_k) = \phi_{j_1, \eta_1}(u_1)\cdots
     \phi_{j_k, \eta_k}(u_k)\,,

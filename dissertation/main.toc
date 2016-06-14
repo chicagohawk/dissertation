@@ -14,7 +14,7 @@
 \contentsline {section}{\numberline {1.6}Outline}{40}
 \contentsline {chapter}{\numberline {2}Estimate the Gradient by Using the Space-time Solution}{43}
 \contentsline {section}{\numberline {2.1}Approach}{44}
-\contentsline {subsection}{\numberline {2.1.1}Parameterization}{48}
+\contentsline {subsection}{\numberline {2.1.1}Choice of Basis Functions}{48}
 \contentsline {subsection}{\numberline {2.1.2}Elements for Adaptive Basis Construction}{56}
 \contentsline {subsection}{\numberline {2.1.3}Algorithm}{62}
 \contentsline {subsection}{\numberline {2.1.4}Minimizing the Truncation Error}{64}
