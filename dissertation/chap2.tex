@@ -278,12 +278,14 @@ self-similarity \cite{wavelet mallat}:
 \begin{equation*}\begin{split}
     &f(u) \in V_j \Leftrightarrow f(2u) \in V_{j+1}, \; j\in \mathbb{Z}\\
     &f(u) \in V_j \Leftrightarrow f(u-\frac{\eta}{2^j}) \in V_{j},
-                    \; j\in \mathbb{Z},\, \eta\in \mathbb{Z}
+                    \; j\in \mathbb{Z},\, \eta\in \left\{\eta_0, \eta_0\pm 1, \eta_0\pm 2,\cdots\right\},
 \end{split}\end{equation*}
+where $\eta_0\in \mathbb{R}$ is an arbitrary constant.
 The function space $V_j$ is spanned by a set of orthonormal bases called the wavelet
 \cite{wavelet mallat}
 \begin{equation}
-    \hat{\phi}_{j,\eta}(u) = 2^{j/2} \hat{\phi}(2^j u-\eta) \,,\quad \eta \in \mathbb{Z}
+    \hat{\phi}_{j,\eta}(u) = 2^{j/2} \hat{\phi}(2^j u-\eta) \,,\quad 
+    \eta\in \left\{\eta_0, \eta_0\pm 1, \eta_0\pm 2,\cdots\right\}
     \label{eqn: self similar wavelet}
 \end{equation}
 where $\hat{\phi}$ is called the mother wavelet.
@@ -417,15 +419,30 @@ the sigmoid bases \eqref{eqn: self similar sigmoid}
 \eqref{eqn: linear expansion} in that a finite number of basis functions are used so
 the parameterization can be implemented in the computer. In this section, the bases used
 in the parameterization, represented by the set $A$ in \eqref{eqn: linear expansion finite},
-are chosen ad hoc. Howevever, the bases shall satisfy the following requirement:
-On values of $u$ that appeared in the gray-box solution, 
-there should be at least one basis that has non-zero gradient (sigmoid's gradient 
-is always non-zero, I don't know how to express 'large enough gradient' accurately. If
-the gradient is non-zero but very small in such values of $u$, the inference will be ill-posed.
-I have difficulty explaining this rigorously).
-Otherwise, the $\frac{dF}{du}$ in such values of $u$ can not be represented.
-Figure \ref{fig: sigmoid basis ad hoc} shows an example set of bases used in this section.
-To ensure the well-posedness of \eqref{eqn: twin min mismatch}, the
+are chosen manually, such that the flux can be well approximated.
+The chosen basis are $\phi_{j, \eta}$ for $j=3$, $\eta=0,1,\cdots, 8$, which are shown in 
+Figure \ref{fig: sigmoid basis ad hoc}.
+The topic of
+how to algorithmically choose a suitable set of basis will be discussed 
+in Section \ref{sec: adaptive basis}.
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=5cm]{../fixed_basis_eg.png}
+        \caption{The bases chosen manually for the numerical example of Buckley-Leverett equation.}
+        \label{fig: sigmoid basis ad hoc}
+    \end{center}
+\end{figure}
+
+
+%The basis shall satisfy the following requirement:
+%On values of $u$ that appeared in the gray-box solution, 
+%there should be at least one basis that has non-zero gradient 
+%(sigmoid's gradient 
+%is always non-zero, I don't know how to express 'large enough gradient' accurately. If
+%the gradient is non-zero but very small in such values of $u$, the inference will be ill-posed.
+%I have difficulty explaining this rigorously).
+%Otherwise, the $\frac{dF}{du}$ in such values of $u$ can not be represented.
+To avoid overfitting in \eqref{eqn: twin min mismatch}, the
 $L_1$ regularization on $\alpha$ is applied in minimizing $\mathcal{M}$. To sum up, 
 $F$ is inferred by solving the following minimization problem,
 \begin{equation}
@@ -443,40 +460,122 @@ $\boldsymbol{\alpha}$.
 $\lambda>0$ is a tunable parameter for
 the $L_1$ regularization. As the value of $\lambda$ increases, more entries in $\boldsymbol{\alpha}$
 will be suppressed to zero
-\cite{Lasso variable selection}. In this section, I set $\lambda=0.01$. As explained above, the
-minimization problem \eqref{eqn: solution mismatch L1 norm} can be solved by a gradient-based
-method. In this section, the problem is solved by the L-BFGS method \cite{LBFGS}, using the
-NLopt package \cite{nlopt}.
+\cite{Lasso variable selection}. \\
+
+
+The value of $\lambda$ should be determined by maximizing the 
+out-of-sample fit, such as the $k$-fold cross validation
+\cite{cross validation}. 
+Given a basis dictionary, the $k$-fold cross validation proceeds in the following three steps:
+In the first step, the gray-box solution $\boldsymbol{u}$ is shuffled randomly into $k$ disjoint sets
+$\left\{\boldsymbol{u}_1 , \boldsymbol{u}_2, \cdots, \boldsymbol{u}_k\right\}$.
+An illustration for $k=3$ is shown in Figure \ref{fig: shuffle}.
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=5cm]{../fixed_basis_eg.png}
-        \caption{An ad hoc set of bases}
-        \label{fig: sigmoid basis ad hoc}
+        \includegraphics[width=3.2cm]{../shuffle_1.png}
+        \caption{The discretized 
+                 gray-box solution is shuffled into $3$ sets, each indicated by a color. 
+                 Each block stands for the state variable on a space-time grid point.}
+        \label{fig: shuffle}
     \end{center}
 \end{figure}
 
-Figure \ref{fig: leftcol} shows the gray-box space-time solution
-on $x\in[0,1], \, t\in[0,1]$ for $c=0$. 
-The solution is used to train a twin model according to \eqref{eqn: solution mismatch L1 norm}.
-The twin-model space-time solution is shown in 
-Figure \ref{fig: rightcol}. The twin-model solution matches the gray-box solution, which indicates that
-the twin model has been trained successfully.\\
+In the second step, $k$ twin models are trained so that their space-time solutions match
+all but one sets of the gray-box solution, as shown in \eqref{eqn: cross validation}, where
+$T_i$ indicates the $i$th twin model.
+\begin{equation}\begin{split}
+T_1 &= \texttt{TrainTwinModel}(\boldsymbol{u}_2, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
+T_2 &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
+&\cdots\\
+T_k &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_2, \cdots, \boldsymbol{u}_{k-1})
+\label{eqn: cross validation}
+\end{split}\end{equation}
+
+In the third step, each trained twin model is validated, by computing
+the solution mismatch on the remaining set of the gray-box solution, as shown in 
+\eqref{eqn: cross validation mismatch}.
+\begin{equation}\begin{split}
+    \mathcal{M}_1 &= \texttt{MismatchValidation}\left( T_1 , \boldsymbol{u}_1\right)\\
+    \mathcal{M}_2 &= \texttt{MismatchValidation}\left( T_2 , \boldsymbol{u}_2\right)\\
+    &\cdots\\
+    \mathcal{M}_k &= \texttt{MismatchValidation}\left( T_k , \boldsymbol{u}_k\right)
+    \label{eqn: cross validation mismatch}
+\end{split}\end{equation}
+$\lambda$ should be chosen to minimize
+the mean value of validation errors
+\begin{equation}
+    \overline{\mathcal{M}} = \frac{1}{k}\left(\mathcal{M}_1 + \mathcal{M}_2 + \cdots 
+    + \mathcal{M}_k\right)\,.
+\end{equation}
+
+
+The minimization problem \eqref{eqn: solution mismatch L1 norm} can be solved by a gradient-based
+method. In this section, the problem is solved by the L-BFGS method \cite{LBFGS}, using the
+NLopt package \cite{nlopt}.\\
+
+An example of training the twin model is shown in Figure \ref{fig: insample test}.
+Figure \ref{fig: insample test} (a) shows the gray-box solution used to train the twin model. 
+Figure \ref{fig: insample test} (b) shows the trained twin model solution by using the same initial condition.
+Figure \ref{fig: flux test} shows the gray-box flux $F$ and the trained flux $\tilde{F}$, as well as
+$\frac{dF}{du}$ and $\frac{d\tilde{F}}{du}$.\\
+
+In addition, the trained twin model is simulated using out-of-sample initial conditions. Two example gray-box
+and twin-model solutions are shown in Figure \ref{fig: outsample good test} and Figure \ref{fig: outsample bad test}.
+In Figure \ref{fig: outsample good test}, the $B_u$ for the gray-box solution is a subset of the
+$B_u$ for the training solution. Therefore, it is expected that the gray-box and the twin-model
+solutions match closely. In contrast, the $B_u$ for the gray-box solution in Figure \ref{fig: outsample bad test}
+is not a subset of the $B_u$ for the training solution, which results in a larger solution mismatch.\\
+
+%Figure \ref{fig: leftcol} shows the gray-box space-time solution
+%on $x\in[0,1], \, t\in[0,1]$ for $c=0$. 
+%The solution is used to train a twin model according to \eqref{eqn: solution mismatch L1 norm}.
+%The twin-model space-time solution is shown in 
+%Figure \ref{fig: rightcol}. The twin-model solution matches the gray-box solution, which indicates that
+%the twin model has been trained successfully.\\
 
 \begin{figure}[htbp]\begin{center}
-    \begin{subfigure}[t]{.4\textwidth}
-        \centering
-        \includegraphics[width=5cm]{../leftcol.png}
-        \caption{Gray-box model.}
-        \label{fig: leftcol}
-    \end{subfigure}
-    \begin{subfigure}[t]{.4\textwidth}
-        \centering
-        \includegraphics[width=5cm]{../rightcol.png}
-        \caption{Trained twin model.}
-        \label{fig: rightcol}
-    \end{subfigure}
-    \caption{Space-time solutions.}
+    \includegraphics[width=10cm]{/home/voila/Documents/2014GRAD/mirror/thesis_add/insample_sol.png}
+    \caption{(a) shows the gray-box solution used to train the twin model. (b) shows the trained twin-model 
+             solution by using the same initial condition as in the gray-box solution.}
+    \label{fig: insample test}
 \end{center}\end{figure}
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=10cm]{/home/voila/Documents/2014GRAD/mirror/thesis_add/insample_flux.png}
+    \caption{(a) shows the gray-box model's flux $F$ (red) and the trained twin-model flux $\tilde{F}$ (blue).
+             (b) shows $\frac{dF}{du}$ (red) and $\frac{d \tilde{F}}{du}$ (blue)}.
+    \label{fig: flux test}
+\end{center}\end{figure}
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=10cm]{/home/voila/Documents/2014GRAD/mirror/thesis_add/outsample_good_fit.png}
+    \caption{(a) shows an gray-box solution. (b) shows the out-of-sample solution of the trained twin model by using the
+             same initial condition as in (a).}
+    \label{fig: outsample good test}
+\end{center}\end{figure}
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[width=10cm]{/home/voila/Documents/2014GRAD/mirror/thesis_add/outsample_bad_gray.png}
+    \caption{(a) shows an gray-box solution. (b) shows the out-of-sample solution of the trained twin model by using the
+             same initial condition as in (a).}
+    \label{fig: outsample bad test}
+\end{center}\end{figure}
+
+%\begin{figure}[htbp]\begin{center}
+%    \begin{subfigure}[t]{.4\textwidth}
+%        \centering
+%        \includegraphics[width=5cm]{../leftcol.png}
+%        \caption{Gray-box model.}
+%        \label{fig: leftcol}
+%    \end{subfigure}
+%    \begin{subfigure}[t]{.4\textwidth}
+%        \centering
+%        \includegraphics[width=5cm]{../rightcol.png}
+%        \caption{Trained twin model.}
+%        \label{fig: rightcol}
+%    \end{subfigure}
+%    \caption{Space-time solutions.}
+%\end{center}\end{figure}
 
 After training the twin model, the adjoint method can be applied to the twin model
 to obtain the gradient of an objective function $\xi$ to 
@@ -489,7 +588,9 @@ Consider the objective function
     \label{eqn: objective ad hoc}
 \end{equation}
 Figure \ref{fig: objective ad hoc} shows the objective function, evaluated using 
-the gray-box model and the trained twin model. It is observed that the gradients of $\xi$
+the gray-box model and the trained twin model, where the twin model is trained
+at $c=0$ with the solution shown in Figure \ref{fig: insample test}. 
+It is observed that the gradients of $\xi$
 match closely at $c=0$ where the twin model is trained.\\
 
 \begin{figure}[htbp]\begin{center}
@@ -499,7 +600,7 @@ match closely at $c=0$ where the twin model is trained.\\
     \label{fig: objective ad hoc}
 \end{center}\end{figure}
 
-The inferred $\tilde{F}$ is compared to the true $F$. Because $\tilde{F}$ is trained by
+Because $\tilde{F}$ is trained by
 the gray-box space-time solution, and because the gray-box space-time solution depends on
 the initial condition $u_0(x)$, it is expected
 that the trained $\tilde{F}$ depends on $u_0(x)$. 
@@ -817,39 +918,40 @@ removed from the basis dictionary. This can be achieved by cross validation,
 in particular, $k$-fold cross validation \cite{cross validation}.
 Given a basis dictionary, the $k$-fold cross validation proceeds in the following three steps:
 In the first step, the gray-box solution $\boldsymbol{u}$ is shuffled randomly into $k$ disjoint sets
-$\left\{\boldsymbol{u}_1 , \boldsymbol{u}_2, \cdots, \boldsymbol{u}_k\right\}$.
-An illustration for $k=3$ is shown in Figure \ref{fig: shuffle}.
-\begin{figure}[htbp]
-    \begin{center}
-        \includegraphics[width=3.2cm]{../shuffle_1.png}
-        \caption{The discretized 
-                 gray-box solution is shuffled into $3$ sets, each indicated by a color. 
-                 Each block stands for the state variable on a space-time grid point.}
-        \label{fig: shuffle}
-    \end{center}
-\end{figure}
+$\left\{\boldsymbol{u}_1 , \boldsymbol{u}_2, \cdots, \boldsymbol{u}_k\right\}$, which
+is illustrated in Figure \ref{fig: shuffle}.
+%An illustration for $k=3$ is shown in Figure \ref{fig: shuffle}.
+%\begin{figure}[htbp]
+%    \begin{center}
+%        \includegraphics[width=3.2cm]{../shuffle_1.png}
+%        \caption{The discretized 
+%                 gray-box solution is shuffled into $3$ sets, each indicated by a color. 
+%                 Each block stands for the state variable on a space-time grid point.}
+%        \label{fig: shuffle}
+%    \end{center}
+%\end{figure}
 
 In the second step, $k$ twin models are initialized using the same basis dictionary.
 The $k$ twin models are trained so that their space-time solutions match
 all but one sets of the gray-box solution, as shown in \eqref{eqn: cross validation}, where
 $T_i$ indicates the $i$th twin model.
-\begin{equation}\begin{split}
-T_1 &= \texttt{TrainTwinModel}(\boldsymbol{u}_2, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
-T_2 &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
-&\cdots\\
-T_k &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_2, \cdots, \boldsymbol{u}_{k-1})
-\label{eqn: cross validation}
-\end{split}\end{equation}
+%\begin{equation}\begin{split}
+%T_1 &= \texttt{TrainTwinModel}(\boldsymbol{u}_2, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
+%T_2 &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
+%&\cdots\\
+%T_k &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_2, \cdots, \boldsymbol{u}_{k-1})
+%\label{eqn: cross validation}
+%\end{split}\end{equation}
 In the third step, each trained twin model is validated, by computing
 the solution mismatch on the remaining set of the gray-box solution, as shown in 
 \eqref{eqn: cross validation mismatch}.
-\begin{equation}\begin{split}
-    \mathcal{M}_1 &= \texttt{MismatchValidation}\left( T_1 , \boldsymbol{u}_1\right)\\
-    \mathcal{M}_2 &= \texttt{MismatchValidation}\left( T_2 , \boldsymbol{u}_2\right)\\
-    &\cdots\\
-    \mathcal{M}_k &= \texttt{MismatchValidation}\left( T_k , \boldsymbol{u}_k\right)
-    \label{eqn: cross validation mismatch}
-\end{split}\end{equation}
+%\begin{equation}\begin{split}
+%    \mathcal{M}_1 &= \texttt{MismatchValidation}\left( T_1 , \boldsymbol{u}_1\right)\\
+%    \mathcal{M}_2 &= \texttt{MismatchValidation}\left( T_2 , \boldsymbol{u}_2\right)\\
+%    &\cdots\\
+%    \mathcal{M}_k &= \texttt{MismatchValidation}\left( T_k , \boldsymbol{u}_k\right)
+%    \label{eqn: cross validation mismatch}
+%\end{split}\end{equation}
 The mean value of validation errors,
 \begin{equation}
     \overline{\mathcal{M}} = \frac{1}{k}\left(\mathcal{M}_1 + \mathcal{M}_2 + \cdots 

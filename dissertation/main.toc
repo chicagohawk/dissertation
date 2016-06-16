@@ -15,29 +15,29 @@
 \contentsline {chapter}{\numberline {2}Estimate the Gradient by Using the Space-time Solution}{43}
 \contentsline {section}{\numberline {2.1}Approach}{44}
 \contentsline {subsection}{\numberline {2.1.1}Choice of Basis Functions}{48}
-\contentsline {subsection}{\numberline {2.1.2}Elements for Adaptive Basis Construction}{56}
-\contentsline {subsection}{\numberline {2.1.3}Algorithm}{62}
-\contentsline {subsection}{\numberline {2.1.4}Minimizing the Truncation Error}{64}
-\contentsline {section}{\numberline {2.2}Numerical Results}{69}
-\contentsline {subsection}{\numberline {2.2.1}Buckley-Leverett Equation}{69}
-\contentsline {subsection}{\numberline {2.2.2}Navier-Stokes Flow}{71}
-\contentsline {subsection}{\numberline {2.2.3}Polymer Injection in Petroleum Reservoir}{77}
-\contentsline {section}{\numberline {2.3}Chapter Summary}{79}
-\contentsline {chapter}{\numberline {3}Leveraging the Twin Model for Bayesian Optimization}{83}
-\contentsline {section}{\numberline {3.1}Approach}{84}
-\contentsline {subsection}{\numberline {3.1.1}Modeling the Objective and Gradient by Gaussian Processes}{84}
-\contentsline {subsection}{\numberline {3.1.2}Algorithm}{87}
-\contentsline {subsection}{\numberline {3.1.3}Convergence Properties Using True Hyper Parameters}{88}
-\contentsline {section}{\numberline {3.2}Numerical Results}{92}
-\contentsline {subsection}{\numberline {3.2.1}Buckley-Leverett Equation}{92}
-\contentsline {subsection}{\numberline {3.2.2}Navier-Stokes Flow}{93}
-\contentsline {subsection}{\numberline {3.2.3}Polymer Injection in Petroleum Reservoir}{97}
-\contentsline {section}{\numberline {3.3}Chapter Summary}{99}
-\contentsline {chapter}{\numberline {4}Conclusions}{103}
-\contentsline {section}{\numberline {4.1}Thesis Summary}{103}
-\contentsline {section}{\numberline {4.2}Contributions}{105}
-\contentsline {section}{\numberline {4.3}Future Work}{106}
-\contentsline {chapter}{\numberline {A}Proof of Theorems}{107}
-\contentsline {section}{\numberline {A.1}Theorem \ref {theorem: 1}}{107}
-\contentsline {section}{\numberline {A.2}Theorem \ref {theorem: 2}}{109}
-\contentsline {section}{\numberline {A.3}Theorem \ref {theorem: 3}}{112}
+\contentsline {subsection}{\numberline {2.1.2}Elements for Adaptive Basis Construction}{57}
+\contentsline {subsection}{\numberline {2.1.3}Algorithm}{64}
+\contentsline {subsection}{\numberline {2.1.4}Minimizing the Truncation Error}{66}
+\contentsline {section}{\numberline {2.2}Numerical Results}{71}
+\contentsline {subsection}{\numberline {2.2.1}Buckley-Leverett Equation}{71}
+\contentsline {subsection}{\numberline {2.2.2}Navier-Stokes Flow}{73}
+\contentsline {subsection}{\numberline {2.2.3}Polymer Injection in Petroleum Reservoir}{79}
+\contentsline {section}{\numberline {2.3}Chapter Summary}{81}
+\contentsline {chapter}{\numberline {3}Leveraging the Twin Model for Bayesian Optimization}{85}
+\contentsline {section}{\numberline {3.1}Approach}{86}
+\contentsline {subsection}{\numberline {3.1.1}Modeling the Objective and Gradient by Gaussian Processes}{86}
+\contentsline {subsection}{\numberline {3.1.2}Algorithm}{89}
+\contentsline {subsection}{\numberline {3.1.3}Convergence Properties Using True Hyper Parameters}{90}
+\contentsline {section}{\numberline {3.2}Numerical Results}{94}
+\contentsline {subsection}{\numberline {3.2.1}Buckley-Leverett Equation}{94}
+\contentsline {subsection}{\numberline {3.2.2}Navier-Stokes Flow}{95}
+\contentsline {subsection}{\numberline {3.2.3}Polymer Injection in Petroleum Reservoir}{99}
+\contentsline {section}{\numberline {3.3}Chapter Summary}{101}
+\contentsline {chapter}{\numberline {4}Conclusions}{105}
+\contentsline {section}{\numberline {4.1}Thesis Summary}{105}
+\contentsline {section}{\numberline {4.2}Contributions}{107}
+\contentsline {section}{\numberline {4.3}Future Work}{108}
+\contentsline {chapter}{\numberline {A}Proof of Theorems}{109}
+\contentsline {section}{\numberline {A.1}Theorem \ref {theorem: 1}}{109}
+\contentsline {section}{\numberline {A.2}Theorem \ref {theorem: 2}}{111}
+\contentsline {section}{\numberline {A.3}Theorem \ref {theorem: 3}}{114}
