@@ -232,11 +232,8 @@ A choice of the basis functions, the sigmoid functions,
 is introduced to parameterize $\tilde{F}$. By using a fixed set of basis functions, the sigmoid basis
 is demonstrated in a numerical example.
 Section \ref{sec: adaptive basis} develops a procedure that adaptively refines the
-basis functions. 
-%The procedure adopts a greedy search of the best refinement
-%at every iteration and refrains from overfitting.
-Section \ref{sec: twin algo} summarizes the developments in the previous two sections and
-gives an algorithm for training the twin model. To reduce the computational cost of the
+basis functions,
+and gives an algorithm for training the twin model. To reduce the computational cost of the
 algorithm, Section \ref{sec: trunc error} presents a numerical 
 shortcut for \eqref{eqn: twin min mismatch} that is more computationally efficient. The
 numerical shortcut minimizes the integrated truncation error instead of the solution mismatch.
@@ -506,6 +503,7 @@ the mean value of validation errors
 \begin{equation}
     \overline{\mathcal{M}} = \frac{1}{k}\left(\mathcal{M}_1 + \mathcal{M}_2 + \cdots 
     + \mathcal{M}_k\right)\,.
+    \label{eqn: cross validation error mean}
 \end{equation}
 
 
@@ -519,7 +517,9 @@ Figure \ref{fig: insample test} (b) shows the trained twin model solution by usi
 Figure \ref{fig: flux test} shows the gray-box flux $F$ and the trained flux $\tilde{F}$, as well as
 $\frac{dF}{du}$ and $\frac{d\tilde{F}}{du}$.\\
 
-In addition, the trained twin model is simulated using out-of-sample initial conditions. Two example gray-box
+In addition, the trained twin model is simulated using out-of-sample initial conditions which
+are different from the initial condition in the training solution. 
+Two example gray-box
 and twin-model solutions are shown in Figure \ref{fig: outsample good test} and Figure \ref{fig: outsample bad test}.
 In Figure \ref{fig: outsample good test}, the $B_u$ for the gray-box solution is a subset of the
 $B_u$ for the training solution. Therefore, it is expected that the gray-box and the twin-model
@@ -589,7 +589,7 @@ Consider the objective function
 \end{equation}
 Figure \ref{fig: objective ad hoc} shows the objective function, evaluated using 
 the gray-box model and the trained twin model, where the twin model is trained
-at $c=0$ with the solution shown in Figure \ref{fig: insample test}. 
+at $c=0$ with the solution shown in Figure \ref{fig: insample test} (a). 
 It is observed that the gradients of $\xi$
 match closely at $c=0$ where the twin model is trained.\\
 
@@ -604,30 +604,32 @@ Because $\tilde{F}$ is trained by
 the gray-box space-time solution, and because the gray-box space-time solution depends on
 the initial condition $u_0(x)$, it is expected
 that the trained $\tilde{F}$ depends on $u_0(x)$. 
-Figure \ref{fig: combine 3} shows the training results for three different initial conditions.
+Figure \ref{fig: combine 3} shows the training results using the gray-box solutions of
+three different initial conditions at $c=0$.
 Some observations can be made: 1) As expected, the inferred 
-$\tilde{F}$ can differ from $F$ by a constant, as 
-indicated by the second row of Figure \ref{fig: combine 3}; 
+$\tilde{F}$ can differ from $F$ by a constant, which
+can be observed by in Figure \ref{fig: combine 3} (d), (e), and (f); 
 2) $\frac{d\tilde{F}}{du}$ matches $\frac{dF}{du}$ only in a
-domain of $u$ where the solution exists, as indicated by the green area in the third row of
-Figure \ref{fig: combine 3};
-3) $\frac{d\tilde{F}}{du}$ does not match $\frac{dF}{du}$ outside the green area, indicating that
-some bases are redundant thus can be safely dropped out from the parameterization of $\tilde{F}$
-in \eqref{eqn: linear expansion finite}.
-The issue can be seen clearly in the third column of Figure \ref{fig: combine 3};
-4) In some regions of $u$, the bases are too coarse. The issue is particularly important 
-in the plot at the bottom-left corner, where $\frac{d\tilde{F}}{du}$ exhibits
-a wavy deviation from $\frac{dF}{du}$. At such regions of $u$, the bases may be refined to
-yield a more accurate approximation of $F$.
+domain of $u$ where the solution exists, as indicated by the green areas in 
+Figure \ref{fig: combine 3} (g), (h), and (i);
+3) $\frac{d\tilde{F}}{du}$ does not necessarily match $\frac{dF}{du}$ outside the green area, 
+%indicating that
+%some bases are redundant thus can be safely dropped out from the parameterization of $\tilde{F}$
+%in \eqref{eqn: linear expansion finite}.
+The issue can be seen clearly in Figure \ref{fig: combine 3} (c), (f), and (i);
+4) In some regions of $u$, the bases are too coarse. The issue appears
+in Figure \ref{fig: combine 3} (g), where $\frac{d\tilde{F}}{du}$ exhibits
+a wavy deviation from $\frac{dF}{du}$. At such regions of $u$, the basis dictionary may be enriched 
+by additional bases to enable a more accurate approximation of $F$.
 Addressing these issues in a systematic way is crucial to the rigorous development of
 the twin model method. This topic is discussed in the next section.\\
 
 \begin{figure}[htbp]
 \begin{center}
-    \includegraphics[width=16cm]{../combine_3_inits.png}
-    \caption{The first row shows the three different initial conditions used to generate
-             the gray-box space-time solution. The second row compares the trained $\tilde{F}$ 
-             (blue) and the Buckley-Leverett $F$ (red). The third row compares
+    \includegraphics[width=16cm]{../combine_3_inits_new.png}
+    \caption{(a,b,c) shows the three different initial conditions used to generate
+             the gray-box space-time solution. (d,e,f) compares the trained $\tilde{F}$ 
+             (blue) and the Buckley-Leverett $F$ (red). (g,h,i) compares
              the trained $\frac{d\tilde{F}}{du}$ (blue) and the Buckley-Leverett 
              $\frac{dF}{du}$ (red). The green background highlights the domain of $u$ where
              the gray-box space-time solution exists.}
@@ -636,7 +638,7 @@ the twin model method. This topic is discussed in the next section.\\
 \end{figure}
 
 
-\subsection{Elements for Adaptive Basis Construction}
+\subsection{Adaptive Basis Construction}
 \label{sec: adaptive basis}
 This section addresses the problem of adaptively choosing a finite set of basis functions
 for the parameterization of $\tilde{F}$.
@@ -673,19 +675,28 @@ which is sketched in Figure \ref{fig: outline heuristics}.\\
     \end{center}
 \end{figure}
 
-(I think you will question the Figure \ref{fig: outline heuristics}. For example, you may ask 
-what does "no more basis is needed" mean? I have to say that 
-this figure is only a sketch of the complete twin model
-algorithm presented in the next section. I want the reader to have an overall idea of the motivation of
-why I talks about things like ``the significance of a basis'' in the following. 
-I can only discuss the details in the following part of the section. 
-Do you have a better idea how to explain this figure clearly in a high level?)
-This section develops several key 
-elements that lead to the implementation of the algorithm in Figure \ref{fig: outline heuristics}.
-Firstly, a formulation is provided to efficiently assess the 
-significance of each candidate basis; Secondly, 
-the neighborhood of a sigmoid basis is defined;
-Thirdly, a metric is developed that determines when to add or remove a candidate basis.\\
+Some components of the algorithm requires measuring how significant a basis is
+in training a twin model. Two criterions are needed. 
+The first criterion determines ``which'' basis shall be chosen as the candidate basis 
+to add to or delete from the dictionary, based on some metric of the ``significance'' of 
+the bases.
+The second criterion determines ``whether'' the candidate basis needs to be added or deleted, based
+on whether the approximation is sufficiently accurate.
+The two criterions are developed in this section. \\
+
+%(I think you will question the Figure \ref{fig: outline heuristics}. For example, you may ask 
+%what does "no more basis is needed" mean? I have to say that 
+%this figure is only a sketch of the complete twin model
+%algorithm presented in the next section. I want the reader to have an overall idea of the motivation of
+%why I talks about things like ``the significance of a basis'' in the following. 
+%I can only discuss the details in the following part of the section. 
+%Do you have a better idea how to explain this figure clearly in a high level?)
+%This section develops several key 
+%elements that lead to the implementation of the algorithm in Figure \ref{fig: outline heuristics}.
+%Firstly, a formulation is provided to efficiently assess the 
+%significance of each candidate basis; Secondly, 
+%the neighborhood of a sigmoid basis is defined;
+%Thirdly, a metric is developed that determines when to add or remove a candidate basis.\\
 %The three elements are employed to build the twin model algorithm in Section \ref{sec: twin algo}.\\
 
 Firstly, a formulation is developed to efficiently assess the significance of the candidate basis.
@@ -914,12 +925,15 @@ Although the mismatch improvement, $\Delta \mathcal{M}^*\left(\mathcal{A}, l\rig
 non-negative, it is inadvisable to cram the basis dictionary with too many bases,
 otherwise a twin model can be overfitted.
 Therefore, a criterion is required to determine if a candidate basis shall be added to or 
-removed from the basis dictionary. This can be achieved by cross validation,
-in particular, $k$-fold cross validation \cite{cross validation}.
-Given a basis dictionary, the $k$-fold cross validation proceeds in the following three steps:
-In the first step, the gray-box solution $\boldsymbol{u}$ is shuffled randomly into $k$ disjoint sets
-$\left\{\boldsymbol{u}_1 , \boldsymbol{u}_2, \cdots, \boldsymbol{u}_k\right\}$, which
-is illustrated in Figure \ref{fig: shuffle}.
+removed from the basis dictionary. 
+The technique of $k$-fold cross validation, which has been discussed in Section \ref{sec: flux param},
+can be applied.
+%This can be achieved by cross validation,
+%in particular, $k$-fold cross validation \cite{cross validation}.
+%Given a basis dictionary, the $k$-fold cross validation proceeds in the following three steps:
+%In the first step, the gray-box solution $\boldsymbol{u}$ is shuffled randomly into $k$ disjoint sets
+%$\left\{\boldsymbol{u}_1 , \boldsymbol{u}_2, \cdots, \boldsymbol{u}_k\right\}$, which
+%is illustrated in Figure \ref{fig: shuffle}.
 %An illustration for $k=3$ is shown in Figure \ref{fig: shuffle}.
 %\begin{figure}[htbp]
 %    \begin{center}
@@ -930,41 +944,40 @@ is illustrated in Figure \ref{fig: shuffle}.
 %        \label{fig: shuffle}
 %    \end{center}
 %\end{figure}
-
-In the second step, $k$ twin models are initialized using the same basis dictionary.
-The $k$ twin models are trained so that their space-time solutions match
-all but one sets of the gray-box solution, as shown in \eqref{eqn: cross validation}, where
-$T_i$ indicates the $i$th twin model.
-%\begin{equation}\begin{split}
-%T_1 &= \texttt{TrainTwinModel}(\boldsymbol{u}_2, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
-%T_2 &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
-%&\cdots\\
-%T_k &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_2, \cdots, \boldsymbol{u}_{k-1})
-%\label{eqn: cross validation}
-%\end{split}\end{equation}
-In the third step, each trained twin model is validated, by computing
-the solution mismatch on the remaining set of the gray-box solution, as shown in 
-\eqref{eqn: cross validation mismatch}.
-%\begin{equation}\begin{split}
-%    \mathcal{M}_1 &= \texttt{MismatchValidation}\left( T_1 , \boldsymbol{u}_1\right)\\
-%    \mathcal{M}_2 &= \texttt{MismatchValidation}\left( T_2 , \boldsymbol{u}_2\right)\\
-%    &\cdots\\
-%    \mathcal{M}_k &= \texttt{MismatchValidation}\left( T_k , \boldsymbol{u}_k\right)
-%    \label{eqn: cross validation mismatch}
-%\end{split}\end{equation}
-The mean value of validation errors,
-\begin{equation}
+%
+%In the second step, $k$ twin models are initialized using the same basis dictionary.
+%The $k$ twin models are trained so that their space-time solutions match
+%all but one sets of the gray-box solution, as shown in \eqref{eqn: cross validation}, where
+%$T_i$ indicates the $i$th twin model.
+%%\begin{equation}\begin{split}
+%%T_1 &= \texttt{TrainTwinModel}(\boldsymbol{u}_2, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
+%%T_2 &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_3, \cdots, \boldsymbol{u}_k)\\
+%%&\cdots\\
+%%T_k &= \texttt{TrainTwinModel}(\boldsymbol{u}_1, \boldsymbol{u}_2, \cdots, \boldsymbol{u}_{k-1})
+%%\label{eqn: cross validation}
+%%\end{split}\end{equation}
+%In the third step, each trained twin model is validated, by computing
+%the solution mismatch on the remaining set of the gray-box solution, as shown in 
+%\eqref{eqn: cross validation mismatch}.
+%%\begin{equation}\begin{split}
+%%    \mathcal{M}_1 &= \texttt{MismatchValidation}\left( T_1 , \boldsymbol{u}_1\right)\\
+%%    \mathcal{M}_2 &= \texttt{MismatchValidation}\left( T_2 , \boldsymbol{u}_2\right)\\
+%%    &\cdots\\
+%%    \mathcal{M}_k &= \texttt{MismatchValidation}\left( T_k , \boldsymbol{u}_k\right)
+%%    \label{eqn: cross validation mismatch}
+%%\end{split}\end{equation}
+The mean value of validation errors \eqref{eqn: cross validation error mean},
+\begin{equation*}
     \overline{\mathcal{M}} = \frac{1}{k}\left(\mathcal{M}_1 + \mathcal{M}_2 + \cdots 
     + \mathcal{M}_k\right)
-\end{equation}
+\end{equation*}
 measures the performance of the basis dictionary. A basis shall be added to or removed from
 the dictionary only if such action reduces $\overline{\mathcal{M}}$. Because the cross valiation
 involves $k$ twin models, it increases the computational cost.
-Therefore, a small $k$ is preferrable.
-All the numerical examples in the thesis use $k=2$.\\
+Therefore, a small $k$ is preferrable. $k=2$ will be used in the following numerical examples.\\
 
-\subsection{Algorithm}
-\label{sec: twin algo}
+%\subsection{Algorithm}
+%\label{sec: twin algo}
 Based upon the developments in the previous sections, a twin model algorithm 
 with adaptive basis construction is developed based on Figure \ref{fig: outline heuristics}. \\
 
@@ -1316,7 +1329,7 @@ governed by the Buckley-Leverett equation \eqref{eqn: Buckley-Leverett}
     \frac{u^2}{1+ 2(1-u)^2}} \Big) = c\,,
 \end{equation*}
 In this section, the same problem is studied but using the adaptive basis construction developed 
-in Section \ref{sec: twin algo} and \ref{sec: trunc error}. 
+in Section \ref{sec: adaptive basis} and \ref{sec: trunc error}. 
 The initial dictionary, $\boldsymbol{\phi}_{\mathcal{A}}$, is selected to contain a single basis
 $\left(0, \frac{0}{2^0}\right)$. Clearly the choice is not unique. 
 As long as the
