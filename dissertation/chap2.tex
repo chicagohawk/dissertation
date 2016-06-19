@@ -679,7 +679,7 @@ Some components of the algorithm requires measuring how significant a basis is
 in training a twin model. Two criterions are needed. 
 The first criterion determines ``which'' basis shall be chosen as the candidate basis 
 to add to or delete from the dictionary, based on some metric of the ``significance'' of 
-the bases.
+the basis.
 The second criterion determines ``whether'' the candidate basis needs to be added or deleted, based
 on whether the approximation is sufficiently accurate.
 The two criterions are developed in this section. \\
@@ -971,14 +971,14 @@ The mean value of validation errors \eqref{eqn: cross validation error mean},
     \overline{\mathcal{M}} = \frac{1}{k}\left(\mathcal{M}_1 + \mathcal{M}_2 + \cdots 
     + \mathcal{M}_k\right)
 \end{equation*}
-measures the performance of the basis dictionary. A basis shall be added to or removed from
+can be used to measure the performance of the basis dictionary. A basis shall be added to or removed from
 the dictionary only if such action reduces $\overline{\mathcal{M}}$. Because the cross valiation
 involves $k$ twin models, it increases the computational cost.
 Therefore, a small $k$ is preferrable. $k=2$ will be used in the following numerical examples.\\
 
 %\subsection{Algorithm}
 %\label{sec: twin algo}
-Based upon the developments in the previous sections, a twin model algorithm 
+Based upon the above developments, a twin model algorithm 
 with adaptive basis construction is developed based on Figure \ref{fig: outline heuristics}. \\
 
 \begin{algorithm}[H]
@@ -1044,16 +1044,16 @@ with adaptive basis construction is developed based on Figure \ref{fig: outline 
 
 
 Algorithm \ref{alg: train twin} adopts the heuristics of the forward-backward iteration
-discussed in Section \ref{sec: adaptive basis review}.
+shown in Figure \ref{fig: outline heuristics}.
 The algorithm starts from training a twin model using 
-a starting basis dictionary. 
+a starting basis dictionary $\boldsymbol{\phi}_{\mathcal{A}}$. 
 %Usually the starting
 %dictionary contains one basis for each dimension with very low resolution.
-The choice of the starting basis dictionary is given in Section 
+The choice of the starting basis dictionary will be discussed in Section 
 \ref{sec: twin numerical results} along with numerical examples.
 The main part of the algorithm iterates over a forward step (line 3-9) and a backward step (line
-10-19). The forward step firstly finds the most promising candidate in the neighborhood of the current
-dictionary that is added to the dictionary, using \eqref{eqn: basis significance}.
+10-19). The forward step firstly finds the most promising candidate 
+in the neighborhood of the current dictionary according to \eqref{eqn: basis significance}.
 If the addition indeed reduces the cross validation error, the candidate is added 
 to the dictionary; otherwise it is rejected. 
 If the basis is added, the coefficients are updated by minimizing the solution mismatch, which can be
@@ -1062,15 +1062,15 @@ The backward step finds the most promising
 candidate in the current dictionary for deletion. 
 If the deletion reduces the cross validation error, the candidate
 is removed from the dictionary. 
-If the basis is deleted, the coefficients are updated by BFGS again.
+If the basis is indeed deleted, the coefficients are updated by BFGS again.
 The iteration exits when the most promising addition no longer 
 reduces the validation error. In the end, the algorithm provides the basis dictionary and its
 coefficients as the output.\\
 
 The algorithm requires to train multiple twin models at each iteration. For
-$k=2$, $6$ twin models are trained if both the forward and the backward step are acceptive.
-In practice, the trained coefficients at the last iteration usually provide good initial guess
-for the next iteration. Nonetheless, the algorithm can be costly if the dictionary turns out
+$k=2$, $6$ twin models will be trained if both the forward and the backward steps are acceptive.
+In practice, the trained coefficients at the last iteration may provide good initial guess
+for the next iteration. However, the algorithm can still be costly if the dictionary turns out
 to have a large number of bases, which results in a large number of iterations. 
 To address this issue, a numerical shortcut is provided in Section 
 \ref{sec: trunc error} that significantly reduces the cost.\\
@@ -1078,11 +1078,12 @@ To address this issue, a numerical shortcut is provided in Section
 \subsection{Minimizing the Truncation Error}
 \label{sec: trunc error}
 In the previous sections, the twin model method was developed. The method infers the unknown
-$F$ in a gray-box simulator by training a twin model to minimize the metric of
+$F$ in a gray-box simulator by training a twin model that minimizes the 
 space-time solution mismatch.
-The training can be expensive: In the algorithm \ref{alg: train twin}, each iterate
-(the addition and deletion of a basis) requires $2k$ minimizations
-of the solution mismatch; and each minimization requires at least one twin-model simulation.
+The training can be expensive: In the algorithm \ref{alg: train twin}, each iteration 
+involves $k$ minimization problems of the solution mismatch in the forward step, 
+and $k$ minimization problems of the solution mismatch in the backward step,
+where each minimization requires at least one twin-model simulation.
 Instead of the solution mismatch, this section develops another metric to minimize in order
 to reduce the computational cost.\\
 
@@ -1106,8 +1107,8 @@ to be the residual of the twin-model PDE \eqref{eqn: govern twin model},
     \frac{\partial \tilde{u}}{\partial t}+ \nabla \cdot \big(D \tilde{F}(\tilde{u})\big) = q(\tilde{u},c)\,,
 \end{split}
 \end{equation*}
-by plugging in the
-solution of $u$ of the gray-box PDE \eqref{eqn: govern PDE}
+by replacing $\tilde{u}$ with $u$, where $u$ is the gray-box solution satisfying 
+\eqref{eqn: govern PDE}
 \begin{equation*}\begin{split}
     \frac{\partial u}{\partial t}+ \nabla \cdot \big( D F(u) \big) = q(u,c)\,.
 \end{split}
@@ -1365,6 +1366,8 @@ the resolution increases. \\
     \label{fig: basis pnt}
 \end{center}\end{figure}
 
+(Because the trained flux is visually indifferent to Figure 2-11, the flux is not plotted. 
+Do you think I still need to plot them?)
 Consider a time-space-dependent control $c=c(t,x)$ in \eqref{eqn: Buckley-Leverett} 
 \begin{equation*}
     \frac{\partial u}{\partial t} + \frac{\partial}{\partial x}\Big(
@@ -1412,7 +1415,7 @@ Table \ref{table: BL grad error} shows the integrated gradient error
      -\boldsymbol{u}_{ij}\big)^2 \,,
 \end{equation*}
 by using either the
-ad hoc bases shown in Figure \ref{fig: sigmoid basis ad hoc},
+manually chosen bases shown in Figure \ref{fig: sigmoid basis ad hoc},
 or by using the bases constructed adaptively.\\
 \begin{center}
     \begin{tabular}{|c|c|c|c|}
@@ -1801,7 +1804,7 @@ is trained to minimize the solution mismatch metric.
 The inferrability of the twin model is studied theoretically for a simple PDE with only one equation
 and one dimensional space. 
 To enable the training computationally, a sigmoid parameterization
-is presented. However, an ad hoc choice for the bases
+is presented. However, a manually chosen set of bases
 does not fully exploit the information contained in the
 gray-box solution. To address this issue,
 an adaptive basis construction procedure is presented. The adaptive 
