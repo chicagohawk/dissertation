@@ -34,7 +34,8 @@ any objective function with respect to $c$.
 Finally, it is envisioned that the adjoint gradient of the twin model can drive the optimization of 
 the objective function constrained by the gray-box model.\\
 
-The example above involves only one equation and one dimensional space.
+
+The above example involves only one equation and one dimensional space.
 This chapter develops a more general
 procedure suitable for systems of equations and for problems with a spatial dimension greater than one.
 
@@ -61,56 +62,50 @@ Equation \eqref{eqn: govern twin model}
 differs from \eqref{eqn: govern PDE} in its flux. 
 For simplicity,
 let the solution of the open-box simulator, $\tilde{\boldsymbol{u}}$, be defined on the same 
-spatial grid points and time steps of the gray-box simulator.
-The space-time integration of the mismatch of $u$ and $\tilde{u}$ can be written as
+spatial grid points and time steps of the gray-box simulator. \\
+
+The metric used to measure the difference of the twin model and the gray-box model is the
+\textbf{solution mismatch}.
+The solution mismatch is defined to be
 \begin{equation}
-    \int_{0}^T\int_\Omega \big(\tilde{u}(t,x) - u(t,x)\big)^2 \, \textrm{d}x\,\textrm{d}t
-    \label{eqn: cont sol mismatch}
-\end{equation}
-The mismatch, \eqref{eqn: cont sol mismatch}, can be approximated by using $\boldsymbol{u}$ and 
-$\tilde{\boldsymbol{u}}$.
-\begin{equation}
-    \mathcal{M}(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \big( \tilde{\boldsymbol{u}}_{ij}
+    \mathcal{M}_u(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \big( \tilde{\boldsymbol{u}}_{ij}
      -\boldsymbol{u}_{ij}\big)^2 \,,
     \label{eqn: solution mismatch}
 \end{equation}
-where $i=1,\cdots, M$ are the indices for time grid, and $j=1,\cdots, N$ are the indices for the space grid.
+which approximates
+\begin{equation}
+    \int_{0}^T\int_\Omega \big(\tilde{u}(t,x) - u(t,x)\big)^2 \, \textrm{d}x\,\textrm{d}t\,.
+    \label{eqn: cont sol mismatch}
+\end{equation}
+In \eqref{eqn: solution mismatch}, $i=1,\cdots, M$ are the indices for time grid, and $j=1,\cdots, N$ are the indices for the space grid.
 $w_{ij}$'s are the quadrature weights defined with respect to \eqref{eqn: cont sol mismatch}. 
 For example, if a uniform Cartesian space-time grid is used, the quadrature weights equal a constant.
-Notice that $\mathcal{M}$ solely depends on
-$\tilde{F}$ through the twin model solution $\tilde{\boldsymbol{u}}$ given the 
-quadrature weights and the gray-box solution.
+Notice that $\mathcal{M}_u$ depends solely on
+$\tilde{F}$ through the twin model solution $\tilde{\boldsymbol{u}}$ if the 
+quadrature weights and the gray-box solution are given.\\
+
+
 Given a function space $\mathcal{S}_F$,
-I propose to infer a flux $\tilde{F}$ such that the mismatch between
-$\boldsymbol{u}$ and $\tilde{\boldsymbol{u}}$ is minimized, i.e.
+I propose to infer a flux $\tilde{F}$ such that $\mathcal{M}_u$ is minimized,
 \begin{equation}
-    \tilde{F}^* = \argmin_{\tilde{F} \in \mathcal{S}_F} \mathcal{M}\,,
+    \tilde{F}^* = \argmin_{\tilde{F} \in \mathcal{S}_F} \mathcal{M}_u\,.
     \label{eqn: twin min mismatch}
 \end{equation}
 The choice for $\mathcal{S}_F$ will be discussed later in Section \ref{sec: flux param} and
 \ref{sec: adaptive basis}. By setting the $F$ in \eqref{eqn: govern twin model} to be $\tilde{F}^*$,
-one obtain a ``trained'' twin-model equation
+one obtain a trained twin-model equation
 \begin{equation}\begin{split}
     \frac{\partial \tilde{u}}{\partial t}+ \nabla \cdot \big(D \tilde{F}^*(\tilde{u})\big) = q(\tilde{u},c)\,,
 \end{split}
 \label{eqn: govern twin model trained}
 \end{equation}
 Let $\tilde{\boldsymbol{u}}^*$ be the space-time solution of the twin model governed by \eqref{eqn: govern twin model trained}.
-The adjoint method can be applied to compute the gradient of $\tilde{\boldsymbol{u}}$ with respect
-to $\tilde{F}$. Therefore, the gradient of $\mathcal{M}$ with respect to $\tilde{F}$ can be obtained through 
-\eqref{eqn: solution mismatch} according to
-\begin{equation}
-    \frac{d\mathcal{M}}{d\tilde{F}} = \frac{d\mathcal{M}}{d\tilde{\boldsymbol{u}}} \frac{d\tilde{\boldsymbol{u}}}{d\tilde{F}}
-    \label{eqn: estimated gradient temp}
-\end{equation}
-Using the gradient \eqref{eqn: estimated gradient temp}, the optimization problem, \eqref{eqn: twin min mismatch},
-can be solved by gradient-based methods.
-Finally, given $\tilde{F}^*$, $\tilde{\boldsymbol{u}}^*$ depends on $c$. 
+Given $\tilde{F}^*$, $\tilde{\boldsymbol{u}}^*$ depends on $c$. 
 The gradient of any objective function $\xi(\tilde{\boldsymbol{u}}^*, c)$ with respect to $c$
 can be obtained by applying the adjoint method to the trained twin model.
-The gradient $\frac{d \xi(\tilde{\boldsymbol{u}}^*, c)}{dc}$ can drive the gradient-based optimization of 
+The gradient $\frac{d \xi(\tilde{\boldsymbol{u}}^*, c)}{dc}$ can drive the 
+gradient-based optimization of 
 $\xi({\boldsymbol{u}}, c)$, where ${\boldsymbol{u}}$ is the gray-box space-time solution.\\
-
 
 %The key to inferring the flux is to leverage the gray-box space-time solution.
 %Its inferrability can be 
@@ -143,8 +138,13 @@ $\xi({\boldsymbol{u}}, c)$, where ${\boldsymbol{u}}$ is the gray-box space-time 
 
 
 The key to inferring $F$ is to leverage the gray-box space-time solution.
-For example, the following theorem shows what aspect of $F$ can be inferred from the
-solution of a special form of \eqref{eqn: 1D conceptual},
+Compared to the surrogate modeling of the output $\xi$ \cite{surrogate review}, the advantage of
+the twin-model approach lies in the usage of the big data, the space-time solution, generated from
+gray-box PDE solvers. The usage of the big data may lead to more accurate modeling of $F$ and more
+accurate predictions of $\xi$ with fewer runs of the gray-box simulation.\\
+
+For example, the following theorem illustrates what aspect of $F$ can be inferred from the gray-box
+solution for a special form of \eqref{eqn: 1D conceptual},
 \begin{equation*}\begin{split}
     \frac{\partial u}{\partial t}+ \nabla \cdot \big( F(u) \big) = q(u,c)\,,
 \end{split}
@@ -218,14 +218,106 @@ rather than the fluxes themselves.
     \end{center}
 \end{figure}
 
-Compared to the surrogate modeling of the output $\xi$ \cite{surrogate review}, the advantage of
-the twin-model approach lies in the usage of the ``big data'', the space-time solution, generated from
-gray-box PDE solvers. The usage of the big data may lead to more accurate modeling of $F$ and more
-accurate predictions of $\xi$ with fewer runs of the gray-box simulation.\\
+In practice, the minimization of $\mathcal{M}_u$ can be expensive if the twin model uses
+implicit time marching schemes, because the computation of $\mathcal{M}_u$ will require iterative
+solves of linearized equations of the twin model \cite{PDE theory}.
+To avoid the expensive iterative solves, the \textbf{integrated truncation error} is introduced.
+Define
+\begin{equation}
+    \tau = \frac{\partial u}{\partial t} 
+    + \nabla \cdot \big(D \tilde{F}(u)\big) - q(u,c)\,,
+    \label{eqn: residual}
+\end{equation}
+to be the residual of \eqref{eqn: govern twin model}
+by replacing $\tilde{u}$ with $u$.
+Let $\boldsymbol{\tau}$ be the discretized residual obtained by plugging the discretized 
+gray-box solution into the twin-model simulator.
+The integrated truncation error is defined to be
+\begin{equation}
+    \mathcal{M}_{\tau}(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \boldsymbol{\tau}_{ij}^2 \,,
+    \label{eqn: truncation error}
+\end{equation}
+which approximates
+\begin{equation}
+    \int_0^T \int_\Omega \tau^2 \, \textrm{d}x\textrm{d}t\,.
+    \label{eqn: integrated residual}
+\end{equation}
+In \eqref{eqn: truncation error}, 
+$i, j, w_{ij}$ are defined in the same way as in \eqref{eqn: solution mismatch}.\\
+
+If $\mathcal{M}_u$ is replaced by $\mathcal{M}_{\tau}$ in \eqref{eqn: twin min mismatch},
+a different twin model can be obtained. The minimization of $\mathcal{M}_{\tau}$ can be
+cheaper than the minimization of $\mathcal{M}_u$ because the computation of the residual 
+$\boldsymbol{\tau}$ does not require the iterative solves.
+The problem is that the $\tilde{F}$ that minimizes 
+$\mathcal{M}_{\tau}$ does not guarantee a small $\mathcal{M}_u$.
+Indeed, if the twin models is unstable, $\mathcal{M}_u$ may not be bounded even if 
+$\mathcal{M}_{\tau}$ is bounded \cite{PDE theory}.
+In the following, a sufficient condition is studied under which $\mathcal{M}_u$ can be bounded by 
+$\mathcal{M}_{\tau}$.\\
+
+\begin{theorem}
+    Consider a twin model simulator whose one-step time marching is
+    \begin{equation}
+        \mathcal{G}_i:\, \mathbb{R}^N\mapsto\mathbb{R}^N,\, \tilde{\boldsymbol{u}}_{i\cdot}\rightarrow 
+        \tilde{\boldsymbol{u}}_{i+1\cdot}=\mathcal{G}_i
+        \tilde{\boldsymbol{u}}_{i\cdot} \,,\quad i=1,\cdots, M-1\,.
+    \end{equation}
+    Assume the quadrature weights are time-independent, i.e.
+    $w_{ij} = w_{j}$ for all $i,j$.
+    If $\mathcal{G}_i$ satisfies
+    \begin{equation}
+        \|\mathcal{G}_ia-\mathcal{G}_ib\|^2_{W} \le \beta \|a-b\|^2_{W} \,,
+        \label{eqn: contractive}
+    \end{equation}
+    with $\beta<1$,
+    for any $a, b \in \mathbb{R}^N$ and for all $i$,
+    then 
+    \begin{equation}
+        \mathcal{M}_u \le \frac{1}{1-\beta} \mathcal{M}_{\tau}\,,
+    \end{equation}
+    where
+    \begin{equation}
+        \|v\|^2_{W} \equiv v^T 
+            \begin{pmatrix}
+                {w_{1}} && \\
+                & \ddots & \\
+                && {w_{N}}
+            \end{pmatrix} v
+    \end{equation}
+    for any $v\in \mathbb{R}^N$.
+    \label{theorem: 2}
+\end{theorem}
+The proof is given in Appendix \ref{proof 2}. The theorem implies that,
+if the twin model is a contractive dynamical 
+system \cite{contractive system}, as given by \eqref{eqn: contractive}, then the
+solution mismatch can be bounded by the integrated truncation error. In contrast, 
+the bound may not exist for non-contractive dynamical systems, for example for systems 
+that exhibit bifurcation \cite{dynamical system}. It is a future work to further investigate the applicability of the pre-training
+theoretically, in particular, to investigate the necessary and sufficient condition for the bound.\\
+
+The usage of $\mathcal{M}_{\tau}$ will be discussed in section 
+\ref{sec: adaptive basis}. In the following, $\mathcal{M}$ is used to represent both $\mathcal{M}_u$
+and $\mathcal{M}_{\tau}$.\\
+
+
+The minimization of $\mathcal{M}$ can be solved by gradient-based methods.
+For $\mathcal{M}=\mathcal{M}_{\tau}$, the adjoint method can be applied to compute 
+$\frac{d\mathcal{M}_{\tau}}{d\tilde{F}}$ to drive the optimization.
+For $\mathcal{M} = \mathcal{M}_u$, the adjoint method can be 
+applied to compute the gradient of $\tilde{\boldsymbol{u}}$ with respect
+to $\tilde{F}$. Therefore, the gradient of $\mathcal{M}$ with respect to $\tilde{F}$ can be 
+obtained through 
+\eqref{eqn: solution mismatch} according to
+\begin{equation}
+    \frac{d\mathcal{M}}{d\tilde{F}} = \frac{d\mathcal{M}}{d\tilde{\boldsymbol{u}}} \frac{d\tilde{\boldsymbol{u}}}{d\tilde{F}}\,.
+    \label{eqn: estimated gradient temp}
+\end{equation}\\
+
 
 The remainder of this chapter is organized as follows.
-Section \ref{sec: flux param} discusses the choices of the function space, $\mathcal{S}_F$, 
-that appeared in \eqref{eqn: twin min mismatch}.
+Section \ref{sec: flux param} discusses the choices of the function space $\mathcal{S}_F$
+in \eqref{eqn: twin min mismatch}.
 %A suitable parameterization for $\tilde{F}$ will be chosen that takes into account the observations from
 %Theorem \ref{theorem: 1}.
 A choice of the basis functions, the sigmoid functions, 
@@ -233,15 +325,12 @@ is introduced to parameterize $\tilde{F}$. By using a fixed set of basis functio
 is demonstrated in a numerical example.
 Section \ref{sec: adaptive basis} develops a procedure that adaptively refines the
 basis functions,
-and gives an algorithm for training the twin model. To reduce the computational cost of the
-algorithm, Section \ref{sec: trunc error} presents a numerical 
-shortcut for \eqref{eqn: twin min mismatch} that is more computationally efficient. The
-numerical shortcut minimizes the integrated truncation error instead of the solution mismatch.
+and gives the algorithm for training the twin model. 
 Section \ref{sec: twin numerical results} demonstrates the algorithm in several numerical examples.
 Finally, section \ref{sec: chap 2 summary} summarizes the chapter.\\
 
 
-\subsection{Choice of Basis Functions}
+\section{Choice of Basis Functions}
 \label{sec: flux param}
 As discussed in Section \ref{sec: adaptive basis review}, 
 $F$ can be parameterized by a linear combination of basis functions.
@@ -275,14 +364,13 @@ self-similarity \cite{wavelet mallat}:
 \begin{equation*}\begin{split}
     &f(u) \in V_j \Leftrightarrow f(2u) \in V_{j+1}, \; j\in \mathbb{Z}\\
     &f(u) \in V_j \Leftrightarrow f(u-\frac{\eta}{2^j}) \in V_{j},
-                    \; j\in \mathbb{Z},\, \eta\in \left\{\eta_0, \eta_0\pm 1, \eta_0\pm 2,\cdots\right\},
+                    \; j\in \mathbb{Z},\, \eta\in \left\{0, \pm 1, \pm 2,\cdots\right\}\,.
 \end{split}\end{equation*}
-where $\eta_0\in \mathbb{R}$ is an arbitrary constant.
 The function space $V_j$ is spanned by a set of orthonormal bases called the wavelet
 \cite{wavelet mallat}
 \begin{equation}
     \hat{\phi}_{j,\eta}(u) = 2^{j/2} \hat{\phi}(2^j u-\eta) \,,\quad 
-    \eta\in \left\{\eta_0, \eta_0\pm 1, \eta_0\pm 2,\cdots\right\}
+    \eta\in \left\{0, \pm 1, \pm 2,\cdots\right\}\,,
     \label{eqn: self similar wavelet}
 \end{equation}
 where $\hat{\phi}$ is called the mother wavelet.
@@ -339,7 +427,7 @@ $\phi_{j,\eta}$ satisfies the self-similarity property
     {\phi}_{j,\eta}(u) = {\phi}(2^j u-\eta) \,,\quad j\in \mathbb{Z} \,,\;\eta \in \mathbb{Z}\,,
     \label{eqn: self similar sigmoid}
 \end{equation}
-where $\phi$ is called the ``mother sigmoid''.\\
+where $\phi$ is called the \textbf{mother sigmoid}.\\
 
 \begin{figure}[Htbp]\begin{center}
     \includegraphics[width=5cm, height=4cm]{../basis_combined.png}
@@ -376,12 +464,58 @@ $\tilde{F}$ can be expressed by
                        \phi_{\boldsymbol{j}, \boldsymbol{\eta}}\,,
     \label{eqn: linear expansion}
 \end{equation}
-where $\alpha$'s are the coefficients of the bases. There are infinite number of bases involved
+where $\alpha$'s are the coefficients of the bases.\\
+
+A compact representation of the sigmoid bases is introduced.
+A univariate basis function,
+\begin{equation*}
+    {\phi}_{j,\eta}(u) = {\phi}(2^j u-\eta) \,,\quad j\in \mathbb{Z} \,,\;\eta \in \mathbb{Z}\,,
+    \label{eqn: self similar sigmoid}
+\end{equation*}
+can be represented by a tuple $(j, \eta)$,
+where $j$ is the dilation parameter, and $\frac{\eta}{2^j}$ is
+the center of the basis.
+Similarly, a $k$-variate basis function, $\phi_{\boldsymbol{j}, \boldsymbol{\eta}}$ in
+\eqref{eqn: tensor basis}, can be represented by a tuple $\left(\boldsymbol{j}, \,
+\boldsymbol{\eta}\right) 
+= \left((j_1,\cdots, j_k), \, \left(\eta_1, \cdots, \eta_k\right)\right)$.
+Thus, a sigmoid function can be visualized by a point in a $2k$-dimensional space,
+which is illustrated in Figure \ref{fig: basis 0} thru. \ref{fig: basis 3} 
+for the univariate case.
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.48\textwidth}
+        \centering
+        \includegraphics[width=7.5cm]{../basis_0.png}
+        \caption{$\left(0,0\right)$}
+        \label{fig: basis 0}
+    \end{subfigure}
+    \begin{subfigure}[t]{.48\textwidth}
+        \centering
+        \includegraphics[width=7.5cm]{../basis_1.png}
+        \caption{$\left(0, -1\right)$}
+        \label{fig: basis 1}
+    \end{subfigure}
+    \begin{subfigure}[t]{.48\textwidth}
+        \centering
+        \includegraphics[width=7.5cm]{../basis_3.png}
+        \caption{$\left(1, 0\right)$}
+        \label{fig: basis 2}
+    \end{subfigure}
+    \begin{subfigure}[t]{.48\textwidth}
+        \centering
+        \includegraphics[width=7.5cm]{../basis_6.png}
+        \caption{$\left(1, 1\right)$}
+        \label{fig: basis 3}
+    \end{subfigure}
+    \caption{An illustration of the tuple representation of univariate sigmoid functions.}
+\end{center}\end{figure}
+
+There are infinite number of bases involved
 in this expression, making it infeasible to be implemented in the computer. To address this issue,
 a systematic procedure for choosing
 a suitable subset of the bases %$\{\boldsymbol{j}, \boldsymbol{\eta}\}$
-will be presented in Section \ref{sec: adaptive basis}.
-\\
+will be presented in Section \ref{sec: adaptive basis}.\\
+
 
 In the remaining part of the section, a numerical example is given to illustrate the inference
 of $F$ by using the sigmoid parameterization.
@@ -407,21 +541,21 @@ The twin model solves
 with the same $c$ and the same initial and boundary conditions. Parameterize $\tilde{F}$ by
 the sigmoid bases \eqref{eqn: self similar sigmoid}
 \begin{equation}
-    \tilde{F} = \sum_{{\left\{j, \eta\right\}}\in A\subset \mathbb{Z}^k\times \mathbb{Z}^k} 
+    \tilde{F} = \sum_{(j, \eta)\in \mathcal{A}\subset \mathbb{Z}\times \mathbb{Z}} 
                        \alpha_{{j}, {\eta}}
                        \phi_{{j}, {\eta}}\,,
     \label{eqn: linear expansion finite}
 \end{equation}
-\eqref{eqn: linear expansion finite} differs from 
+where $\mathcal{A}$ is a finite set that contains the tuples representing
+the basis functions. \eqref{eqn: linear expansion finite} differs from 
 \eqref{eqn: linear expansion} in that a finite number of basis functions are used so
-the parameterization can be implemented in the computer. In this section, the bases used
-in the parameterization, represented by the set $A$ in \eqref{eqn: linear expansion finite},
-are chosen manually, such that the flux can be well approximated.
-The chosen basis are $\phi_{j, \eta}$ for $j=3$, $\eta=0,1,\cdots, 8$, which are shown in 
+the parameterization can be implemented in the computer. In this example, the set $\mathcal{A}$
+is chosen manually, such that the Buckley-Leverett flux can be well approximated.
+The chosen basis are $(j, \eta)$ for $j=3$, $\eta=0,1,\cdots, 8$, which are shown in 
 Figure \ref{fig: sigmoid basis ad hoc}.
 The topic of
 how to algorithmically choose a suitable set of basis will be discussed 
-in Section \ref{sec: adaptive basis}.
+in Section \ref{sec: adaptive basis}.\\
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=5cm]{../fixed_basis_eg.png}
@@ -439,8 +573,9 @@ in Section \ref{sec: adaptive basis}.
 %the gradient is non-zero but very small in such values of $u$, the inference will be ill-posed.
 %I have difficulty explaining this rigorously).
 %Otherwise, the $\frac{dF}{du}$ in such values of $u$ can not be represented.
-To avoid overfitting in \eqref{eqn: twin min mismatch}, the
-$L_1$ regularization on $\alpha$ is applied in minimizing $\mathcal{M}$. To sum up, 
+The twin model is trained to minimize $\mathcal{M}_u$.
+To avoid overfitting in \eqref{eqn: twin min mismatch}, we consider applying an
+$L_1$ regularization on $\boldsymbol{\alpha}$. In other words,
 $F$ is inferred by solving the following minimization problem,
 \begin{equation}
     \boldsymbol{\alpha}^* = \argmin_{\alpha_{j, \eta}\in \mathbb{R}} \left(
@@ -450,7 +585,7 @@ $F$ is inferred by solving the following minimization problem,
     \,,
     \label{eqn: solution mismatch L1 norm}
 \end{equation}
-where $\boldsymbol{\alpha} = \left\{\alpha_{j,k}\right\}_{\left\{j,k\right\}\in A}$, 
+where $\boldsymbol{\alpha} = \left\{\alpha_{j,k}\right\}_{\left(j,k\right)\in A}$, 
 $\left\|\cdot\right\|_{L_1}$ is the $L_1$ norm, and
 $\tilde{\boldsymbol{u}}$ is the twin-model space-time solution that depends on the value of
 $\boldsymbol{\alpha}$.
@@ -492,25 +627,23 @@ In the third step, each trained twin model is validated, by computing
 the solution mismatch on the remaining set of the gray-box solution, as shown in 
 \eqref{eqn: cross validation mismatch}.
 \begin{equation}\begin{split}
-    \mathcal{M}_1 &= \texttt{MismatchValidation}\left( T_1 , \boldsymbol{u}_1\right)\\
-    \mathcal{M}_2 &= \texttt{MismatchValidation}\left( T_2 , \boldsymbol{u}_2\right)\\
+    \mathcal{M}_u^1 &= \texttt{SolutionMismatch}\left( T_1 , \boldsymbol{u}_1\right)\\
+    \mathcal{M}_u^2 &= \texttt{SolutionMismatch}\left( T_2 , \boldsymbol{u}_2\right)\\
     &\cdots\\
-    \mathcal{M}_k &= \texttt{MismatchValidation}\left( T_k , \boldsymbol{u}_k\right)
+    \mathcal{M}_u^k &= \texttt{SolutionMismatch}\left( T_k , \boldsymbol{u}_k\right)
     \label{eqn: cross validation mismatch}
 \end{split}\end{equation}
 $\lambda$ should be chosen to minimize
 the mean value of validation errors
 \begin{equation}
-    \overline{\mathcal{M}} = \frac{1}{k}\left(\mathcal{M}_1 + \mathcal{M}_2 + \cdots 
-    + \mathcal{M}_k\right)\,.
+    \overline{\mathcal{M}} = \frac{1}{k}\left(\mathcal{M}_u^1 + \mathcal{M}_u^2 + \cdots 
+    + \mathcal{M}_u^k\right)\,.
     \label{eqn: cross validation error mean}
-\end{equation}
+\end{equation}\\
 
 
-The minimization problem \eqref{eqn: solution mismatch L1 norm} can be solved by a gradient-based
-method. In this section, the problem is solved by the L-BFGS method \cite{LBFGS}, using the
-NLopt package \cite{nlopt}.\\
-
+\eqref{eqn: solution mismatch L1 norm} is solved by the L-BFGS method \cite{LBFGS}, using the
+NLopt package \cite{nlopt}.
 An example of training the twin model is shown in Figure \ref{fig: insample test}.
 Figure \ref{fig: insample test} (a) shows the gray-box solution used to train the twin model. 
 Figure \ref{fig: insample test} (b) shows the trained twin model solution by using the same initial condition.
@@ -518,7 +651,7 @@ Figure \ref{fig: flux test} shows the gray-box flux $F$ and the trained flux $\t
 $\frac{dF}{du}$ and $\frac{d\tilde{F}}{du}$.\\
 
 In addition, the trained twin model is simulated using out-of-sample initial conditions which
-are different from the initial condition in the training solution. 
+are different from the initial condition of the training solution. 
 Two example gray-box
 and twin-model solutions are shown in Figure \ref{fig: outsample good test} and Figure \ref{fig: outsample bad test}.
 In Figure \ref{fig: outsample good test}, the $B_u$ for the gray-box solution is a subset of the
@@ -638,16 +771,18 @@ the twin model method. This topic is discussed in the next section.\\
 \end{figure}
 
 
-\subsection{Adaptive Basis Construction}
+\section{Adaptive Basis Construction}
 \label{sec: adaptive basis}
 This section addresses the problem of adaptively choosing a finite set of basis functions
 for the parameterization of $\tilde{F}$.
+Assume all possible choices of basis functions forms a countable set, thereby can be indexed 
+by positive integers.
 The heuristics for the adaptive basis construction has been discussed in Section
 \ref{sec: adaptive basis review}. It has been explained that the candidate bases, namely the basis
 dictionary, can be chosen adaptively using 
 the following iterative approach \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}. 
-Starting from an initial set of basis functions $\boldsymbol{\phi}_0$,
-the basis dictionary $\boldsymbol{\phi}$ is built up progressively 
+Starting from an initial set of basis functions,
+the basis dictionary is built up progressively 
 by iterating over a forward step and a backward step
 \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
 The forward step searches over a candidate set of bases, and appends the most useful bases 
@@ -660,29 +795,66 @@ The iteration stops only when no alternation is made to the dictionary or when a
 as a targeted approximation accuracy,
 is achieved \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}. My thesis applies 
 this approach to the adaptive construction of the bases for the parameterization of $\tilde{F}$,
-which is sketched in Figure \ref{fig: outline heuristics}.\\
+which is sketched in Algorithm \ref{algo: outline heuristics}, where
+$\mathcal{A}$ indicates a finite set containing integers that index the basis functions in the
+basis dictionary.\\
 
-\begin{figure}
-    \begin{center}
-        \includegraphics[height=6cm]{../algo1_2.png}
-        \caption{The outline of the algorithm for training a twin model with an adaptive basis.
-                 $\boldsymbol{\phi}$ is the basis dictionary, $\boldsymbol{\phi}_0$ is the 
-                 initial basis dictionary, $\boldsymbol{\alpha}$ indicates the bases' coefficients.
-                 As explained in the previous section, the solution mismatch is a function that depends
-                 on $u$ and $\tilde{F}$, where $\tilde{F}$ depends on the bases $\boldsymbol{\phi}$
-                 and its coefficients $\boldsymbol{\alpha}$.} 
-        \label{fig: outline heuristics}
-    \end{center}
-\end{figure}
+\begin{algorithm}
+    \begin{algorithmic}[1]
+        \REQUIRE{Gray-box solution $\boldsymbol{u}$; Initial basis dictionary 
+                 $\mathcal{A}$.}
+        \LOOP
+            \STATE Minimize solution mismatch:
+                   $\alpha \leftarrow \argmin_{\alpha} \mathcal{M}
+                    \left( \tilde{F}(\mathcal{A}, \alpha), \boldsymbol{u}\right)$
+            \IF {No more basis is needed}
+                \STATE \textbf{Break}
+            \ELSE
+                \STATE Enrich $\mathcal{A}$ by an additional basis.
+            \ENDIF
+            \IF {No basis shall be deleted}
+                \STATE \textbf{Continue}
+            \ELSE 
+                \STATE Delete a basis from $\mathcal{A}$.
+            \ENDIF
+        \ENDLOOP
+        \ENSURE $\mathcal{A}$, $\alpha$.
+    \end{algorithmic}
+    \caption{The outline of the algorithm for training a twin model with an adaptive basis.
+             $\mathcal{A}$ indicates the basis dictionary.  
+             $\boldsymbol{\alpha}$ indicates the bases' coefficients.
+             Starting from an initial dictionary, the algorithm iterates over the forward and
+             the backward step to adaptively construct the dictionary and find the optimal 
+             coefficients.
+             As explained in the previous section, the solution mismatch is a function that depends
+             on $u$ and $\tilde{F}$, where $\tilde{F}$ depends on the dictionary $\mathcal{A}$
+             and its coefficients $\alpha$.} 
+    \label{algo: outline heuristics}
+\end{algorithm}
+
+
+%\begin{figure}
+%    \begin{center}
+%        \includegraphics[height=6cm]{../algo1_2.png}
+%        \caption{The outline of the algorithm for training a twin model with an adaptive basis.
+%                 $\boldsymbol{\phi}$ is the basis dictionary, $\boldsymbol{\phi}_0$ is the 
+%                 initial basis dictionary, $\boldsymbol{\alpha}$ indicates the bases' coefficients.
+%                 As explained in the previous section, the solution mismatch is a function that depends
+%                 on $u$ and $\tilde{F}$, where $\tilde{F}$ depends on the bases $\boldsymbol{\phi}$
+%                 and its coefficients $\boldsymbol{\alpha}$.} 
+%        \label{fig: outline heuristics}
+%    \end{center}
+%\end{figure}
 
 Some components of the algorithm requires measuring how significant a basis is
-in training a twin model. Two criterions are needed. 
-The first criterion determines ``which'' basis shall be chosen as the candidate basis 
-to add to or delete from the dictionary, based on some metric of the ``significance'' of 
+in training a twin model. Two criteria are needed. 
+The first criterion determines \textbf{which} basis shall be chosen as the candidate basis 
+to add to or delete from the dictionary, based on a metric of the significance of 
 the basis.
-The second criterion determines ``whether'' the candidate basis needs to be added or deleted, based
+The second criterion determines \textbf{whether} the current dictionary contains too few or
+too many bases, based
 on whether the approximation is sufficiently accurate.
-The two criterions are developed in this section. \\
+The two criteria are developed in this section. \\
 
 %(I think you will question the Figure \ref{fig: outline heuristics}. For example, you may ask 
 %what does "no more basis is needed" mean? I have to say that 
@@ -699,44 +871,52 @@ The two criterions are developed in this section. \\
 %Thirdly, a metric is developed that determines when to add or remove a candidate basis.\\
 %The three elements are employed to build the twin model algorithm in Section \ref{sec: twin algo}.\\
 
-Firstly, a formulation is developed to efficiently assess the significance of the candidate basis.
-Given a basis dictionary $\boldsymbol{\phi}_\mathcal{A} = 
-\{\phi_i\}_{i\in \mathcal{A}}$, define the ``minimal mismatch''
+To define the first criterion, 
+a formulation is developed to efficiently assess the significance of a candidate basis.
+Given a basis dictionary $\mathcal{A}$, define the \textbf{minimal mismatch}
 \begin{equation}
     \mathcal{M}^*(\mathcal{A}) = \min_{\boldsymbol{\alpha}_\mathcal{A} \in \mathbb{R}^{|\mathcal{A}|}}
-    \mathcal{M}\left( \sum_{i\in \mathcal{A}}
-    {\alpha}_i {\phi}_i \right)\,,
+    \mathcal{M}\left( \sum_{(\boldsymbol{j}, \boldsymbol{\eta})\in \mathcal{A}}
+    {\alpha}_{\boldsymbol{j}, \boldsymbol{\eta}} {\phi}_{\boldsymbol{j}, 
+    \boldsymbol{\eta}} \right)\,,
     \label{eqn: minimal mismatch}
 \end{equation}
+where $\mathcal{M}$ is defined in \eqref{eqn: solution mismatch},
 to be the minimal solution mismatch \eqref{eqn: solution mismatch} if $\tilde{F}$ were parameterized
-by $\boldsymbol{\phi}_\mathcal{A}$.
-$\mathcal{A}$ is a finite set containing $\{\boldsymbol{j},
-\boldsymbol{\eta}\}$'s, the dilation and translation parameters of the sigmoid bases.
+by the bases indexed by $\mathcal{A}$.
+%The basis functions are represented by $\left(\boldsymbol{j},
+%\boldsymbol{\eta}\right)$'s, i.e. the dilation and translation parameters of the sigmoid bases.
 Given the gray-box solution, the minimal mismatch 
 is a function of $\mathcal{A}$.
-$\boldsymbol{\alpha}_{\mathcal{A}} = \{\alpha_i\}_{i\in \mathcal{A}}$ is the coefficient for 
-$\boldsymbol{\phi}_\mathcal{A}$. 
-Let $\boldsymbol{\alpha}_{\mathcal{A}}^* =\{\alpha_i^*\}_{i\in \mathcal{A}}$
+%$\boldsymbol{\alpha}_{\mathcal{A}} = \{\alpha_i\}_{i\in \mathcal{A}}$ is the coefficient for 
+%$\boldsymbol{\phi}_\mathcal{A}$. 
+Let $\boldsymbol{\alpha}_{\mathcal{A}}^* =\{\alpha_{\boldsymbol{j}, \boldsymbol{\eta}}^*\}_{
+(\boldsymbol{j}, \boldsymbol{\eta})\in \mathcal{A}}$
 be the optimal coefficients that solves \eqref{eqn: minimal mismatch}, and let
-$\tilde{F}^*_\mathcal{A} = \sum_{i\in \mathcal{A}} \alpha^*_i \phi_i$.
+$\tilde{F}^*_\mathcal{A} = \sum_{(\boldsymbol{j}, \boldsymbol{\eta})\in \mathcal{A}} 
+\alpha^*_{\boldsymbol{j}, \boldsymbol{\eta}} \phi_{\boldsymbol{j}, \boldsymbol{\eta}}$.
 Consider appending $\boldsymbol{\phi}_{\mathcal{A}}$ 
 by an additional basis
-$\phi_l$, and let $\boldsymbol{\phi}_{\mathcal{A}^\prime} = \left\{
-\boldsymbol{\phi}_{\mathcal{A}}, \phi_l \right\}$,
-$\mathcal{A}^\prime = \left\{ \mathcal{A}, l \right\}$.
+$\left(\boldsymbol{j}_l, \boldsymbol{\eta}_l\right)$, 
+and let 
+%$\boldsymbol{\phi}_{\mathcal{A}^\prime} = \left\{
+%\boldsymbol{\phi}_{\mathcal{A}}, \phi_l \right\}$,
+$\mathcal{A}^\prime$ be the appended basis dictionary.
+%$\left\{ \mathcal{A}, l \right\}$.
 The minimal mismatch for the appended basis dictionary
 $\boldsymbol{\phi}_{\mathcal{A}^\prime}$ is
 \begin{equation}
     \mathcal{M}^*(\mathcal{A}^\prime) 
     = \min_{\boldsymbol{\alpha}_{\mathcal{A}^\prime} \in \mathbb{R}^{|\mathcal{A}|+1}}
-    \mathcal{M}\left( \sum_{i\in \mathcal{A}^\prime}
-    {\alpha}_{i} {\phi}_{i} \right)\,,
+    \mathcal{M}\left( \sum_{(\boldsymbol{j}, \boldsymbol{\eta})\in \mathcal{A}^\prime}
+    {\alpha}_{\boldsymbol{j}, \boldsymbol{\eta}} {\phi}_{\boldsymbol{j}, \boldsymbol{\eta}} 
+    \right)\,,
     \label{eqn: append minimal mismatch}
 \end{equation}
 Because $\boldsymbol{\phi}_{\mathcal{A}}$ is a subset of $\boldsymbol{\phi}_{\mathcal{A}^\prime}$, 
 it's obvious that 
 $\mathcal{M}^*(\mathcal{A}^\prime) \le \mathcal{M}^*(\mathcal{A})$. 
-Define the ``mismatch improvement'' to be
+Define the \textbf{mismatch improvement} to be
 \begin{equation}
     \Delta \mathcal{M}^*\left(\mathcal{A}, l\right) = \mathcal{M}^*(\mathcal{A}) - 
     \mathcal{M}^*(\mathcal{A}^\prime)
@@ -791,52 +971,9 @@ can be computed by numerical quadrature over the bounded domain.
 For example, for a uniform Cartesian space-time grid, the quadrature weights are equal to a constant.
 \\
 
-Secondly, a compact representation of the sigmoid bases is introduced.
-A univariate basis function,
-\begin{equation*}
-    {\phi}_{j,\eta}(u) = {\phi}(2^j u-\eta) \,,\quad j\in \mathbb{Z} \,,\;\eta \in \mathbb{Z}\,,
-    \label{eqn: self similar sigmoid}
-\end{equation*}
-can be represented by a tuple $(j, \frac{\eta}{2^j})$,
-where $j$ is the dilation parameter, and $\frac{\eta}{2^j}$ is
-the center of the basis.
-Similarly, a $k$-variate basis function, $\phi_{\boldsymbol{j}, \boldsymbol{\eta}}$ in
-\eqref{eqn: tensor basis}, can be represented by a tuple $\left(\boldsymbol{j}, \,
-\frac{\boldsymbol{\eta}}{2^{\boldsymbol{j}}}\right) 
-= \left(\{j_1,\cdots, j_k\}, \, \left\{\frac{\eta_1}{2^{j_1}}, \cdots, \frac{\eta_k}{2^{j_k}}\right\}\right)$.
-Thus, a sigmoid function can be visualized by a point in a $2k$-dimensional space,
-which is illustrated in Figure \ref{fig: basis 0} thru. \ref{fig: basis 3} 
-for the univariate case.
-\begin{figure}[htbp]\begin{center}
-    \begin{subfigure}[t]{.48\textwidth}
-        \centering
-        \includegraphics[width=7.5cm]{../basis_0.png}
-        \caption{$\left(0,\frac{0}{2^0}\right)$}
-        \label{fig: basis 0}
-    \end{subfigure}
-    \begin{subfigure}[t]{.48\textwidth}
-        \centering
-        \includegraphics[width=7.5cm]{../basis_1.png}
-        \caption{$\left(0, \frac{-1}{2^0}\right)$}
-        \label{fig: basis 1}
-    \end{subfigure}
-    \begin{subfigure}[t]{.48\textwidth}
-        \centering
-        \includegraphics[width=7.5cm]{../basis_3.png}
-        \caption{$\left(1, \frac{1}{2^0}\right)$}
-        \label{fig: basis 2}
-    \end{subfigure}
-    \begin{subfigure}[t]{.48\textwidth}
-        \centering
-        \includegraphics[width=7.5cm]{../basis_6.png}
-        \caption{$\left(1, \frac{1}{2^1}\right)$}
-        \label{fig: basis 3}
-    \end{subfigure}
-    \caption{An illustration of the tuple representation and the corresponding univariate sigmoid.}
-\end{center}\end{figure}
 
-Using this representation, define the ``neighborhood'' of a univariate sigmoid 
-$(j,\frac{\eta}{2^j})$ to be a set of the sigmoid bases:
+Using this representation, define the neighborhood of a univariate sigmoid 
+$(j,\eta)$ to be a set of the sigmoid bases:
 \begin{equation}
     \mathcal{N}\left[ \left(j,\frac{\eta}{2^j}\right) \right]
     = \left\{ 
@@ -976,12 +1113,12 @@ the dictionary only if such action reduces $\overline{\mathcal{M}}$. Because the
 involves $k$ twin models, it increases the computational cost.
 Therefore, a small $k$ is preferrable. $k=2$ will be used in the following numerical examples.\\
 
-%\subsection{Algorithm}
-%\label{sec: twin algo}
 Based upon the above developments, a twin model algorithm 
 with adaptive basis construction is developed based on Figure \ref{fig: outline heuristics}. \\
 
-\begin{algorithm}[H]
+
+
+\begin{algorithm}
 \begin{algorithmic}[1]
 \REQUIRE{Initial basis dictionary $\boldsymbol{\phi}_\mathcal{A}$, 
         coefficients $\alpha_{\mathcal{A}}= \mathbf{0}$},
@@ -1036,6 +1173,12 @@ with adaptive basis construction is developed based on Figure \ref{fig: outline 
 \ENDIF
 \ENDIF
 \ENDLOOP
+\STATE
+       Minimize solution mismatch 
+       $
+           \alpha_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{M}_u
+           \left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
+       $
 \ENSURE $\mathcal{A}$, $\phi_{\mathcal{A}}$, $\alpha_{\mathcal{A}}$.
 \end{algorithmic}
 \caption{Training twin model with adaptive basis construction.}
@@ -1044,7 +1187,7 @@ with adaptive basis construction is developed based on Figure \ref{fig: outline 
 
 
 Algorithm \ref{alg: train twin} adopts the heuristics of the forward-backward iteration
-shown in Figure \ref{fig: outline heuristics}.
+shown in Algorithm \ref{algo: outline heuristics}.
 The algorithm starts from training a twin model using 
 a starting basis dictionary $\boldsymbol{\phi}_{\mathcal{A}}$. 
 %Usually the starting
@@ -1075,158 +1218,6 @@ to have a large number of bases, which results in a large number of iterations.
 To address this issue, a numerical shortcut is provided in Section 
 \ref{sec: trunc error} that significantly reduces the cost.\\
 
-\subsection{Minimizing the Truncation Error}
-\label{sec: trunc error}
-In the previous sections, the twin model method was developed. The method infers the unknown
-$F$ in a gray-box simulator by training a twin model that minimizes the 
-space-time solution mismatch.
-The training can be expensive: In the algorithm \ref{alg: train twin}, each iteration 
-involves $k$ minimization problems of the solution mismatch in the forward step, 
-and $k$ minimization problems of the solution mismatch in the backward step,
-where each minimization requires at least one twin-model simulation.
-Instead of the solution mismatch, this section develops another metric to minimize in order
-to reduce the computational cost.\\
-
-%To reduce the computational cost, a ``pre-training'' step is proposed
-%where an ``integrated truncation error'' is minimized. 
-%A pre-trained twin model is then ``fine tuned'' to minimize the solution mismatch.
-%The applicability of the pre-training is studied; in particular, I study
-%under what condition can the solution mismatch be bounded by the integrated truncation error.
-%Finally, a stochastic gradient descent approach is adopted that efficiently 
-%minimizes the integrated truncation error.\\
-
-
-Define
-\begin{equation}
-    \tau := \frac{\partial u}{\partial t} 
-    + \nabla \cdot \big(D \tilde{F}(u)\big) - q(u,c)\,,
-    \label{eqn: residual}
-\end{equation}
-to be the residual of the twin-model PDE \eqref{eqn: govern twin model},
-\begin{equation*}\begin{split}
-    \frac{\partial \tilde{u}}{\partial t}+ \nabla \cdot \big(D \tilde{F}(\tilde{u})\big) = q(\tilde{u},c)\,,
-\end{split}
-\end{equation*}
-by replacing $\tilde{u}$ with $u$, where $u$ is the gray-box solution satisfying 
-\eqref{eqn: govern PDE}
-\begin{equation*}\begin{split}
-    \frac{\partial u}{\partial t}+ \nabla \cdot \big( D F(u) \big) = q(u,c)\,.
-\end{split}
-\end{equation*}
-%Let its twin-model discretization be $\boldsymbol{\tau}$ (I think this is not clearly explained, 
-%but can't find a good way of expressing this).
-Assume the gray-box simulator and its twin model use the same space-time grid. 
-Define $\boldsymbol{\tau}$ to be the discretized residual obtained by plugging the discretized 
-gray-box solution into the twin-model simulator.
-Define the integrated truncation error to be
-\begin{equation}
-    \mathcal{T}(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \boldsymbol{\tau}_{ij}^2 \,,
-    \label{eqn: truncation error}
-\end{equation}
-where $w_{ij}$ are the quadrature weights defined in \eqref{eqn: solution mismatch}. 
-$i,j$ are the indices for time and space grid.\\
-
-The previous section discussed that the minimization of $\mathcal{M}$ can be computationally expensive.
-To reduce the computational cost, I propose to train a twin model 
-by minimizing the integrated truncation error.
-In other words, the coefficients of a twin model can be determined by
-\begin{equation}
-    \alpha_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}}
-    \alpha_i \phi_i\right)\,.
-    \label{eqn: minimize truncation error}
-\end{equation}
-
-\eqref{eqn: minimize truncation error} can be solved using algorithm \ref{alg: train twin} by
-replace $\mathcal{M}$ with $\mathcal{T}$. As a consequence, in the algorithm  \ref{alg: train twin}, 
-the estimator for the 
-significance of a candidate basis, $s_l(\mathcal{A})$, is replaced by 
-\begin{equation}
-    s_l^t(\mathcal{A}) \equiv \left|\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{T}}{d \tilde{F}}
-    \right|_{\tilde{F}_\mathcal{A}^*} \phi_l \; \textrm{d} u \right|\,.
-    \label{eqn: basis significance 2}
-\end{equation}
-In addition, the validation error, $\overline{\mathcal{M}}$, is replaced by
-\begin{equation}
-    \overline{\mathcal{T}} = \frac{1}{k}\left( \mathcal{T}_1 + \mathcal{T}_2 + \cdots + 
-    \mathcal{T}_k\right)\,,
-    \label{eqn: pre train validation error}
-\end{equation}
-where
-\begin{equation}
-    \mathcal{T}_i = \texttt{IntegratedTruncationError}(T_i, \boldsymbol{u}_i)\,.
-\end{equation}
-for $i=1, \cdots, k$.
-To sum up, \eqref{eqn: minimize truncation error} can be solved by the following algorithm.
-\begin{algorithm}[H]
-\begin{algorithmic}[1]
-\REQUIRE{Initial basis dictionary $\boldsymbol{\phi}_\mathcal{A}$, 
-        coefficients $\alpha_{\mathcal{A}}^t= \mathbf{0}$},
-        Validation error $\overline{\mathcal{T}}_0 = \infty$,
-        Gray-box solution $\boldsymbol{u}$.
-\STATE Minimize solution mismatch 
-       $
-           \alpha^t_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
-       $ 
-\LOOP 
-\STATE Find $\phi_{l}\in \mathcal{N}(\boldsymbol{\phi}_{\mathcal{A}}) \backslash 
-       \boldsymbol{\phi}_{\mathcal{A}}$ with the maximal $s_l^t(\mathcal{A})$ \\
-       $\mathcal{A} \leftarrow 
-       \mathcal{A} \bigcup \{l\}$, $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow 
-       \boldsymbol{\phi}_{\mathcal{A}}
-       \bigcup \{\phi_{l}\}$, $\alpha^t_l = 0$,
-       $\alpha^t_{\mathcal{A}} \leftarrow \{\alpha^t_{\mathcal{A}}, \alpha^t_l\}$
-\STATE Compute $\overline{\mathcal{T}}$ by $k$-fold cross validation.
-\IF {$\overline{\mathcal{T}} < \overline{\mathcal{T}}_0$} 
-    \STATE $\overline{\mathcal{T}}_0\leftarrow \overline{\mathcal{T}}$\\
-       $
-           \alpha^t_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
-       $
-\ELSE \STATE 
-       $\mathcal{A} \leftarrow 
-       \mathcal{A} \backslash \{l\}$, $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow 
-       \boldsymbol{\phi}_{\mathcal{A}}
-       \backslash \{\phi_{l}\}$, $\alpha^t_{\mathcal{A}} \leftarrow \alpha^t_{\mathcal{A}} \backslash 
-       \{\alpha^t_l\}$
-      \textbf{break}
-\ENDIF
-\STATE Find $\phi_{l^\prime}\in 
-       \boldsymbol{\phi}_{\mathcal{A}}$ with the least $s_{l^\prime}^t(\mathcal{A})$  \\
-\IF {${l^\prime} \neq {l}$}
-\STATE  
-       $\mathcal{A} \leftarrow 
-       \mathcal{A} \backslash \{l^\prime\}$,
-       $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow \boldsymbol{\phi}_{\mathcal{A}}
-        \backslash\{\phi_{l^\prime}\}$, 
-       $\alpha^t_{\mathcal{A}} \leftarrow \alpha^t_{\mathcal{A}}\backslash \{\alpha^t_{l^\prime}\}$
-\STATE Compute $\overline{\mathcal{T}}$ by $k$-fold cross validation.
-\IF{  $\overline{\mathcal{T}} < \overline{\mathcal{T}}_0$ }
-\STATE $\overline{\mathcal{T}}_0 \leftarrow \overline{\mathcal{T}}$\\
-       $
-           \alpha^t_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
-       $
-\ELSE \STATE
-       $\mathcal{A} \leftarrow \mathcal{A}\bigcup \{l^\prime\}$,
-       $\phi_{\mathcal{A}}\leftarrow \phi_{\mathcal{A}} 
-       \bigcup \{\phi_{l^\prime}\}$, $\alpha^t_{\mathcal{A}} \leftarrow 
-       \alpha^t_{\mathcal{A}}\bigcup \{\alpha^t_{l^\prime}\}$
-\ENDIF
-\ENDIF
-\ENDLOOP
-\ENSURE $\mathcal{A}$, $\phi_{\mathcal{A}}$, $\alpha^t_{\mathcal{A}}$.
-\end{algorithmic}
-\caption{Training a twin model by minimizing the integrated truncation error.}
-\label{alg: train twin trunc}
-\end{algorithm}
-
-
-Using algorithm \ref{alg: train twin trunc}, a two-step
-procedure is proposed to train the twin model. In the first step, the twin model
-is pre-trained using algorithm \ref{alg: train twin trunc}.
-In the second step, the $\phi_{\mathcal{A}}$, obtained from algorithm 
-\ref{alg: train twin trunc}, is used as the basis dictionary.
-Its coefficients, $\alpha_\mathcal{A}^t$, are fine tuned by minimizing the 
-solution mismatch $\mathcal{M}$.\\
-
 The benefit of the two-step procedure is as follows:
 The first step does not involve the full space-time simulation of the twin model, because
 the solution mismatch $\mathcal{M}$ is replaced by the integrated truncation error $\mathcal{T}$.
@@ -1239,50 +1230,215 @@ the second step does not involve any iteration on the basis selection. To sum up
 allows the separation of the basis selection and the minimization of the solution mismatch,
 therefore is computationally preferrable.\\
 
-However, the minimization of $\mathcal{T}$ does not guarantee a bounded $\mathcal{M}$.
-In the following, I study the condition under which $\mathcal{M}$ can be bounded by $\mathcal{T}$.
-A sufficient condition for the bound is provided
-by Theorem \ref{theorem: 2}.\\
 
-\begin{theorem}
-    Consider a twin model simulator whose one-step time marching is
-    \begin{equation}
-        \mathcal{G}_i:\, \mathbb{R}^N\mapsto\mathbb{R}^N,\, \tilde{\boldsymbol{u}}_{i\cdot}\rightarrow 
-        \tilde{\boldsymbol{u}}_{i+1\cdot}=\mathcal{G}_i
-        \tilde{\boldsymbol{u}}_{i\cdot} \,,\quad i=1,\cdots, M-1\,.
-    \end{equation}
-    Assume the quadrature weights are time-independent, i.e.
-    $w_{ij} = w_{j}$ for all $i,j$.
-    If $\mathcal{G}_i$ satisfies
-    \begin{equation}
-        \|\mathcal{G}_ia-\mathcal{G}_ib\|^2_{W} \le \beta \|a-b\|^2_{W} \,,
-        \label{eqn: contractive}
-    \end{equation}
-    with $\beta<1$,
-    for any $a, b \in \mathbb{R}^N$ and for all $i$,
-    then 
-    \begin{equation}
-        \mathcal{M} \le \frac{1}{1-\beta} \mathcal{T}\,,
-    \end{equation}
-    where
-    \begin{equation}
-        \|v\|^2_{W} \equiv v^T 
-            \begin{pmatrix}
-                {w_{1}} && \\
-                & \ddots & \\
-                && {w_{N}}
-            \end{pmatrix} v
-    \end{equation}
-    for any $v\in \mathbb{R}^N$.
-    \label{theorem: 2}
-\end{theorem}
-The proof is given in Appendix \ref{proof 2}. The theorem implies that,
-if the twin model is a contractive dynamical 
-system \cite{contractive system}, as given by \eqref{eqn: contractive}, then the
-solution mismatch can be bounded by the integrated truncation error. In contrast, 
-the bound may not exist for non-contractive dynamical systems, for example for systems 
-that exhibit bifurcation \cite{dynamical system}. It is a future work to further investigate the applicability of the pre-training
-theoretically, in particular, to investigate the necessary and sufficient condition for the bound. \\
+%\subsection{Minimizing the Truncation Error}
+%\label{sec: trunc error}
+%In the previous sections, the twin model method was developed. The method infers the unknown
+%$F$ in a gray-box simulator by training a twin model that minimizes the 
+%space-time solution mismatch.
+%The training can be expensive: In the algorithm \ref{alg: train twin}, each iteration 
+%involves $k$ minimization problems of the solution mismatch in the forward step, 
+%and $k$ minimization problems of the solution mismatch in the backward step,
+%where each minimization requires at least one twin-model simulation.
+%Instead of the solution mismatch, this section develops another metric to minimize in order
+%to reduce the computational cost.\\
+%
+%%To reduce the computational cost, a ``pre-training'' step is proposed
+%%where an ``integrated truncation error'' is minimized. 
+%%A pre-trained twin model is then ``fine tuned'' to minimize the solution mismatch.
+%%The applicability of the pre-training is studied; in particular, I study
+%%under what condition can the solution mismatch be bounded by the integrated truncation error.
+%%Finally, a stochastic gradient descent approach is adopted that efficiently 
+%%minimizes the integrated truncation error.\\
+%
+%
+%Define
+%%\begin{equation}
+%%    \tau := \frac{\partial u}{\partial t} 
+%%    + \nabla \cdot \big(D \tilde{F}(u)\big) - q(u,c)\,,
+%%    \label{eqn: residual}
+%%\end{equation}
+%to be the residual of the twin-model PDE \eqref{eqn: govern twin model},
+%\begin{equation*}\begin{split}
+%    \frac{\partial \tilde{u}}{\partial t}+ \nabla \cdot \big(D \tilde{F}(\tilde{u})\big) = q(\tilde{u},c)\,,
+%\end{split}
+%\end{equation*}
+%by replacing $\tilde{u}$ with $u$, where $u$ is the gray-box solution satisfying 
+%\eqref{eqn: govern PDE}
+%\begin{equation*}\begin{split}
+%    \frac{\partial u}{\partial t}+ \nabla \cdot \big( D F(u) \big) = q(u,c)\,.
+%\end{split}
+%\end{equation*}
+%%Let its twin-model discretization be $\boldsymbol{\tau}$ (I think this is not clearly explained, 
+%%but can't find a good way of expressing this).
+%Assume the gray-box simulator and its twin model use the same space-time grid. 
+%Define $\boldsymbol{\tau}$ to be the discretized residual obtained by plugging the discretized 
+%gray-box solution into the twin-model simulator.
+%Define the integrated truncation error to be
+%%\begin{equation}
+%%    \mathcal{T}(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \boldsymbol{\tau}_{ij}^2 \,,
+%%    \label{eqn: truncation error}
+%%\end{equation}
+%where $w_{ij}$ are the quadrature weights defined in \eqref{eqn: solution mismatch}. 
+%$i,j$ are the indices for time and space grid.\\
+%
+%The previous section discussed that the minimization of $\mathcal{M}$ can be computationally expensive.
+%To reduce the computational cost, I propose to train a twin model 
+%by minimizing the integrated truncation error.
+%In other words, the coefficients of a twin model can be determined by
+%\begin{equation}
+%    \alpha_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}}
+%    \alpha_i \phi_i\right)\,.
+%    \label{eqn: minimize truncation error}
+%\end{equation}
+%
+%\eqref{eqn: minimize truncation error} can be solved using algorithm \ref{alg: train twin} by
+%replace $\mathcal{M}$ with $\mathcal{T}$. As a consequence, in the algorithm  \ref{alg: train twin}, 
+%the estimator for the 
+%significance of a candidate basis, $s_l(\mathcal{A})$, is replaced by 
+%\begin{equation}
+%    s_l^t(\mathcal{A}) \equiv \left|\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{T}}{d \tilde{F}}
+%    \right|_{\tilde{F}_\mathcal{A}^*} \phi_l \; \textrm{d} u \right|\,.
+%    \label{eqn: basis significance 2}
+%\end{equation}
+%In addition, the validation error, $\overline{\mathcal{M}}$, is replaced by
+%\begin{equation}
+%    \overline{\mathcal{T}} = \frac{1}{k}\left( \mathcal{T}_1 + \mathcal{T}_2 + \cdots + 
+%    \mathcal{T}_k\right)\,,
+%    \label{eqn: pre train validation error}
+%\end{equation}
+%where
+%\begin{equation}
+%    \mathcal{T}_i = \texttt{IntegratedTruncationError}(T_i, \boldsymbol{u}_i)\,.
+%\end{equation}
+%for $i=1, \cdots, k$.
+%To sum up, \eqref{eqn: minimize truncation error} can be solved by the following algorithm.
+%\begin{algorithm}[H]
+%\begin{algorithmic}[1]
+%\REQUIRE{Initial basis dictionary $\boldsymbol{\phi}_\mathcal{A}$, 
+%        coefficients $\alpha_{\mathcal{A}}^t= \mathbf{0}$},
+%        Validation error $\overline{\mathcal{T}}_0 = \infty$,
+%        Gray-box solution $\boldsymbol{u}$.
+%\STATE Minimize solution mismatch 
+%       $
+%           \alpha^t_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
+%       $ 
+%\LOOP 
+%\STATE Find $\phi_{l}\in \mathcal{N}(\boldsymbol{\phi}_{\mathcal{A}}) \backslash 
+%       \boldsymbol{\phi}_{\mathcal{A}}$ with the maximal $s_l^t(\mathcal{A})$ \\
+%       $\mathcal{A} \leftarrow 
+%       \mathcal{A} \bigcup \{l\}$, $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow 
+%       \boldsymbol{\phi}_{\mathcal{A}}
+%       \bigcup \{\phi_{l}\}$, $\alpha^t_l = 0$,
+%       $\alpha^t_{\mathcal{A}} \leftarrow \{\alpha^t_{\mathcal{A}}, \alpha^t_l\}$
+%\STATE Compute $\overline{\mathcal{T}}$ by $k$-fold cross validation.
+%\IF {$\overline{\mathcal{T}} < \overline{\mathcal{T}}_0$} 
+%    \STATE $\overline{\mathcal{T}}_0\leftarrow \overline{\mathcal{T}}$\\
+%       $
+%           \alpha^t_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
+%       $
+%\ELSE \STATE 
+%       $\mathcal{A} \leftarrow 
+%       \mathcal{A} \backslash \{l\}$, $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow 
+%       \boldsymbol{\phi}_{\mathcal{A}}
+%       \backslash \{\phi_{l}\}$, $\alpha^t_{\mathcal{A}} \leftarrow \alpha^t_{\mathcal{A}} \backslash 
+%       \{\alpha^t_l\}$
+%      \textbf{break}
+%\ENDIF
+%\STATE Find $\phi_{l^\prime}\in 
+%       \boldsymbol{\phi}_{\mathcal{A}}$ with the least $s_{l^\prime}^t(\mathcal{A})$  \\
+%\IF {${l^\prime} \neq {l}$}
+%\STATE  
+%       $\mathcal{A} \leftarrow 
+%       \mathcal{A} \backslash \{l^\prime\}$,
+%       $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow \boldsymbol{\phi}_{\mathcal{A}}
+%        \backslash\{\phi_{l^\prime}\}$, 
+%       $\alpha^t_{\mathcal{A}} \leftarrow \alpha^t_{\mathcal{A}}\backslash \{\alpha^t_{l^\prime}\}$
+%\STATE Compute $\overline{\mathcal{T}}$ by $k$-fold cross validation.
+%\IF{  $\overline{\mathcal{T}} < \overline{\mathcal{T}}_0$ }
+%\STATE $\overline{\mathcal{T}}_0 \leftarrow \overline{\mathcal{T}}$\\
+%       $
+%           \alpha^t_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{T}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
+%       $
+%\ELSE \STATE
+%       $\mathcal{A} \leftarrow \mathcal{A}\bigcup \{l^\prime\}$,
+%       $\phi_{\mathcal{A}}\leftarrow \phi_{\mathcal{A}} 
+%       \bigcup \{\phi_{l^\prime}\}$, $\alpha^t_{\mathcal{A}} \leftarrow 
+%       \alpha^t_{\mathcal{A}}\bigcup \{\alpha^t_{l^\prime}\}$
+%\ENDIF
+%\ENDIF
+%\ENDLOOP
+%\ENSURE $\mathcal{A}$, $\phi_{\mathcal{A}}$, $\alpha^t_{\mathcal{A}}$.
+%\end{algorithmic}
+%\caption{Training a twin model by minimizing the integrated truncation error.}
+%\label{alg: train twin trunc}
+%\end{algorithm}
+%
+%
+%Using algorithm \ref{alg: train twin trunc}, a two-step
+%procedure is proposed to train the twin model. In the first step, the twin model
+%is pre-trained using algorithm \ref{alg: train twin trunc}.
+%In the second step, the $\phi_{\mathcal{A}}$, obtained from algorithm 
+%\ref{alg: train twin trunc}, is used as the basis dictionary.
+%Its coefficients, $\alpha_\mathcal{A}^t$, are fine tuned by minimizing the 
+%solution mismatch $\mathcal{M}$.\\
+%
+%The benefit of the two-step procedure is as follows:
+%The first step does not involve the full space-time simulation of the twin model, because
+%the solution mismatch $\mathcal{M}$ is replaced by the integrated truncation error $\mathcal{T}$.
+%Thereby the computational cost of the forward-backward iteration is reduced.
+%The second step only involves 
+%the minimization of $\mathcal{M}$, by using the basis dictionary obtained from the first step.
+%Although the full space-time simulation of the twin model is required in the minimization
+%of $\mathcal{M}$,
+%the second step does not involve any iteration on the basis selection. To sum up, the two-step procedure
+%allows the separation of the basis selection and the minimization of the solution mismatch,
+%therefore is computationally preferrable.\\
+%
+%However, the minimization of $\mathcal{T}$ does not guarantee a bounded $\mathcal{M}$.
+%In the following, I study the condition under which $\mathcal{M}$ can be bounded by $\mathcal{T}$.
+%A sufficient condition for the bound is provided
+%by Theorem \ref{theorem: 2}.\\
+%
+%\begin{theorem}
+%    Consider a twin model simulator whose one-step time marching is
+%    \begin{equation}
+%        \mathcal{G}_i:\, \mathbb{R}^N\mapsto\mathbb{R}^N,\, \tilde{\boldsymbol{u}}_{i\cdot}\rightarrow 
+%        \tilde{\boldsymbol{u}}_{i+1\cdot}=\mathcal{G}_i
+%        \tilde{\boldsymbol{u}}_{i\cdot} \,,\quad i=1,\cdots, M-1\,.
+%    \end{equation}
+%    Assume the quadrature weights are time-independent, i.e.
+%    $w_{ij} = w_{j}$ for all $i,j$.
+%    If $\mathcal{G}_i$ satisfies
+%    \begin{equation}
+%        \|\mathcal{G}_ia-\mathcal{G}_ib\|^2_{W} \le \beta \|a-b\|^2_{W} \,,
+%        \label{eqn: contractive}
+%    \end{equation}
+%    with $\beta<1$,
+%    for any $a, b \in \mathbb{R}^N$ and for all $i$,
+%    then 
+%    \begin{equation}
+%        \mathcal{M} \le \frac{1}{1-\beta} \mathcal{T}\,,
+%    \end{equation}
+%    where
+%    \begin{equation}
+%        \|v\|^2_{W} \equiv v^T 
+%            \begin{pmatrix}
+%                {w_{1}} && \\
+%                & \ddots & \\
+%                && {w_{N}}
+%            \end{pmatrix} v
+%    \end{equation}
+%    for any $v\in \mathbb{R}^N$.
+%    \label{theorem: 2}
+%\end{theorem}
+%The proof is given in Appendix \ref{proof 2}. The theorem implies that,
+%if the twin model is a contractive dynamical 
+%system \cite{contractive system}, as given by \eqref{eqn: contractive}, then the
+%solution mismatch can be bounded by the integrated truncation error. In contrast, 
+%the bound may not exist for non-contractive dynamical systems, for example for systems 
+%that exhibit bifurcation \cite{dynamical system}. It is a future work to further investigate the applicability of the pre-training
+%theoretically, in particular, to investigate the necessary and sufficient condition for the bound. \\
 
 %Because the residual $\boldsymbol{\tau}$ can be evaluated explicitly given the gray-box
 %solution, 

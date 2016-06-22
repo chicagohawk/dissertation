@@ -1,9 +1,9 @@
 \select@language {english}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces The integrated errors of the estimated gradients for the three solutions.\relax }}{73}
-\contentsline {table}{\numberline {2.2}{\ignorespaces The error of the gradient estimation, in percentage.\relax }}{79}
-\contentsline {table}{\numberline {2.3}{\ignorespaces The error of estimated gradient at day $2$, $16$, $30$, and $44$, in percentage.\relax }}{81}
+\contentsline {table}{\numberline {2.1}{\ignorespaces The integrated errors of the estimated gradients for the three solutions.\relax }}{70}
+\contentsline {table}{\numberline {2.2}{\ignorespaces The error of the gradient estimation, in percentage.\relax }}{75}
+\contentsline {table}{\numberline {2.3}{\ignorespaces The error of estimated gradient at day $2$, $16$, $30$, and $44$, in percentage.\relax }}{79}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

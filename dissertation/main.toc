@@ -14,29 +14,28 @@
 \contentsline {section}{\numberline {1.6}Outline}{40}
 \contentsline {chapter}{\numberline {2}Estimate the Gradient by Using the Space-time Solution}{43}
 \contentsline {section}{\numberline {2.1}Approach}{44}
-\contentsline {subsection}{\numberline {2.1.1}Choice of Basis Functions}{48}
-\contentsline {subsection}{\numberline {2.1.2}Adaptive Basis Construction}{57}
-\contentsline {subsection}{\numberline {2.1.3}Minimizing the Truncation Error}{66}
-\contentsline {section}{\numberline {2.2}Numerical Results}{71}
-\contentsline {subsection}{\numberline {2.2.1}Buckley-Leverett Equation}{71}
-\contentsline {subsection}{\numberline {2.2.2}Navier-Stokes Flow}{73}
-\contentsline {subsection}{\numberline {2.2.3}Polymer Injection in Petroleum Reservoir}{79}
-\contentsline {section}{\numberline {2.3}Chapter Summary}{81}
-\contentsline {chapter}{\numberline {3}Leveraging the Twin Model for Bayesian Optimization}{85}
-\contentsline {section}{\numberline {3.1}Approach}{86}
-\contentsline {subsection}{\numberline {3.1.1}Modeling the Objective and Gradient by Gaussian Processes}{86}
-\contentsline {subsection}{\numberline {3.1.2}Algorithm}{89}
-\contentsline {subsection}{\numberline {3.1.3}Convergence Properties Using True Hyper Parameters}{90}
-\contentsline {section}{\numberline {3.2}Numerical Results}{94}
-\contentsline {subsection}{\numberline {3.2.1}Buckley-Leverett Equation}{94}
-\contentsline {subsection}{\numberline {3.2.2}Navier-Stokes Flow}{95}
-\contentsline {subsection}{\numberline {3.2.3}Polymer Injection in Petroleum Reservoir}{99}
-\contentsline {section}{\numberline {3.3}Chapter Summary}{101}
-\contentsline {chapter}{\numberline {4}Conclusions}{105}
-\contentsline {section}{\numberline {4.1}Thesis Summary}{105}
-\contentsline {section}{\numberline {4.2}Contributions}{107}
-\contentsline {section}{\numberline {4.3}Future Work}{108}
-\contentsline {chapter}{\numberline {A}Proof of Theorems}{109}
-\contentsline {section}{\numberline {A.1}Theorem \ref {theorem: 1}}{109}
-\contentsline {section}{\numberline {A.2}Theorem \ref {theorem: 2}}{111}
-\contentsline {section}{\numberline {A.3}Theorem \ref {theorem: 3}}{114}
+\contentsline {section}{\numberline {2.2}Choice of Basis Functions}{50}
+\contentsline {section}{\numberline {2.3}Adaptive Basis Construction}{60}
+\contentsline {section}{\numberline {2.4}Numerical Results}{68}
+\contentsline {subsection}{\numberline {2.4.1}Buckley-Leverett Equation}{68}
+\contentsline {subsection}{\numberline {2.4.2}Navier-Stokes Flow}{70}
+\contentsline {subsection}{\numberline {2.4.3}Polymer Injection in Petroleum Reservoir}{75}
+\contentsline {section}{\numberline {2.5}Chapter Summary}{80}
+\contentsline {chapter}{\numberline {3}Leveraging the Twin Model for Bayesian Optimization}{81}
+\contentsline {section}{\numberline {3.1}Approach}{82}
+\contentsline {subsection}{\numberline {3.1.1}Modeling the Objective and Gradient by Gaussian Processes}{82}
+\contentsline {subsection}{\numberline {3.1.2}Algorithm}{85}
+\contentsline {subsection}{\numberline {3.1.3}Convergence Properties Using True Hyper Parameters}{86}
+\contentsline {section}{\numberline {3.2}Numerical Results}{90}
+\contentsline {subsection}{\numberline {3.2.1}Buckley-Leverett Equation}{90}
+\contentsline {subsection}{\numberline {3.2.2}Navier-Stokes Flow}{91}
+\contentsline {subsection}{\numberline {3.2.3}Polymer Injection in Petroleum Reservoir}{95}
+\contentsline {section}{\numberline {3.3}Chapter Summary}{97}
+\contentsline {chapter}{\numberline {4}Conclusions}{101}
+\contentsline {section}{\numberline {4.1}Thesis Summary}{101}
+\contentsline {section}{\numberline {4.2}Contributions}{103}
+\contentsline {section}{\numberline {4.3}Future Work}{104}
+\contentsline {chapter}{\numberline {A}Proof of Theorems}{105}
+\contentsline {section}{\numberline {A.1}Theorem \ref {theorem: 1}}{105}
+\contentsline {section}{\numberline {A.2}Theorem \ref {theorem: 2}}{107}
+\contentsline {section}{\numberline {A.3}Theorem \ref {theorem: 3}}{110}

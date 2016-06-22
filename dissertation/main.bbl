@@ -539,6 +539,11 @@ Schiesser, W. E.
 \newblock {The Numerical Methods of Lines.} 
 \newblock {\em Academic Press}, 1991.
 
+\bibitem{PDE theory}
+Smith, G. D.
+\newblock{Numerical Solution of Partial Differential Equations: Finite Difference Methods.}
+\newblock{\em Oxford University Press}, pp. 67-68, 1985.
+
 \bibitem{wavelet mallat}
 Mallat, S. G. 
 \newblock A Theory for Multiresolution Signal Decomposition: the Wavelet Representation. 

@@ -1,0 +1,23 @@
+Lax-Wendroff does not apply:
+consistency + stability = convergence.
+
+Consistent: The true PDE residual P\phi
+            The twin-model discretized T\phi
+            P - T not converge to 0 as \Delta x, \Delta t goes to 0
+            not guaranteed
+So even if stable twin model, theoretically does not guarantee convergence
+Convergence: solution mismatch goes to 0 as Delta t and Delta x goes to 0.
+
+Even if stability twin model, does not guarantee solution mismatch goes to 0.
+
+Method 1: 
+Minimize T with adaptive basis construction.
+The simulate twin model to find twin-model solution u.
+If: simulation not converge.
+    simulation converge but large solution mismatch.
+    simulation converge but small solution mismatch.
+Check M.
+
+When to 
+Method 2:
+Minimize M with adaptive basis construction.
