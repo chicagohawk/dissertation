@@ -19,8 +19,8 @@
 \contentsline {section}{\numberline {2.4}Numerical Results}{68}
 \contentsline {subsection}{\numberline {2.4.1}Buckley-Leverett Equation}{68}
 \contentsline {subsection}{\numberline {2.4.2}Navier-Stokes Flow}{70}
-\contentsline {subsection}{\numberline {2.4.3}Polymer Injection in Petroleum Reservoir}{75}
-\contentsline {section}{\numberline {2.5}Chapter Summary}{80}
+\contentsline {subsection}{\numberline {2.4.3}Polymer Injection in Petroleum Reservoir}{73}
+\contentsline {section}{\numberline {2.5}Chapter Summary}{79}
 \contentsline {chapter}{\numberline {3}Leveraging the Twin Model for Bayesian Optimization}{81}
 \contentsline {section}{\numberline {3.1}Approach}{82}
 \contentsline {subsection}{\numberline {3.1.1}Modeling the Objective and Gradient by Gaussian Processes}{82}

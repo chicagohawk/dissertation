@@ -213,7 +213,9 @@ rather than the fluxes themselves.
         \includegraphics[width=10cm]{../excitedDomain.png}
         \caption{An illustration of $B_u$ defined in Theorem \ref{theorem: 1}. The blue line is $u_0$ 
         and the green dashed line is $\frac{du_0}{dx}$. $B_u$ is the set of $u_0$ where the derivative 
-        $\frac{du_0}{dx}$ has an absolute value larger than $\gamma$.}
+        $\frac{du_0}{dx}$ has an absolute value larger than $\gamma$.
+        The left column represents the basis on the $\left(j, \frac{\eta}{2^j}\right)$ plane,
+        and the right column shows the actual basis $\phi_{j,\eta}$.}
         \label{fig: excitedDomain}
     \end{center}
 \end{figure}
@@ -795,9 +797,9 @@ The iteration stops only when no alternation is made to the dictionary or when a
 as a targeted approximation accuracy,
 is achieved \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}. My thesis applies 
 this approach to the adaptive construction of the bases for the parameterization of $\tilde{F}$,
-which is sketched in Algorithm \ref{algo: outline heuristics}, where
-$\mathcal{A}$ indicates a finite set containing integers that index the basis functions in the
-basis dictionary.\\
+which is sketched in Algorithm \ref{algo: outline heuristics}. Here
+$\mathcal{A}$ stands for a finite set of the tuple representation of the bases in the
+dictionary.\\
 
 \begin{algorithm}
     \begin{algorithmic}[1]
@@ -805,8 +807,8 @@ basis dictionary.\\
                  $\mathcal{A}$.}
         \LOOP
             \STATE Minimize solution mismatch:
-                   $\alpha \leftarrow \argmin_{\alpha} \mathcal{M}
-                    \left( \tilde{F}(\mathcal{A}, \alpha), \boldsymbol{u}\right)$
+                   $\boldsymbol{\alpha} \leftarrow \argmin_{\boldsymbol{\alpha}} \mathcal{M}
+                    \left( \tilde{F}(\mathcal{A}, \boldsymbol{\alpha}), \boldsymbol{u}\right)$
             \IF {No more basis is needed}
                 \STATE \textbf{Break}
             \ELSE
@@ -818,7 +820,7 @@ basis dictionary.\\
                 \STATE Delete a basis from $\mathcal{A}$.
             \ENDIF
         \ENDLOOP
-        \ENSURE $\mathcal{A}$, $\alpha$.
+        \ENSURE $\mathcal{A}$, $\boldsymbol{\alpha}$.
     \end{algorithmic}
     \caption{The outline of the algorithm for training a twin model with an adaptive basis.
              $\mathcal{A}$ indicates the basis dictionary.  
@@ -881,9 +883,11 @@ Given a basis dictionary $\mathcal{A}$, define the \textbf{minimal mismatch}
     \boldsymbol{\eta}} \right)\,,
     \label{eqn: minimal mismatch}
 \end{equation}
-where $\mathcal{M}$ is defined in \eqref{eqn: solution mismatch},
-to be the minimal solution mismatch \eqref{eqn: solution mismatch} if $\tilde{F}$ were parameterized
-by the bases indexed by $\mathcal{A}$.
+where $\mathcal{M}$ is defined either as the solution mismatch $\mathcal{M}_u$ by 
+\eqref{eqn: solution mismatch}, or as the integrated truncation error 
+$\mathcal{M}_{\tau}$ by \eqref{eqn: truncation error}.
+%to be the minimal solution mismatch \eqref{eqn: solution mismatch} if $\tilde{F}$ were parameterized
+%by the bases indexed by $\mathcal{A}$.
 %The basis functions are represented by $\left(\boldsymbol{j},
 %\boldsymbol{\eta}\right)$'s, i.e. the dilation and translation parameters of the sigmoid bases.
 Given the gray-box solution, the minimal mismatch 
@@ -895,16 +899,16 @@ Let $\boldsymbol{\alpha}_{\mathcal{A}}^* =\{\alpha_{\boldsymbol{j}, \boldsymbol{
 be the optimal coefficients that solves \eqref{eqn: minimal mismatch}, and let
 $\tilde{F}^*_\mathcal{A} = \sum_{(\boldsymbol{j}, \boldsymbol{\eta})\in \mathcal{A}} 
 \alpha^*_{\boldsymbol{j}, \boldsymbol{\eta}} \phi_{\boldsymbol{j}, \boldsymbol{\eta}}$.
-Consider appending $\boldsymbol{\phi}_{\mathcal{A}}$ 
+Consider appending $\mathcal{A}$ 
 by an additional basis
-$\left(\boldsymbol{j}_l, \boldsymbol{\eta}_l\right)$, 
+$l\equiv \left(\boldsymbol{j}_l, \boldsymbol{\eta}_l\right)$, 
 and let 
 %$\boldsymbol{\phi}_{\mathcal{A}^\prime} = \left\{
 %\boldsymbol{\phi}_{\mathcal{A}}, \phi_l \right\}$,
 $\mathcal{A}^\prime$ be the appended basis dictionary.
 %$\left\{ \mathcal{A}, l \right\}$.
 The minimal mismatch for the appended basis dictionary
-$\boldsymbol{\phi}_{\mathcal{A}^\prime}$ is
+$\mathcal{A}^\prime$ is
 \begin{equation}
     \mathcal{M}^*(\mathcal{A}^\prime) 
     = \min_{\boldsymbol{\alpha}_{\mathcal{A}^\prime} \in \mathbb{R}^{|\mathcal{A}|+1}}
@@ -913,28 +917,44 @@ $\boldsymbol{\phi}_{\mathcal{A}^\prime}$ is
     \right)\,,
     \label{eqn: append minimal mismatch}
 \end{equation}
-Because $\boldsymbol{\phi}_{\mathcal{A}}$ is a subset of $\boldsymbol{\phi}_{\mathcal{A}^\prime}$, 
-it's obvious that 
-$\mathcal{M}^*(\mathcal{A}^\prime) \le \mathcal{M}^*(\mathcal{A})$. 
+If the coefficients for the bases $\mathcal{A}^\prime\backslash (\boldsymbol{j}_l, \boldsymbol{\eta}_l)$
+are set to be $\boldsymbol{\alpha}^*_{\mathcal{A}}$ while the coefficient for the basis
+$(\boldsymbol{j}_l, \boldsymbol{\eta}_l)$ is set to be $0$, then 
+$\mathcal{M}(\mathcal{A}^\prime) = \mathcal{M}^*(\mathcal{A})$. 
+Therefore, $\mathcal{M}^*(\mathcal{A}^\prime) \le \mathcal{M}^*(\mathcal{A})$. 
 Define the \textbf{mismatch improvement} to be
 \begin{equation}
     \Delta \mathcal{M}^*\left(\mathcal{A}, l\right) = \mathcal{M}^*(\mathcal{A}) - 
-    \mathcal{M}^*(\mathcal{A}^\prime)
+    \mathcal{M}^*(\mathcal{A}^\prime)\ge 0
     \label{eqn: mismatch improvement}
 \end{equation} 
 Let $\boldsymbol{\alpha}^*_{\mathcal{A}^\prime} = \left\{
 \hat{\boldsymbol{\alpha}}^*_{\mathcal{A}}, \, \alpha_l^*
 \right\}$ be the optimal coefficients that solves \eqref{eqn: append minimal mismatch}.
-Approximate \eqref{eqn: mismatch improvement} by Taylor expansion, we get
+View $\Delta \mathcal{M}^*\left(\mathcal{A}, l\right)$ as a function of $\alpha_l$,
+and assume its Hessian is positive definite at 
+$\alpha_l^*$. The first-order optimality condition gives
 \begin{equation}\begin{split}
     \Delta\mathcal{M}^*\left(\mathcal{A}, l\right) &
-    = \mathcal{M} \left( \boldsymbol{\alpha}^*_{\mathcal{A}} \cdot \boldsymbol{\phi}_{\mathcal{A}}\right)
-    - \mathcal{M} \left( \hat{\boldsymbol{\alpha}}^*_{\mathcal{A}} \cdot \boldsymbol{\phi}_{\mathcal{A}}
+    = \mathcal{M} \left( 
+    \sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}}
+    \alpha^*_{\boldsymbol{j}, \boldsymbol{\eta}} \boldsymbol{\phi}_{\boldsymbol{j}, \boldsymbol{\eta}}
+    \right)
+    - \mathcal{M} \left( 
+    \sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}}
+    \hat{\alpha}^*_{\boldsymbol{j}, \boldsymbol{\eta}} 
+    \boldsymbol{\phi}_{\boldsymbol{j}, \boldsymbol{\eta}}
     + \alpha_l^* \phi_l
     \right)\\
     &\approx 
-    \mathcal{M} \left( \boldsymbol{\alpha}^*_{\mathcal{A}} \cdot \boldsymbol{\phi}_{\mathcal{A}}\right) 
-    - \mathcal{M} \left( \hat{\boldsymbol{\alpha}}^*_{\mathcal{A}} \cdot \boldsymbol{\phi}_{\mathcal{A}}
+    \mathcal{M} \left(
+    \sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}}
+    \alpha^*_{\boldsymbol{j}, \boldsymbol{\eta}} \boldsymbol{\phi}_{\boldsymbol{j}, \boldsymbol{\eta}}
+    \right) 
+    - \mathcal{M} \left( 
+    \sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}}
+    \hat{\alpha}^*_{\boldsymbol{j}, \boldsymbol{\eta}} 
+    \boldsymbol{\phi}_{\boldsymbol{j}, \boldsymbol{\eta}}
     \right)
     -\left(\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
     \right|_{\tilde{F}_\mathcal{A}^*} \phi_l
@@ -946,48 +966,53 @@ Approximate \eqref{eqn: mismatch improvement} by Taylor expansion, we get
 \end{split}\end{equation}
 where $\frac{d\mathcal{M}}{d\tilde{F}}$ is the derivative of $\mathcal{M}(\tilde{F})$ 
 with respect to $\tilde{F}$, evaluated on $\tilde{F} = \tilde{F}^*_\mathcal{A}$.
-(I am not sure how to justify $\boldsymbol{\alpha}^*_{\mathcal{A}} \approx 
-\hat{\boldsymbol{\alpha}}^*_{\mathcal{A}}$. Without this approximation, \eqref{eqn: taylor expansion} 
-will be much more costly to evaluate, because \eqref{eqn: append minimal mismatch} 
-must be solved for every
-candidate $\phi_l$ in order to evaluate $\Delta \mathcal{M}^*$. Using this approximation, \eqref{eqn: append minimal mismatch} does not need to
-be solved. Do you have a better way of explaining this?)
-The absolute value of the coefficient for $\alpha_l$,
+%(I am not sure how to justify $\boldsymbol{\alpha}^*_{\mathcal{A}} \approx 
+%\hat{\boldsymbol{\alpha}}^*_{\mathcal{A}}$. Without this approximation, \eqref{eqn: taylor expansion} 
+%will be much more costly to evaluate, because \eqref{eqn: append minimal mismatch} 
+%must be solved for every
+%candidate $\phi_l$ in order to evaluate $\Delta \mathcal{M}^*$. Using this approximation, \eqref{eqn: append minimal mismatch} does not need to
+%be solved. Do you have a better way of explaining this?)
+The absolute value of the coefficient for $\alpha_l^*$,
 \begin{equation}
     s_l(\mathcal{A}) \equiv \left|\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
-    \right|_{\tilde{F}_\mathcal{A}^*} \phi_l \; \textrm{d} u \right|\,,
+    \right|_{\tilde{F}_\mathcal{A}^*} \phi_l \; \textrm{d} u \right|
     \label{eqn: basis significance}
 \end{equation}
 estimates the significance of the basis $\phi_l$ \cite{weight selection}. 
 If there are multiple candidate bases, \eqref{eqn: basis significance} can be used to rank their 
 significance.\\
 
-For a twin model consisted of a system of $k$ equations,
+For a twin model that consists of a system of $k$ equations,
 $\tilde{F}$ is a function of $u\in\mathbb{R}^k$, thus 
 $\frac{d\mathcal{M}}{d\tilde{F}}$ is also a function of $u\in\mathbb{R}^k$.
 As discussed in the previous sections, $\frac{d \mathcal{M}}{d\tilde{F}}$ is non-zero only in a
-domain where there is solution. Thus \eqref{eqn: taylor expansion} 
+domain where there is solution. Thus \eqref{eqn: basis significance} 
 can be computed by numerical quadrature over the bounded domain.
 For example, for a uniform Cartesian space-time grid, the quadrature weights are equal to a constant.
 \\
 
-
-Using this representation, define the neighborhood of a univariate sigmoid 
-$(j,\eta)$ to be a set of the sigmoid bases:
+In practice, \eqref{eqn: basis significance} is not computable
+for all the candidate bases $(\boldsymbol{j}, \boldsymbol{\eta})$
+for $\boldsymbol{j}\in \mathbb{Z}^k$ and
+$\boldsymbol{\eta}\in \mathbb{Z}^k$, because the number of bases are infinite. 
+Therefore, at every iteration in Algorithm \ref{algo: outline heuristics},
+\eqref{eqn: basis significance} shall only be evaluated on a finite number of bases. 
+To address this issue, the \textbf{neighborhood} of sigmoid bases is defined. 
+For univariate basis, the neighborhood of $(j,\eta)$ is defined to be a set of the sigmoid bases:
 \begin{equation}
-    \mathcal{N}\left[ \left(j,\frac{\eta}{2^j}\right) \right]
+    \mathcal{N}\left[ \left(j,\eta\right) \right]
     = \left\{ 
-        \left( j+1, \frac{\eta}{2^j} \right),\,
-        \left( j, \frac{\eta\pm 1}{2^j} \right)
+        \left( j+1, \eta\right),\,
+        \left( j, \eta\pm 1 \right)
     \right\}\,.
     \label{eqn: neighborhood 1D}
 \end{equation}
-The neighborhood contains 1) a basis 
-$\left( j+1, \frac{\eta}{2^j} \right)$ 
+The neighborhood contains three basis functions: one basis 
+$\left( j+1, \eta \right)$ 
 whose dilation parameter is incremented by one; and
-2) two basis $\left( j, \frac{\eta\pm 1}{2^j} \right)$
-whose dilation parameter keeps the same but the translation parameter is incremented by $\pm 1$.
-For illustration, the neighborhood of $\left(0,\frac{0}{2^0}\right)$
+two basis $\left( j, \eta\pm 1 \right)$
+whose dilation parameter keeps the same but the translation parameter is shifted by $\pm 1$.
+For illustration, the neighborhood of $\left(0,0\right)$
 is shown in Figure \ref{fig: basis neighbor}.
 The definition can be extended to the multivariate sigmoid. 
 The neighborhood of a multivariate sigmoid is defined to be
@@ -995,76 +1020,85 @@ The neighborhood of a multivariate sigmoid is defined to be
     &\mathcal{N}
     \left[
          \left(
-               \boldsymbol{j}, \frac{\boldsymbol{\eta}}{2^{\boldsymbol{j}}}
+               \boldsymbol{j}, \boldsymbol{\eta}
          \right)
     \right] = 
-    \mathcal{N}\left[ \left(\{j_1, \cdots, j_k\} , \left\{
-    \frac{\eta_1}{2^{j_1}}, \cdots, \frac{\eta_k}{2^{j_k}} \right\} \right) \right]\\
+    \mathcal{N}\left[ \big((j_1, \cdots, j_k) , \left(
+    \eta_1, \cdots, \eta_k \right) \big) \right]\\
     = & \bigg\{
-            \left( \left\{ j_1+1,\cdots, j_k\right\},
-                   \left\{ \frac{\eta_1}{2^{j_1+1}}, \cdots, \frac{\eta_k}{2^{j_k}} \right\}
-            \right) \, \cdots \, ,
-            \left( \left\{ j_1,\cdots, j_k+1\right\},
-                   \left\{ \frac{\eta_1}{2^{j_1}}, \cdots, \frac{\eta_k}{2^{j_k+1}} \right\}
-            \right),\,   \\
+            \big( \left( j_1+1,\cdots, j_k\right),
+                   \left( \eta_1, \cdots, \eta_k \right)
+            \big) ,\, \cdots \, ,
+            \big( \left( j_1,\cdots, j_k+1\right),
+                   \left( \eta_1, \cdots, \eta_k \right)
+            \big),\,   \\
           & 
-            \left( \left\{ j_1,\cdots, j_k\right\},
-                   \left\{ \frac{\eta_1\pm 1}{2^{j_1}}, \cdots, \frac{\eta_k}{2^{j_k}} \right\}
-            \right) \, \cdots \, ,
-            \left( \left\{ j_1,\cdots, j_k\right\},
-                   \left\{ \frac{\eta_1}{2^{j_1}}, \cdots, \frac{\eta_k\pm 1}{2^{j_k}} \right\}
-            \right) \bigg\}\,,
+            \big( \left( j_1,\cdots, j_k\right),
+                   \left( \eta_1\pm 1, \cdots, \eta_k \right)
+            \big) ,\, \cdots \, ,
+            \big( \left( j_1,\cdots, j_k\right),
+                   \left( \eta_1, \cdots, \eta_k\pm 1 \right)
+            \big) \bigg\}\,,
     \label{eqn: neighborhood kD}
 \end{split}\end{equation}
-which consists of $k$ bases whose dilation parameters are incremented by $1$, 
+which consists of $k$ bases whose dilation parameters are shifted by $1$, 
 and $2k$ bases whose translation parameters are incremented by $\pm 1$.
-It is easy to see that a basis $(\boldsymbol{j}_0, \frac{\boldsymbol{\eta}_0}{2^{\boldsymbol{j}_0}})$ 
-can be connected to any basis $(\boldsymbol{j}, \frac{\boldsymbol{\eta}}{2^{\boldsymbol{j}}})$ 
-with $\boldsymbol{j} \ge \boldsymbol{j}_0$ \footnote{ Define $\boldsymbol{j} \ge \boldsymbol{j}_0$
-to be $\boldsymbol{j}_i \ge \boldsymbol{j}^\prime$ for all $i=1, \cdots, k$.}
-through a chain
-of neighborhoods.
+%It is easy to see that a basis $(\boldsymbol{j}_0, \frac{\boldsymbol{\eta}_0}{2^{\boldsymbol{j}_0}})$ 
+%can be connected to any basis $(\boldsymbol{j}, \frac{\boldsymbol{\eta}}{2^{\boldsymbol{j}}})$ 
+%with $\boldsymbol{j} \ge \boldsymbol{j}_0$ \footnote{ Define $\boldsymbol{j} \ge \boldsymbol{j}_0$
+%to be $\boldsymbol{j}_i \ge \boldsymbol{j}^\prime$ for all $i=1, \cdots, k$.}
+%through a chain of neighborhoods.
 \begin{figure}[Htbp]\begin{center}
     \begin{subfigure}[p]{1.\textwidth}
         \centering
         \includegraphics[width=10cm]{../basis_neighbor.png}
-        \caption{$\mathcal{N}\left[\left(0,\frac{0}{2^0}\right)\right]$}
+        \caption{$\mathcal{N}\left[\left(0,0\right)\right]$}
         \label{fig: basis neighbor}
     \end{subfigure}
     \begin{subfigure}[p]{1.\textwidth}
         \centering
         \includegraphics[width=10cm]{../basis_neighbor_2.png}
-        \caption{$\mathcal{N}\left[ \big(0, \frac{0}{2^0}\big), \big(1, \frac{-1}{2^1}\big)
+        \caption{$\mathcal{N}\left[ \big(0, 0\big), \big(1, -1\big)
                  \right]$}
         \label{fig: union neighbor}
     \end{subfigure}
     \caption{Neighborhood for univariate bases. 
              $(a)$ shows the neighborhood (blue)
              of a single basis (red).  $(b)$ shows the neighborhood (blue) 
-             of several bases (red). 
-             The left column represents the basis on the $\left(j, \frac{\eta}{2^j}\right)$ plane,
-             and the right column shows the actual basis $\phi_{j,\eta}$.}
+             of several bases (red).}
 \end{center}\end{figure}
-In addition, define the neighborhood of multiple sigmoid functions to be the union
-of the neighborhoods of all member sigmoid, \eqref{eqn: multiple neighbor}. The neighborhood of multiple sigmoid functions
+In addition, define the neighborhood of a set of sigmoid functions to be the union
+of the neighborhoods of all member bases minus the set itself, 
+\eqref{eqn: multiple neighbor}. The neighborhood of 
+a set of sigmoid functions
 is illustrated in Figure \ref{fig: union neighbor}.
-\begin{equation}
-    \mathcal{N}\left[(\boldsymbol{j}_1, \frac{\boldsymbol{\eta}_1}{2^{\boldsymbol{j}_1}} ), \cdots, 
-    ( \boldsymbol{j}_n, \frac{\boldsymbol{\eta}_n}{2^{\boldsymbol{j}_n}}) \right]
-    = \mathcal{N}\left[(\boldsymbol{j}_1, \frac{\boldsymbol{\eta}_1}{2^{\boldsymbol{j}_1}})\right]\bigcup \cdots 
-      \bigcup \mathcal{N}\left[(\boldsymbol{j}_n, \frac{\boldsymbol{\eta}_n}{2^{\boldsymbol{j}_n}})\right]\,.
+\begin{equation}\begin{split}
+    &\mathcal{N}\left[(\boldsymbol{j}_1, \boldsymbol{\eta}_1), \cdots, 
+    ( \boldsymbol{j}_n, \boldsymbol{\eta}_n) \right]\\
+    = &\left( \mathcal{N}\left[(\boldsymbol{j}_1, \boldsymbol{\eta}_1)\right]\bigcup \cdots 
+      \bigcup \mathcal{N}\left[(\boldsymbol{j}_n, \boldsymbol{\eta}_n)\right]\right)
+      \bigg\backslash \left\{(\boldsymbol{j}_1, \boldsymbol{\eta}_1), \cdots, 
+      ( \boldsymbol{j}_n, \boldsymbol{\eta}_n) \right\}\,.
 \label{eqn: multiple neighbor}
-\end{equation}\\
+\end{split}\end{equation}\\
 
-Thirdly, a criterion is developed to determine whether a basis should be added or removed from
-the basis dictionary. 
-Although the mismatch improvement, $\Delta \mathcal{M}^*\left(\mathcal{A}, l\right)$, is always
-non-negative, it is inadvisable to cram the basis dictionary with too many bases,
-otherwise a twin model can be overfitted.
-Therefore, a criterion is required to determine if a candidate basis shall be added to or 
-removed from the basis dictionary. 
-The technique of $k$-fold cross validation, which has been discussed in Section \ref{sec: flux param},
-can be applied.
+Using the definition of neighborhood and the significance metric, we can determine which basis
+to add and delete in the Algorithm \ref{algo: outline heuristics}. 
+To add a basis, the basis significance, \eqref{eqn: basis significance},
+is computed for all the bases in the neighborhood of the current dictionary. At each iteration,
+the basis with the largest significance will be considered for addition. Similarly, 
+to delete a basis, the basis significance is computed for all the bases in the current dictionary.
+At each iteration, the basis with the smallest significance will be considered for deletion.
+Nonetheless, another criterion is needed to determine whether a basis should indeed
+be added or removed from the basis dictionary. \\
+%Although the mismatch improvement, $\Delta \mathcal{M}^*\left(\mathcal{A}, l\right)$, is always
+%non-negative, it is inadvisable to cram the basis dictionary with too many bases,
+%otherwise a twin model can be overfitted.
+%Therefore, a criterion is required to determine if a candidate basis shall be added to or 
+%removed from the basis dictionary. 
+
+To develop the second criterion, the technique of $k$-fold cross validation can be applied.
+The $k$-fold cross validation has been discussed in Section \ref{sec: flux param}, where
 %This can be achieved by cross validation,
 %in particular, $k$-fold cross validation \cite{cross validation}.
 %Given a basis dictionary, the $k$-fold cross validation proceeds in the following three steps:
@@ -1081,8 +1115,8 @@ can be applied.
 %        \label{fig: shuffle}
 %    \end{center}
 %\end{figure}
-%
-%In the second step, $k$ twin models are initialized using the same basis dictionary.
+$k$ twin models are trained and validated on randomly shuffled disjoint sets of the
+gray-box solution.
 %The $k$ twin models are trained so that their space-time solutions match
 %all but one sets of the gray-box solution, as shown in \eqref{eqn: cross validation}, where
 %$T_i$ indicates the $i$th twin model.
@@ -1109,126 +1143,147 @@ The mean value of validation errors \eqref{eqn: cross validation error mean},
     + \mathcal{M}_k\right)
 \end{equation*}
 can be used to measure the performance of the basis dictionary. A basis shall be added to or removed from
-the dictionary only if such action reduces $\overline{\mathcal{M}}$. Because the cross valiation
-involves $k$ twin models, it increases the computational cost.
-Therefore, a small $k$ is preferrable. $k=2$ will be used in the following numerical examples.\\
+the dictionary only if such action reduces $\overline{\mathcal{M}}$.\\
 
-Based upon the above developments, a twin model algorithm 
-with adaptive basis construction is developed based on Figure \ref{fig: outline heuristics}. \\
+Based upon the above developments, the twin model algorithm with adaptive basis construction
+is given by Algorithm \ref{alg: train twin}.
+The algorithm adopts the heuristics of the forward-backward iterations
+shown in Algorithm \ref{algo: outline heuristics}.
+The forward-back iterations determines which and whether a basis is added or deleted 
+in the dictionary, by using the metric $\mathcal{M}$ and the significance $s$.
+The metric $\mathcal{M}$ and the significance $s$ can be defined either according to the
+solution mismatch $\mathcal{M}_u$, or according to the integrated truncation error
+$\mathcal{M}_{\tau}$. We suggest using $\mathcal{M}_{\tau}$ due to less computational cost.
+The algorithm starts from training a twin model using 
+an arbitrary basis dictionary $\mathcal{A}$. 
+%Usually the starting
+%dictionary contains one basis for each dimension with very low resolution.
+%The choice of the starting basis dictionary will be discussed in Section 
+%\ref{sec: twin numerical results} along with numerical examples.
+The main part of the algorithm iterates over a forward step (line 3-9) and a backward step (line
+11-20). The forward step firstly finds the most significant candidate 
+in the neighborhood of the current dictionary according to \eqref{eqn: basis significance}.
+If the addition indeed reduces the cross validation error, the candidate is added 
+to the dictionary; otherwise it is rejected. 
+If the basis is added, the coefficients are updated by minimizing the solution mismatch, which can be
+implemented by the Broyden-Fletcher-Goldfarb-Shannon (BFGS) algorithm \cite{quasiNewton}.
+The backward step finds the most significant
+candidate in the current dictionary for deletion. 
+If the deletion reduces the cross validation error, the candidate
+is removed from the dictionary. 
+If the basis is indeed deleted, the coefficients are updated by BFGS again.
+The iteration exits when the most significant addition no longer 
+reduces the validation error. In the end, the 
+coefficients are tuned to minimize the solution mismatch $\mathcal{M}_u$, which ensures that
+$\mathcal{M}_u$ is bounded.
+The output of the algorithm are the basis dictionary $\mathcal{A}$ and the
+coefficients $\boldsymbol{\alpha}_{\mathcal{A}}$.\\
+
+In the algorithm,
+the metric $\mathcal{M}$ and the significance $s$ in the forward-backward iterations is defined by
+the integrated truncation error metric.
+$\mathcal{M}_{\tau}$ is cheaper to evaluate than $\mathcal{M}_u$ 
+for twin models that use implicit time marching schemes and works well in practice. However, 
+$\mathcal{M}_u$ may not be bounded by $\mathcal{M}_{\tau}$. Therefore, in the end of Algorithm
+\ref{alg: train twin}, the coefficients are minimized according to the solution mismatch metric.
 
 
 
 \begin{algorithm}
 \begin{algorithmic}[1]
-\REQUIRE{Initial basis dictionary $\boldsymbol{\phi}_\mathcal{A}$, 
-        coefficients $\alpha_{\mathcal{A}}= \mathbf{0}$},
+\REQUIRE{Initial basis dictionary $\mathcal{A}$, 
         Validation error $\overline{\mathcal{M}}_0 = \infty$,
-        Gray-box solution $\boldsymbol{u}$.
+        Gray-box solution $\boldsymbol{u}$ }.
 \STATE Minimize solution mismatch 
        $
-           \alpha_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{M}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
+           \boldsymbol{\alpha}_{\mathcal{A}} \leftarrow \argmin_{\boldsymbol{\alpha}} 
+           \mathcal{M}\left(\sum_{
+           (\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}} 
+           \alpha_{\boldsymbol{j}, 
+           \boldsymbol{\eta}} \phi_{\boldsymbol{j}, \boldsymbol{\eta}}\right)
        $ 
 \LOOP 
-\STATE Find $\phi_{l}\in \mathcal{N}(\boldsymbol{\phi}_{\mathcal{A}}) \backslash 
-       \boldsymbol{\phi}_{\mathcal{A}}$ with the maximal $s_l(\mathcal{A})$ \\
-       $\mathcal{A} \leftarrow 
-       \mathcal{A} \bigcup \{l\}$, $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow 
-       \boldsymbol{\phi}_{\mathcal{A}}
-       \bigcup \{\phi_{l}\}$, $\alpha_l = 0$,
-       $\alpha_{\mathcal{A}} \leftarrow \{\alpha_{\mathcal{A}}, \alpha_l\}$
+\STATE Compute 
+       $$l^* \leftarrow \argmax_{l \in \mathcal{N}(\mathcal{A})} s_l(\mathcal{A})$$
+\STATE Update\\
+       $$\mathcal{A} \leftarrow 
+       \mathcal{A} \bigcup \{l^*\}\;, \alpha_{l^*} = 0\;,
+       \boldsymbol{\alpha}_{\mathcal{A}} \leftarrow \{\boldsymbol{\alpha}_{\mathcal{A}}, 
+       \alpha_{l^*}\}$$
 \STATE Compute $\overline{\mathcal{M}}$ by $k$-fold cross validation.
 \IF {$\overline{\mathcal{M}} < \overline{\mathcal{M}}_0$} 
-    \STATE $\overline{\mathcal{M}}_0\leftarrow \overline{\mathcal{M}}$\\
-       $
-           \alpha_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{M}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
-       $
+    \STATE $$
+               \overline{\mathcal{M}}_0\leftarrow \overline{\mathcal{M}}\;,\;
+               \boldsymbol{\alpha}_{\mathcal{A}} \leftarrow \argmin_{\alpha} 
+               \mathcal{M}\left(\sum_{(\boldsymbol{j}, \boldsymbol{\eta}) 
+               \in \mathcal{A}} \alpha_{\boldsymbol{j}, \boldsymbol{\eta}} 
+               \phi_{\boldsymbol{j}, \boldsymbol{\eta}}\right)
+           $$
 \ELSE \STATE 
-       $\mathcal{A} \leftarrow 
-       \mathcal{A} \backslash \{l\}$, $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow 
-       \boldsymbol{\phi}_{\mathcal{A}}
-       \backslash \{\phi_{l}\}$, $\alpha_{\mathcal{A}} \leftarrow \alpha_{\mathcal{A}} \backslash 
-       \{\alpha_l\}$
-      \textbf{break}
+       $$\mathcal{A} \leftarrow 
+       \mathcal{A} \backslash \{l^*\}
+       \;,\;\boldsymbol{\alpha}_{\mathcal{A}} \leftarrow \boldsymbol{\alpha}_{\mathcal{A}} \backslash 
+       \{\alpha_{l^*}\}$$
+       \textbf{break}
 \ENDIF
-\STATE Find $\phi_{l^\prime}\in 
-       \boldsymbol{\phi}_{\mathcal{A}}$ with the least $s_{l^\prime}(\mathcal{A})$  \\
-\IF {${l^\prime} \neq {l}$}
+\STATE Compute 
+       $$g^* \leftarrow \argmin_{g \in \mathcal{A}} s_g(\mathcal{A})$$
+\IF {${g^*} \neq l^*$}
 \STATE  
-       $\mathcal{A} \leftarrow 
-       \mathcal{A} \backslash \{l^\prime\}$,
-       $\boldsymbol{\phi}_{\mathcal{A}} \leftarrow \boldsymbol{\phi}_{\mathcal{A}}
-        \backslash\{\phi_{l^\prime}\}$, 
-       $\alpha_{\mathcal{A}} \leftarrow \alpha_{\mathcal{A}}\backslash \{\alpha_{l^\prime}\}$
+       $$\mathcal{A} \leftarrow 
+       \mathcal{A} \backslash \{g^*\}\;,\;
+       \boldsymbol{\alpha}_{\mathcal{A}} \leftarrow \boldsymbol{\alpha}_{\mathcal{A}}\backslash \{\alpha_{g^*}\} $$
 \STATE Compute $\overline{\mathcal{M}}$ by $k$-fold cross validation.
 \IF{  $\overline{\mathcal{M}} < \overline{\mathcal{M}}_0$ }
-\STATE $\overline{\mathcal{M}}_0 \leftarrow \overline{\mathcal{M}}$\\
-       $
-           \alpha_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{M}\left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
-       $
+\STATE $$\overline{\mathcal{M}}_0 \leftarrow \overline{\mathcal{M}}$$
+       $$
+           \boldsymbol{\alpha}_{\mathcal{A}} \leftarrow 
+           \argmin_{\alpha} \mathcal{M}\left(\sum_{(\boldsymbol{j}, \boldsymbol{\eta}) 
+           \in \mathcal{A}} \alpha_{\boldsymbol{j}, \boldsymbol{\eta}} 
+           \phi_{\boldsymbol{j}, \boldsymbol{\eta}}\right)
+       $$
 \ELSE \STATE
-       $\mathcal{A} \leftarrow \mathcal{A}\bigcup \{l^\prime\}$,
-       $\phi_{\mathcal{A}}\leftarrow \phi_{\mathcal{A}} 
-       \bigcup \{\phi_{l^\prime}\}$, $\alpha_{\mathcal{A}} \leftarrow 
-       \alpha_{\mathcal{A}}\bigcup \{\alpha_{l^\prime}\}$
+       $$\mathcal{A} \leftarrow \mathcal{A}\bigcup \{g^*\} \;,\;
+       \boldsymbol{\alpha}_{\mathcal{A}} \leftarrow 
+       \boldsymbol{\alpha}_{\mathcal{A}}\bigcup \{\alpha_{g^*}\}$$
 \ENDIF
 \ENDIF
 \ENDLOOP
 \STATE
-       Minimize solution mismatch 
-       $
-           \alpha_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{M}_u
-           \left(\sum_{i \in \mathcal{A}} \alpha_i \phi_i\right)
-       $
-\ENSURE $\mathcal{A}$, $\phi_{\mathcal{A}}$, $\alpha_{\mathcal{A}}$.
+       $$
+           \boldsymbol{\alpha}_{\mathcal{A}} \leftarrow \argmin_{\alpha} \mathcal{M}_u
+           \left(\sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}} 
+           \alpha_{\boldsymbol{j}, \boldsymbol{\eta}} 
+           \phi_{\boldsymbol{j}, \boldsymbol{\eta}}\right)
+       $$
+\ENSURE $\mathcal{A}$, $\alpha_{\mathcal{A}}$.
 \end{algorithmic}
 \caption{Training twin model with adaptive basis construction.}
 \label{alg: train twin}
 \end{algorithm}
 
 
-Algorithm \ref{alg: train twin} adopts the heuristics of the forward-backward iteration
-shown in Algorithm \ref{algo: outline heuristics}.
-The algorithm starts from training a twin model using 
-a starting basis dictionary $\boldsymbol{\phi}_{\mathcal{A}}$. 
-%Usually the starting
-%dictionary contains one basis for each dimension with very low resolution.
-The choice of the starting basis dictionary will be discussed in Section 
-\ref{sec: twin numerical results} along with numerical examples.
-The main part of the algorithm iterates over a forward step (line 3-9) and a backward step (line
-10-19). The forward step firstly finds the most promising candidate 
-in the neighborhood of the current dictionary according to \eqref{eqn: basis significance}.
-If the addition indeed reduces the cross validation error, the candidate is added 
-to the dictionary; otherwise it is rejected. 
-If the basis is added, the coefficients are updated by minimizing the solution mismatch, which can be
-implemented by the Broyden-Fletcher-Goldfarb-Shannon (BFGS) algorithm \cite{quasiNewton}.
-The backward step finds the most promising
-candidate in the current dictionary for deletion. 
-If the deletion reduces the cross validation error, the candidate
-is removed from the dictionary. 
-If the basis is indeed deleted, the coefficients are updated by BFGS again.
-The iteration exits when the most promising addition no longer 
-reduces the validation error. In the end, the algorithm provides the basis dictionary and its
-coefficients as the output.\\
 
-The algorithm requires to train multiple twin models at each iteration. For
-$k=2$, $6$ twin models will be trained if both the forward and the backward steps are acceptive.
-In practice, the trained coefficients at the last iteration may provide good initial guess
-for the next iteration. However, the algorithm can still be costly if the dictionary turns out
-to have a large number of bases, which results in a large number of iterations. 
-To address this issue, a numerical shortcut is provided in Section 
-\ref{sec: trunc error} that significantly reduces the cost.\\
-
-The benefit of the two-step procedure is as follows:
-The first step does not involve the full space-time simulation of the twin model, because
-the solution mismatch $\mathcal{M}$ is replaced by the integrated truncation error $\mathcal{T}$.
-Thereby the computational cost of the forward-backward iteration is reduced.
-The second step only involves 
-the minimization of $\mathcal{M}$, by using the basis dictionary obtained from the first step.
-Although the full space-time simulation of the twin model is required in the minimization
-of $\mathcal{M}$,
-the second step does not involve any iteration on the basis selection. To sum up, the two-step procedure
-allows the separation of the basis selection and the minimization of the solution mismatch,
-therefore is computationally preferrable.\\
+%The algorithm requires to train multiple twin models at each iteration. For
+%$k=2$, $6$ twin models will be trained if both the forward and the backward steps are acceptive.
+%In practice, the trained coefficients at the last iteration may provide good initial guess
+%for the next iteration. However, the algorithm can still be costly if the dictionary turns out
+%to have a large number of bases, which results in a large number of iterations. 
+%To address this issue, a numerical shortcut is provided in Section 
+%\ref{sec: trunc error} that significantly reduces the cost.\\
+%
+%
+%The benefit of the two-step procedure is as follows:
+%The first step does not involve the full space-time simulation of the twin model, because
+%the solution mismatch $\mathcal{M}$ is replaced by the integrated truncation error $\mathcal{T}$.
+%Thereby the computational cost of the forward-backward iteration is reduced.
+%The second step only involves 
+%the minimization of $\mathcal{M}$, by using the basis dictionary obtained from the first step.
+%Although the full space-time simulation of the twin model is required in the minimization
+%of $\mathcal{M}$,
+%the second step does not involve any iteration on the basis selection. To sum up, the two-step procedure
+%allows the separation of the basis selection and the minimization of the solution mismatch,
+%therefore is computationally preferrable.\\
 
 
 %\subsection{Minimizing the Truncation Error}
@@ -1470,7 +1525,7 @@ therefore is computationally preferrable.\\
 %the code can take advantage of vectorization libraries rather than computing the residual 
 %at each grid point separately.\\
 
-
+\newpage
 \section{Numerical Results}
 \label{sec: twin numerical results}
 This section demonstrates the twin model on the estimation of the gradients for
@@ -1486,16 +1541,15 @@ governed by the Buckley-Leverett equation \eqref{eqn: Buckley-Leverett}
     \frac{u^2}{1+ 2(1-u)^2}} \Big) = c\,,
 \end{equation*}
 In this section, the same problem is studied but using the adaptive basis construction developed 
-in Section \ref{sec: adaptive basis} and \ref{sec: trunc error}. 
-The initial dictionary, $\boldsymbol{\phi}_{\mathcal{A}}$, is selected to contain a single basis
-$\left(0, \frac{0}{2^0}\right)$. Clearly the choice is not unique. 
-As long as the
-initial basis has a low resolution and is centered inside $\left[u_{\min}, u_{\max}\right]$,
-Algorithm \ref{alg: train twin} is able to build the dictionary adaptively.\\
+in Section \ref{sec: adaptive basis}. 
+The initial dictionary, $\mathcal{A}$, is selected to contain a single basis
+$\left(0, 0\right)$. Clearly the choice is not unique. 
+We choose $\left(0, 0\right)$ because it has a low resolution 
+and is centered inside $\left[u_{\min}, u_{\max}\right]$.\\
 
 Figure \ref{fig: basis pnt} shows the selected bases
 for the three solutions in Figure \ref{fig: combine 3}, respectively, obtained by 
-algorithm \ref{alg: train twin trunc}.
+algorithm \ref{alg: train twin}.
 As $\left[u_{\min}, u_{\max}\right]$ shrinks, the dictionary's cardinality reduces and
 the resolution increases. \\
 
@@ -1522,8 +1576,8 @@ the resolution increases. \\
     \label{fig: basis pnt}
 \end{center}\end{figure}
 
-(Because the trained flux is visually indifferent to Figure 2-11, the flux is not plotted. 
-Do you think I still need to plot them?)
+%(Because the trained flux is visually indifferent to Figure 2-11, the flux is not plotted. 
+%Do you think I still need to plot them?)
 Consider a time-space-dependent control $c=c(t,x)$ in \eqref{eqn: Buckley-Leverett} 
 \begin{equation*}
     \frac{\partial u}{\partial t} + \frac{\partial}{\partial x}\Big(
