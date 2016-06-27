@@ -606,15 +606,21 @@ Figure \ref{fig: chap 3 reservoir setup}. Five injectors
 are placed along the southern boundary, and one producer is placed in the northeastern
 corner. The reservoir is simulated for $t\in[0,T=10]\,\texttt{day}$.\\
 
-Firstly, consider constant-in-time injection rates at the injectors.
-Define 
+Firstly, consider constant-in-time injection rates at the injectors. Let the price
+of unit mass oil be $e^{\frac{t}{30}}$ which decays over time, and let the price of unit mass water 
+be $0.4$. Define 
 \begin{equation}
-    \xi(t) = -\int_\Omega \rho_o(t) \phi S_o(t) d\boldsymbol{x}
-        - \lambda t \sum_{i=1}^5 I_{\texttt{inj} i}\,,
+    \xi(t) = \int_0^t \rho_{\textrm{prod}\, o} S_o e^{-\frac{t}{30}} I_{\textrm{prod}}\textrm{d}t 
+           - \lambda t \sum_{i=1}^5 I_{\texttt{inj}\, i}\,,
     \label{eqn: chap 3 reservoir cum cost}
 \end{equation}
-which is the negative oil residual minus the water cost at time $t$.
-$\lambda = 0.4$ is the cost of water per unit volume. $I_{\texttt{inj}i}$ is the injection rate
+%\begin{equation}
+%    \xi(t) = -\int_\Omega \rho_o(t) \phi S_o(t) d\boldsymbol{x}
+%        - \lambda t \sum_{i=1}^5 I_{\texttt{inj} i}\,,
+%    \label{eqn: chap 3 reservoir cum cost}
+%\end{equation}
+which is the price of the total oil produced minus the price of the total water injected.
+$I_{\texttt{inj}i}$ is the injection rate
 at the $i$th injector. 
 The goal is to maximize $\xi(T)$ with bound constraints on the injection rates
 $0\le I_{\texttt{inj}i} \le I_{\max}$.

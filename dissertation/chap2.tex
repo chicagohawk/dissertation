@@ -1556,19 +1556,19 @@ the resolution increases. \\
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.32\textwidth}
         \centering
-        \includegraphics[width=4.5cm]{../basis_pnt_1.png}
+        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/case_1.png}
         \caption{Solution 1}
         \label{fig: basis pnt 1}
     \end{subfigure}
     \begin{subfigure}[t]{.32\textwidth}     
         \centering
-        \includegraphics[width=4.5cm]{../basis_pnt_2.png}
+        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/case_2.png}
         \caption{Solution 2}
         \label{fig: basis pnt 2}
     \end{subfigure}
     \begin{subfigure}[t]{.32\textwidth}
         \centering
-        \includegraphics[width=4.5cm]{../basis_pnt_3.png}
+        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/case_3.png}
         \caption{Solution 3}
         \label{fig: basis pnt 3}
     \end{subfigure}
@@ -1578,6 +1578,70 @@ the resolution increases. \\
 
 %(Because the trained flux is visually indifferent to Figure 2-11, the flux is not plotted. 
 %Do you think I still need to plot them?)
+
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_1.png}
+        \caption{Iteration 1}
+        \label{fig: basis history 1}
+    \end{subfigure}
+    \begin{subfigure}[t]{.32\textwidth}     
+        \centering
+        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_2.png}
+        \caption{Iteration 2}
+        \label{fig: basis history 2}
+    \end{subfigure}
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_3.png}
+        \caption{Iteration 3}
+        \label{fig: basis history 3}
+    \end{subfigure}\\
+
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_4.png}
+        \caption{Iteration 4}
+        \label{fig: basis history 4}
+    \end{subfigure}
+    \begin{subfigure}[t]{.32\textwidth}     
+        \centering
+        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_5.png}
+        \caption{Iteration 5}
+        \label{fig: basis history 5}
+    \end{subfigure}
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_6.png}
+        \caption{Iteration 6}
+        \label{fig: basis history 6}
+    \end{subfigure}\\
+
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_7.png}
+        \caption{Iteration 7}
+        \label{fig: basis history 7}
+    \end{subfigure}
+    \begin{subfigure}[t]{.32\textwidth}     
+        \centering
+        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_8.png}
+        \caption{Iteration 8}
+        \label{fig: basis history 8}
+    \end{subfigure}
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_9.png}
+        \caption{Iteration 9}
+        \label{fig: basis history 9}
+    \end{subfigure}   
+    \caption{The basis dictionary at each forward-backward iteration in Figure \ref{fig: basis pnt 3}. 
+             The red dots, the blue cross}
+    \label{fig: basis history}
+\end{center}\end{figure}
+
+
 Consider a time-space-dependent control $c=c(t,x)$ in \eqref{eqn: Buckley-Leverett} 
 \begin{equation*}
     \frac{\partial u}{\partial t} + \frac{\partial}{\partial x}\Big(
@@ -1632,7 +1696,7 @@ or by using the bases constructed adaptively.\\
        \hline\hline
          & Solution 1 & Solution 2 & Solution 3\\
        \hline
-       Ad hoc basis & $2.5\times 10^{-3}$& $6.6\times 10^{-4}$ & $7.3\times 10^{-5}$ \\
+       Manual basis & $2.5\times 10^{-3}$& $6.6\times 10^{-4}$ & $7.3\times 10^{-5}$ \\
        \hline
        Adaptive basis & $4.2\times 10^{-6}$& $1.5\times 10^{-6}$ & $8.9\times 10^{-7}$ \\
        \hline\hline
@@ -1780,10 +1844,43 @@ solution, large deviation is expected outside the convex hull.\\
     \end{subfigure}
     \caption{The gray-box state equation (right column) and the trained state equation 
              (left column). The gray-box model uses either the ideal gas equation
-             (first row) or the Reclich-Kwong equation (second row). The convex hull 
+             (first row) or the Redlich-Kwong equation (second row). The convex hull 
              of the gray-box solution is shown by the dashed red line.}
     \label{fig: state err Ubend}
 \end{center}\end{figure}
+
+\begin{center}\begin{tabular}{ccccc}
+(2, 1, 9 , 1) & (2, 1, 11, 2) & (2, 2, 8 , 0) & (2, 2, 8 , 2) & (2, 2, 8 , 3) \\
+(2, 2, 9 , 0) & (2, 2, 9 , 1) & (2, 2, 9 , 3) & (2, 2, 9 , 4) & (2, 2, 10, 0) \\
+(2, 2, 10, 1) & (2, 2, 10, 2) & (2, 2, 10, 3) & (2, 2, 10, 4) & (2, 2, 11, 0) \\
+(2, 2, 11, 3) & (2, 2, 12, 0) & (2, 2, 12, 4) & (2, 2, 13, 3) & (3, 2, 16, 4) \\
+(3, 2, 18, 2) & (3, 2, 20, 1) & &&
+\end{tabular}
+\captionof{table}{List of the dictionary for the van der Waals gas, $(j_{U}, j_{\rho},
+\eta_{U}, \eta_{\rho})$.}
+\label{tab: basis list 1}
+\end{center}
+
+
+\begin{center}\begin{tabular}{ccccc}
+(1, 2, 5, 0) & (2, 2, 8, 0) & (2, 2, 8, 2) & (2, 2, 8, 4) & (2, 2, 9, 0)\\
+(2, 2, 9, 1) & (2, 2, 9, 2) & (2, 2, 9, 3) & (2, 2, 10, 2) & (2, 2, 10, 3)\\
+(2, 2, 11, 0) & (2, 2, 11, 2) & (2, 2, 11, 3) & (2, 2, 11, 4) & (2, 2, 12, 0)\\
+(2, 2, 12, 1) & (2, 2, 12, 2) & (2, 2, 12, 3) & (2, 2, 13, 1) &(2, 2, 13, 3)\\
+(2, 2, 14, 0) & (2, 2, 14, 1) & (2, 2, 14, 2) & (3, 2, 18, 2) & \\
+\end{tabular}
+\captionof{table}{List of the dictionary for the Redlich-Kwong gas, $(j_{U}, j_{\rho},
+\eta_{U}, \eta_{\rho})$.}
+\label{tab: basis list 2}\end{center}
+
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=8cm]{../NS_Mtau_history.png}
+        \caption{The cross validation error $\overline{\mathcal{M}}_{\tau}$ at 
+                 each forward-backward iteration.}
+        \label{fig: NS Mtau history}
+    \end{center}
+\end{figure}
 
 The trained twin model enables the adjoint gradient estimation.
 Figure \ref{fig: geo grad all} shows the
