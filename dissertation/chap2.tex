@@ -40,6 +40,17 @@ This chapter develops a more general
 procedure suitable for systems of equations and for problems with a spatial dimension greater than one.
 
 \section{Approach}
+This section discusses the general approach for training a twin model.
+In particular, the metric of solution mismatch is presented. 
+We then study what aspects of $F$ can be 
+inferred by using the metric for a special case of conservation laws.
+Besides, another metric, the integrated truncation error, is proposed.
+The latter metric has less theoretical backup but can be cheaper to evaluate and
+useful in practice, which
+will be demonstrated in Section \ref{sec: twin numerical results}.
+The relationship of the two metrics is studied. Finally, we discuss the method
+to minimize the two metrics.\\
+
 \label{infer}
 Consider a gray-box simulator that solves the PDE \eqref{eqn: govern PDE}, 
 \begin{equation*}\begin{split}
@@ -65,7 +76,7 @@ let the solution of the open-box simulator, $\tilde{\boldsymbol{u}}$, be defined
 spatial grid points and time steps of the gray-box simulator. \\
 
 The metric used to measure the difference of the twin model and the gray-box model is the
-\textbf{solution mismatch}.
+solution mismatch.
 The solution mismatch is defined to be
 \begin{equation}
     \mathcal{M}_u(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \big( \tilde{\boldsymbol{u}}_{ij}
@@ -91,8 +102,8 @@ I propose to infer a flux $\tilde{F}$ such that $\mathcal{M}_u$ is minimized,
     \tilde{F}^* = \argmin_{\tilde{F} \in \mathcal{S}_F} \mathcal{M}_u\,.
     \label{eqn: twin min mismatch}
 \end{equation}
-The choice for $\mathcal{S}_F$ will be discussed later in Section \ref{sec: flux param} and
-\ref{sec: adaptive basis}. By setting the $F$ in \eqref{eqn: govern twin model} to be $\tilde{F}^*$,
+The choice for $\mathcal{S}_F$ will be discussed later in Section \ref{sec: flux param}. 
+By setting the $F$ in \eqref{eqn: govern twin model} to be $\tilde{F}^*$,
 one obtain a trained twin-model equation
 \begin{equation}\begin{split}
     \frac{\partial \tilde{u}}{\partial t}+ \nabla \cdot \big(D \tilde{F}^*(\tilde{u})\big) = q(\tilde{u},c)\,,
@@ -149,7 +160,7 @@ solution for a special form of \eqref{eqn: 1D conceptual},
     \frac{\partial u}{\partial t}+ \nabla \cdot \big( F(u) \big) = q(u,c)\,,
 \end{split}
 \end{equation*}
-if the spatial dimension is 1.
+where the spatial dimension is 1.
 %However, the inferrability can be partially justified by the following theorem
 %if \eqref{eqn: govern PDE} has only one equation, has one dimensional space, $q=0$, and $D=1$.
 \begin{theorem}
@@ -194,36 +205,47 @@ solid blue and the dashed green lines. Given the value of $\gamma$,
 $B_u$ is shown on the right vertical axis which consists of values of $u$ that appear in $u_0$
 and satisfy $\left|\frac{du_0}{dx}\right|\ge \gamma > 0$.\\
 
-Several observations can be made from Theorem \ref{theorem: 1}.
-Firstly, if the solutions of \eqref{eqn: easy 1} and \eqref{eqn: easy 2} match closely 
-$\left(|\tilde{u}(t,x)-u(t,x)| < \delta\right)$, then
-the derivatives of their flux functions must match closely in $B_u$ $\left(\left|\frac{d\tilde{F}}{du} - \frac{dF}{du}\right| < 
-\epsilon\right)$. 
-Secondly, the conclusion 
-can only be drawn for values of $u$ which appeared in the initial condition $\left(u\in \left\{u_0(x)\, \textrm{for all } \, x\in \mathbb{R}\right\}\right)$, 
-and where the initial condition has large enough slope $\left(\left|\frac{du_0}{dx}\right|\ge \gamma > 0\right)$.
-Thirdly, only the derivatives of the fluxes are guaranteed to match $\left(\left|\frac{d\tilde{F}}{du} - \frac{dF}{du}\right| < \epsilon\right)$,
-rather than the fluxes themselves. 
-%For the general form \eqref{eqn: govern PDE} which 1) has systems of equations, 2) has higher spatial dimensions, 
-%and 3) only discretized space-time solution is available,
-%the inferrability is difficult to show theoretically. Instead, it will be demonstrated numerically.\\
-
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=10cm]{../excitedDomain.png}
         \caption{An illustration of $B_u$ defined in Theorem \ref{theorem: 1}. The blue line is $u_0$ 
         and the green dashed line is $\frac{du_0}{dx}$. $B_u$ is the set of $u_0$ where the derivative 
         $\frac{du_0}{dx}$ has an absolute value larger than $\gamma$.
-        The left column represents the basis on the $\left(j, \frac{\eta}{2^j}\right)$ plane,
-        and the right column shows the actual basis $\phi_{j,\eta}$.}
+        The left y-axis is $\frac{du_0}{dx}$, and the right y-axis is $u_0$.
+        $B_u$, represented by the bold blue line on the right y-axis,
+        is domain of $u$ in which the error of the inferred flux can be bounded by the solution
+        mismatch.}
         \label{fig: excitedDomain}
     \end{center}
 \end{figure}
 
-In practice, the minimization of $\mathcal{M}_u$ can be expensive if the twin model uses
-implicit time marching schemes, because the computation of $\mathcal{M}_u$ will require iterative
-solves of linearized equations of the twin model \cite{PDE theory}.
-To avoid the expensive iterative solves, the \textbf{integrated truncation error} is introduced.
+Several observations can be made from Theorem \ref{theorem: 1}.
+Firstly, if the solutions of \eqref{eqn: easy 1} and \eqref{eqn: easy 2} match closely, i.e.
+$|\tilde{u}(t,x)-u(t,x)| < \delta$, then
+the derivatives of their flux functions must match closely in $B_u$, i.e.
+$\left|\frac{d\tilde{F}}{du} - \frac{dF}{du}\right| < \epsilon$. 
+Secondly, only the derivatives of the fluxes are guaranteed to match, i.e.
+$\left|\frac{d\tilde{F}}{du} - \frac{dF}{du}\right| < \epsilon$,
+rather than the fluxes themselves. 
+If $F$ or $\tilde{F}$ is added by a constant, the solution of the gray-box or the twin-model
+will not change.
+Thirdly, the conclusion 
+can only be drawn for values of $u$ which appeared in the initial condition 
+$\left(u\in \left\{u_0(x)\, \textrm{for all } \, x\in \mathbb{R}\right\}\right)$, 
+and where the initial condition has large enough slope $\left(\left|\frac{du_0}{dx}\right|\ge \gamma > 0\right)$.
+Generally speaking, 
+we expect that $F$ is only inferrable (up to a constant) in the domain of $u$ covered by the gray-box 
+solution, which will be demonstrated in the numerical examples in this chapter.\\
+%For the general form \eqref{eqn: govern PDE} which 1) has systems of equations, 2) has higher spatial dimensions, 
+%and 3) only discretized space-time solution is available,
+%the inferrability is difficult to show theoretically. Instead, it will be demonstrated numerically.\\
+
+
+If the twin model uses implicit time marching schemes,
+the minimization of $\mathcal{M}_u$ can be expensive because the computation of $\mathcal{M}_u$ 
+requires to solve a system of equations at every timestep \cite{PDE theory}.
+To reduce the computational cost, we introduce another metric:
+the integrated truncation error.
 Define
 \begin{equation}
     \tau = \frac{\partial u}{\partial t} 
@@ -247,15 +269,8 @@ which approximates
 In \eqref{eqn: truncation error}, 
 $i, j, w_{ij}$ are defined in the same way as in \eqref{eqn: solution mismatch}.\\
 
-If $\mathcal{M}_u$ is replaced by $\mathcal{M}_{\tau}$ in \eqref{eqn: twin min mismatch},
-a different twin model can be obtained. The minimization of $\mathcal{M}_{\tau}$ can be
-cheaper than the minimization of $\mathcal{M}_u$ because the computation of the residual 
-$\boldsymbol{\tau}$ does not require the iterative solves.
-The problem is that the $\tilde{F}$ that minimizes 
-$\mathcal{M}_{\tau}$ does not guarantee a small $\mathcal{M}_u$.
-Indeed, if the twin models is unstable, $\mathcal{M}_u$ may not be bounded even if 
-$\mathcal{M}_{\tau}$ is bounded \cite{PDE theory}.
-In the following, a sufficient condition is studied under which $\mathcal{M}_u$ can be bounded by 
+We study the relationship of $\mathcal{M}_{\tau}$ and $\mathcal{M}_{u}$.
+A sufficient condition is studied under which $\mathcal{M}_u$ can be bounded by 
 $\mathcal{M}_{\tau}$.\\
 
 \begin{theorem}
@@ -272,11 +287,10 @@ $\mathcal{M}_{\tau}$.\\
         \|\mathcal{G}_ia-\mathcal{G}_ib\|^2_{W} \le \beta \|a-b\|^2_{W} \,,
         \label{eqn: contractive}
     \end{equation}
-    with $\beta<1$,
     for any $a, b \in \mathbb{R}^N$ and for all $i$,
     then 
     \begin{equation}
-        \mathcal{M}_u \le \frac{1}{1-\beta} \mathcal{M}_{\tau}\,,
+        \mathcal{M}_u \le \left(1+ \beta+ \cdots + \beta^{M-1}\right) \mathcal{M}_{\tau}\,,
     \end{equation}
     where
     \begin{equation}
@@ -291,18 +305,35 @@ $\mathcal{M}_{\tau}$.\\
     \label{theorem: 2}
 \end{theorem}
 The proof is given in Appendix \ref{proof 2}. The theorem implies that,
-if the twin model is a contractive dynamical 
-system \cite{contractive system}, as given by \eqref{eqn: contractive}, then the
-solution mismatch can be bounded by the integrated truncation error. In contrast, 
-the bound may not exist for non-contractive dynamical systems, for example for systems 
-that exhibit bifurcation \cite{dynamical system}. It is a future work to further investigate the applicability of the pre-training
-theoretically, in particular, to investigate the necessary and sufficient condition for the bound.\\
+if the one-step time marching operator of the twin model is Lipschitz continuous, 
+as given by \eqref{eqn: contractive}, then the
+solution mismatch can be bounded by the integrated truncation error.
+Unfortunately, if the Lipschitz constant $\beta>1$ and if 
+the number of timesteps $M\gg 1$, then
+$\left(1+ \beta+ \cdots + \beta^{M-1}\right)$ can be large. Thus
+a small $\mathcal{M}_{\tau}$ does not always guarantee a small $\mathcal{M}_u$.
+Therefore, for twin models that has $\beta>1$ and $M \gg 1$, 
+if computational budget allows, we recommend minimizing $\mathcal{M}_u$
+instead of $\mathcal{M}_u$ for training a twin model. Despite the theoretical
+flaw, $\mathcal{M}_\tau$ can be useful in practice when minimizing $\mathcal{M}_u$ is
+too computationally expensive.\\
 
-The usage of $\mathcal{M}_{\tau}$ will be discussed in section 
-\ref{sec: adaptive basis}. In the following, $\mathcal{M}$ is used to represent both $\mathcal{M}_u$
-and $\mathcal{M}_{\tau}$.\\
+%If $\mathcal{M}_u$ is replaced by $\mathcal{M}_{\tau}$ in \eqref{eqn: twin min mismatch},
+%a different twin model can be obtained. The minimization of $\mathcal{M}_{\tau}$ can be
+%cheaper than the minimization of $\mathcal{M}_u$ because the computation of the residual 
+%$\boldsymbol{\tau}$ does not require the iterative solves.
+%However, 
+%Indeed, if the twin models is unstable, $\mathcal{M}_u$ may not be bounded even if 
+%$\mathcal{M}_{\tau}$ is bounded \cite{PDE theory}.\\
 
 
+%In practice, we may have $\beta>1$. For $M\gg 1$, small Mtau big Mu. 
+%If solution big difference, then adjoint can be different. We recommend using Mu if 
+%computation resource allows.
+%The usage of $\mathcal{M}_{\tau}$ will be discussed in section 
+%\ref{sec: adaptive basis}. 
+Let $\mathcal{M}$ denote either $\mathcal{M}_u$
+or $\mathcal{M}_{\tau}$.
 The minimization of $\mathcal{M}$ can be solved by gradient-based methods.
 For $\mathcal{M}=\mathcal{M}_{\tau}$, the adjoint method can be applied to compute 
 $\frac{d\mathcal{M}_{\tau}}{d\tilde{F}}$ to drive the optimization.
@@ -323,11 +354,10 @@ in \eqref{eqn: twin min mismatch}.
 %A suitable parameterization for $\tilde{F}$ will be chosen that takes into account the observations from
 %Theorem \ref{theorem: 1}.
 A choice of the basis functions, the sigmoid functions, 
-is introduced to parameterize $\tilde{F}$. By using a fixed set of basis functions, the sigmoid basis
-is demonstrated in a numerical example.
-Section \ref{sec: adaptive basis} develops a procedure that adaptively refines the
-basis functions,
-and gives the algorithm for training the twin model. 
+is introduced to parameterize $\tilde{F}$. By using a fixed set of basis functions, the 
+twin model is demonstrated in a numerical example.
+Section \ref{sec: adaptive basis} develops an algorithm that adaptively constructs the
+basis functions.
 Section \ref{sec: twin numerical results} demonstrates the algorithm in several numerical examples.
 Finally, section \ref{sec: chap 2 summary} summarizes the chapter.\\
 
@@ -656,10 +686,12 @@ In addition, the trained twin model is simulated using out-of-sample initial con
 are different from the initial condition of the training solution. 
 Two example gray-box
 and twin-model solutions are shown in Figure \ref{fig: outsample good test} and Figure \ref{fig: outsample bad test}.
-In Figure \ref{fig: outsample good test}, the $B_u$ for the gray-box solution is a subset of the
-$B_u$ for the training solution. Therefore, it is expected that the gray-box and the twin-model
-solutions match closely. In contrast, the $B_u$ for the gray-box solution in Figure \ref{fig: outsample bad test}
-is not a subset of the $B_u$ for the training solution, which results in a larger solution mismatch.\\
+In Figure \ref{fig: outsample good test}, the domain of the gray-box solution is $[0.1, 0.3]$, which
+is contained in the the domain of the training solution, $[0,0.48]$.
+Therefore, we expect that the gray-box and the twin-model
+solutions match closely. In contrast, the domain of the gray-box solution in Figure 
+\ref{fig: outsample bad test} is $[0.05,0.9]$. The domain is not contained 
+in the domain of the training solution, which results in a large solution mismatch.\\
 
 %Figure \ref{fig: leftcol} shows the gray-box space-time solution
 %on $x\in[0,1], \, t\in[0,1]$ for $c=0$. 
@@ -777,12 +809,10 @@ the twin model method. This topic is discussed in the next section.\\
 \label{sec: adaptive basis}
 This section addresses the problem of adaptively choosing a finite set of basis functions
 for the parameterization of $\tilde{F}$.
-Assume all possible choices of basis functions forms a countable set, thereby can be indexed 
-by positive integers.
-The heuristics for the adaptive basis construction has been discussed in Section
-\ref{sec: adaptive basis review}. It has been explained that the candidate bases, namely the basis
-dictionary, can be chosen adaptively using 
-the following iterative approach \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}. 
+Assume all possible choices of basis functions forms a countable set.
+Algorithm \ref{algo: outline heuristics} has outlined an iterative approach 
+to construct the basis dictionary.
+%\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}. 
 Starting from an initial set of basis functions,
 the basis dictionary is built up progressively 
 by iterating over a forward step and a backward step
@@ -875,7 +905,7 @@ The two criteria are developed in this section. \\
 
 To define the first criterion, 
 a formulation is developed to efficiently assess the significance of a candidate basis.
-Given a basis dictionary $\mathcal{A}$, define the \textbf{minimal mismatch}
+Given a basis dictionary $\mathcal{A}$, define the minimal mismatch
 \begin{equation}
     \mathcal{M}^*(\mathcal{A}) = \min_{\boldsymbol{\alpha}_\mathcal{A} \in \mathbb{R}^{|\mathcal{A}|}}
     \mathcal{M}\left( \sum_{(\boldsymbol{j}, \boldsymbol{\eta})\in \mathcal{A}}
@@ -883,9 +913,8 @@ Given a basis dictionary $\mathcal{A}$, define the \textbf{minimal mismatch}
     \boldsymbol{\eta}} \right)\,,
     \label{eqn: minimal mismatch}
 \end{equation}
-where $\mathcal{M}$ is defined either as the solution mismatch $\mathcal{M}_u$ by 
-\eqref{eqn: solution mismatch}, or as the integrated truncation error 
-$\mathcal{M}_{\tau}$ by \eqref{eqn: truncation error}.
+where $\mathcal{M}$ can be either the solution mismatch $\mathcal{M}_u$ 
+or the integrated truncation error $\mathcal{M}_{\tau}$.
 %to be the minimal solution mismatch \eqref{eqn: solution mismatch} if $\tilde{F}$ were parameterized
 %by the bases indexed by $\mathcal{A}$.
 %The basis functions are represented by $\left(\boldsymbol{j},
@@ -921,83 +950,105 @@ If the coefficients for the bases $\mathcal{A}^\prime\backslash (\boldsymbol{j}_
 are set to be $\boldsymbol{\alpha}^*_{\mathcal{A}}$ while the coefficient for the basis
 $(\boldsymbol{j}_l, \boldsymbol{\eta}_l)$ is set to be $0$, then 
 $\mathcal{M}(\mathcal{A}^\prime) = \mathcal{M}^*(\mathcal{A})$. 
-Therefore, $\mathcal{M}^*(\mathcal{A}^\prime) \le \mathcal{M}^*(\mathcal{A})$. 
-Define the \textbf{mismatch improvement} to be
-\begin{equation}
-    \Delta \mathcal{M}^*\left(\mathcal{A}, l\right) = \mathcal{M}^*(\mathcal{A}) - 
-    \mathcal{M}^*(\mathcal{A}^\prime)\ge 0
-    \label{eqn: mismatch improvement}
-\end{equation} 
-Let $\boldsymbol{\alpha}^*_{\mathcal{A}^\prime} = \left\{
-\hat{\boldsymbol{\alpha}}^*_{\mathcal{A}}, \, \alpha_l^*
-\right\}$ be the optimal coefficients that solves \eqref{eqn: append minimal mismatch}.
-View $\Delta \mathcal{M}^*\left(\mathcal{A}, l\right)$ as a function of $\alpha_l$,
-and assume its Hessian is positive definite at 
-$\alpha_l^*$. The first-order optimality condition gives
+Therefore, $\mathcal{M}^*(\mathcal{A}^\prime) \le \mathcal{M}^*(\mathcal{A})$. The appension of
+an additional basis does not increase the minimal mismatch.\\
+
+Consider setting the coefficients of $\mathcal{A}^\prime$ to be
+$\left\{  \boldsymbol{\alpha}^*_{\mathcal{A}}, \, \epsilon  \right\}$.
+For $\epsilon\rightarrow 0$, apply first-order approximation, we have
 \begin{equation}\begin{split}
-    \Delta\mathcal{M}^*\left(\mathcal{A}, l\right) &
-    = \mathcal{M} \left( 
+    & \mathcal{M} \left( 
     \sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}}
     \alpha^*_{\boldsymbol{j}, \boldsymbol{\eta}} \boldsymbol{\phi}_{\boldsymbol{j}, \boldsymbol{\eta}}
     \right)
     - \mathcal{M} \left( 
     \sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}}
-    \hat{\alpha}^*_{\boldsymbol{j}, \boldsymbol{\eta}} 
+    {\alpha}^*_{\boldsymbol{j}, \boldsymbol{\eta}} 
     \boldsymbol{\phi}_{\boldsymbol{j}, \boldsymbol{\eta}}
-    + \alpha_l^* \phi_l
-    \right)\\
-    &\approx 
-    \mathcal{M} \left(
-    \sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}}
-    \alpha^*_{\boldsymbol{j}, \boldsymbol{\eta}} \boldsymbol{\phi}_{\boldsymbol{j}, \boldsymbol{\eta}}
-    \right) 
-    - \mathcal{M} \left( 
-    \sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}}
-    \hat{\alpha}^*_{\boldsymbol{j}, \boldsymbol{\eta}} 
-    \boldsymbol{\phi}_{\boldsymbol{j}, \boldsymbol{\eta}}
-    \right)
-    -\left(\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
-    \right|_{\tilde{F}_\mathcal{A}^*} \phi_l
-    \; \textrm{d} u \right) \alpha_l^*\\
+    + \epsilon \phi_l
+    \right)   \\
     &\approx -\left(\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
     \right|_{\tilde{F}_\mathcal{A}^*} \phi_l
-    \; \textrm{d} u \right) \alpha_l^* \,,
-    \label{eqn: taylor expansion}
+    \; \textrm{d} u \right) \epsilon \,.
+    \label{eqn: epsilon mismatch}
 \end{split}\end{equation}
-where $\frac{d\mathcal{M}}{d\tilde{F}}$ is the derivative of $\mathcal{M}(\tilde{F})$ 
-with respect to $\tilde{F}$, evaluated on $\tilde{F} = \tilde{F}^*_\mathcal{A}$.
+%Define the \textbf{mismatch improvement} to be
+%\begin{equation}
+%    \Delta \mathcal{M}^*\left(\mathcal{A}, l\right) = \mathcal{M}^*(\mathcal{A}) - 
+%    \mathcal{M}^*(\mathcal{A}^\prime)\ge 0
+%    \label{eqn: mismatch improvement}
+%\end{equation} 
+%Let $\boldsymbol{\alpha}^*_{\mathcal{A}^\prime} = \left\{
+%\hat{\boldsymbol{\alpha}}^*_{\mathcal{A}}, \, \alpha_l^*
+%\right\}$ be the optimal coefficients that solves \eqref{eqn: append minimal mismatch}.
+%View $\Delta \mathcal{M}^*\left(\mathcal{A}, l\right)$ as a function of $\alpha_l$,
+%and assume its Hessian is positive definite at 
+%$\alpha_l^*$. The first-order optimality condition gives
+%\begin{equation}\begin{split}
+%    \Delta\mathcal{M}^*\left(\mathcal{A}, l\right) &
+%    = \mathcal{M} \left( 
+%    \sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}}
+%    \alpha^*_{\boldsymbol{j}, \boldsymbol{\eta}} \boldsymbol{\phi}_{\boldsymbol{j}, \boldsymbol{\eta}}
+%    \right)
+%    - \mathcal{M} \left( 
+%    \sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}}
+%    \hat{\alpha}^*_{\boldsymbol{j}, \boldsymbol{\eta}} 
+%    \boldsymbol{\phi}_{\boldsymbol{j}, \boldsymbol{\eta}}
+%    + \alpha_l^* \phi_l
+%    \right)\\
+%    &\approx 
+%    \mathcal{M} \left(
+%    \sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}}
+%    \alpha^*_{\boldsymbol{j}, \boldsymbol{\eta}} \boldsymbol{\phi}_{\boldsymbol{j}, \boldsymbol{\eta}}
+%    \right) 
+%    - \mathcal{M} \left( 
+%    \sum_{(\boldsymbol{j}, \boldsymbol{\eta}) \in \mathcal{A}}
+%    \hat{\alpha}^*_{\boldsymbol{j}, \boldsymbol{\eta}} 
+%    \boldsymbol{\phi}_{\boldsymbol{j}, \boldsymbol{\eta}}
+%    \right)
+%    -\left(\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
+%    \right|_{\tilde{F}_\mathcal{A}^*} \phi_l
+%    \; \textrm{d} u \right) \alpha_l^*\\
+%    &\approx -\left(\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
+%    \right|_{\tilde{F}_\mathcal{A}^*} \phi_l
+%    \; \textrm{d} u \right) \alpha_l^* \,,
+%    \label{eqn: taylor expansion}
+%\end{split}\end{equation}
+%where $\frac{d\mathcal{M}}{d\tilde{F}}$ is the derivative of $\mathcal{M}(\tilde{F})$ 
+%with respect to $\tilde{F}$, evaluated on $\tilde{F} = \tilde{F}^*_\mathcal{A}$.
 %(I am not sure how to justify $\boldsymbol{\alpha}^*_{\mathcal{A}} \approx 
 %\hat{\boldsymbol{\alpha}}^*_{\mathcal{A}}$. Without this approximation, \eqref{eqn: taylor expansion} 
 %will be much more costly to evaluate, because \eqref{eqn: append minimal mismatch} 
 %must be solved for every
 %candidate $\phi_l$ in order to evaluate $\Delta \mathcal{M}^*$. Using this approximation, \eqref{eqn: append minimal mismatch} does not need to
 %be solved. Do you have a better way of explaining this?)
-The absolute value of the coefficient for $\alpha_l^*$,
+The absolute value of the coefficient for $\epsilon$,
 \begin{equation}
     s_l(\mathcal{A}) \equiv \left|\int_{u\in \mathbb{R}^k} \left.\frac{d\mathcal{M}}{d \tilde{F}}
     \right|_{\tilde{F}_\mathcal{A}^*} \phi_l \; \textrm{d} u \right|
     \label{eqn: basis significance}
 \end{equation}
-estimates the significance of the basis $\phi_l$ \cite{weight selection}. 
+is the rate of change of $\mathcal{M}$ by perturbing the coefficient of $\phi_l$, which
+estimates the significance of the appended basis \cite{weight selection}. 
 If there are multiple candidate bases, \eqref{eqn: basis significance} can be used to rank their 
 significance.\\
 
-For a twin model that consists of a system of $k$ equations,
-$\tilde{F}$ is a function of $u\in\mathbb{R}^k$, thus 
-$\frac{d\mathcal{M}}{d\tilde{F}}$ is also a function of $u\in\mathbb{R}^k$.
-As discussed in the previous sections, $\frac{d \mathcal{M}}{d\tilde{F}}$ is non-zero only in a
-domain where there is solution. Thus \eqref{eqn: basis significance} 
-can be computed by numerical quadrature over the bounded domain.
-For example, for a uniform Cartesian space-time grid, the quadrature weights are equal to a constant.
-\\
+%For a twin model that consists of a system of $k$ equations,
+%$\tilde{F}$ is a function of $u\in\mathbb{R}^k$, thus 
+%$\frac{d\mathcal{M}}{d\tilde{F}}$ is also a function of $u\in\mathbb{R}^k$.
+%As discussed in the previous sections, $\frac{d \mathcal{M}}{d\tilde{F}}$ is non-zero only inside a
+%range where there is solution. Thus \eqref{eqn: basis significance} 
+%can be computed by numerical quadrature over the bounded domain.
+%%For example, for a uniform Cartesian space-time grid, the quadrature weights are equal to a constant.
+%\\
 
 In practice, \eqref{eqn: basis significance} is not computable
-for all the candidate bases $(\boldsymbol{j}, \boldsymbol{\eta})$
+for \textbf{all} the candidate bases $(\boldsymbol{j}, \boldsymbol{\eta})$
 for $\boldsymbol{j}\in \mathbb{Z}^k$ and
 $\boldsymbol{\eta}\in \mathbb{Z}^k$, because the number of bases are infinite. 
 Therefore, at every iteration in Algorithm \ref{algo: outline heuristics},
 \eqref{eqn: basis significance} shall only be evaluated on a finite number of bases. 
-To address this issue, the \textbf{neighborhood} of sigmoid bases is defined. 
+To address this issue, the neighborhood of sigmoid bases is defined. 
 For univariate basis, the neighborhood of $(j,\eta)$ is defined to be a set of the sigmoid bases:
 \begin{equation}
     \mathcal{N}\left[ \left(j,\eta\right) \right]
@@ -1145,11 +1196,10 @@ The mean value of validation errors \eqref{eqn: cross validation error mean},
 can be used to measure the performance of the basis dictionary. A basis shall be added to or removed from
 the dictionary only if such action reduces $\overline{\mathcal{M}}$.\\
 
-Based upon the above developments, the twin model algorithm with adaptive basis construction
-is given by Algorithm \ref{alg: train twin}.
-The algorithm adopts the heuristics of the forward-backward iterations
-shown in Algorithm \ref{algo: outline heuristics}.
-The forward-back iterations determines which and whether a basis is added or deleted 
+Based upon the above developments, Algorithm \ref{alg: train twin} gives the details need in
+Algorithm \ref{algo: outline heuristics} to adaptively construct the basis dictionary.
+The main part of the algorithm is the forward-back iterations that
+determines which and whether a basis is added or deleted 
 in the dictionary, by using the metric $\mathcal{M}$ and the significance $s$.
 The metric $\mathcal{M}$ and the significance $s$ can be defined either according to the
 solution mismatch $\mathcal{M}_u$, or according to the integrated truncation error
@@ -1161,7 +1211,7 @@ an arbitrary basis dictionary $\mathcal{A}$.
 %The choice of the starting basis dictionary will be discussed in Section 
 %\ref{sec: twin numerical results} along with numerical examples.
 The main part of the algorithm iterates over a forward step (line 3-9) and a backward step (line
-11-20). The forward step firstly finds the most significant candidate 
+11-19). The forward step firstly finds the most significant candidate 
 in the neighborhood of the current dictionary according to \eqref{eqn: basis significance}.
 If the addition indeed reduces the cross validation error, the candidate is added 
 to the dictionary; otherwise it is rejected. 
@@ -1203,13 +1253,12 @@ $\mathcal{M}_u$ may not be bounded by $\mathcal{M}_{\tau}$. Therefore, in the en
            \boldsymbol{\eta}} \phi_{\boldsymbol{j}, \boldsymbol{\eta}}\right)
        $ 
 \LOOP 
-\STATE Compute 
-       $$l^* \leftarrow \argmax_{l \in \mathcal{N}(\mathcal{A})} s_l(\mathcal{A})$$
-\STATE Update\\
-       $$\mathcal{A} \leftarrow 
-       \mathcal{A} \bigcup \{l^*\}\;, \alpha_{l^*} = 0\;,
-       \boldsymbol{\alpha}_{\mathcal{A}} \leftarrow \{\boldsymbol{\alpha}_{\mathcal{A}}, 
-       \alpha_{l^*}\}$$
+\STATE $$l^* \leftarrow \argmax_{l \in \mathcal{N}(\mathcal{A})} s_l(\mathcal{A})\;,\;\;
+       \mathcal{A} \leftarrow 
+       \mathcal{A} \bigcup \{l^*\}$$
+       %\;, \alpha_{l^*} = 0\;,
+       %\boldsymbol{\alpha}_{\mathcal{A}} \leftarrow \{\boldsymbol{\alpha}_{\mathcal{A}}, 
+       %\alpha_{l^*}\}$$
 \STATE Compute $\overline{\mathcal{M}}$ by $k$-fold cross validation.
 \IF {$\overline{\mathcal{M}} < \overline{\mathcal{M}}_0$} 
     \STATE $$
@@ -1221,31 +1270,32 @@ $\mathcal{M}_u$ may not be bounded by $\mathcal{M}_{\tau}$. Therefore, in the en
            $$
 \ELSE \STATE 
        $$\mathcal{A} \leftarrow 
-       \mathcal{A} \backslash \{l^*\}
-       \;,\;\boldsymbol{\alpha}_{\mathcal{A}} \leftarrow \boldsymbol{\alpha}_{\mathcal{A}} \backslash 
-       \{\alpha_{l^*}\}$$
+       \mathcal{A} \backslash \{l^*\}$$
+       %\;,\;\boldsymbol{\alpha}_{\mathcal{A}} \leftarrow \boldsymbol{\alpha}_{\mathcal{A}} \backslash 
+       %\{\alpha_{l^*}\}$$
        \textbf{break}
 \ENDIF
-\STATE Compute 
+\STATE  
        $$g^* \leftarrow \argmin_{g \in \mathcal{A}} s_g(\mathcal{A})$$
 \IF {${g^*} \neq l^*$}
 \STATE  
        $$\mathcal{A} \leftarrow 
-       \mathcal{A} \backslash \{g^*\}\;,\;
-       \boldsymbol{\alpha}_{\mathcal{A}} \leftarrow \boldsymbol{\alpha}_{\mathcal{A}}\backslash \{\alpha_{g^*}\} $$
+       \mathcal{A} \backslash \{g^*\}$$
+       %\;,\;
+       %\boldsymbol{\alpha}_{\mathcal{A}} \leftarrow \boldsymbol{\alpha}_{\mathcal{A}}\backslash \{\alpha_{g^*}\} $$
 \STATE Compute $\overline{\mathcal{M}}$ by $k$-fold cross validation.
 \IF{  $\overline{\mathcal{M}} < \overline{\mathcal{M}}_0$ }
-\STATE $$\overline{\mathcal{M}}_0 \leftarrow \overline{\mathcal{M}}$$
-       $$
-           \boldsymbol{\alpha}_{\mathcal{A}} \leftarrow 
-           \argmin_{\alpha} \mathcal{M}\left(\sum_{(\boldsymbol{j}, \boldsymbol{\eta}) 
-           \in \mathcal{A}} \alpha_{\boldsymbol{j}, \boldsymbol{\eta}} 
-           \phi_{\boldsymbol{j}, \boldsymbol{\eta}}\right)
+\STATE $$\overline{\mathcal{M}}_0 \leftarrow \overline{\mathcal{M}}\;,\;\;
+         \boldsymbol{\alpha}_{\mathcal{A}} \leftarrow 
+         \argmin_{\alpha} \mathcal{M}\left(\sum_{(\boldsymbol{j}, \boldsymbol{\eta}) 
+         \in \mathcal{A}} \alpha_{\boldsymbol{j}, \boldsymbol{\eta}} 
+         \phi_{\boldsymbol{j}, \boldsymbol{\eta}}\right)
        $$
 \ELSE \STATE
-       $$\mathcal{A} \leftarrow \mathcal{A}\bigcup \{g^*\} \;,\;
-       \boldsymbol{\alpha}_{\mathcal{A}} \leftarrow 
-       \boldsymbol{\alpha}_{\mathcal{A}}\bigcup \{\alpha_{g^*}\}$$
+       $$\mathcal{A} \leftarrow \mathcal{A}\bigcup \{g^*\}$$
+       % \;,\;
+       %\boldsymbol{\alpha}_{\mathcal{A}} \leftarrow 
+       %\boldsymbol{\alpha}_{\mathcal{A}}\bigcup \{\alpha_{g^*}\}$$
 \ENDIF
 \ENDIF
 \ENDLOOP
@@ -1543,15 +1593,16 @@ governed by the Buckley-Leverett equation \eqref{eqn: Buckley-Leverett}
 In this section, the same problem is studied but using the adaptive basis construction developed 
 in Section \ref{sec: adaptive basis}. 
 The initial dictionary, $\mathcal{A}$, is selected to contain a single basis
-$\left(0, 0\right)$. Clearly the choice is not unique. 
-We choose $\left(0, 0\right)$ because it has a low resolution 
+$\left(1, 0\right)$. Clearly the choice is not unique. 
+We choose $\left(1, 0\right)$ because it has a low resolution 
 and is centered inside $\left[u_{\min}, u_{\max}\right]$.\\
 
 Figure \ref{fig: basis pnt} shows the selected bases
 for the three solutions in Figure \ref{fig: combine 3}, respectively, obtained by 
 algorithm \ref{alg: train twin}.
-As $\left[u_{\min}, u_{\max}\right]$ shrinks, the dictionary's cardinality reduces and
-the resolution increases. \\
+As $\left[u_{\min}, u_{\max}\right]$ shrinks, the number of bases in the dictionary decreases
+but the resolution of the bases increases. Figure \ref{fig: basis history} shows
+the dictionary after each forward-backward iteration for Figure \ref{fig: basis pnt 3}.\\
 
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.32\textwidth}
@@ -1572,7 +1623,10 @@ the resolution increases. \\
         \caption{Solution 3}
         \label{fig: basis pnt 3}
     \end{subfigure}
-    \caption{The basis dictionary for the three solutions in Figure \ref{fig: combine 3}.}
+    \caption{The basis dictionary for the three solutions in Figure \ref{fig: combine 3}.
+             The iteration starts from the initial basis $(1,0)$. The bases in the
+             dictionary are indicated by red dots, and the deleted bases are indicated
+             by blue crosses.}
     \label{fig: basis pnt}
 \end{center}\end{figure}
 
@@ -1804,14 +1858,9 @@ The solution mismatch, \eqref{eqn: solution mismatch}, is given by
 \end{split}\end{equation*}
 where $w_\rho$, $w_u$, $w_v$, and $w_E$ are non-dimensionalization constants.
 Figure \ref{fig: grayErrSol Ubend} shows the gray-box solution and the solution mismatch
-after training the twin model.
+after training the twin model.\\
+
 %\footnote{Both the solution and the mismatch are normalized.}.
-Figure \ref{fig: state err Ubend} compares the true state equation and the corresponding trained 
-state equation, where the convex hull of $({U}_\infty, \rho_\infty)$, the internal energy
-and the density of the gray-box solution,
-is shown by the dashed red line.
-Because the state equation is expected to be inferrable only inside the domain of the gray-box 
-solution, large deviation is expected outside the convex hull.\\
 
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.49\textwidth}
@@ -1829,25 +1878,17 @@ solution, large deviation is expected outside the convex hull.\\
     \label{fig: grayErrSol Ubend}
 \end{center}\end{figure}
 
+The selected bases in the
+dictionary, represented by $(j_U, j_{\rho}, \eta_U, \eta_\rho)$, are listed in Table 
+\ref{tab: basis list 1} and \ref{tab: basis list 2}. Figure \ref{fig: NS Mtau history}
+shows the cross validation error $\mathcal{M}_{\tau}$ at each forward-backward iteration.
+Figure \ref{fig: state err Ubend} compares the true state equation and the corresponding trained 
+state equation. The convex hull of $({U}_\infty, \rho_\infty)$, the internal energy
+and the density of the gray-box solution,
+is shown by the dashed red line.
+Because the state equation is expected to be inferrable only inside the domain of the gray-box 
+solution, large deviation is expected outside the convex hull.\\
 
-
-\begin{figure}[htbp]\begin{center}
-    \begin{subfigure}[t]{.99\textwidth}
-        \centering
-        \includegraphics[height=5.cm]{../state_eqn_vdw.png}
-        \label{fig: graysol Ubend}
-    \end{subfigure}\\
-    \begin{subfigure}[t]{.99\textwidth}
-        \centering
-        \includegraphics[height=5.cm]{../state_eqn_rk.png}
-        \label{fig: errsol Ubend}
-    \end{subfigure}
-    \caption{The gray-box state equation (right column) and the trained state equation 
-             (left column). The gray-box model uses either the ideal gas equation
-             (first row) or the Redlich-Kwong equation (second row). The convex hull 
-             of the gray-box solution is shown by the dashed red line.}
-    \label{fig: state err Ubend}
-\end{center}\end{figure}
 
 \begin{center}\begin{tabular}{ccccc}
 (2, 1, 9 , 1) & (2, 1, 11, 2) & (2, 2, 8 , 0) & (2, 2, 8 , 2) & (2, 2, 8 , 3) \\
@@ -1881,6 +1922,30 @@ solution, large deviation is expected outside the convex hull.\\
         \label{fig: NS Mtau history}
     \end{center}
 \end{figure}
+
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.99\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{../state_eqn_vdw.png}
+        \caption{(a)}
+        \label{fig: graysol Ubend}
+    \end{subfigure}\\
+    \begin{subfigure}[t]{.99\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{../state_eqn_rk.png}
+        \caption{(b)}
+        \label{fig: errsol Ubend}
+    \end{subfigure}
+    \caption{The state equation for the van der Waals gas (a), and for the
+             Redlich-Kwong gas (b).
+             The left column shows the trained state equation, and the right
+             column shows the gray-box state equation. The trained state equation
+             is added by a constant so the pressure matches the pressure of the
+             gray-box equation at $U=2.5$ and $\rho=1$. The dashed red line shows
+             the convex hull of the gray-box solution.}
+    \label{fig: state err Ubend}
+\end{center}\end{figure}
+
 
 The trained twin model enables the adjoint gradient estimation.
 Figure \ref{fig: geo grad all} shows the

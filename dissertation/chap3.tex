@@ -670,8 +670,29 @@ conservation law simulation, which violates my assumptions in Chapter \ref{chap 
 Such scaling problem is suffered by most non-parametric methods.}. Instead,
 the twin model is tested on a simple gradient descent method, the 
 backtracking-Armijo gradient descent method \cite{backtrack line search}.
-Clearly, such practice is theoretically flawed, because the gradient error
-can not be estimated or bounded, and the optimization may not converge at all.
+The method is a gradient descent method whose stepsize at the $l$th iteration
+is determined by Algorithm \ref{alg: Armijo},
+the backtracking-Armijo line search \cite{backtrack line search}
+
+\begin{algorithm}[htbp]
+\begin{algorithmic}[1]
+\REQUIRE{Initial stepsize $\alpha_0$. $0<\beta<1$, $0<\tau<1$.}
+    \FOR{$l=1$ \TO $l_{\max}$}
+        \STATE $\alpha_{l+1} = \gamma \alpha_0$, $l=l+1$ .
+        \IF{ $\xi(c+\alpha_{l+1} \nabla \xi) - \xi(c) \ge \beta \alpha_{l+1} \nabla \xi^T \cdot 
+              \nabla \xi$}
+            \STATE \textbf{break}
+        \ENDIF
+    \ENDFOR
+\ENSURE $\alpha_{l}$
+\end{algorithmic}
+\caption{Determine the stepsize in the gradient descent optimization by 
+         the backtracking-Armijo line search \cite{backtrack line search}.}
+\label{alg: Armijo}
+\end{algorithm}
+
+ecause the gradient error
+can not be estimated or bounded, using the gradient descent approach is theoretically flawed.
 However, it is interesting to examine the practical utility of the twin model.\\
 
 Figure \ref{fig: chap 3 reservoir opt inj} shows the optimized injection rates.
@@ -694,7 +715,7 @@ evaluation gets more improvement than the constant-rate control.
 
 
 \begin{figure}[htbp]\begin{center}
-    \includegraphics[width=7.5cm,height=5.7cm]{../reservoir_obj_grad_descent.png}
+    \includegraphics[width=7.5cm,height=5.7cm]{../reservoir_obj_grad_descent_2.png}
     \caption{The current best objective evaluation using the backtracking-Armijo gradient
              descent method, where the gradient is provided by the twin model.}
     \label{fig: chap 3 reservoir grad descent obj}

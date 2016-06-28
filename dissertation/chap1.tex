@@ -288,7 +288,7 @@ which is useful for the adaptive parameterization of a twin model.
 \label{sec: review optimization}
 Optimization methods can be categorized into derivative-free and gradient-based methods 
 \cite{gradfreereview}, depending on whether the gradient information is used. 
-In the sequel, I review the two types of methods.\\
+In this section, I review the two types of methods.\\
 \subsubsection{Derivative-free Optimization}
 \label{section: DFO}
 Derivative-free optimization (DFO) requires only the availability of objective
@@ -1120,16 +1120,16 @@ the bases for $\tilde{F}$. Details are discussed in Section \ref{sec: adaptive b
 The general notations are declared here.
 \begin{itemize}
     \item $t\in [0,T]$: the time,
-    \item $\{t_i\}_{i=1}^M$: the time discretization,
+    \item $\{t_i\}_{i=1}^M$: the time steps,
     \item $x\in \Omega$: the space,
-    \item $\{x_j\}_{j=1}^N$: the space discretization,
+    \item $\{x_j\}_{j=1}^N$: the spatial grid points,
     \item $u$: the space-time solution of gray-box conservation law,
     \item $\tilde{u}$: the space-time solution of twin-model conservation law,
     \item $\boldsymbol{u}$: the discretized space-time solution of gray-box simulator,
     \item $\tilde{\boldsymbol{u}}$: the discretized space-time solution of twin-model simulator,
-    \item $k$: 1) the number of equations of the conservation law; or 2) the number of folds in 
+    \item $k$: the number of equations of the conservation law; or the number of folds in 
                cross validation.
-    \item $D$: a differential operator,
+    \item $D$: a known differential operator,
     \item $F$: the unknown function of the gray-box model,
     \item $\tilde{F}$: the inferred $F$,
     \item $q$: the source term,
@@ -1143,15 +1143,19 @@ The general notations are declared here.
     \item $\mathcal{C}\subset \mathbb{R}^d$: the control space,
     \item $K,\, G$: the covariance functions,
     \item $a$: the acquisition function,
-    \item $\mathcal{M}$: the solution mismatch,
+    \item $\mathcal{M}_u$: the solution mismatch,
+    \item $\mathcal{M}_{\tau}$: the integrated truncation error,
     \item $\overline{\mathcal{M}}$: the mean solution mismatch in cross validation,
-    \item $\phi$: the basis functions for $\tilde{F}$,
-    \item $\alpha$: the coefficients for $\phi$,
+    \item $\phi$: a basis function for $\tilde{F}$,
+    \item $j, \boldsymbol{j}$: the dilation parameters of the basis for uni- and
+                               multi-variate functions,
+    \item $\eta, \boldsymbol{\eta}$: the translation parameters of the basis for uni- and
+                               multi-variate functions,
     \item $\mathcal{A}$: the basis dictionary,
+    \item $\alpha$: the coefficients for $\phi$,
     \item $T$: twin model,
     \item $\tau$: residual,
     \item $\boldsymbol{\tau}$: discretized residual,
-    \item $\mathcal{T}$: integrated truncation error.
 \end{itemize}
 
 
@@ -1178,17 +1182,20 @@ My thesis is organized as follows. Chapter \ref{chapter 2}  describes a method t
 objective function constrained by a gray-box simulation, at a cost independent of the dimensionality
 of the gradient. 
 This is achieved through firstly training a twin model, then applying the adjoint method to the trained twin model.
-To train the twin model, a solution mismatch metric is presented. The metric
-is used for the training of twin models.  In addition, an adaptive basis construction scheme 
-is developed to approximate the unknown components in the twin model. 
-Based on the developments, the algorithm for constructing the twin model is summarized.
-Furthermore, methods for reducing the computational cost for training the twin model is
-discussed. Finally, the twin model algorithm is demonstrated in several numerical examples.
-Chapter \ref{chapter 3} develops an efficient global optimization method by using the twin-model gradient obtained
-from Chapter \ref{chapter 2}.
-In Chapter \ref{chapter 3}, the twin-model gradient is modeled stochastically by the Gaussian process.
+To train a twin model, two metrics, the solution mismatch and the integrated truncation
+error, are presented, and the relationship of the two metrics is studied.
+Then we present a method to parameterize the unknown component of the twin model.
+Using the two metrics and the parameterization, 
+a twin model algorithm is developed to approximate the unknown 
+components in the twin model.
+Finally, the twin model algorithm is demonstrated in several numerical examples.
+Chapter \ref{chapter 3} develops a global optimization method by using the estimated
+gradient obtained from the twin model algorithm in Chapter \ref{chapter 2}.
+The gray-box objective function and the estimated gradient are modeled as unknown
+realizations of Gaussian processes.
 Based on the Gaussian process model, 
-a Bayesian optimization algorithm is devised that leverages the twin-model gradient.
+a Bayesian optimization algorithm is developed that leverages the estimated gradient for
+more efficient optimization.
 Its convergence properties are studied. Finally, the twin-model Bayesian optimization algorithm
 is demonstrated in several numerical examples. Chapter \ref{chapter 4} summarizes the thesis and
 my contributions, and proposes several directions of future works.

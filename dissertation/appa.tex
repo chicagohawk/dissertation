@@ -67,13 +67,19 @@ no shock occurs in $t\in[0,T]$. Since the theorem is already proven for the no-s
 \section{Theorem \ref{theorem: 2}}
 \label{proof 2}
 Proof: \\
-Let the one-step time marching of the gray-box simulator be
+Let the one-step time marching of the twin model be
+\begin{equation*}
+    \mathcal{G}_i:\, \mathbb{R}^N\mapsto\mathbb{R}^N,\, \tilde{\boldsymbol{u}}_{i\cdot}\rightarrow 
+    \tilde{\boldsymbol{u}}_{i+1\cdot}=\mathcal{G}_i
+    \tilde{\boldsymbol{u}}_{i\cdot} \,,\quad i=1,\cdots, M-1\,,
+\end{equation*}
+and let the one-step time marching of the gray-box simulator be
 \begin{equation*}
     \mathcal{H}:\, \mathbb{R}^n\mapsto\mathbb{R}^n,\, 
     \boldsymbol{u}_{i\cdot}
     \rightarrow 
     \boldsymbol{u}_{i+1\cdot} = \mathcal{H}_i\boldsymbol{u}_{i\cdot} \,,
-    \quad i=1,\cdots, M-1\,,
+    \quad i=1,\cdots, M-1\,.
 \end{equation*}
 The integrated truncation error can be written as
 \begin{equation*}\begin{split}
