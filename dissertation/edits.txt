@@ -3,3 +3,11 @@
 3. pp49, Eqn(2.13) in theorem 2 is modified to avoid the contrastive assumption. Therefore, a weaker conclusion is obtained.
 4. pp50. The conclusion discussion of theorem 2 is modified to reflect the change in theorem 2. I agree M_\tau has less theoretical backup. Besides, I can't prove that the bases selected by M_\tau are good. So my strategy is not to say anything more than I can prove. M_\tau is useful in practice, that's what I say in the thesis. For non-contrastive twin models, M_\tau can't bound M_u, I think it's okay. 
 6. pp59. The discussion of out-of-sample twin model solutions is modified to avoid saying B_u.
+7. pp65. The significance is derived using the first-order perturbation.
+8. pp68. The usage of M_u and M_\tau is explained for Algorithm 2. My statement is consistent with section 2.1: The message that I conveyed is: M_\tau is cheap to evaluate but has less theoretical backup. If computational budget allows, we recommend using M_u. Otherwise, use M_\tau.
+9. pp70. Removed the "update \alpha" statement in the algorithm.
+10. pp73. Added a history of basis dictionary in the forward-backward iteration.
+11. pp77. Added a list of selected basis.
+12. pp 78. Added a figure showing the decreasing of M_\tau of the basis selection iterations.
+13. pp 84. Aodified chapter summary to reflect the changes.
+14. pp 103. Added a description of the gradient descent optimization. The stepsize of the gradient descent is given by backtracking-Armijo method.
