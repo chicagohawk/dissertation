@@ -235,16 +235,19 @@ the initial condition, boundary condition, source term, and the flux are jointly
 Consider the optimization problem
 \begin{equation}\begin{split}
     c^* &= \argmax_{c_{\min}\le  c \le c_{\max}}\; \xi(\boldsymbol{u},c) \\
-    \xi(\boldsymbol{u},c) &= \sum_{i=1}^M \sum_{j=1}^N w_{ij} f(\boldsymbol{u}_{ij},c; t_i,x_j)
+    \xi(c) &= \sum_{i=1}^M \sum_{j=1}^N w_{ij} f(\boldsymbol{u}_{ij},c; t_i,x_j)
     \approx \int_0^T \int_\Omega f(u,c; t,x)d\boldsymbol{x} d t%\\
     %\textrm{s.t.} \; &\; c_{\min}\le  c \le c_{\max}\,,
     \label{eqn: objective prototype}
 \end{split}\end{equation}
-where $\boldsymbol{u}$ is the discretized space-time solution of a gray-box conservation law
-simulator. The spatial coordinate is $x \in \Omega$ and the time is $t\in[0,T]$.
-$i=1,\cdots, M$ and $j=1,\cdots, N$ indicate the indices for the time and space discretization.
+where $\boldsymbol{u}$ and $u$ are the discretized and continuous 
+space-time solutions of a gray-box conservation law
+simulator.  $\boldsymbol{u}$ and $u$ depend on the control variables $c$. 
+We assume $\xi$ to be a twice differentiable function.
+The spatial coordinate is $x \in \Omega$ and the time is $t\in[0,T]$.
+$i=1,\cdots, M$ and $j=1,\cdots, N$ are the indices for the time and space grid points.
 $f$ is a given function that depends on $u$, $c$, $t$, and $x$.
-$w_{ij}$'s are given quadrature weights for the integration.
+$w_{ij}$'s are the quadrature weights for the integration.
 $c\in\mathbb{R}^d$ indicates the control variable. 
 $c_{\min}$ and $c_{\max}$ are elementwise bound constraints.\\
 

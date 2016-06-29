@@ -9,13 +9,15 @@
 This chapter develops a Bayesian optimization framework to solve \eqref{eqn: objective prototype},
 \begin{equation*}\begin{split}
     c^* &= \argmax_{c_{\min}\le  c \le c_{\max}}\; \xi(\boldsymbol{u},c) \\
-    \xi(\boldsymbol{u},c) &= \sum_{i=1}^M \sum_{j=1}^N w_{ij} f(\boldsymbol{u}_{ij},c; t_i,x_j)
+    \xi(c) &= \sum_{i=1}^M \sum_{j=1}^N w_{ij} f(\boldsymbol{u}_{ij},c; t_i,x_j)
     \approx \int_0^T \int_\Omega f(u,c; t,x)d\boldsymbol{x} d t%\\
     %\textrm{s.t.} \; &\; c_{\min}\le  c \le c_{\max}\,,
 \end{split}\,,\end{equation*}
-where $\xi$ is the objective function, $\boldsymbol{u}$ is the gray-box solution, $c$ is the 
+where $\xi$ is the objective function that is twice differentiable, 
+$\boldsymbol{u}$ is the gray-box solution, $c$ is the 
 control variables, $i=1,\cdots,M, \; j=1,\cdots, N$ are the indices for the time and space
 grid, and $w_{ij}$'s are the quadrature weights.
+In the following context, we assume $\xi$ to be twice differentiable.
 As discussed in Section \ref{sec: review optimization}, 
 the advantage of Bayesian optimization is that it
 uses \textbf{all} the information available from previous evaluations.
@@ -68,14 +70,16 @@ distinguishing the sources of errors.\\
 %as model inadequacy as discussed
 %in Section \ref{sec: model calibration}. 
 
-Let $\nabla\xi$ be the true gradient by using the gray-box model,
-$\xi_{\tilde{\nabla}}$ be the twin-model estimated gradient \footnote{
-$\tilde{\xi}(c)$ is the objective evaluation provided by a twin model 
-trained using the gray-box solution at $c$. $\xi_{\tilde{\nabla}}(c)$ is the adjoint
-gradient estimated by the twin model. If $\tilde{\xi}$ is differentiable, there
-is another gradient, $\nabla \tilde{\xi}$, which can be evaluated by finite difference. 
-Usually $\nabla \tilde{\xi}\neq \xi_{\tilde{\nabla}}$. Notice
-$\xi_{\tilde{\nabla}}$ may not be a conservative vector field.}, and
+Let $\nabla\xi$ be the true gradient of $\xi$,
+$\xi_{\tilde{\nabla}}$ be the twin-model estimated gradient,
+%\footnote{
+%$\tilde{\xi}(c)$ is the objective evaluation provided by a twin model which is
+%trained using the gray-box solution at $c$. $\xi_{\tilde{\nabla}}(c)$ is the adjoint
+%gradient estimated by the twin model. If $\tilde{\xi}$ is differentiable, there
+%is another gradient, $\nabla \tilde{\xi}$, which can be evaluated by finite difference. 
+%Usually $\nabla \tilde{\xi}\neq \xi_{\tilde{\nabla}}$. Notice
+%$\xi_{\tilde{\nabla}}$ may not be a conservative vector field.}
+and
 $\xi_{\tilde{\nabla}i}$ be its $i$th component.
 We model the relationship between $\nabla \xi$ and $\xi_{\tilde{\nabla}}$ by
 \cite{non param calibrate 1, non param calibrate 2, non param calibrate 3}
@@ -85,7 +89,7 @@ We model the relationship between $\nabla \xi$ and $\xi_{\tilde{\nabla}}$ by
     \left.\xi_{\tilde{\nabla}i}\right. 
     = \left. \nabla \xi_i\right. + 
       {{\epsilon}_i}\,,
-\label{eqn: gradient model inadequacy}
+    \label{eqn: gradient model inadequacy}
 \end{equation}
 for $i=1,\cdots, d$, where $\boldsymbol{\epsilon}=(\epsilon_1, \cdots, \epsilon_d)$ models
 the error in the estimated gradient, where $\epsilon_i$'s are functions that depend on the
@@ -185,13 +189,21 @@ where
         \boldsymbol{G}(c_N, c_1) & \cdots & \boldsymbol{G}(c_N, c_N)
     \end{pmatrix}\,,
 \end{equation}
+where $\boldsymbol{G}(c_i, c_j)$ is the covariance matrix of $\boldsymbol{\epsilon}(c_i)$
+and $\boldsymbol{\epsilon}(c_j)$ given by
 \begin{equation}
     \boldsymbol{G}(c_i, c_j) = \textrm{diag}\big(G_1(c_i, c_j), \cdots, G_d(c_i, c_j)\big)\,,
     \; i, \, j=1,\cdots, d.
 \end{equation}
 The derivation of \eqref{eqn: joint H} and \eqref{eqn: joint E} can be found in \cite{grad coKriging}.\\
 
-The Mat$\acute{\textrm{e}}$rn $5/2$ kernel is used for $K$ and $G_i$'s, in particular,
+As discussed in Section \ref{sec: review optimization}, there are many choices for
+the covariance kernels $K$ and $G$, such as the exponential kernel, the squared exponential kernel, and
+the Mat$\acute{\textrm{e}}$rn kernel. In the following context, the
+Mat$\acute{\textrm{e}}$rn $5/2$ kernel is used. This is because the functions simulated by this kernel
+are twice differentiable but without further smoothness 
+\cite{practical Bayesian, GP book, Matern kernel}. We have
+%The Mat$\acute{\textrm{e}}$rn $5/2$ kernel is used for $K$ and $G_i$'s, in particular,
 \begin{equation}
        K(c_1,c_2) = \sigma_\xi^2
        \left(1+ \frac{\sqrt{5}\|c_1-c_2\|_{L_2}}{L_\xi}
@@ -202,12 +214,19 @@ The Mat$\acute{\textrm{e}}$rn $5/2$ kernel is used for $K$ and $G_i$'s, in parti
        G_i(c_1,c_2) = \sigma_{G_i}^2
        \left(1+ \frac{\sqrt{5}\|c_1-c_2\|_{L_2}}{L_{G_i}}
        + \frac{5\|c_1-c_2\|_{L_2}^2}{ 3{L_{G_i}}^2}\right)
-       \exp\left(-\frac{\sqrt{5}\|c_1-c_2\|_{L_2}}{{L_{G_i}}}\right) \,.
+       \exp\left(-\frac{\sqrt{5}\|c_1-c_2\|_{L_2}}{{L_{G_i}}}\right) \,,
 \end{equation}
+where $\sigma_\xi, \sigma_{G_i}$'s are the standard deviation parameters, and
+$L_{\xi}, L_{G_i}$'s are the correlation length parameters.\\
 
 Let $\theta$ denote the hyper parameters
 $L_\xi$, $\sigma_\xi$, $L_{G_i}$'s, $\sigma_{G_i}$'s, and $\mu$.
-$\theta$ can be estimated by log maximum likelihood. The likelihood of observing
+Given the samples of $\xi$ and $\xi_{\tilde{\nabla}}$ on a set of $c$'s,
+$\theta$ can be estimated by log maximum likelihood. 
+As discussed in Section \ref{sec: review optimization}, we use $\underline{c}_n=(c_1, \cdots, c_n)$
+to represent a sequence of control variables on which $\xi$ and $\xi_{\tilde{\nabla}}$ 
+have been evaluated.
+The likelihood of observing
 $\xi(\underline{c}_n)$ 
 and $\xi_{\tilde{\nabla}}(\underline{c}_n)$ is given by
 \begin{equation}\begin{split}
@@ -217,12 +236,13 @@ and $\xi_{\tilde{\nabla}}(\underline{c}_n)$ is given by
     =& \int p\big(\xi(\underline{c}_n),\nabla\xi(\underline{c}_n) | \theta\big) 
       p\big( \xi_{\tilde{\nabla}}(\underline{c}_n) | \xi(\underline{c}_n),\nabla\xi(\underline{c}_n)
       ;\theta \big)
-      d\big(\nabla \xi(\underline{c}_n)\big)\,,
+      d\big(\nabla \xi(\underline{c}_n)\big)\,.
     \label{eqn: marginal likelihood}
 \end{split}\end{equation}
-which is marginalized over $\nabla \xi(\underline{c}_n)$. Because
+%which is marginalized over $\nabla \xi(\underline{c}_n)$. 
+Because
 \begin{equation}\begin{split}
-    \xi(\underline{c}_n),\nabla \xi(\underline{c}_n) \Big| \theta \sim \mathcal{N}\left(
+    \xi(\underline{c}_n),\nabla \xi(\underline{c}_n) \big| \theta \sim \mathcal{N}\left(
         \begin{pmatrix}
             \boldsymbol{\mu}\\
             \boldsymbol{0}
@@ -248,7 +268,7 @@ and
     \right)\,,
 \label{second term}
 \end{equation}
-the log marginal likelihood has the closed form
+the log marginal likelihood can be derived. It has the closed form
 \begin{equation}\begin{split}
     &\log p(\xi(\underline{c}_n), \xi_{\tilde{\nabla}}(\underline{c}_n) | \theta) \\ 
     =&
@@ -270,12 +290,17 @@ the log marginal likelihood has the closed form
             \boldsymbol{H}^T & \boldsymbol{E}+\overline{\boldsymbol{G}}
         \end{pmatrix}       
     \right) \\
-    &- \frac{N(d+1)}{2} \log(2\pi)\,,
+    &- \frac{N(d+1)}{2} \log(2\pi)\,.
 \end{split}\label{eqn: likelihood eqn}
 \end{equation}
-which can be optimized efficiently using GBO methods such as StoGo, 
-as discussed in Section \ref{section: GBO}. Given the joint distribution
-\eqref{eqn: joint dis}, the posterior of $\xi(c)$, for any $c\in \mathbb{R}^d$, 
+The log marginal likelihood can be optimized efficiently using GBO methods. 
+In my thesis, the optimization is done by the BFGS algorithm
+in the NLopt package \cite{nlopt}.\\
+%as discussed in Section \ref{section: GBO}. 
+
+Given the joint distribution
+\eqref{eqn: joint dis} and the estimated hyperparameter $\theta$, 
+the posterior of $\xi(c)$, for any $c\in \mathbb{R}^d$, 
 can be obtained by \eqref{eqn: posterior formulation},
 \begin{equation*}\begin{split}
     \tilde{m}(c) & 
@@ -284,19 +309,30 @@ can be obtained by \eqref{eqn: posterior formulation},
     \tilde{K}(c, c^\prime)&=
     K(c,c^\prime) - K(c,\underline{c}_n) K(\underline{c}_n, \underline{c}_n)^{-1} K(\underline{c}_n,c^\prime)
 \end{split}\,.
-\label{eqn: posterior formulation}
 \end{equation*}
-Using the posterior, the acquisition function, $\rho(c)$, can be constructed and optimized
-to find the next evaluation point. My thesis will use the expected improvement acquisition function.
-See Section \ref{section: bayes opt} for the details.
+As discussed in Section \ref{sec: review optimization},
+the expected improvement (EI) acquisition function, $\rho(c)$, 
+can be evaluated by using the posterior.
+The acquisition function can be optimized
+to find the next control variable to evaluate the objective function. 
+%We refer to Section \ref{section: bayes opt} for the details.
 
 
-\section{Algorithm}
+\section{Optimization Algorithm}
 \label{sec: chap3 algo}
-Based upon the review in Section \ref{section: bayes opt} and the
-developments in Section \ref{sec: chap3 cokriging}, I present a Bayesian optimization 
-algorithm with bound constraints $c_{\min}\le c\le c_{\max}$, Algorithm \ref{alg: bayes opt twin}. 
-The flowchart of the algorithm is sketched in Figure \ref{fig: opt flowchart}.\\
+Based upon the
+developments in Section \ref{sec: chap3 cokriging}, I present the flowchart, 
+Figure \ref{fig: opt flowchart}, of the Bayesian optimization algorithm.
+The detailed algorithm is given in
+Algorithm \ref{alg: bayes opt twin}. \\
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=12cm]{../opt_framework_2.png}
+        \caption{The flowchart of Algorithm \ref{alg: bayes opt twin}.}
+        \label{fig: opt flowchart}
+    \end{center}
+\end{figure}
 
 \begin{algorithm}[htbp]
 \begin{algorithmic}[1]
@@ -324,13 +360,9 @@ The flowchart of the algorithm is sketched in Figure \ref{fig: opt flowchart}.\\
 \label{alg: bayes opt twin}
 \end{algorithm}
 
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=12cm]{../opt_framework_2.png}
-        \caption{The flowchart of Algorithm \ref{alg: bayes opt twin}.}
-        \label{fig: opt flowchart}
-    \end{center}
-\end{figure}
+%Re-Discuss "reuse".
+%Add algorithm, previous iteration twin model, 
+
 
 In line 3 of Algorithm \ref{alg: bayes opt twin}, 
 it is beneficial to reuse twin models, because the
