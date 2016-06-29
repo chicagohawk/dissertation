@@ -67,6 +67,7 @@ distinguishing the sources of errors.\\
 %\cite{non param calibrate 1, non param calibrate 2, non param calibrate 3}.
 %as model inadequacy as discussed
 %in Section \ref{sec: model calibration}. 
+
 Let $\nabla\xi$ be the true gradient by using the gray-box model,
 $\xi_{\tilde{\nabla}}$ be the twin-model estimated gradient \footnote{
 $\tilde{\xi}(c)$ is the objective evaluation provided by a twin model 
@@ -76,7 +77,7 @@ is another gradient, $\nabla \tilde{\xi}$, which can be evaluated by finite diff
 Usually $\nabla \tilde{\xi}\neq \xi_{\tilde{\nabla}}$. Notice
 $\xi_{\tilde{\nabla}}$ may not be a conservative vector field.}, and
 $\xi_{\tilde{\nabla}i}$ be its $i$th component.
-The relationship between $\nabla \xi$ and $\xi_{\tilde{\nabla}}$ can be modeled by 
+We model the relationship between $\nabla \xi$ and $\xi_{\tilde{\nabla}}$ by
 \cite{non param calibrate 1, non param calibrate 2, non param calibrate 3}
 
 %is modeled by the model inadequacy formulation \eqref{eqn: model calibration},
@@ -86,9 +87,12 @@ The relationship between $\nabla \xi$ and $\xi_{\tilde{\nabla}}$ can be modeled 
       {{\epsilon}_i}\,,
 \label{eqn: gradient model inadequacy}
 \end{equation}
-for $i=1,\cdots, d$. \eqref{eqn: gradient model inadequacy} has
-the idiosyncratic noise term removed 
-because $\nabla \xi$ and $\xi_{\tilde{\nabla}}$ are deterministic.\\
+for $i=1,\cdots, d$, where $\boldsymbol{\epsilon}=(\epsilon_1, \cdots, \epsilon_d)$ models
+the error in the estimated gradient, where $\epsilon_i$'s are functions that depend on the
+control variable.\\
+%\eqref{eqn: gradient model inadequacy} has
+%the idiosyncratic noise term removed 
+%because $\nabla \xi$ and $\xi_{\tilde{\nabla}}$ are deterministic.\\
 
 Gaussian processes are adopted to model the terms in \eqref{eqn: gradient model inadequacy}. 
 In particular, I made the following assumptions.
