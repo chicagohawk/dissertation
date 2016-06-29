@@ -1,6 +1,5 @@
 1. pp38, pp41, modified the "Notations" and "thesis outline" sections to reflect recent changes.
 2. pp44, a description of the section is added under the "Approach" title.
-3. pp49, Eqn(2.13) in theorem 2 is modified to avoid the contrastive assumption.
-4. pp49. The discussion of theorem 2 is modified.
-5. pp57. The discussion of out-of-sample twin model solutions is modified.
-
+3. pp49, Eqn(2.13) in theorem 2 is modified to avoid the contrastive assumption. Therefore, a weaker conclusion is obtained.
+4. pp50. The conclusion discussion of theorem 2 is modified to reflect the change in theorem 2. I agree M_\tau has less theoretical backup. Besides, I can't prove that the bases selected by M_\tau are good. So my strategy is not to say anything more than I can prove. M_\tau is useful in practice, that's what I say in the thesis. For non-contrastive twin models, M_\tau can't bound M_u, I think it's okay. 
+6. pp59. The discussion of out-of-sample twin model solutions is modified to avoid saying B_u.
