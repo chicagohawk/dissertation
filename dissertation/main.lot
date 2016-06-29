@@ -1,11 +1,11 @@
 \select@language {english}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces The integrated errors of the estimated gradients for the three solutions.\relax }}{70}
-\contentsline {table}{\numberline {2.2}{\ignorespaces List of the dictionary for the van der Waals gas, $(j_{U}, j_{\rho }, \eta _{U}, \eta _{\rho })$.\relax }}{75}
-\contentsline {table}{\numberline {2.3}{\ignorespaces List of the dictionary for the Redlich-Kwong gas, $(j_{U}, j_{\rho }, \eta _{U}, \eta _{\rho })$.\relax }}{75}
-\contentsline {table}{\numberline {2.4}{\ignorespaces The error of the gradient estimation, in percentage.\relax }}{76}
-\contentsline {table}{\numberline {2.5}{\ignorespaces The error of estimated gradient at day $2$, $16$, $30$, and $44$, in percentage.\relax }}{80}
+\contentsline {table}{\numberline {2.1}{\ignorespaces The error of the estimated gradients for the three solutions. The adaptively constructed bases reduce the estimation error.\relax }}{72}
+\contentsline {table}{\numberline {2.2}{\ignorespaces List of the dictionary for the van der Waals gas, $(j_{U}, j_{\rho }, \eta _{U}, \eta _{\rho })$.\relax }}{77}
+\contentsline {table}{\numberline {2.3}{\ignorespaces List of the dictionary for the Redlich-Kwong gas, $(j_{U}, j_{\rho }, \eta _{U}, \eta _{\rho })$.\relax }}{77}
+\contentsline {table}{\numberline {2.4}{\ignorespaces The error of the gradient estimation, in percentage.\relax }}{78}
+\contentsline {table}{\numberline {2.5}{\ignorespaces The error of estimated gradient at day $2$, $16$, $30$, and $44$, in percentage.\relax }}{84}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
