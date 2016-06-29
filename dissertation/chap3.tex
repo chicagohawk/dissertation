@@ -30,15 +30,18 @@ in Section \ref{sec: chap3 numerical} in several numerical examples.\\
 \section{Modeling the Objective and Gradient by Gaussian Processes}
 \label{sec: chap3 cokriging}
 Assume the gray-box simulator evaluates the objective function $\xi$ accurately.
-The adjoint gradient estimated by the twin model
-is not exactly the true gradient for several reasons. For example, 
-the discretized 
-gray-box solution can be under-resolved, thus limiting the accuracy of the inference of $F$.
+The adjoint gradient estimated by the twin model may not equal
+the true gradient for several reasons. For example, 
+the gray-box solution can be under-resolved if the space-time grid is too coarse, 
+thus limiting the accuracy of 
+the inference of $F$.
 In addition, the simulators for the twin and gray-box models may use different
-numerical schemes, so the $\tilde{F}$ that yields the minimal solution mismatch may not
-be exactly $F$.
-It is difficult to identify the various sources of errors and unrealistic to quantify all the
-errors separately. Instead, my thesis models the gradient error as its entirety without 
+numerical schemes, so the twin-model solution may not equal the gray-box solution
+even if $F=\tilde{F}$. Similarly, the $\tilde{F}$ that minimizes the solution mismatch may not
+equal $F$. Because of the errors in estimating $F$, error is introduced in estimating the gradient.
+It is difficult to identify and separately quantify the various sources of errors 
+in the estimated gradient.
+Instead, I model the gradient error as a whole without 
 distinguishing the sources of errors.\\
 %by model inadequacy. 
 %Model inadequacy relates to the fact that models are barely perfect.
