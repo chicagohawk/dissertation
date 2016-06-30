@@ -25,11 +25,11 @@
 \contentsline {section}{\numberline {3.1}Modeling the Objective and Gradient by Gaussian Processes}{88}
 \contentsline {section}{\numberline {3.2}Optimization Algorithm}{92}
 \contentsline {section}{\numberline {3.3}Convergence Properties Using True Hyper Parameters}{94}
-\contentsline {section}{\numberline {3.4}Numerical Results}{96}
+\contentsline {section}{\numberline {3.4}Numerical Results}{97}
 \contentsline {subsection}{\numberline {3.4.1}Buckley-Leverett Equation}{97}
-\contentsline {subsection}{\numberline {3.4.2}Navier-Stokes Flow}{98}
-\contentsline {subsection}{\numberline {3.4.3}Polymer Injection in Petroleum Reservoir}{101}
-\contentsline {section}{\numberline {3.5}Chapter Summary}{105}
+\contentsline {subsection}{\numberline {3.4.2}Navier-Stokes Flow}{100}
+\contentsline {subsection}{\numberline {3.4.3}Polymer Injection in Petroleum Reservoir}{100}
+\contentsline {section}{\numberline {3.5}Chapter Summary}{106}
 \contentsline {chapter}{\numberline {4}Conclusions}{107}
 \contentsline {section}{\numberline {4.1}Thesis Summary}{107}
 \contentsline {section}{\numberline {4.2}Contributions}{109}

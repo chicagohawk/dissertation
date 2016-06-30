@@ -369,47 +369,53 @@ provides the current objective function $\xi(c)$ and the gray-box solution
 $\boldsymbol{u}(c)$.
 The resulting gray-box solution is used to train a twin model according to the
 twin model algorithm, Algorithm 
-\ref{algo: outline heuristics}, which provides the estimated gradient $\xi_{\tilde{\nabla}}(c)$.
+\ref{alg: train twin}, which provides the estimated gradient $\xi_{\tilde{\nabla}}(c)$.
 Using the new evaluations of $\xi$ and $\xi_{\tilde{\nabla}}$ at $c$, the hyperparameters are
 updated by the maximum likelihood. Then the next candidate control variable is determined
 according to the expected improvement acquisition function. If the expected improvement at
 the candidate control is smaller than a threshold value, the optimization exits and reports 
-the best control variable; otherwise the iteration continues.\\
+the best control variable; otherwise the iteration continues until the maximum number of
+iterations is reached.\\
 
-%Re-Discuss "reuse".
-%Add algorithm, previous iteration twin model,
-%for existing basis,
-%remove basis, then use the pruned dictionary as initial dictionary.
-%Then algo2.
-%
-%In line 3 of Algorithm \ref{algo: outline heuristics},
-%a new twin model is trained at each iteration for the current control variable.
-%The basis dictionary for the new twin model does not need to be constructed from scratch.
-%The dictionary for the twin model of the last iteration can be used as an initial guess
-%of the dictionary for the current twin model.
-%\begin{algorithm}[htbp]
-%\begin{algorithmic}[1]
-%\REQUIRE{$\mathcal{A}, \alpha_{\mathcal{A}}$ of the trained twin model at the previous iteration.}
-%\STATE Compute $\overline{\mathcal{M}}$ by $k$-fold cross validation. $\overline{M}_0\leftarrow 
-%       \overline{\mathcal{M}}$.
-%\WHILE{$\left|\mathcal{A}\right|>1$}
-%    \STATE $$l^* \leftarrow \argmax_{l \in \mathcal{N}(\mathcal{A})} s_l(\mathcal{A})\;,\;\;
-%             \mathcal{A} \leftarrow 
-%             \mathcal{A} \backslash \{l^*\}$$
-%    \STATE Compute $\overline{\mathcal{M}}$ by cross validation.
-%    \IF{$\overline{M} < \overline{M}_0$}
-%        \STATE $\overline{M}_0 \leftarrow \overline{M}$
-%    \ELSE 
-%        \STATE $\mathcal{A} \bigcup \{l^*\}\,,\quad$
-%               \textbf{break}
-%    \ENDIF
-%\ENDWHILE
-%\ENSURE $\mathcal{A}$
-%\end{algorithmic}
-%\caption{Prune the basis dictionary of previously trained twin model.}
-%\label{alg: bayes opt twin prune}
-%\end{algorithm}
-%
+In line 3 of Algorithm \ref{alg: bayes opt twin},
+a new twin model is trained at each iteration for the current control variable.
+The basis dictionary for the new twin model does not need to be constructed from scratch.
+The dictionary of the last iteration can be used to provide an initial guess of the dictionary
+for the current twin model. The bases in the old dictionary may be insignificant for
+the current twin model, therefore they should be pruned to give the initial guess.
+We present a greedy approach to prune the bases in 
+Algorithm \ref{alg: bayes opt twin prune}.
+The pruned dictionary is then used as the initial basis dictionary for training the current
+twin model. 
+
+
+\begin{algorithm}[htbp]
+\begin{algorithmic}[1]
+\REQUIRE{$\mathcal{A}, \alpha_{\mathcal{A}}$ of the trained twin model at the last iteration.}
+\STATE Compute $\overline{\mathcal{M}}$ by $k$-fold cross validation. 
+       $\overline{\mathcal{M}}_0\leftarrow 
+       \overline{\mathcal{M}}$.
+\WHILE{$\left|\mathcal{A}\right|>1$}
+    \STATE $$l^* \leftarrow \argmax_{l \in \mathcal{N}(\mathcal{A})} s_l(\mathcal{A})\;,\;\;
+             \mathcal{A} \leftarrow 
+             \mathcal{A} \backslash \{l^*\}$$
+    \STATE Compute $\overline{\mathcal{M}}$ by cross validation.
+    \IF{$\overline{\mathcal{M}} < \overline{\mathcal{M}}_0$}
+        \STATE $\overline{\mathcal{M}}_0 \leftarrow \overline{\mathcal{M}}$
+    \ELSE 
+        \STATE $\mathcal{A} \bigcup \{l^*\}\,,\quad$
+               \textbf{break}
+    \ENDIF
+\ENDWHILE
+\ENSURE $\mathcal{A}$
+\end{algorithmic}
+\caption{Prune the basis dictionary of previously trained twin model. To
+       be consistent, the metric $\mathcal{M}$ 
+       is set as the same 
+       metric, either $\mathcal{M}_\tau$ or $\mathcal{M}_u$, as in Algorithm \ref{alg: train twin}.}
+\label{alg: bayes opt twin prune}
+\end{algorithm}
+
 %In line 3 of Algorithm \ref{alg: bayes opt twin}, 
 %it is beneficial to reuse twin models, because the
 %twin models that are trained on previous controls may be good initial guesses for 
