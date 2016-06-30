@@ -438,7 +438,7 @@ twin model.
 This section investigates the convergence properties 
 of Algorithm \ref{alg: bayes opt twin}.
 For Bayesian optimization with only the 
-objective evaluation, the convergence properties have been explored in the past.
+objective function evaluation, the convergence properties have been explored in the literatures.
 M. Locatelli \cite{Locatelli} proved that Bayesian optimization with EI acquisition
 generates a dense search sequence 
 for the 1-D optimization problem 
@@ -448,19 +448,26 @@ for higher dimensional space and for more general classes of stochastic processe
 Recently, A. Bull \cite{converge Bull} showed that Bayesian optimization with EI
 has a convergence rate at
 $\mathcal{O}(n^{-\nu/d})$,
-where $\nu>0$ is a constant parameter controlling the kernel smoothness. 
+where $\nu>0$ is a constant parameter controlling the kernel smoothness, and $d$
+is the dimensionality of the control variable. 
 Similar results have been given for UCB acquisition. 
-N. Srinivas \cite{GP bandit} bounded the convergence rate
-from above at $\mathcal{O}(n^{- \frac{\nu}{2\nu+d(d+1)}})$ for UCB, and also established the 
-relationship between the convergence rate and the information gain due to evaluating the objective.
-In this section, I analyze the convergence properties of Algorithm \ref{alg: bayes opt twin} when 
-the true hyper parameters are used. My contribution is to
+N. Srinivas \cite{GP bandit} shows that the convergence rate for UCB is
+$\mathcal{O}(n^{- \frac{\nu}{2\nu+d(d+1)}})$.
+% and also established the 
+%relationship between the convergence rate and the information gain due to evaluating the objective.
+However, to the best of my knowledge, the convergence analysis found in the literatures
+only considers objective function evaluations but not estimated gradient evaluations.
+My contribution is to
 extend the convergence analysis to incorporate estimated gradient evaluations.
-Under the assumptions in Section \ref{sec: chap3 cokriging}, it is proven that
-the search sequence is indeed dense.
-The conclusion implies that the algorithm is able to find the optimal 
+In this section, I analyze the convergence properties of Algorithm \ref{alg: bayes opt twin}.
+I assume that the true objective function and the gradient error is indeed realizations of 
+Gaussian processes. In addition, I assume the kernel functions and the hyperparameters
+of the Gaussian processes are known.
+Under the assumptions in Section \ref{sec: chap3 cokriging}, I prove that
+the search sequence of the control variable is dense in the search space.
+The conclusion implies that the algorithm is able to find the optimal control
 as $n_{\max}\rightarrow \infty$, regardless
-of the gradient estimation quality.\\
+of the magnitude of error in the gradient estimation.\\
 
 The true hyper parameters values are taken as known constants throughout the section.
 Without loss of generality, assume the objective function to be a realization of 
