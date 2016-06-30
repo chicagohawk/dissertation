@@ -315,24 +315,18 @@ the expected improvement (EI) acquisition function, $\rho(c)$,
 can be evaluated by using the posterior.
 The acquisition function can be optimized
 to find the next control variable to evaluate the objective function. 
+In my thesis, the optimization is done by
+the StoGo algorithm \cite{stogo 1, stogo 2}, a gradient-based branch-and-bound algorithm 
+implemented in the NLopt package \cite{nlopt}.
 %We refer to Section \ref{section: bayes opt} for the details.
 
 
 \section{Optimization Algorithm}
 \label{sec: chap3 algo}
 Based upon the
-developments in Section \ref{sec: chap3 cokriging}, I present the flowchart, 
-Figure \ref{fig: opt flowchart}, of the Bayesian optimization algorithm.
-The detailed algorithm is given in
-Algorithm \ref{alg: bayes opt twin}. \\
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=12cm]{../opt_framework_2.png}
-        \caption{The flowchart of Algorithm \ref{alg: bayes opt twin}.}
-        \label{fig: opt flowchart}
-    \end{center}
-\end{figure}
+developments in Section \ref{sec: chap3 cokriging}, I present 
+the Bayesian optimization algorithm \ref{alg: bayes opt twin}. The
+flowchart of the algorithm is sketched in Figure \ref{fig: opt flowchart}. \\
 
 \begin{algorithm}[htbp]
 \begin{algorithmic}[1]
@@ -356,29 +350,81 @@ Algorithm \ref{alg: bayes opt twin}. \\
 \ENDFOR
 \ENSURE{$c^*_0$, $\xi^*_0$}
 \end{algorithmic}
-\caption{Bayesian optimization with twin model.}
+\caption{Bayesian optimization enhanced by the gradient estimated by the twin model method.}
 \label{alg: bayes opt twin}
 \end{algorithm}
 
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=12cm]{../opt_framework_2.png}
+        \caption{The flowchart of Algorithm \ref{alg: bayes opt twin}.}
+        \label{fig: opt flowchart}
+    \end{center}
+\end{figure}
+
+The algorithm starts from an initial value of the control variable $c$, then
+iterates over line 2-12 to find the next candidate control.
+At each iteration, the gray-box model is run at the current control variable, which 
+provides the current objective function $\xi(c)$ and the gray-box solution
+$\boldsymbol{u}(c)$.
+The resulting gray-box solution is used to train a twin model according to the
+twin model algorithm, Algorithm 
+\ref{algo: outline heuristics}, which provides the estimated gradient $\xi_{\tilde{\nabla}}(c)$.
+Using the new evaluations of $\xi$ and $\xi_{\tilde{\nabla}}$ at $c$, the hyperparameters are
+updated by the maximum likelihood. Then the next candidate control variable is determined
+according to the expected improvement acquisition function. If the expected improvement at
+the candidate control is smaller than a threshold value, the optimization exits and reports 
+the best control variable; otherwise the iteration continues.\\
+
 %Re-Discuss "reuse".
-%Add algorithm, previous iteration twin model, 
-
-
-In line 3 of Algorithm \ref{alg: bayes opt twin}, 
-it is beneficial to reuse twin models, because the
-twin models that are trained on previous controls may be good initial guesses for 
-the current training. 
-If the gray-box solutions are similar, it is expected that the trained twin models 
-may be similar too.
-A rigorous investigation of the topic is a future work. Instead, I suggest a tentative
-procedure to reuse trained twin models as follows:
-1) When running Algoithm \ref{alg: bayes opt twin}, store 
-$\boldsymbol{u}(c)$ and the trained twin models
-at all iterates; 2) At each iterate, find a previously trained twin model whose solution is closest 
-to the current solution according to \eqref{eqn: solution mismatch};
-3) Loop over the backward step in Algorithm 
-\ref{alg: train twin} to prune all possible redundant bases of the twin model; and
-4) Apply Algorithm \ref{alg: train twin} to train the twin model as usual.\\
+%Add algorithm, previous iteration twin model,
+%for existing basis,
+%remove basis, then use the pruned dictionary as initial dictionary.
+%Then algo2.
+%
+%In line 3 of Algorithm \ref{algo: outline heuristics},
+%a new twin model is trained at each iteration for the current control variable.
+%The basis dictionary for the new twin model does not need to be constructed from scratch.
+%The dictionary for the twin model of the last iteration can be used as an initial guess
+%of the dictionary for the current twin model.
+%\begin{algorithm}[htbp]
+%\begin{algorithmic}[1]
+%\REQUIRE{$\mathcal{A}, \alpha_{\mathcal{A}}$ of the trained twin model at the previous iteration.}
+%\STATE Compute $\overline{\mathcal{M}}$ by $k$-fold cross validation. $\overline{M}_0\leftarrow 
+%       \overline{\mathcal{M}}$.
+%\WHILE{$\left|\mathcal{A}\right|>1$}
+%    \STATE $$l^* \leftarrow \argmax_{l \in \mathcal{N}(\mathcal{A})} s_l(\mathcal{A})\;,\;\;
+%             \mathcal{A} \leftarrow 
+%             \mathcal{A} \backslash \{l^*\}$$
+%    \STATE Compute $\overline{\mathcal{M}}$ by cross validation.
+%    \IF{$\overline{M} < \overline{M}_0$}
+%        \STATE $\overline{M}_0 \leftarrow \overline{M}$
+%    \ELSE 
+%        \STATE $\mathcal{A} \bigcup \{l^*\}\,,\quad$
+%               \textbf{break}
+%    \ENDIF
+%\ENDWHILE
+%\ENSURE $\mathcal{A}$
+%\end{algorithmic}
+%\caption{Prune the basis dictionary of previously trained twin model.}
+%\label{alg: bayes opt twin prune}
+%\end{algorithm}
+%
+%In line 3 of Algorithm \ref{alg: bayes opt twin}, 
+%it is beneficial to reuse twin models, because the
+%twin models that are trained on previous controls may be good initial guesses for 
+%the current training. 
+%If the gray-box solutions are similar, it is expected that the trained twin models 
+%may be similar too.
+%A rigorous investigation of the topic is a future work. Instead, I suggest a tentative
+%procedure to reuse trained twin models as follows:
+%1) When running Algoithm \ref{alg: bayes opt twin}, store 
+%$\boldsymbol{u}(c)$ and the trained twin models
+%at all iterates; 2) At each iterate, find a previously trained twin model whose solution is closest 
+%to the current solution according to \eqref{eqn: solution mismatch};
+%3) Loop over the backward step in Algorithm 
+%\ref{alg: train twin} to prune all possible redundant bases of the twin model; and
+%4) Apply Algorithm \ref{alg: train twin} to train the twin model as usual.\\
 
 
 \section{Convergence Properties Using True Hyper Parameters}
