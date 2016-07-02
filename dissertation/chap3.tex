@@ -652,7 +652,7 @@ faster, especially when the number of iteration is small.
 \end{center}\end{figure}
 
 \begin{figure}[htbp]\begin{center}
-    \includegraphics[width=8.2cm,height=6.3cm]{../opt_BL.png}
+    \includegraphics[width=8.2cm,height=6.3cm]{../opt_BL_marker.png}
     %~/Documents/2014GRAD/mirror/final_2/results
     \caption{The current best objective evaluation 
              at each iteration. The red line is obtained by the 
@@ -664,7 +664,7 @@ faster, especially when the number of iteration is small.
 \end{center}\end{figure}
 
 \subsection{Navier-Stokes Flow}
-Consider the same Navier-Stokes flow as in Section 
+Consider the same Navier-Stokes flow in Section 
 \ref{sec: chap2 num example NS}.
 Let $S(c)$ be the area of the return bend, which is a function of the 
 control points' coordinates, $c$. Let $S_0$ be the area that corresponds to
@@ -677,23 +677,35 @@ of $S$ and $S_0$,
     \label{eqn: mass flux 2}
 \end{equation}
 where $\lambda>0$. The goal is to maximize $\xi(c)$ in a bounded domain
-$c_{\min}\le c\le c_{\max}$. 
-Because there are $4$ adjustable control points at each boundary, the
+$c_{\min}\le c\le c_{\max}$ shown by the blue boxes in Figure 
+\ref{fig: NS opt geo combined} (a). 
+There are four variable control points at each boundary, where each control point
+has the x- and y-coordinates. So the
 control is $16$-dimensional.
-Figure \ref{fig: NS opt geo combined} shows
+Figure \ref{fig: NS opt geo combined} (a) shows
 the initial and the optimized geometries as well as the bound constraints.
-It also shows the pressure profiles at the interior and the exterior boundaries along
+Figure \ref{fig: NS opt geo combined} (b)
+shows the pressure profiles at the interior and the exterior boundaries along
 the streamwise direction. The optimized geometry reduces the adverse pressure
 gradient at the flow separation, thus decreases the drag and increases the
 mass flux.\\
 
 \begin{figure}[htbp]\begin{center}
-    \includegraphics[width=14.4cm]{../Ubend_combined_new.png}
-    \caption{The left plot shows the initial guess of control points (blue dots), 
+    \begin{subfigure}[t]{.35\textwidth}
+        \centering
+        \includegraphics[height=6cm]{../Ubend_combined_new_a.png}
+        \caption{}
+    \end{subfigure}
+    \begin{subfigure}[t]{.64\textwidth}
+        \centering
+        \includegraphics[height=6cm]{../Ubend_combined_new_b.png}
+        \caption{}
+    \end{subfigure}
+    \caption{(a) shows the initial guess of control points (blue dots), 
              the initial guess of the geometry (blue line),
              the optimized control points (red dots), and the optimized
              geometry (red line). The purple squares indicate the bound 
-             constraints for each control point. The right plot shows the 
+             constraints for each control point. (b) shows the 
              pressure along the interior and the exterior boundaries for
              the initial (blue) and the optimized (red) geometry.}
     \label{fig: NS opt geo combined}
