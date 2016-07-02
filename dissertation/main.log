@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  2 JUL 2016 17:02
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  2 JUL 2016 17:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2242,13 +2242,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 742--747
  []
 
 [101 <../Ubend_combined_new_a.png (PNG copy)> <../Ubend_combined_new_b.png (PNG
- copy)>] [102 <../Ubend_combined_new_2.png (PNG copy)> <../NS_compute_time_2.pn
-g (PNG copy)>]
+ copy)>] [102 <../Ubend_combined_new_2.png> <../NS_compute_time_2.png (PNG copy
+)>]
 Underfull \hbox (badness 10000) in paragraph at lines 755--767
 
  []
 
-<../reservoir_perm.png, id=448, 770.88pt x 770.077pt>
+<../reservoir_perm.png, id=449, 770.88pt x 770.077pt>
 File: ../reservoir_perm.png Graphic file (type png)
 
 <use ../reservoir_perm.png>
@@ -2260,14 +2260,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 775--787
  []
 
 [103 <../reservoir_perm.png>]
-<../reservoir_5d_obj.png, id=454, 525.4029pt x 397.485pt>
+<../reservoir_5d_obj.png, id=455, 525.4029pt x 397.485pt>
 File: ../reservoir_5d_obj.png Graphic file (type png)
 
 <use ../reservoir_5d_obj.png>
 Package pdftex.def Info: ../reservoir_5d_obj.png used on input line 789.
 (pdftex.def)             Requested size: 213.3963pt x 162.18143pt.
 
-<../reservoir_profit_t.png, id=455, 586.8324pt x 442.2924pt>
+<../reservoir_profit_t.png, id=456, 586.8324pt x 442.2924pt>
 File: ../reservoir_profit_t.png Graphic file (type png)
 
 <use ../reservoir_profit_t.png>
@@ -2284,13 +2284,13 @@ Overfull \hbox (17.62482pt too wide) detected at line 831
 [][] 
  []
 
-<../optinj.png, id=460, 449.68pt x 337.26pt>
+<../optinj.png, id=461, 449.68pt x 337.26pt>
 File: ../optinj.png Graphic file (type png)
  <use ../optinj.png>
 Package pdftex.def Info: ../optinj.png used on input line 850.
 (pdftex.def)             Requested size: 213.39436pt x 162.18143pt.
 
-<../reservoir_obj_grad_descent_2.png, id=461, 433.62pt x 294.1389pt>
+<../reservoir_obj_grad_descent_2.png, id=462, 433.62pt x 294.1389pt>
 File: ../reservoir_obj_grad_descent_2.png Graphic file (type png)
 
 <use ../reservoir_obj_grad_descent_2.png>
@@ -2423,7 +2423,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 102--105
 
  []
 
-<../sketch2.png, id=500, 507.3354pt x 342.5598pt>
+<../sketch2.png, id=501, 507.3354pt x 342.5598pt>
 File: ../sketch2.png Graphic file (type png)
  <use ../sketch2.png>
 Package pdftex.def Info: ../sketch2.png used on input line 107.
@@ -2598,9 +2598,9 @@ er/sfsl1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti0800.pfb></us
 r/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/
 type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/type1/public/cm-supe
 r/sftt1200.pfb>
-Output written on main.pdf (130 pages, 3352221 bytes).
+Output written on main.pdf (130 pages, 3339774 bytes).
 PDF statistics:
- 681 PDF objects out of 1000 (max. 8388607)
+ 682 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  341 words of extra memory for PDF output out of 10000 (max. 10000000)
 
