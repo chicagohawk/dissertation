@@ -585,8 +585,14 @@ and estimated.\\
 This section demonstrates the optimization algorithm on several numerical examples.
 
 \subsection{Buckley-Leverett Equation}
-Consider the same problem setup as in Section \ref{sec: chap 2 BL}. 
-Represent the source term by 25 parameters
+Consider the same gray-box model of Buckley-Leverett equation in Section \ref{sec: chap 2 BL}
+\begin{equation*}
+    \frac{\partial u}{\partial t} + \frac{\partial}{\partial x}\Big(
+    \frac{u^2}{1+ 2(1-u)^2} \Big) = c\,,
+\end{equation*}
+with the periodic boundary condition and the same initial condition shown in 
+Figure \ref{fig: outsample bad test}.
+We parameterize the control $c$ by
 \begin{equation}\begin{split}
     &c(t,x) = \sum_{i=1}^5 \sum_{j=1}^5 c_{ij} \, B_{ij}(t,x)\\
     &B_{ij} = \exp\left(-\frac{(t-t_i)^2}{L_t^2}\right)
@@ -602,9 +608,22 @@ Consider minimizing the objective
 \end{equation}
 with the bound constraints $-1 \le c_{ij}\le 1$ for $i,j=1,\cdots, 5$.\\
 
+The optimization is done by using Algorithm \ref{alg: bayes opt twin}.
 Figure \ref{fig: opt BL source} shows the optimized source term.
-Figure \ref{fig: opt BL sol} shows the corresponding gray-box solution. 
-Notice the solution at $t=1$ is close to $\frac{1}{2}$ due to the optimized source.
+Figure \ref{fig: opt BL sol} shows the corresponding gray-box solution.
+Constrained by a limited number of gray-box simulations,
+the optimized solution and objective are examined.
+Figure \ref{fig: u t=1 BL} 
+compares the optimized $u(t=1,x)$ obtained by using the Bayesian optimization with
+and without the estimated gradient, after twenty gray-box simulations.
+%and the vanilla Bayesian optimization\footnote{The vanilla Bayesian optimization uses
+%only the objective evaluation.}, after $20$ gray-box simulations. 
+Figure \ref{fig: current best BL} shows the current best (minimal) objective evaluation at
+each iteration. The usage of twin-model gradient accelerates the optimization, especially when 
+the number of iteration is small.
+
+
+%Notice the solution at $t=1$ is close to $\frac{1}{2}$ due to the optimized source.
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.49\textwidth}
         \centering
@@ -621,16 +640,6 @@ Notice the solution at $t=1$ is close to $\frac{1}{2}$ due to the optimized sour
     \caption{Optimized results for the Buckley-Leverett equation.}
     \label{fig: opt BL results}
 \end{center}\end{figure}
-
-Constrained by a limited number of gray-box simulations,
-the optimized solution and objective are examined.
-Figure \ref{fig: u t=1 BL} 
-compares the optimized $u(t=1,x)$ obtained by either the twin-model Bayesian optimization 
-and the vanilla Bayesian optimization\footnote{The vanilla Bayesian optimization uses
-only the objective evaluation.}, after $20$ gray-box simulations. 
-Figure \ref{fig: current best BL} shows the current best (minimal) objective at
-each iterate. The use of twin model accelerates the optimization, especially when 
-the number of iterate is small.
 
 \begin{figure}[htbp]\begin{center}
     \includegraphics[width=8.2cm,height=6.3cm]{../finalutx.png}

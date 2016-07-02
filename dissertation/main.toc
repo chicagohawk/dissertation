@@ -27,9 +27,9 @@
 \contentsline {section}{\numberline {3.3}Convergence Properties Using True Hyper Parameters}{94}
 \contentsline {section}{\numberline {3.4}Numerical Results}{97}
 \contentsline {subsection}{\numberline {3.4.1}Buckley-Leverett Equation}{98}
-\contentsline {subsection}{\numberline {3.4.2}Navier-Stokes Flow}{99}
-\contentsline {subsection}{\numberline {3.4.3}Polymer Injection in Petroleum Reservoir}{102}
-\contentsline {section}{\numberline {3.5}Chapter Summary}{106}
+\contentsline {subsection}{\numberline {3.4.2}Navier-Stokes Flow}{100}
+\contentsline {subsection}{\numberline {3.4.3}Polymer Injection in Petroleum Reservoir}{101}
+\contentsline {section}{\numberline {3.5}Chapter Summary}{105}
 \contentsline {chapter}{\numberline {4}Conclusions}{109}
 \contentsline {section}{\numberline {4.1}Thesis Summary}{109}
 \contentsline {section}{\numberline {4.2}Contributions}{111}
