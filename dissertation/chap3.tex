@@ -711,28 +711,33 @@ mass flux.\\
     \label{fig: NS opt geo combined}
 \end{center}\end{figure}
 
-Figure \ref{fig: NS opt obj 2} shows the current best objective evaluation at each iterate.
-Twin model enables faster objective improvement than the vanilla Bayesian optimization.
-In particular, at the $8$th iterate, twin-model Bayesian optimization already achieves near optimality.
+Figure \ref{fig: NS opt obj 2} shows the current best objective evaluation at each iteration.
+The twin-model estimated gradient enables faster improvement of the objective evaluation.
+%After a small number of iterations, twin-model Bayesian optimization achieves near optimality.
 Figure \ref{fig: NS opt wall clock} shows the wall clock time of the optimization
-against the number of iterates. Although twin model increases the per-iterate computational
-cost, the increased cost is offset by faster objective improvement. After around $80$
-minutes (8 twin-model optimization iterations), twin model achieves near optimality whereas the vanilla 
-Bayesian optimization is still far from optimal.\\
+against the number of iterations. Although twin model increases the computational
+cost per iteration, the increased cost is offset by faster improvement of the objective function. 
+%After around $80$
+%minutes (8 twin-model optimization iterations), twin model achieves near optimality whereas the vanilla 
+%Bayesian optimization is still far from optimal.\\
 
 \begin{figure}[htbp]\begin{center}
     \includegraphics[width=9cm]{../Ubend_combined_new_2.png}
-    \caption{The current best objective at each iterate for the van der Waals gas and the 
+    \caption{The current best objective at each iteration for the van der Waals gas and the 
              Redlich-Kwong gas. The green lines are
              obtained by the twin-model Bayesian optimization. The red lines are
-             obtained by the vanilla Bayesian optimization. The black horizontal lines
-             indicate the true optimal.}
+             obtained by the Bayesian optimization without the estimated gradient. 
+             The black horizontal lines
+             indicate the true optimal, obtained by BFGS using the true gradient.}
     \label{fig: NS opt obj 2}
 \end{center}\end{figure}
 
 \begin{figure}[htbp]\begin{center}
     \includegraphics[width=9cm]{../NS_compute_time_2.png}
-    \caption{The cumulative and per-iterate wall clock time, in minutes.}
+    \caption{The cumulative and per-iteration wall clock time, in minutes. Although
+             the twin-model Bayesian optimization is more costly per-iteration due 
+             to the training of twin model, it achieves near-optimality with
+             less overall computational time.}
     \label{fig: NS opt wall clock}
 \end{center}\end{figure}
 
@@ -740,7 +745,20 @@ Bayesian optimization is still far from optimal.\\
 \subsection{Polymer Injection in Petroleum Reservoir}
 \label{sec: chap 3 reservoir}
 Consider a 2D horizontal reservoir governed by \eqref{eqn: two phase polymer}
-and \eqref{eqn: darcy law}. The permeability is heterogeneous, and is shown in
+\begin{equation*}\begin{split}
+    \frac{\partial }{\partial t} \left(\rho_\alpha \phi S_\alpha \right) + \nabla \cdot
+    \left( \rho_\alpha \vec{v}_{\alpha} \right) &= 0\,, \quad \alpha \in \{w,o\}\\
+    \frac{\partial}{\partial t}\left( \rho_w \phi S_w c \right) + \nabla \cdot
+    \left( c \rho \vec{v}_{wp}\right) &= 0        
+    \end{split}\,,
+\end{equation*}
+and \eqref{eqn: darcy law}
+\begin{equation*}\begin{split}
+    \vec{v}_\alpha &= - {M_\alpha} k_{r\alpha} \boldsymbol{K} \cdot (\nabla p - \rho_w g \nabla z), \, \quad \alpha \in \{w,o\}\\
+    \vec{v}_{wp} &= -{M_{wp}} k_{rw} \boldsymbol{K} \cdot (\nabla p - \rho_{w} g \nabla z)
+\end{split}\,.
+\end{equation*}
+The permeability is heterogeneous, and is shown in
 Figure \ref{fig: chap 3 reservoir setup}. Five injectors 
 are placed along the southern boundary, and one producer is placed in the northeastern
 corner. The reservoir is simulated for $t\in[0,T=10]\,\texttt{day}$.\\
