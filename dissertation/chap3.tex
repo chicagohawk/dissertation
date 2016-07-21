@@ -666,9 +666,9 @@ faster, especially when the number of iteration is small.
 \subsection{Navier-Stokes Flow}
 Consider the same Navier-Stokes flow in Section 
 \ref{sec: chap2 num example NS}.
-Let $S(c)$ be the area of the return bend, which is a function of the 
-control points' coordinates, $c$. Let $S_0$ be the area that corresponds to
-the initial guess of the control points. 
+Let $S(c)$ be the area of the return bend. 
+$S(c)$ is a function of the 
+control points' coordinates represented by $c$. Let $S_0 = \frac{1}{2}\pi(1.25^2-0.25^2)$.
 The objective function is the steady-state mass flux with a penalty term representing the difference 
 of $S$ and $S_0$,
 \begin{equation}
@@ -678,17 +678,33 @@ of $S$ and $S_0$,
 \end{equation}
 where $\lambda>0$. The goal is to maximize $\xi(c)$ in a bounded domain
 $c_{\min}\le c\le c_{\max}$ shown by the blue boxes in Figure 
-\ref{fig: NS opt geo combined} (a). 
+\ref{fig: NS opt geo combined}. 
 There are four variable control points at each boundary, where each control point
 has the x- and y-coordinates. So the
 control is $16$-dimensional.
-Figure \ref{fig: NS opt geo combined} (a) shows
-the initial and the optimized geometries as well as the bound constraints.
-Figure \ref{fig: NS opt geo combined} (b)
-shows the pressure profiles at the interior and the exterior boundaries along
+Figures \ref{fig: NS opt geo combined} (a) and (c) show
+the initial and the optimized geometries for
+the van der Waals and the Redlich-Kwong gases.
+Figures \ref{fig: NS opt geo combined} (b) and (d) 
+show the corresponding pressure profiles at the interior and the exterior boundaries along
 the streamwise direction. The optimized geometry reduces the adverse pressure
 gradient at the flow separation, thus decreases the drag and increases the
 mass flux.\\
+
+Figure \ref{fig: RK iteration} shows the geometry,
+the trained state equation, and the basis dictionary for the first five iterations
+and the optimized result of the Bayesian optimization. In this numerical example,
+the trained state equation and the basis dictionary are similar at each Bayesian optimization
+iteration.
+Figure \ref{fig: NS opt obj 2} shows the current best objective evaluation at each iteration.
+The twin-model estimated gradient enables faster improvement of the objective evaluation.
+%After a small number of iterations, twin-model Bayesian optimization achieves near optimality.
+Figure \ref{fig: NS opt wall clock} shows the wall clock time of the optimization
+against the number of iterations. Although twin model increases the computational
+cost per iteration, the increased cost is offset by faster improvement of the objective function. \\
+
+
+\clearpage 
 
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.35\textwidth}
@@ -700,26 +716,118 @@ mass flux.\\
         \centering
         \includegraphics[height=6cm]{../Ubend_combined_new_b.png}
         \caption{}
+    \end{subfigure}\\
+    \begin{subfigure}[t]{.35\textwidth}
+        \centering
+        \includegraphics[height=6cm]{../Ubend_combined_new_a_RK.png}
+        \caption{}
+    \end{subfigure}
+    \begin{subfigure}[t]{.64\textwidth}
+        \centering
+        \includegraphics[height=6cm]{../Ubend_combined_new_b_RK.png}
+        \caption{}
     \end{subfigure}
     \caption{(a) shows the initial guess of control points (blue dots), 
              the initial guess of the geometry (blue line),
              the optimized control points (red dots), and the optimized
-             geometry (red line). The purple squares indicate the bound 
+             geometry (red line). The blue squares indicate the bound 
              constraints for each control point. (b) shows the 
              pressure along the interior and the exterior boundaries for
              the initial (blue) and the optimized (red) geometry.}
     \label{fig: NS opt geo combined}
 \end{center}\end{figure}
 
-Figure \ref{fig: NS opt obj 2} shows the current best objective evaluation at each iteration.
-The twin-model estimated gradient enables faster improvement of the objective evaluation.
-%After a small number of iterations, twin-model Bayesian optimization achieves near optimality.
-Figure \ref{fig: NS opt wall clock} shows the wall clock time of the optimization
-against the number of iterations. Although twin model increases the computational
-cost per iteration, the increased cost is offset by faster improvement of the objective function. 
 %After around $80$
 %minutes (8 twin-model optimization iterations), twin model achieves near optimality whereas the vanilla 
 %Bayesian optimization is still far from optimal.\\
+
+
+\begin{figure}
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case0/state_fit_0_RK.png} \hspace{.5cm}
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case0/state_err_0_RK.png}\\
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case0/geo_0.png} \hspace{2cm}
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case0/basis_0_RK.png}
+        \caption{Iteration 0}
+        \label{fig: RK iteration 0}
+    \end{subfigure}
+\end{center}\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}     
+        \centering
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case1/state_fit_1_RK.png} \hspace{.5cm}
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case1/state_err_1_RK.png}\\
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case1/geo_1.png} \hspace{2cm}
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case1/basis_1_RK.png}
+        \caption{Iteration 1}
+        \label{fig: RK iteration 1}
+    \end{subfigure}
+\end{center}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case2/state_fit_2_RK.png} \hspace{.5cm}
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case2/state_err_2_RK.png}\\
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case2/geo_2.png} \hspace{2cm}
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case2/basis_2_RK.png}
+        \caption{Iteration 2}
+        \label{fig: RK iteration 2}
+    \end{subfigure}
+\end{center}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case3/state_fit_3_RK.png} \hspace{.5cm}
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case3/state_err_3_RK.png}\\
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case3/geo_3.png} \hspace{2cm}
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case3/basis_3_RK.png}
+        \caption{Iteration 3}
+        \label{fig: RK iteration 3}
+    \end{subfigure}
+\end{center}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}     
+        \centering
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case4/state_fit_4_RK.png} \hspace{.5cm}
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case4/state_err_4_RK.png}\\
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case4/geo_4.png} \hspace{2cm}
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case4/basis_4_RK.png}
+        \caption{Iteration 4}
+        \label{fig: RK iteration 4}
+    \end{subfigure}
+\end{center}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case99/state_fit_99_RK.png} \hspace{.5cm}
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case99/state_err_99_RK.png}\\
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case99/geo_99.png} \hspace{2cm}
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case99/basis_99_RK.png}
+        \caption{Optimized}
+        \label{fig: RK iteration 99}
+    \end{subfigure}
+\end{center}
+\caption{The trained state equation, the error of the trained state equation,
+         the return bend geometry, and the basis dictionary at some iterations
+         of the Bayesian optimization.
+         The gray-box model uses the Redlich-Kwong state equation. 
+         The resolution of the bases is represented using the same symbols as in 
+         Figure \ref{fig: selected basis NS}.}
+\label{fig: RK iteration}
+\end{figure}
+
+
 
 \begin{figure}[htbp]\begin{center}
     \includegraphics[width=9cm]{../Ubend_combined_new_2.png}
@@ -737,13 +845,16 @@ cost per iteration, the increased cost is offset by faster improvement of the ob
     \caption{The cumulative and per-iteration wall clock time, in minutes. Although
              the twin-model Bayesian optimization is more costly per-iteration due 
              to the training of twin model, it achieves near-optimality with
-             less overall computational time.}
+             less overall computational time. The gray-box model uses the Redlich-Kwong state
+             equation.}
     \label{fig: NS opt wall clock}
 \end{center}\end{figure}
 
+\clearpage 
 
 \subsection{Polymer Injection in Petroleum Reservoir}
 \label{sec: chap 3 reservoir}
+
 Consider a 2D horizontal reservoir governed by \eqref{eqn: two phase polymer}
 \begin{equation*}\begin{split}
     \frac{\partial }{\partial t} \left(\rho_\alpha \phi S_\alpha \right) + \nabla \cdot
@@ -763,12 +874,17 @@ Figure \ref{fig: chap 3 reservoir setup}. Five injectors
 are placed along the southern boundary, and one producer is placed in the northeastern
 corner. The reservoir is simulated for $t\in[0,T=10]\,\texttt{day}$.\\
 
+
+\subsubsection{Time-independent control}
 Firstly, consider constant-in-time injection rates at the injectors. Let the price
-of unit mass oil be $e^{\frac{t}{30}}$ which decays over time, and let the price of unit mass water 
-be $0.4$. Define 
+of unit mass oil be $e^{-\frac{t}{\tau}}$ which decays over time, where $\tau>0$ is 
+a constant. Let the price of unit mass water 
+be $0<\lambda<1$. Define 
+%\tau=30
 \begin{equation}
-    \xi(t) = \int_0^t \rho_{\textrm{prod}\, o} S_o e^{-\frac{t}{30}} I_{\textrm{prod}}\textrm{d}t 
-           - \lambda t \sum_{i=1}^5 I_{\texttt{inj}\, i}\,,
+    \xi(t) = \left(\int_0^t \rho_{\textrm{prod}\, o} S_o e^{-\frac{t}{\tau}} I_{\textrm{prod}}\textrm{d}t 
+           - \int_\Omega \rho_o(t=0) \phi S_o(t=0) \textrm{d}x \right)
+           - \lambda t \sum_{i=1}^5 \rho_{\textrm{inj}wi} I_{\texttt{inj}i}\,,
     \label{eqn: chap 3 reservoir cum cost}
 \end{equation}
 %\begin{equation}
@@ -776,9 +892,12 @@ be $0.4$. Define
 %        - \lambda t \sum_{i=1}^5 I_{\texttt{inj} i}\,,
 %    \label{eqn: chap 3 reservoir cum cost}
 %\end{equation}
-which is the price of the total oil produced minus the price of the total water injected.
-$I_{\texttt{inj}i}$ is the injection rate
-at the $i$th injector. 
+which represents the price of the produced oil produced 
+minus the price of all residual oil at $t=0$ and the price of the total water injected.
+$\rho_{\textrm{prod}o}$ is the oil phase density at the producer, 
+$\rho_{\textrm{inj}wi}$'s are the water phase densities at the injectors,
+$I_{\textrm{prod}}$ is the production rate at the producer, and
+$I_{\texttt{inj}i}$'s are the injection rates at the $i$th injector. 
 The goal is to maximize $\xi(T)$ with bound constraints on the injection rates
 $0\le I_{\texttt{inj}i} \le I_{\max}$.
 Since there are five injectors, the optimization is 5-dimensional.\\
@@ -795,7 +914,8 @@ against the number of iterates.
 The black line indicates the true optimal\footnote{The true optimal
 is obtained by simulated annealing after running $192$ gray-box simulations.}.
 The twin model Bayesian optimization achieves
-near-optimality faster than the vanilla Bayesian optimization. 
+near-optimality faster than the vanilla Bayesian optimization without using 
+the gradient information. 
 Figure \ref{fig: chap 3 reservoir profit t} shows $\xi(t)$ 
 for the initial and the optimized injection rates. The initial rates are
 set at $I_{\texttt{inj}i} = I_{\max}$ for all injectors, 
@@ -805,7 +925,10 @@ to the water being wasted.\\
 
 \begin{figure}[htbp]\begin{center}
     \includegraphics[width=7.5cm,height=5.7cm]{../reservoir_5d_obj.png}
-    \caption{The current best objective evaluation against the number of iterates.}
+    \caption{The current best objective evaluation against the number of iterates. 
+             The black line indicates the true optimal obtained by COBYLA optimization
+             \cite{linear trust region},
+             a derivative-free optimization method.}
     \label{fig: chap 3 reservoir objective}
 \end{center}\end{figure}
 
@@ -815,6 +938,8 @@ to the water being wasted.\\
     \label{fig: chap 3 reservoir profit t}
 \end{center}\end{figure}
 
+
+\subsubsection{Time-dependent control}
 Secondly, consider time-dependent injection rates. If $[0,T]$ is discretized uniformly 
 into $200$ segments, each $I_{\texttt{inj}i}$ becomes a vector with a length of 200.
 Thus the optimization is one thousand dimensional. Clearly the Bayesian optimization 
@@ -824,7 +949,7 @@ the covariance matrix for evaluating the posterior is $N(d+1)$-by-$N(d+1)$.
 For example, after $100$ iterates, the matrix becomes $10^5$-by-$10^5$. 
 The optimization algorithm can dominate the computational cost instead of the
 conservation law simulation, which violates my assumptions in Chapter \ref{chap 1}.
-Such scaling problem is suffered by most non-parametric methods.}. Instead,
+The problem of scaling is generally suffered by non-parametric methods.}. Instead,
 the twin model is tested on a simple gradient descent method, the 
 backtracking-Armijo gradient descent method \cite{backtrack line search}.
 The method is a gradient descent method whose stepsize at the $l$th iteration

@@ -44,7 +44,7 @@ To implement the twin model numerically,
 the unknown part of the flux function is parameterized by a set of basis.
 I argue that the sigmoid bases are well suited for this problem since
 their gradients are local. The procedure is demonstrated
-on a Buckley-Leverett equation using an ad hoc set of sigmoids.
+on a Buckley-Leverett equation using a set of sigmoids chosen manually.
 Although the estimated gradient is accurate, several limitations are observed
 which lead to the developments of adaptive basis construction.
 Several tools are introduced for the adaptive basis construction,
@@ -54,10 +54,12 @@ The adaptive basis construction
 fully exploits the information contained in the
 gray-box solution, and avoids the problem of overfitting.
 Based upon these developments, a twin model algorithm is presented.
-To reduce the computational cost of the algorithm, a pre-train step is suggested
-that minimizes the integrated truncation error instead of the solution mismatch.
+The algorithm selects the basis dictionary adaptively using a forward-backward iteration
+procedure, where either the solution mismatch or the integrated truncation error
+can be used as the metric for basis selection.
 The twin model algorithm is demonstrated on 
-a variety of numerical examples, including a 1D convection equation with unknown 
+sveral numerical examples:
+a 1D convection equation with unknown 
 flux function, a 2D steady-state Navier-Stokes flow with unknown state equation,
 and a 3D petroleum reservoir flow with unknown mobility factors.
 In all the three examples, the twin model algorithm provides accurate estimates
@@ -74,15 +76,17 @@ hyper parameters are estimated by maximum likelihood.
 I present a Bayesian optimization algorithm that utilizes the twin-model gradient.
 In addition, I show that the algorithm is able to find the optimal regardless
 of the gradient estimation accuracy, if the true hyper parameters are used.
-The optimization algorithm is demonstrated on several problems similar to Chapter \ref{chapter 2},
-including a Buckley-Leverett equation with source term controls,
+The optimization algorithm is demonstrated on several similar problems discussed in
+Chapter \ref{chapter 2}:
+a Buckley-Leverett equation with source term controls,
 a Navier-Stokes flow in a return bend with boundary geometry controls,
 and a petroleum reservoir with polymer-water injection rate controls.
 In all the three examples, the
 twin-model optimization achieves
-near-optimality with less iterations than the vanilla Bayesian optimization. 
+near-optimality with less iterations than the vanilla Bayesian optimization without
+the gradient information. 
 Finally, the twin model gradient is tested on a
-$1000$-dimensional control problem, by employing a simple gradient descent approach. 
+high-dimensional control problem, by employing a simple gradient descent approach. 
 The gradient efficiently enables the optimization of the high-dimensional problem,
 which represents another major contribution of my thesis.\\
 
@@ -96,8 +100,9 @@ The main contributions of this work are:
           gray-box solutions and avoids overfitting;
     \item a Gaussian process model of the twin-model gradient
           and a Bayesian optimization algorithm that employs the twin model; and
-    \item a theoretical and numerical demonstration of the algorithms 
-          in a variety of problems.
+    \item theoretical and numerical demonstrations of the algorithms 
+          in several numerical examples: the Buckley-Leverett equation, the
+          Navier-Stokes equation, and the porous media flow equation.
 \end{enumerate}
 
 \section{Future Work}
@@ -105,15 +110,20 @@ There are several potential thrusts of further research:
 A useful extension is to investigate the
 inferrability of twin models for various conservation laws. In particular,
 Theorem \ref{theorem: 1} may be extended for problems with a
-system of equations and higher spatial dimension. Another interesting extension
-is to study the applicability of the pre-train step, especially to
-obtain a necessary and sufficient condition for bounding $\mathcal{M}$
-with $\mathcal{T}$. Finally, in the twin-model Bayesian optimization algorithm, 
+system of equations and higher spatial dimension. 
+%Another important direction
+%is to study the applicability of using the integrated truncation error
+%for adaptively constructing the basis dictionary. especially to
+%obtain a necessary and sufficient condition for bounding $\mathcal{M}$
+%with $\mathcal{T}$.
+Besides, in the twin-model Bayesian optimization algorithm, 
 it is of great practical value to reuse twin model more efficiently.
-My current approach uses the twin model with the closest solution as an initial guess,
-and re-trains the twin model at every iterate. In the future, an important
-research topic is on how to utilize all previously trained twin models. Another important topic 
-is to employ ``trust region'' in the optimization: the same twin model can be used multiple times
+My current approach uses the twin model in the last iteration as an initial guess
+of the basis dictionary
+and re-trains the twin model at every iteration. In the future, a
+research direction is on how to utilize all previously trained twin models,
+for example by employing
+the ``trust region'' technique in the optimization: the same twin model can be used multiple times
 at different controls inside a trust region\footnote{In my thesis,
 the twin model is re-trained at each new control. Generally, gradient-based
 trust region methods require the gradient to satisfy a property called full-linearity.
@@ -122,6 +132,6 @@ by the twin-model gradient. The lack of full-linearity is a key factor
 that refrains me from exploring the trust-region methods. See 
 \cite{trustregionconn} and \cite{trustregionwild} for the details.}, thus reducing
 the training cost.
-Finally, it is interesting to generalize the formulation \eqref{eqn: govern PDE} to
-incorporate unknown source terms and boundary conditions.\\
+%Finally, it is interesting to generalize the formulation \eqref{eqn: govern PDE} to
+%incorporate unknown source terms and boundary conditions.\\
 

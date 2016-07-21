@@ -18,23 +18,25 @@
 \contentsline {section}{\numberline {2.3}Adaptive Basis Construction}{62}
 \contentsline {section}{\numberline {2.4}Numerical Results}{71}
 \contentsline {subsection}{\numberline {2.4.1}Buckley-Leverett Equation}{71}
-\contentsline {subsection}{\numberline {2.4.2}Navier-Stokes Flow}{74}
-\contentsline {subsection}{\numberline {2.4.3}Polymer Injection in Petroleum Reservoir}{78}
-\contentsline {section}{\numberline {2.5}Chapter Summary}{84}
-\contentsline {chapter}{\numberline {3}Leveraging the Twin Model for Bayesian Optimization}{87}
-\contentsline {section}{\numberline {3.1}Modeling the Objective and Gradient by Gaussian Processes}{88}
-\contentsline {section}{\numberline {3.2}Optimization Algorithm}{92}
-\contentsline {section}{\numberline {3.3}Convergence Properties Using True Hyper Parameters}{94}
-\contentsline {section}{\numberline {3.4}Numerical Results}{97}
-\contentsline {subsection}{\numberline {3.4.1}Buckley-Leverett Equation}{98}
-\contentsline {subsection}{\numberline {3.4.2}Navier-Stokes Flow}{100}
-\contentsline {subsection}{\numberline {3.4.3}Polymer Injection in Petroleum Reservoir}{101}
-\contentsline {section}{\numberline {3.5}Chapter Summary}{107}
-\contentsline {chapter}{\numberline {4}Conclusions}{109}
-\contentsline {section}{\numberline {4.1}Thesis Summary}{109}
-\contentsline {section}{\numberline {4.2}Contributions}{111}
-\contentsline {section}{\numberline {4.3}Future Work}{112}
-\contentsline {chapter}{\numberline {A}Proof of Theorems}{113}
-\contentsline {section}{\numberline {A.1}Theorem \ref {theorem: 1}}{113}
-\contentsline {section}{\numberline {A.2}Theorem \ref {theorem: 2}}{115}
-\contentsline {section}{\numberline {A.3}Theorem \ref {theorem: 3}}{118}
+\contentsline {subsection}{\numberline {2.4.2}Navier-Stokes Flow}{77}
+\contentsline {subsection}{\numberline {2.4.3}Polymer Injection in Petroleum Reservoir}{84}
+\contentsline {section}{\numberline {2.5}Chapter Summary}{89}
+\contentsline {chapter}{\numberline {3}Leveraging the Twin Model for Bayesian Optimization}{93}
+\contentsline {section}{\numberline {3.1}Modeling the Objective and Gradient by Gaussian Processes}{94}
+\contentsline {section}{\numberline {3.2}Optimization Algorithm}{98}
+\contentsline {section}{\numberline {3.3}Convergence Properties Using True Hyper Parameters}{100}
+\contentsline {section}{\numberline {3.4}Numerical Results}{103}
+\contentsline {subsection}{\numberline {3.4.1}Buckley-Leverett Equation}{104}
+\contentsline {subsection}{\numberline {3.4.2}Navier-Stokes Flow}{106}
+\contentsline {subsection}{\numberline {3.4.3}Polymer Injection in Petroleum Reservoir}{114}
+\contentsline {subsubsection}{Time-independent control}{114}
+\contentsline {subsubsection}{Time-dependent control}{115}
+\contentsline {section}{\numberline {3.5}Chapter Summary}{117}
+\contentsline {chapter}{\numberline {4}Conclusions}{121}
+\contentsline {section}{\numberline {4.1}Thesis Summary}{121}
+\contentsline {section}{\numberline {4.2}Contributions}{123}
+\contentsline {section}{\numberline {4.3}Future Work}{124}
+\contentsline {chapter}{\numberline {A}Proof of Theorems}{125}
+\contentsline {section}{\numberline {A.1}Theorem \ref {theorem: 1}}{125}
+\contentsline {section}{\numberline {A.2}Theorem \ref {theorem: 2}}{127}
+\contentsline {section}{\numberline {A.3}Theorem \ref {theorem: 3}}{130}

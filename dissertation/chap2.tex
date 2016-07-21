@@ -517,25 +517,25 @@ for the univariate case.\\
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.48\textwidth}
         \centering
-        \includegraphics[width=7.5cm]{../basis_0.png}
+        \includegraphics[width=7.5cm]{../basis_0_flip.png}
         \caption{$\left(0,0\right)$}
         \label{fig: basis 0}
     \end{subfigure}
     \begin{subfigure}[t]{.48\textwidth}
         \centering
-        \includegraphics[width=7.5cm]{../basis_1.png}
+        \includegraphics[width=7.5cm]{../basis_1_flip.png}
         \caption{$\left(0, -1\right)$}
         \label{fig: basis 1}
     \end{subfigure}
     \begin{subfigure}[t]{.48\textwidth}
         \centering
-        \includegraphics[width=7.5cm]{../basis_3.png}
+        \includegraphics[width=7.5cm]{../basis_3_flip.png}
         \caption{$\left(1, 0\right)$}
         \label{fig: basis 2}
     \end{subfigure}
     \begin{subfigure}[t]{.48\textwidth}
         \centering
-        \includegraphics[width=7.5cm]{../basis_6.png}
+        \includegraphics[width=7.5cm]{../basis_6_flip.png}
         \caption{$\left(1, 1\right)$}
         \label{fig: basis 3}
     \end{subfigure}
@@ -570,7 +570,10 @@ The twin model solves
     = c\,,
     \label{eqn: Buckley-Leverett twin}
 \end{equation}
-with the same $c$ and the same initial and boundary conditions. Parameterize $\tilde{F}$ by
+with the same $c$ and the same initial and boundary conditions. 
+A second-order finite volume scheme is used to simulate both the gray-box model
+\eqref{eqn: Buckley-Leverett} and the twin models \eqref{eqn: Buckley-Leverett twin}.
+Parameterize $\tilde{F}$ by
 the sigmoid bases \eqref{eqn: self similar sigmoid}
 \begin{equation}
     \tilde{F} = \sum_{(j, \eta)\in \mathcal{A}\subset \mathbb{Z}\times \mathbb{Z}} 
@@ -1103,13 +1106,13 @@ and $2k$ bases whose translation parameters are incremented by $\pm 1$.
 \begin{figure}[Htbp]\begin{center}
     \begin{subfigure}[p]{1.\textwidth}
         \centering
-        \includegraphics[width=10cm]{../basis_neighbor.png}
+        \includegraphics[width=10cm]{../basis_neighbor_flip.png}
         \caption{$\mathcal{N}\left[\left(0,0\right)\right]$}
         \label{fig: basis neighbor}
     \end{subfigure}
     \begin{subfigure}[p]{1.\textwidth}
         \centering
-        \includegraphics[width=10cm]{../basis_neighbor_2.png}
+        \includegraphics[width=10cm]{../basis_neighbor_2_flip.png}
         \caption{$\mathcal{N}\left[ \big(0, 0\big), \big(1, -1\big)
                  \right]$}
         \label{fig: union neighbor}
@@ -1596,7 +1599,9 @@ for the three solutions in Figure \ref{fig: combine 3}, respectively, obtained b
 algorithm \ref{alg: train twin}.
 As $\left[u_{\min}, u_{\max}\right]$ shrinks, the number of bases in the dictionary decreases
 but the resolution of the bases increases. Figure \ref{fig: basis history} shows
-the dictionary after each forward-backward iteration for Figure \ref{fig: basis pnt 3}.\\
+the dictionary and $\frac{d\tilde{F}}{du}$ 
+at each forward-backward iteration, where initial condition of the training solution 
+is given in Figure \ref{fig: basis pnt 3}.\\
 
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.32\textwidth}
@@ -1628,65 +1633,119 @@ the dictionary after each forward-backward iteration for Figure \ref{fig: basis 
 %Do you think I still need to plot them?)
 
 \begin{figure}[htbp]\begin{center}
-    \begin{subfigure}[t]{.32\textwidth}
+    \begin{subfigure}[t]{1.\textwidth}
         \centering
-        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_1.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_2.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_5.png}
         \caption{Iteration 1}
         \label{fig: basis history 1}
     \end{subfigure}
-    \begin{subfigure}[t]{.32\textwidth}     
+\end{center}\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}     
         \centering
-        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_2.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_3.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_6.png}
         \caption{Iteration 2}
         \label{fig: basis history 2}
     \end{subfigure}
-    \begin{subfigure}[t]{.32\textwidth}
+\end{center}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}
         \centering
-        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_3.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_4.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_7.png}
         \caption{Iteration 3}
         \label{fig: basis history 3}
-    \end{subfigure}\\
-
-    \begin{subfigure}[t]{.32\textwidth}
+    \end{subfigure}
+\end{center}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}
         \centering
-        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_4.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_9.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_8.png}
         \caption{Iteration 4}
         \label{fig: basis history 4}
     \end{subfigure}
-    \begin{subfigure}[t]{.32\textwidth}     
+\end{center}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}     
         \centering
-        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_5.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_10.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_11.png}
         \caption{Iteration 5}
         \label{fig: basis history 5}
     \end{subfigure}
-    \begin{subfigure}[t]{.32\textwidth}
+\end{center}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}
         \centering
-        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_6.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_12.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_200.png}
         \caption{Iteration 6}
-        \label{fig: basis history 6}
-    \end{subfigure}\\
-
-    \begin{subfigure}[t]{.32\textwidth}
-        \centering
-        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_7.png}
-        \caption{Iteration 7}
         \label{fig: basis history 7}
     \end{subfigure}
-    \begin{subfigure}[t]{.32\textwidth}     
+\end{center}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}     
         \centering
-        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_8.png}
-        \caption{Iteration 8}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_14.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_13.png}
+        \caption{Iteration 7}
         \label{fig: basis history 8}
     \end{subfigure}
-    \begin{subfigure}[t]{.32\textwidth}
+\end{center}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}
         \centering
-        \includegraphics[width=4.5cm]{/home/voila/Documents/2014GRAD/test/forwardbackward/figure_9.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_16.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_13.png}
+        \caption{Iteration 8}
+        \label{fig: basis history 6}
+    \end{subfigure}
+\end{center}
+\end{figure}
+
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}
+        \centering
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_18.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_19.png}
         \caption{Iteration 9}
         \label{fig: basis history 9}
     \end{subfigure}   
-    \caption{The basis dictionary at each forward-backward iteration in Figure \ref{fig: basis pnt 3}. 
-             The red dots indicate the bases in the dictionary, the blue crosses indicate the deleted
-             basis.}
+\end{center}
+\end{figure}
+\begin{figure}\ContinuedFloat
+\begin{center}
+    \begin{subfigure}[t]{1.\textwidth}
+        \centering
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_20.png}
+        \includegraphics[height=4.5cm]{/home/voila/Documents/2014GRAD/mirror/final_3/basisHistory/figure_21.png}
+        \caption{Iteration 10}
+        \label{fig: basis history 10}
+    \end{subfigure}   
+    \caption{The basis dictionary at each forward-backward iteration when the initial 
+             condition is chosen as Figure \ref{fig: basis pnt 3}. 
+             In the left figure, 
+             the red dots indicate the bases in the dictionary, while 
+             the blue crosses indicate the deleted
+             basis. In the right figure, the red line indicates the derivative of the true flux,
+             while the blue line indicate the derivative of the trained flux.}
     \label{fig: basis history}
 \end{center}\end{figure}
 
@@ -1848,6 +1907,7 @@ Two state equations are tested: the van der Waals equation and the Redlich-Kwong
 \end{equation}
 where we set $a_{vdw}=10^4$, $b_{vdw}=0.1$, $a_{rk}=10^7$ and $b_{rk}=0.1$.\\
 
+We use a second-order finite volume scheme to discretize the Navier-Stokes equation.
 The solution mismatch, \eqref{eqn: solution mismatch}, is given by
 \begin{equation*}\begin{split}
     \mathcal{M} = &w_\rho \int_\Omega \left|\tilde{\rho}_{\infty} - \rho_{\infty}\right|^2 d\boldsymbol{x}
@@ -1883,10 +1943,13 @@ after training the twin model.\\
 
 The selected bases in the
 dictionary, represented by $(j_U, j_{\rho}, \eta_U, \eta_\rho)$, are listed in Table 
-\ref{tab: basis list 1} and \ref{tab: basis list 2}. Figure \ref{fig: NS Mtau history}
+\ref{tab: basis list 1} and \ref{tab: basis list 2}. 
+They are also shown in Figure \ref{fig: selected basis NS} on a 
+$(\frac{\eta_U}{2^{j_U}}, \frac{\eta_\rho}{2^{j_\rho}})$ plane.
+Figure \ref{fig: NS Mtau history}
 shows the cross validation error $\mathcal{M}_{\tau}$ at each forward-backward iteration.
-Figure \ref{fig: state err Ubend} compares the true state equation and the corresponding trained 
-state equation. The convex hull of $({U}_\infty, \rho_\infty)$, the internal energy
+Figure \ref{fig: state RK} shows the trained state equation and its error.
+The convex hull of $({U}_\infty, \rho_\infty)$, the internal energy
 and the density of the gray-box solution,
 is shown by the dashed red line.
 Because the state equation is expected to be inferrable only inside the domain of the gray-box 
@@ -1894,11 +1957,11 @@ solution, large deviation is expected outside the convex hull.\\
 
 
 \begin{center}\begin{tabular}{ccccc}
-(2, 1, 9 , 1) & (2, 1, 11, 2) & (2, 1, 8 , 0) & (2, 1, 10, 2) & (2, 2, 8 , 3) \\
-(2, 2, 9 , 0) & (2, 2, 9 , 1) & (2, 2, 9 , 3) & (2, 2, 9 , 4) & (2, 2, 10, 0) \\
-(2, 2, 10, 1) & (2, 2, 10, 2) & (2, 2, 10, 3) & (2, 2, 11, 0) & (2, 2, 11, 3) \\
-(2, 2, 12, 0) & (2, 2, 12, 4) & (2, 2, 13, 3) & (3, 2, 16, 4) & (3, 2, 18, 2) \\
-(3, 2, 20, 1) & &&&
+(1,1,5,2)  &(1,1,6,2 )&(1,1,6,1) &(2,1,9,1)  & (2,1,10,1) \\
+(2,1,11,2) &(2,1,11,1)&(2,1,10,0)&(2,1,12,2) & (2,2,9,3) \\
+(2,2,10,2) &(2,2,10,3)&(2,2,11,3)&(2,2,10,1) & (2,2,11,4) \\
+(2,2,10,4)&          &           &           &
+
 \end{tabular}
 \captionof{table}{List of the dictionary for the van der Waals gas, $(j_{U}, j_{\rho},
 \eta_{U}, \eta_{\rho})$.}
@@ -1907,15 +1970,36 @@ solution, large deviation is expected outside the convex hull.\\
 
 
 \begin{center}\begin{tabular}{ccccc}
-(2, 2, 8, 0) & (2, 2, 8, 2) & (2, 2, 8, 4) & (2, 2, 9, 0) & (2, 2, 9, 1)\\
-(2, 2, 9, 2) & (2, 2, 9, 3) & (2, 2, 10, 2) & (2, 2, 10, 3) & (2, 2, 11, 0) \\
-(2, 2, 11, 2) & (2, 2, 11, 3) & (2, 2, 11, 4) & (2, 2, 12, 0) & (2, 2, 12, 1) \\
-(2, 2, 12, 2) & (2, 2, 12, 3) & (2, 2, 13, 1) &(2, 2, 13, 3) & (2, 2, 14, 0) \\
-(2, 2, 14, 1) & (3, 2, 18, 2) & &\\
+(1,1,5,2)  & (1,1,6,2)  & (1,1,6,1)  & (1,1,6,0)  & (2,1,9,1) \\
+(2,1,10,1) & (2,1,11,2) & (2,1,11,1) & (2,1,10,0) & (2,1,12,2)\\
+(2,1,13,2) & (2,2,10,2) & (2,2,10,3) & (2,2,11,3) & (2,2,12,3)\\
+(2,2,10,1) & (2,2,11,4) & & & 
 \end{tabular}
 \captionof{table}{List of the dictionary for the Redlich-Kwong gas, $(j_{U}, j_{\rho},
 \eta_{U}, \eta_{\rho})$.}
 \label{tab: basis list 2}\end{center}
+
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.49\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case0/basis_0_VDW.png}
+        \caption{Van der Waals state equation.}
+        \label{fig: selected basis NS 1}
+    \end{subfigure}
+    \begin{subfigure}[t]{.49\textwidth}
+        \centering
+        \includegraphics[height=5.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case0/basis_0_RK.png}
+        \caption{Redlich-Kwong state equation.}
+        \label{fig: selected basis NS 2}
+    \end{subfigure}
+    \caption{The basis dictionary for the state equations, plotted on the $(\frac{\eta_U}{2^{j_U}},
+             \frac{\eta_\rho}{2^{j_\rho}})$ plane. The circles represent the bases that have
+             $j_U=1, j_\eta=1$. The squares represent the bases that have $j_U=1,j_\eta=1$.
+             The dots represent the bases that have $j_U=2, j_\eta=2$.}
+    \label{fig: selected basis NS}
+\end{center}\end{figure}
+
+
 
 \begin{figure}[htbp]
     \begin{center}
@@ -1931,24 +2015,28 @@ solution, large deviation is expected outside the convex hull.\\
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.99\textwidth}
         \centering
-        \includegraphics[height=5.cm]{../state_eqn_vdw.png}
-        \caption{(a)}
-        \label{fig: graysol Ubend}
+        %\includegraphics[height=5.cm]{../state_eqn_vdw.png}
+        \includegraphics[height=4.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case0/state_fit_0_VDW.png}
+        \includegraphics[height=4.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case0/state_err_0_VDW.png}
+        \caption{Van der Waals}
+        \label{fig: state err VDW}
     \end{subfigure}\\
     \begin{subfigure}[t]{.99\textwidth}
         \centering
-        \includegraphics[height=5.cm]{../state_eqn_rk.png}
-        \caption{(b)}
-        \label{fig: errsol Ubend}
+        %\includegraphics[height=5.cm]{../state_eqn_rk.png}
+        \includegraphics[height=4.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case0/state_fit_0_RK.png}
+        \includegraphics[height=4.cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_opt/thesis_add/iteration/case0/state_err_0_RK.png}
+        \caption{Redlich-Kwong}
+        \label{fig: state err RK}
     \end{subfigure}
-    \caption{The state equation for the van der Waals gas (a), and for the
-             Redlich-Kwong gas (b).
+    \caption{The state equation for the van der Waals gas, and for the
+             Redlich-Kwong gas.
              The left column shows the trained state equation, and the right
-             column shows the gray-box state equation. The trained state equation
+             column shows the error of the state equation. The trained state equation
              is added by a constant so the pressure matches the pressure of the
-             gray-box equation at $U=2.5$ and $\rho=0.7$. The dashed red line shows
+             gray-box equation at $U=2.6$ and $\rho=0.7$. The dashed red line shows
              the convex hull of the gray-box solution.}
-    \label{fig: state err Ubend}
+    \label{fig: state RK}
 \end{center}\end{figure}
 
 
@@ -1981,7 +2069,8 @@ The error of the gradient estimation is given in Table \ref{tab: idea gas gradie
         }
         \label{fig: geo grad perturb}
     \end{subfigure}
-    \caption{A comparison of the estimated gradient and the true gradient.}
+    \caption{A comparison of the estimated gradient and the true gradient for the Redlich-Kwong gas.
+             The result for the van der Waals gas is visually indistinguishable to this plot.}
     \label{fig: geo grad all}
 \end{center}\end{figure}
 
@@ -2069,8 +2158,9 @@ $v_{wp}$ are the componentwise velocities of water, oil, and polymer.
 $\boldsymbol{K}$
 is the permeability tensor. $k_{r}$ is the relative permeability. $p$ is the pressure. $z$ is the depth.
 $g$ is the gravity constant. The mobility factors, $M_o, M_w, M_{wp}$, 
-model the modification of the componentwise mobility due to the presence of polymer.
-In the sequel, the models for the mobility factors are unknown. The only 
+model the modification of the componentwise mobility due to the presence of polymer (oil,
+water, polymer).
+In the following context, the models for the mobility factors are unknown. The only 
 knowledge about the mobility factors is that they depend on $S_w, p$, and $c$.\\
 
 \emph{PSim}, the simulator aforementioned in Section \ref{sec: motivation}, is
@@ -2078,10 +2168,12 @@ used as the gray-box simulator, which uses the IMPES time marching
 \cite{reservoir sim book}, i.e. implicit in pressure
 and explicit in saturation, as well as the upwind scheme.
 Its solution, $S_w$, $c$, and $p$ can be used to train the 
-twin model. The twin model uses fully implicit time marching and the upwind scheme.
+twin model. The twin model is implemented in MRST, an open-source reservoir simulation toolbox
+\cite{MRST}.
+We use the fully implicit time marching and the upwind scheme to simulate the twin model.
 The solution mismatch is defined by
 \begin{equation}
-    \mathcal{M} = w_{S_w}\int_0^T\int_\Omega |S_w-\tilde{S}_w|^2 d\boldsymbol{x} dt
+    \mathcal{M}_u = w_{S_w}\int_0^T\int_\Omega |S_w-\tilde{S}_w|^2 d\boldsymbol{x} dt
                 + w_{c}\int_0^T\int_\Omega |c-\tilde{c}|^2 d\boldsymbol{x} dt 
                 + w_{p}\int_{0}^T\int_\Omega |p-\tilde{p}|^2 d\boldsymbol{x} dt\,,
     \label{eqn: polymer sol mismatch}
@@ -2099,6 +2191,14 @@ is a 3D block with two injectors and one producer. The permeability
 is 100 milli Darcy, and the porosity is 0.3. A constant injection rate of $10^6 
 \texttt{ft}^3/\texttt{day}$ is used at both the injectors.
 The reservoir is simulated for $t\in [0,50] \texttt{day}$.
+To select the basis dictionary for the twin model, the truncation errors for the 
+three equations in \eqref{eqn: two phase polymer} are minimized by using the forward-backward
+iteration.
+Figures \ref{fig: mob O} - \ref{fig: mob W} show the trained mobilities for
+oil, polymer, and water. Tables \ref{tab: mob O} - \ref{tab: mob W} list the
+basis dictionary for the three mobilities. 
+Figure \ref{fig: M history reservoir} shows the truncation error at each forward-backward
+iteration for the three mobilities.
 The solution of $S_w$ is illustrated in Figure \ref{fig: reservoir 3D solutions} for the untrained 
 twin model, the gray-box model, and the trained twin model, respectively. 
 After the training, the twin-model solution matches the gray-box solution closely.\\
@@ -2110,6 +2210,139 @@ After the training, the twin-model solution matches the gray-box solution closel
         \label{fig: reservoir 3D mesh}
     \end{center}
 \end{figure}
+
+\begin{figure}[htbp]\begin{center}
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[height=4.5cm]{/home/voila/Documents/mrst-2015b/mobO.png}
+        \caption{Oil mobility.}
+        \label{fig: mob O}
+    \end{subfigure}\\
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[height=4.5cm]{/home/voila/Documents/mrst-2015b/mobP.png}
+        \caption{Polymer mobility.}
+        \label{fig: mob P}
+    \end{subfigure}\\
+    \begin{subfigure}[t]{.32\textwidth}
+        \centering
+        \includegraphics[height=4.5cm]{/home/voila/Documents/mrst-2015b/mobW.png}
+        \caption{Water mobility.}
+        \label{fig: mob W}
+    \end{subfigure}
+    \caption{The trained mobilities $M_o,\, M_w,\, M_{wp}$.}
+    \label{fig: mobs}
+\end{center}\end{figure}
+
+\begin{center}
+\begin{tabular}{ccc}
+    (-2,  -2,  -2,    -1,     0,     0) & 
+    (-2,  -2,  -2,     0,     0,     1) & 
+    (-2,  -2,  -2,     0,     1,     2) \\
+    (-2,  -2,  -2,     0,     1,     3) &
+    (-2,  -1,  -2,     0,     0,     0) &
+    (-2,  -1,  -2,    -1,     1,     1) \\
+    (-2,  -1,  -2,     0,     0,     1) & 
+    (-2,  -1,  -2,     0,     1,     1) &
+    (-2,  -1,  -2,     0,     1,     2) \\
+    (-2,  -1,  -2,     0,     1,     3) &
+    (-2,  -1,  -1,     0,     0,     0) & 
+    (-2,  -1,  -1,     0,     0,     1) \\
+    (-2,  -1,  -1,     0,     1,     1) &
+    (-2,  -1,  -1,    -1,     1,     2) &
+    (-2,  -1,  -1,     0,     0,     2) \\
+    (-2,  -1,  -1,     0,     1,     2) &
+    (-2,  -1,  -1,     0,     1,     3) &
+    (-2,  -1,  -1,     0,     2,     3) \\
+\end{tabular}
+\captionof{table}{($j_p, j_{sW}, j_c, \eta_p, \eta_{sW}, \eta_c$) for $M_o$.}
+\label{tab: mob O}
+\end{center}
+
+% ---------------------------------
+
+
+\begin{center}
+\begin{tabular}{ccc}
+(-2,  -2,  -2,    -1,     0,     0)&  
+(-2,  -2,  -2,     0,     0,     0)&
+(-2,  -2,  -2,     0,     0,     1)\\
+(-2,  -1,  -2,     0,     0,     0)&
+(-2,  -1,  -2,    -1,     1,     1)&
+(-2,  -1,  -2,     0,     0,     1)\\
+(-2,  -1,  -2,     0,     1,     1)&
+(-2,  -1,  -2,     0,     1,     2)&
+(-2,  -1,  -2,     0,     1,     3)\\
+(-2,  -1,  -2,     0,     2,     3)&
+(-2,  -1,  -1,     0,     0,     0)&
+(-2,  -1,  -1,    -1,     0,     1)\\
+(-2,  -1,  -1,     0,     1,     1)&
+(-2,  -1,  -1,    -1,     1,     2)&
+(-2,  -1,  -1,     0,     0,     2)\\
+(-2,  -1,  -1,     0,     1,     2)&
+(-2,  -1,  -1,     0,     1,     3)&
+(-2,  -1,  -1,     0,     2,     3)\\
+(-2,  -1,  -1,     0,     1,     4)&
+(-2,  -1,  -1,     0,     2,     4)&
+(-2,  -1,  -1,     0,     2,     5)\\
+(-2,  0, -1,   -1,    1,    0)& 
+(-2,  0, -1,    0,    0,    0)&
+(-2,  0, -1,    0,    1,    0)\\
+(-2,  0, -1,   -1,    0,    1)&
+(-2,  0, -1,    0,    1,    1)&
+(-2,  0, -1,    0,    3,    1)\\
+(-2,  0, -1,    0,    0,    2)&
+(-2,  0, -1,    0,    1,    2)&
+(-2,  0, -1,    0,    1,    3)\\
+(-2,  0, -1,    0,    2,    4) &
+(-2,  0,  0,    -1,   0,     2) &
+\end{tabular}
+\captionof{table}{($j_p, j_{sW}, j_c, \eta_p, \eta_{sW}, \eta_c$) for $M_{wp}$.}
+\label{tab: mob P}
+\end{center}
+
+% ----------------------------------
+\begin{center}\begin{tabular}{ccc}
+(-2,  -2,  -2,    -1,     0,     0)&  
+(-2,  -2,  -2,     0,     0,     0)&
+(-2,  -2,  -2,     0,     0,     1)\\
+(-2,  -2,  -2,     0,     1,     2)&
+(-2,  -2,  -2,     0,     1,     3)&
+(-2,  -1,  -2,    -1,     0,     0)\\
+(-2,  -1,  -2,     0,     0,     0)&
+(-2,  -1,  -2,    -1,     1,     1)&
+(-2,  -1,  -2,     0,     0,     1)\\
+(-2,  -1,  -2,     0,     1,     1)&
+(-2,  -1,  -2,     0,     1,     2)&
+(-2,  -1,  -2,     0,     2,     2)\\
+(-2,  -1,  -2,     0,     1,     3)&
+(-2,  -1,  -1,    -1,     0,     0)&
+(-2,  -1,  -1,     0,     0,     0)\\
+(-2,  -1,  -1,    -1,     0,     1)&
+(-2,  -1,  -1,     0,     0,     1)&
+(-2,  -1,  -1,     0,     1,     1)\\
+(-2,  -1,  -1,    -1,     1,     2)&
+(-2,  -1,  -1,     0,     0,     2)&
+(-2,  -1,  -1,     0,     1,     2)\\
+(-2,  -1,  -1,     0,     1,     3)&
+(-2,  -1,  -1,     0,     2,     3)&
+\end{tabular}
+\captionof{table}{($j_p, j_{sW}, j_c, \eta_p, \eta_{sW}, \eta_c$) for $M_w$.}
+\label{tab: mob W}
+\end{center}
+
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=8cm]{/home/voila/Documents/2014GRAD/proposal_defense/M_history_reservoir.png}
+        \caption{The relative cross validation error at each forward-backward iteration.
+                 The x-axis is the number of iteration, and the y-axis
+                 is the integrated truncation error
+                 for  $\overline{M}_\tau$ of the three equations
+                 in \eqref{eqn: two phase polymer}.}
+        \label{fig: M history reservoir}
+    \end{center}
+\end{figure}
+
 
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.99\textwidth}
@@ -2153,6 +2386,7 @@ It is observed that the estimated gradient closely matches the true gradient.
 %because of the different numerical schemes
 %used in the twin and gray-box models. 
 The error is given in Table \ref{tab: reservoir 3D grad error}.\\
+
 
 \begin{figure}[htbp]
     \begin{center}

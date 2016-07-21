@@ -577,4 +577,9 @@ Hirsch, M. W., Smale, S., and Devaney, R. L.
 \newblock{ Differential Equations, Dynamical Systems, and an Introduction to Chaos.} 
 \newblock{\em Academic Press}, 2012.
 
+\bibitem{MRST}
+K.-A. Lie. 
+\newblock{An Introduction to Reservoir Simulation Using MATLAB: User Guide for the Matlab Reservoir Simulation Toolbox (MRST).}
+\newblock{\em SINTEF ICT}, Dec 2015.
+
 \end{thebibliography}
