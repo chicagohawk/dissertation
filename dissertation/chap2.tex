@@ -376,7 +376,7 @@ where the gray-box space-time solution appears and has large enough slope.
 %Besides, $\tilde{F}$ may match 
 %$F$ better on a domain where the gray-box discretized solution $\boldsymbol{u}$ is more densely sampled.
 Therefore, an ideal parameterization should 
-admit local refinements so $\tilde{F}$ can match $F$ better at some domain.
+admit local refinements so $\tilde{F}$ can match $F$ better at some domain locally.
 %similarly, it should allow local dropouts when some bases are unnecessary at some domain. 
 Another observation from Theorem \ref{theorem: 1} is that $F$ can only be estimated up to 
 a constant.
@@ -515,27 +515,27 @@ Thus, a sigmoid function can be visualized by a point in a $2k$-dimensional spac
 which is illustrated in Figure \ref{fig: basis 0} thru. \ref{fig: basis 3} 
 for the univariate case.\\
 \begin{figure}[htbp]\begin{center}
-    \begin{subfigure}[t]{.48\textwidth}
+    \begin{subfigure}[t]{.49\textwidth}
         \centering
-        \includegraphics[width=7.5cm]{../basis_0_flip.png}
+        \includegraphics[width=7.3cm]{../basis_0_flip.png}
         \caption{$\left(0,0\right)$}
         \label{fig: basis 0}
-    \end{subfigure}
-    \begin{subfigure}[t]{.48\textwidth}
+    \end{subfigure} \hspace{.0cm}
+    \begin{subfigure}[t]{.49\textwidth}
         \centering
-        \includegraphics[width=7.5cm]{../basis_1_flip.png}
+        \includegraphics[width=7.3cm]{../basis_1_flip.png}
         \caption{$\left(0, -1\right)$}
         \label{fig: basis 1}
     \end{subfigure}
-    \begin{subfigure}[t]{.48\textwidth}
+    \begin{subfigure}[t]{.49\textwidth}
         \centering
-        \includegraphics[width=7.5cm]{../basis_3_flip.png}
+        \includegraphics[width=7.3cm]{../basis_3_flip.png}
         \caption{$\left(1, 0\right)$}
         \label{fig: basis 2}
-    \end{subfigure}
-    \begin{subfigure}[t]{.48\textwidth}
+    \end{subfigure} \hspace{.0cm}
+    \begin{subfigure}[t]{.49\textwidth}
         \centering
-        \includegraphics[width=7.5cm]{../basis_6_flip.png}
+        \includegraphics[width=7.3cm]{../basis_6_flip.png}
         \caption{$\left(1, 1\right)$}
         \label{fig: basis 3}
     \end{subfigure}
@@ -721,14 +721,17 @@ in the domain of the training solution, and a larger solution mismatch is observ
 \begin{figure}[htbp]\begin{center}
     \includegraphics[width=10cm]{/home/voila/Documents/2014GRAD/mirror/thesis_add/outsample_good_fit.png}
     \caption{(a) shows an gray-box solution. (b) shows the out-of-sample solution of the trained twin model by using the
-             same initial condition as in (a).}
+             same initial condition as in (a). Because the domain of solution is contained in 
+the domain of the training solution, the twin model and the graybox model produce similar solutions.}
     \label{fig: outsample good test}
 \end{center}\end{figure}
 
 \begin{figure}[htbp]\begin{center}
     \includegraphics[width=10cm]{/home/voila/Documents/2014GRAD/mirror/thesis_add/outsample_bad_gray.png}
     \caption{(a) shows an gray-box solution. (b) shows the out-of-sample solution of the trained twin model by using the
-             same initial condition as in (a).}
+             same initial condition as in (a) . Because the domain of solution is beyond
+the domain of the training solution, a large deviation of the twin-model and graybox solutions is
+observed.}
     \label{fig: outsample bad test}
 \end{center}\end{figure}
 
@@ -813,8 +816,8 @@ the twin model method. This topic is discussed in the next section.\\
 \label{sec: adaptive basis}
 This section addresses the problem of adaptively choosing a finite set of basis functions
 for the parameterization of $\tilde{F}$.
-Assume all possible choices of basis functions forms a countable set.
-Algorithm \ref{algo: outline heuristics} has outlined an iterative approach 
+Assume all candidate basis functions form a countable set,
+Algorithm \ref{algo: outline heuristics} outlines an iterative approach 
 to construct the basis dictionary.
 %\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}. 
 Starting from an initial set of basis functions,
@@ -822,18 +825,13 @@ the basis dictionary is built up progressively
 by iterating over a forward step and a backward step
 \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
 The forward step searches over a candidate set of bases, and appends the most useful bases 
-to the dictionary
-\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
+to the dictionary.
 The backward step searches over the current dictionary, and removes the 
-unnecessary bases from the dictionary
-\cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
+unnecessary bases from the dictionary.
 The iteration stops only when no alternation is made to the dictionary or when a criterion, such
 as a targeted approximation accuracy,
-is achieved \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}. My thesis applies 
-this approach to the adaptive construction of the bases for the parameterization of $\tilde{F}$,
-which is sketched in Algorithm \ref{algo: outline heuristics}. Here
-$\mathcal{A}$ stands for a finite set of the tuple representation of the bases in the
-dictionary.\\
+is achieved. My thesis applies 
+this approach to the adaptive construction of the bases for the parameterization of $\tilde{F}$.\\
 
 \begin{algorithm}
     \begin{algorithmic}[1]
@@ -1053,7 +1051,7 @@ $\boldsymbol{\eta}\in \mathbb{Z}^k$, because the number of bases is infinite.
 Therefore, at every iteration in Algorithm \ref{algo: outline heuristics},
 \eqref{eqn: basis significance} shall only be evaluated on a finite number of bases. 
 To address this issue, we define the neighborhood of a sigmoid basis. 
-For univariate basis, the neighborhood of $(j,\eta)$ is defined to be a set of the sigmoid bases:
+For univariate basis, the neighborhood of $(j,\eta)$ is defined to be a set of the sigmoid bases
 \begin{equation}
     \mathcal{N}\left[ \left(j,\eta\right) \right]
     = \left\{ 
@@ -1097,7 +1095,7 @@ The neighborhood of a multivariate sigmoid is defined to be
     \label{eqn: neighborhood kD}
 \end{split}\end{equation}
 which consists of $k$ bases whose dilation parameters are shifted by $1$, 
-and $2k$ bases whose translation parameters are incremented by $\pm 1$.
+and $2k$ bases whose translation parameters are shifted by $\pm 1$.
 %It is easy to see that a basis $(\boldsymbol{j}_0, \frac{\boldsymbol{\eta}_0}{2^{\boldsymbol{j}_0}})$ 
 %can be connected to any basis $(\boldsymbol{j}, \frac{\boldsymbol{\eta}}{2^{\boldsymbol{j}}})$ 
 %with $\boldsymbol{j} \ge \boldsymbol{j}_0$ \footnote{ Define $\boldsymbol{j} \ge \boldsymbol{j}_0$
@@ -1143,16 +1141,18 @@ To add a basis, the basis significance, \eqref{eqn: basis significance},
 is computed for all the bases in the neighborhood of the current dictionary. At each iteration,
 the basis with the largest significance will be considered for addition. Similarly, 
 to delete a basis, the basis significance is computed for all the bases in the current dictionary.
-At each iteration, the basis with the smallest significance will be considered for deletion.
-Nonetheless, another criterion is needed to determine whether a basis should indeed
-be added or removed from the basis dictionary. \\
+At each iteration, the basis with the smallest significance will be considered for deletion.\\
+%Nonetheless, another criterion is needed to determine whether a basis should indeed
+%be added or removed from the basis dictionary. \\
 %Although the mismatch improvement, $\Delta \mathcal{M}^*\left(\mathcal{A}, l\right)$, is always
 %non-negative, it is inadvisable to cram the basis dictionary with too many bases,
 %otherwise a twin model can be overfitted.
 %Therefore, a criterion is required to determine if a candidate basis shall be added to or 
 %removed from the basis dictionary. 
 
-To develop the second criterion, the technique of $k$-fold cross validation can be applied.
+
+Another criterion is needed to determine whether a basis shall indeed be added or removed.
+To develop this criterion, the technique of $k$-fold cross validation can be applied.
 The $k$-fold cross validation has been discussed in Section \ref{sec: flux param}, where
 %This can be achieved by cross validation,
 %in particular, $k$-fold cross validation \cite{cross validation}.
@@ -1207,7 +1207,8 @@ determines which and whether a basis is added or deleted
 in the dictionary, by using the metric $\mathcal{M}$ and the significance $s$.
 The metric $\mathcal{M}$ and the significance $s$ can be defined either according to the
 solution mismatch $\mathcal{M}_u$, or according to the integrated truncation error
-$\mathcal{M}_{\tau}$. We suggest using $\mathcal{M}_{\tau}$ due to less computational cost.
+$\mathcal{M}_{\tau}$. We suggest using $\mathcal{M}_{\tau}$ due to less computational cost 
+when the twin model uses implicit numerical schemes.
 The algorithm starts from training a twin model using 
 an arbitrary basis dictionary $\mathcal{A}$. 
 %Usually the starting
@@ -1588,7 +1589,8 @@ governed by the Buckley-Leverett equation \eqref{eqn: Buckley-Leverett}
 \end{equation*}
 In this section, the same problem 
 is studied but using the adaptive basis construction developed 
-in Section \ref{sec: adaptive basis}. 
+in Section \ref{sec: adaptive basis}. The gray-box and the
+twin models use the same second-order finite volume scheme.
 The initial dictionary, $\mathcal{A}$, is selected to contain a single basis
 $\left(1, 0\right)$. The choice of initial dictionary is not unique.
 We choose $\left(1, 0\right)$ because it has a low resolution 
@@ -1597,11 +1599,13 @@ and is centered inside $\left[u_{\min}, u_{\max}\right]$ of the gray-box solutio
 Figure \ref{fig: basis pnt} shows the selected bases
 for the three solutions in Figure \ref{fig: combine 3}, respectively, obtained by 
 algorithm \ref{alg: train twin}.
-As $\left[u_{\min}, u_{\max}\right]$ shrinks, the number of bases in the dictionary decreases
-but the resolution of the bases increases. Figure \ref{fig: basis history} shows
+As $\left[u_{\min}, u_{\max}\right]$ shrinks, 
+%the number of bases in the dictionary decreases but
+the resolution of the bases increases. Figure \ref{fig: basis history} shows
 the dictionary and $\frac{d\tilde{F}}{du}$ 
-at each forward-backward iteration, where initial condition of the training solution 
-is given in Figure \ref{fig: basis pnt 3}.\\
+at each forward-backward iteration for solution 3 (Figure \ref{fig: basis pnt 3}).\\
+%, where initial condition of the training solution 
+%is given in Figure \ref{fig: basis pnt 3}.\\
 
 \begin{figure}[htbp]\begin{center}
     \begin{subfigure}[t]{.32\textwidth}
@@ -1623,9 +1627,7 @@ is given in Figure \ref{fig: basis pnt 3}.\\
         \label{fig: basis pnt 3}
     \end{subfigure}
     \caption{The basis dictionary for the three solutions in Figure \ref{fig: combine 3}.
-             The iteration starts from the initial basis $(1,0)$. The bases in the
-             dictionary are indicated by red dots, and the deleted bases are indicated
-             by blue crosses.}
+             The iteration starts from the initial basis $(1,0)$.}
     \label{fig: basis pnt}
 \end{center}\end{figure}
 
@@ -1740,7 +1742,7 @@ is given in Figure \ref{fig: basis pnt 3}.\\
         \label{fig: basis history 10}
     \end{subfigure}   
     \caption{The basis dictionary at each forward-backward iteration when the initial 
-             condition is chosen as Figure \ref{fig: basis pnt 3}. 
+             condition is chosen as Figure \ref{fig: combine 3}c. 
              In the left figure, 
              the red dots indicate the bases in the dictionary, while 
              the blue crosses indicate the deleted
@@ -1884,7 +1886,7 @@ van der Waals equation, and the Redlich-Kwong equation \cite{state eqns}.
 We assume the true state equation in the gray-box simulator is unknown. 
 The state equation will be inferred from the gray-box solution. 
 Let $\rho_\infty$ be the steady state density,
-$\boldsymbol{u}_\infty = (u_\infty, v_\infty)$ be the steady state Cartesian velocity,
+$\boldsymbol{u}_\infty = (u_\infty, v_\infty)$ be the steady state velocity,
 and $E_\infty$ be the steady state energy density.
 The steady state mass flux is
 \begin{equation}
@@ -1903,11 +1905,13 @@ Two state equations are tested: the van der Waals equation and the Redlich-Kwong
     p_{vdw} &= \frac{(\gamma-1)U}{1-b_{vdw}\rho} - a_{vdw}\rho^2\\
     p_{rk} &= \frac{(\gamma-1)U}{1-b_{rk}\rho} - 
     \frac{a_{rk}\rho^{5/2}}{((\gamma-1)U)^{1/2}(1+b_{rk}\rho)}
-\end{split}\label{NS state equations}
+\end{split}\,,\label{NS state equations}
 \end{equation}
 where we set $a_{vdw}=10^4$, $b_{vdw}=0.1$, $a_{rk}=10^7$ and $b_{rk}=0.1$.\\
 
-We use a second-order finite volume scheme to discretize the Navier-Stokes equation.
+In both the gray-box and the twin models, we use the same 
+second-order finite volume scheme for discretization
+and a pseudo time marching scheme to solve for the steady state solution.
 The solution mismatch, \eqref{eqn: solution mismatch}, is given by
 \begin{equation*}\begin{split}
     \mathcal{M} = &w_\rho \int_\Omega \left|\tilde{\rho}_{\infty} - \rho_{\infty}\right|^2 d\boldsymbol{x}
@@ -1921,7 +1925,20 @@ The solution mismatch, \eqref{eqn: solution mismatch}, is given by
 \end{split}\end{equation*}
 where $w_\rho$, $w_u$, $w_v$, and $w_E$ are non-dimensionalization constants.
 Figure \ref{fig: grayErrSol Ubend} shows the gray-box solution and the solution mismatch
-after training the twin model.\\
+after training the twin model.
+The selected bases in the
+dictionary, represented by $(j_U, j_{\rho}, \eta_U, \eta_\rho)$, are listed in Table 
+\ref{tab: basis list 1} and \ref{tab: basis list 2}. 
+They are also shown in Figure \ref{fig: selected basis NS} on a 
+$(\frac{\eta_U}{2^{j_U}}, \frac{\eta_\rho}{2^{j_\rho}})$ plane.
+Figure \ref{fig: NS Mtau history}
+shows the cross validation error $\mathcal{M}_{\tau}$ at each forward-backward iteration.
+Figure \ref{fig: state RK} shows the trained state equation and its error.
+The convex hull of $({U}_\infty, \rho_\infty)$
+is shown by the red dashed line.
+Because the state equation is expected to be inferrable only inside the domain of the gray-box 
+solution, large deviation is expected outside the convex hull.\\
+
 
 %\footnote{Both the solution and the mismatch are normalized.}.
 
@@ -1940,20 +1957,6 @@ after training the twin model.\\
              the solution mismatch after training a twin model.}
     \label{fig: grayErrSol Ubend}
 \end{center}\end{figure}
-
-The selected bases in the
-dictionary, represented by $(j_U, j_{\rho}, \eta_U, \eta_\rho)$, are listed in Table 
-\ref{tab: basis list 1} and \ref{tab: basis list 2}. 
-They are also shown in Figure \ref{fig: selected basis NS} on a 
-$(\frac{\eta_U}{2^{j_U}}, \frac{\eta_\rho}{2^{j_\rho}})$ plane.
-Figure \ref{fig: NS Mtau history}
-shows the cross validation error $\mathcal{M}_{\tau}$ at each forward-backward iteration.
-Figure \ref{fig: state RK} shows the trained state equation and its error.
-The convex hull of $({U}_\infty, \rho_\infty)$, the internal energy
-and the density of the gray-box solution,
-is shown by the dashed red line.
-Because the state equation is expected to be inferrable only inside the domain of the gray-box 
-solution, large deviation is expected outside the convex hull.\\
 
 
 \begin{center}\begin{tabular}{ccccc}
@@ -1994,7 +1997,7 @@ solution, large deviation is expected outside the convex hull.\\
     \end{subfigure}
     \caption{The basis dictionary for the state equations, plotted on the $(\frac{\eta_U}{2^{j_U}},
              \frac{\eta_\rho}{2^{j_\rho}})$ plane. The circles represent the bases that have
-             $j_U=1, j_\eta=1$. The squares represent the bases that have $j_U=1,j_\eta=1$.
+             $j_U=1, j_\eta=1$. The squares represent the bases that have $j_U=2,j_\eta=1$.
              The dots represent the bases that have $j_U=2, j_\eta=2$.}
     \label{fig: selected basis NS}
 \end{center}\end{figure}
@@ -2054,8 +2057,7 @@ The error of the gradient estimation is given in Table \ref{tab: idea gas gradie
         The gradient of $\xi$ to the control points for the 
         Redlich-Kwong gas. 
         The wide gray arrow is the gradient evaluated by the gray-box model, while
-        the thin black arrow is the gradient evaluated by the twin model using finite difference.
-        }
+        the thin black arrow is the true gradient.}
         \label{fig: geo grad}
     \end{subfigure}
     \hspace{.5cm}
@@ -2064,8 +2066,8 @@ The error of the gradient estimation is given in Table \ref{tab: idea gas gradie
         \includegraphics[height=7.5cm]{/home/voila/Documents/2014GRAD/numpad/test/ns_cases_spline/results/outflux_geo_grad/perturb_0.png}
         \caption{
         The boundary perturbed according to the gradient. 
-        The blue dashed line is computed by finite difference of the gray-box model, while the
-        red dashed line is computed by the twin model's gradient.
+        The blue dashed line is obtained by the true gradient, while the
+        red dashed line is obtained by the twin-model gradient.
         }
         \label{fig: geo grad perturb}
     \end{subfigure}
@@ -2161,16 +2163,20 @@ $g$ is the gravity constant. The mobility factors, $M_o, M_w, M_{wp}$,
 model the modification of the componentwise mobility due to the presence of polymer (oil,
 water, polymer).
 In the following context, the models for the mobility factors are unknown. The only 
-knowledge about the mobility factors is that they depend on $S_w, p$, and $c$.\\
+knowledge about the mobility factors is that they depend on $S_w, p$, and $c$.
+%In this case, the governing equation \eqref{eqn: two phase polymer} not only depends on
+%the derivatives of the mobility factors, but also depends on the value of the mobility factors.
+%We will still use the sigmoid parameterization.
+\\
 
-\emph{PSim}, the simulator aforementioned in Section \ref{sec: motivation}, is
-used as the gray-box simulator, which uses the IMPES time marching 
+\emph{PSim}, the industrial simulator aforementioned in Section \ref{sec: motivation}, is
+used as the gray-box simulator, where we use the upwinding scheme and the IMPES time marching 
 \cite{reservoir sim book}, i.e. implicit in pressure
-and explicit in saturation, as well as the upwind scheme.
+and explicit in saturation.
 Its solution, $S_w$, $c$, and $p$ can be used to train the 
 twin model. The twin model is implemented in MRST, an open-source reservoir simulation toolbox
 \cite{MRST}.
-We use the fully implicit time marching and the upwind scheme to simulate the twin model.
+We use the upwinding scheme and the fully implicit time marching to simulate the twin model.
 The solution mismatch is defined by
 \begin{equation}
     \mathcal{M}_u = w_{S_w}\int_0^T\int_\Omega |S_w-\tilde{S}_w|^2 d\boldsymbol{x} dt
@@ -2192,9 +2198,9 @@ is 100 milli Darcy, and the porosity is 0.3. A constant injection rate of $10^6
 \texttt{ft}^3/\texttt{day}$ is used at both the injectors.
 The reservoir is simulated for $t\in [0,50] \texttt{day}$.
 To select the basis dictionary for the twin model, the truncation errors for the 
-three equations in \eqref{eqn: two phase polymer} are minimized by using the forward-backward
+three equations in \eqref{eqn: two phase polymer} are minimized separately by using the forward-backward
 iteration.
-Figures \ref{fig: mob O} - \ref{fig: mob W} show the trained mobilities for
+Figure \ref{fig: mobs} shows the trained mobilities for
 oil, polymer, and water. Tables \ref{tab: mob O} - \ref{tab: mob W} list the
 basis dictionary for the three mobilities. 
 Figure \ref{fig: M history reservoir} shows the truncation error at each forward-backward
@@ -2380,7 +2386,8 @@ the star markers show the true gradient at day $2$, $16$, $30$, and $44$, evalua
 Clearly, a rate increase at the injector 1 leads to more residual oil reduction than the injector 2.
 This is because the injector 2 is closer to the producer, where a larger rate accelerates the 
 water breakthrough that impedes further oil production.
-It is observed that the estimated gradient closely matches the true gradient.
+It is observed that the estimated gradient closely matches the true gradient which
+is computed by finite difference.
 %, although
 %the error slightly increases for ea$t$, 
 %because of the different numerical schemes

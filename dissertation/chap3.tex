@@ -672,7 +672,7 @@ control points' coordinates represented by $c$. Let $S_0 = \frac{1}{2}\pi(1.25^2
 The objective function is the steady-state mass flux with a penalty term representing the difference 
 of $S$ and $S_0$,
 \begin{equation}
-    \xi(c) = - \int_{\textrm{outlet}} \rho_\infty u_\infty \big|_{\textrm{outlet}} \; dy
+    \xi(c) = \int_{\textrm{outlet}} \rho_\infty u_\infty \big|_{\textrm{outlet}} \; dy
     - \lambda (S-S_0)^2\,,
     \label{eqn: mass flux 2}
 \end{equation}
@@ -730,10 +730,11 @@ cost per iteration, the increased cost is offset by faster improvement of the ob
     \caption{(a) shows the initial guess of control points (blue dots), 
              the initial guess of the geometry (blue line),
              the optimized control points (red dots), and the optimized
-             geometry (red line). The blue squares indicate the bound 
+             geometry (red line) for the van der Waals gas. The blue squares indicate the bound 
              constraints for each control point. (b) shows the 
              pressure along the interior and the exterior boundaries for
-             the initial (blue) and the optimized (red) geometry.}
+             the initial (blue) and the optimized (red) geometry. (c) and
+             (d) show the results for the Redlich-Kwong gas.}
     \label{fig: NS opt geo combined}
 \end{center}\end{figure}
 
@@ -912,7 +913,7 @@ Since there are five injectors, the optimization is 5-dimensional.\\
 Figure \ref{fig: chap 3 reservoir objective} shows the current best objective evaluation
 against the number of iterates. 
 The black line indicates the true optimal\footnote{The true optimal
-is obtained by simulated annealing after running $192$ gray-box simulations.}.
+is obtained by COBYLA \cite{linear trust region} after running $192$ gray-box simulations.}.
 The twin model Bayesian optimization achieves
 near-optimality faster than the vanilla Bayesian optimization without using 
 the gradient information. 

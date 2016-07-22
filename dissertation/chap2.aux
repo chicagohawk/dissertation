@@ -77,22 +77,13 @@
 \newlabel{fig: insample test}{{2-7}{60}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-8}{\ignorespaces (a) shows the gray-box model's flux $F$ (red) and the trained twin-model flux $\mathaccentV {tilde}07E{F}$ (blue). (b) shows $\frac  {dF}{du}$ (red) and $\frac  {d \mathaccentV {tilde}07E{F}}{du}$ (blue)\relax }}{60}}
 \newlabel{fig: flux test}{{2-8}{60}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-9}{\ignorespaces (a) shows an gray-box solution. (b) shows the out-of-sample solution of the trained twin model by using the same initial condition as in (a).\relax }}{60}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-9}{\ignorespaces (a) shows an gray-box solution. (b) shows the out-of-sample solution of the trained twin model by using the same initial condition as in (a). Because the domain of solution is contained in the domain of the training solution, the twin model and the graybox model produce similar solutions.\relax }}{60}}
 \newlabel{fig: outsample good test}{{2-9}{60}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-10}{\ignorespaces (a) shows an gray-box solution. (b) shows the out-of-sample solution of the trained twin model by using the same initial condition as in (a).\relax }}{61}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-10}{\ignorespaces (a) shows an gray-box solution. (b) shows the out-of-sample solution of the trained twin model by using the same initial condition as in (a) . Because the domain of solution is beyond the domain of the training solution, a large deviation of the twin-model and graybox solutions is observed.\relax }}{61}}
 \newlabel{fig: outsample bad test}{{2-10}{61}}
 \newlabel{eqn: objective ad hoc}{{2.33}{61}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-11}{\ignorespaces The objective function $\xi $ evaluated by either the gray-box model and the trained twin model.\relax }}{61}}
 \newlabel{fig: objective ad hoc}{{2-11}{61}}
-\citation{adaptive basis 1}
-\citation{adaptive basis 2}
-\citation{adaptive basis 3}
-\citation{adaptive basis 1}
-\citation{adaptive basis 2}
-\citation{adaptive basis 3}
-\citation{adaptive basis 1}
-\citation{adaptive basis 2}
-\citation{adaptive basis 3}
 \citation{adaptive basis 1}
 \citation{adaptive basis 2}
 \citation{adaptive basis 3}
@@ -128,7 +119,7 @@
 \newlabel{sub@fig: basis pnt 2}{{b}{72}}
 \newlabel{fig: basis pnt 3}{{2-14c}{72}}
 \newlabel{sub@fig: basis pnt 3}{{c}{72}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-14}{\ignorespaces The basis dictionary for the three solutions in Figure \ref  {fig: combine 3}. The iteration starts from the initial basis $(1,0)$. The bases in the dictionary are indicated by red dots, and the deleted bases are indicated by blue crosses.\relax }}{72}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-14}{\ignorespaces The basis dictionary for the three solutions in Figure \ref  {fig: combine 3}. The iteration starts from the initial basis $(1,0)$.\relax }}{72}}
 \newlabel{fig: basis pnt}{{2-14}{72}}
 \newlabel{fig: basis history 1}{{2-15a}{72}}
 \newlabel{sub@fig: basis history 1}{{a}{72}}
@@ -150,7 +141,7 @@
 \newlabel{sub@fig: basis history 9}{{i}{75}}
 \newlabel{fig: basis history 10}{{2-15j}{75}}
 \newlabel{sub@fig: basis history 10}{{j}{75}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-15}{\ignorespaces The basis dictionary at each forward-backward iteration when the initial condition is chosen as Figure \ref  {fig: basis pnt 3}. In the left figure, the red dots indicate the bases in the dictionary, while the blue crosses indicate the deleted basis. In the right figure, the red line indicates the derivative of the true flux, while the blue line indicate the derivative of the trained flux.\relax }}{75}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-15}{\ignorespaces The basis dictionary at each forward-backward iteration when the initial condition is chosen as Figure \ref  {fig: combine 3}c. In the left figure, the red dots indicate the bases in the dictionary, while the blue crosses indicate the deleted basis. In the right figure, the red line indicates the derivative of the true flux, while the blue line indicate the derivative of the trained flux.\relax }}{75}}
 \newlabel{fig: basis history}{{2-15}{75}}
 \newlabel{fig: grad BL 1}{{2-16a}{76}}
 \newlabel{sub@fig: grad BL 1}{{a}{76}}
@@ -177,9 +168,9 @@
 \citation{Redlich Kwong}
 \newlabel{NS state equations}{{2.46}{79}}
 \newlabel{NS mismatch}{{2.4.2}{79}}
-\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1932}}{80}}
+\newlabel{fig: graysol Ubend}{{\caption@xref {fig: graysol Ubend}{ on input line 1949}}{80}}
 \newlabel{sub@fig: graysol Ubend}{{}{80}}
-\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1937}}{80}}
+\newlabel{fig: errsol Ubend}{{\caption@xref {fig: errsol Ubend}{ on input line 1954}}{80}}
 \newlabel{sub@fig: errsol Ubend}{{}{80}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-18}{\ignorespaces Left column: an example gray-box solution for a given geometry. Right column: the solution mismatch after training a twin model.\relax }}{80}}
 \newlabel{fig: grayErrSol Ubend}{{2-18}{80}}
@@ -191,7 +182,7 @@
 \newlabel{sub@fig: selected basis NS 1}{{a}{81}}
 \newlabel{fig: selected basis NS 2}{{2-19b}{81}}
 \newlabel{sub@fig: selected basis NS 2}{{b}{81}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2-19}{\ignorespaces The basis dictionary for the state equations, plotted on the $(\frac  {\eta _U}{2^{j_U}}, \frac  {\eta _\rho }{2^{j_\rho }})$ plane. The circles represent the bases that have $j_U=1, j_\eta =1$. The squares represent the bases that have $j_U=1,j_\eta =1$. The dots represent the bases that have $j_U=2, j_\eta =2$.\relax }}{81}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-19}{\ignorespaces The basis dictionary for the state equations, plotted on the $(\frac  {\eta _U}{2^{j_U}}, \frac  {\eta _\rho }{2^{j_\rho }})$ plane. The circles represent the bases that have $j_U=1, j_\eta =1$. The squares represent the bases that have $j_U=2,j_\eta =1$. The dots represent the bases that have $j_U=2, j_\eta =2$.\relax }}{81}}
 \newlabel{fig: selected basis NS}{{2-19}{81}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-20}{\ignorespaces The cross validation error $\overline  {\mathcal  {M}}_{\tau }$ at each forward-backward iteration. The y-axis is scaled by a constant so the $\overline  {\mathcal  {M}}_\tau $ at the first forward-backward iteration equals $1$.\relax }}{81}}
 \newlabel{fig: NS Mtau history}{{2-20}{81}}
@@ -241,11 +232,11 @@
 \newlabel{tab: reservoir 3D grad error}{{2.8}{89}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.5}Chapter Summary}{89}}
 \newlabel{sec: chap 2 summary}{{2.5}{89}}
-\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 2351}}{90}}
-\newlabel{sub@fig: reservoir 3D untrained}{{}{90}}
 \newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 2357}}{90}}
-\newlabel{sub@fig: reservoir 3D untrained}{{a}{90}}
+\newlabel{sub@fig: reservoir 3D untrained}{{}{90}}
 \newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 2363}}{90}}
+\newlabel{sub@fig: reservoir 3D untrained}{{a}{90}}
+\newlabel{fig: reservoir 3D untrained}{{\caption@xref {fig: reservoir 3D untrained}{ on input line 2369}}{90}}
 \newlabel{sub@fig: reservoir 3D untrained}{{b}{90}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2-27}{\ignorespaces The isosurfaces of $S_w=0.25$ and $S_w=0.7$ at $t=30$ days. After the training, the twin model solution matches the gray-box solution.\relax }}{90}}
 \newlabel{fig: reservoir 3D solutions}{{2-27}{90}}

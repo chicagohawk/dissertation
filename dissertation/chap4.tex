@@ -23,8 +23,8 @@ lacks the adjoint capability.
 Chapter \ref{chap 1} categorizes such simulators as gray-box.
 The gray-box scenario limits the efficient application 
 of gradient-based optimization methods.
-I motivates the need for the
-adjoint gradient, and explains the feasibility
+I motivate the need for the
+adjoint gradient, and explain the feasibility
 of estimating the adjoint gradient in the gray-box scenario.
 The key is to leverage the gray-box space-time solution, which contains information
 of the gray-box simulator but is usually abandoned by conventional optimization methods.
@@ -41,7 +41,7 @@ For a simple conservation law with only one equation and one dimensional space,
 I demonstrate theoretically that the twin model can indeed infer the gray-box 
 conservation law on a domain that has large solution variation.
 To implement the twin model numerically,
-the unknown part of the flux function is parameterized by a set of basis.
+the unknown part of the flux function is parameterized by a set of bases.
 I argue that the sigmoid bases are well suited for this problem since
 their gradients are local. The procedure is demonstrated
 on a Buckley-Leverett equation using a set of sigmoids chosen manually.
@@ -58,11 +58,11 @@ The algorithm selects the basis dictionary adaptively using a forward-backward i
 procedure, where either the solution mismatch or the integrated truncation error
 can be used as the metric for basis selection.
 The twin model algorithm is demonstrated on 
-sveral numerical examples:
+several numerical examples:
 a 1D convection equation with unknown 
 flux function, a 2D steady-state Navier-Stokes flow with unknown state equation,
 and a 3D petroleum reservoir flow with unknown mobility factors.
-In all the three examples, the twin model algorithm provides accurate estimates
+In all the three examples, the twin model algorithm provides accurate estimation
 of the true gradient, which represents a major contribution towards enabling the
 adjoint gradient computation for gray-box simulations.\\
 
@@ -74,7 +74,7 @@ The model provide analytical expressions for the
 posterior distributions and the acquisition function, while the 
 hyper parameters are estimated by maximum likelihood.
 I present a Bayesian optimization algorithm that utilizes the twin-model gradient.
-In addition, I show that the algorithm is able to find the optimal regardless
+In addition, I show that the algorithm is able to find the optimal control regardless
 of the gradient estimation accuracy, if the true hyper parameters are used.
 The optimization algorithm is demonstrated on several similar problems discussed in
 Chapter \ref{chapter 2}:
@@ -84,11 +84,11 @@ and a petroleum reservoir with polymer-water injection rate controls.
 In all the three examples, the
 twin-model optimization achieves
 near-optimality with less iterations than the vanilla Bayesian optimization without
-the gradient information. 
+the gradient information,
+which represents another major contribution of my thesis.
 Finally, the twin model gradient is tested on a
 high-dimensional control problem, by employing a simple gradient descent approach. 
-The gradient efficiently enables the optimization of the high-dimensional problem,
-which represents another major contribution of my thesis.\\
+The gradient efficiently enables the optimization of the high-dimensional problem.\\
 
 
 \section{Contributions}
@@ -109,7 +109,7 @@ The main contributions of this work are:
 There are several potential thrusts of further research: 
 A useful extension is to investigate the
 inferrability of twin models for various conservation laws. In particular,
-Theorem \ref{theorem: 1} may be extended for problems with a
+Theorem \ref{theorem: 1} may be extended for more general problems with a
 system of equations and higher spatial dimension. 
 %Another important direction
 %is to study the applicability of using the integrated truncation error
@@ -118,19 +118,21 @@ system of equations and higher spatial dimension.
 %with $\mathcal{T}$.
 Besides, in the twin-model Bayesian optimization algorithm, 
 it is of great practical value to reuse twin model more efficiently.
-My current approach uses the twin model in the last iteration as an initial guess
-of the basis dictionary
-and re-trains the twin model at every iteration. In the future, a
+My current approach uses the basis dictionary of the twin model in 
+the last iteration as an initial guess
+of the basis dictionary in the current iteration,
+then re-trains the twin model. In the future, a
 research direction is on how to utilize all previously trained twin models,
 for example by employing
 the ``trust region'' technique in the optimization: the same twin model can be used multiple times
-at different controls inside a trust region\footnote{In my thesis,
+at different controls inside a trust region of the control space\footnote{In my thesis,
 the twin model is re-trained at each new control. Generally, gradient-based
-trust region methods require the gradient to satisfy a property called full-linearity.
+trust region methods require the gradient to satisfy a property called full-linearity
+\cite{trustregionconn, trustregionwild}.
 Unfortunately, this property is not guaranteed 
 by the twin-model gradient. The lack of full-linearity is a key factor
-that refrains me from exploring the trust-region methods. See 
-\cite{trustregionconn} and \cite{trustregionwild} for the details.}, thus reducing
+that refrains me from exploring the trust-region methods in my thesis. It's an open question
+on how to introduce the trust region framework into the optimization}, thus reducing
 the training cost.
 %Finally, it is interesting to generalize the formulation \eqref{eqn: govern PDE} to
 %incorporate unknown source terms and boundary conditions.\\
