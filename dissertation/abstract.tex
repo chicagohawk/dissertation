@@ -14,7 +14,40 @@
 
 Many design applications can be formulated as optimization constrained by conservation laws. Such optimization can be efficiently solved by the adjoint method, which computes the gradient of the objective to the design variables. Traditionally, the adjoint method has not been able to be implemented in "gray-box" conservation law simulations. In gray-box simulations, the analytical and numerical form of the conservation law is unknown, but the full solution of relevant flow quantities is available. Optimization constrained by gray-box simulations can be challenging for high-dimensional design because the adjoint method is not directly applicable.\\
 
-We consider the case where the flux function is unknown in the gray-box conservation law. The twin model method is presented to estimated the gradient by inferring the flux function from the space-time solution. The method enables the estimation of the gradient by solving the adjoint equation associated with the inferred conservation law. Building upon previous research, a Bayesian optimization framework is presented that admits the estimated gradient. The effectiveness of the proposed optimization method is compared to a conventional Bayesian optimization method where the gradient is unavailable. 
-%The performance of the conventional method is found to deteriorate as the optimization dimensionality increases. 
-The twin model enhances the Bayesian optimization performance given a limited number of gray-box simulations.
 
+My thesis considers the gray-box models whose flux functions are unknown or partially unknown. 
+I develop a twin model method that estimates the adjoint gradient from the gray-box space-time
+solution. My method takes advantage of the big data, the gray-box space-time solution, to
+infer the unknown part of the flux.
+The solution is used to train a parameterized, adjoint-enabled conservation law simulator such that
+a metric of solution mismatch is minimized.
+After the training,
+the twin model can estimate the gradient of the objective function by the adjoint method,
+at a cost independent of the dimensionality of the gradient. 
+In addition, an adaptive basis construction
+procedure is presented for the training in order to fully exploit the information contained in the 
+gray-box solution.
+The availability of the estimated gradient enables more efficient optimization. My thesis 
+considers a Bayesian optimization framework, in which 
+the objective, the true gradient, and the error in the estimated gradient are 
+modeled by Gaussian processes. 
+Building upon previous research, a twin-model-enhanced Bayesian optimization algorithm 
+is developed. I show that
+the algorithm is able to find the optimum of the objective function
+regardless of the gradient accuracy, if the 
+true hyperparameters of the Gaussian models are known.\\
+
+The twin model method and the twin-model-enhanced optimization are 
+demonstrated in several gray-box models:
+a Buckley-Leverett equation whose flux function
+is unknown,
+a steady-state Navier-Stokes equation whose state equation is unknown, 
+and a porous media flow equation governing a petroleum reservoir whose componentwise
+mobility factors are unknown. In these examples, the twin model is shown to
+estimate the gradients accurately. 
+Besides, the twin-model-enhanced Bayesian optimization is able to
+achieve near-optimality within less iterations than without using the twin model.
+Finally, I explore the applicability of the twin model method in
+an example with one-thousand dimensional control by using a gradient descent approach.
+The last example implies that the twin model may be adopted by
+other optimization frameworks to improve convergence, which indicates a direction of future research.

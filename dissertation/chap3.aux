@@ -1,113 +1,125 @@
 \relax 
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Leveraging the Twin Model for Bayesian Optimization}{93}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Leveraging the Twin Model for Bayesian Optimization}{99}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\newlabel{chapter 3}{{3}{93}}
+\newlabel{chapter 3}{{3}{99}}
 \citation{non param calibrate 1}
 \citation{non param calibrate 2}
 \citation{non param calibrate 3}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Modeling the Objective and Gradient by Gaussian Processes}{94}}
-\newlabel{sec: chap3 cokriging}{{3.1}{94}}
-\newlabel{eqn: gradient model inadequacy}{{3.1}{94}}
-\newlabel{eqn: joint dis}{{3.3}{95}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Modeling the Objective and Gradient by Gaussian Processes}{100}}
+\newlabel{sec: chap3 cokriging}{{3.1}{100}}
+\newlabel{eqn: gradient model inadequacy}{{3.1}{100}}
+\newlabel{eqn: joint dis}{{3.3}{101}}
 \citation{grad coKriging}
 \citation{practical Bayesian}
 \citation{GP book}
 \citation{Matern kernel}
-\newlabel{eqn: joint H}{{3.7}{96}}
-\newlabel{eqn: joint E}{{3.8}{96}}
+\newlabel{eqn: joint H}{{3.7}{102}}
+\newlabel{eqn: joint E}{{3.8}{102}}
 \citation{nlopt}
-\newlabel{eqn: marginal likelihood}{{3.13}{97}}
-\newlabel{first term}{{3.14}{97}}
-\newlabel{second term}{{3.15}{97}}
-\newlabel{eqn: likelihood eqn}{{3.16}{97}}
+\newlabel{eqn: marginal likelihood}{{3.13}{103}}
+\newlabel{first term}{{3.14}{103}}
+\newlabel{second term}{{3.15}{103}}
+\newlabel{eqn: likelihood eqn}{{3.16}{103}}
 \citation{stogo 1}
 \citation{stogo 2}
 \citation{nlopt}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Optimization Algorithm}{98}}
-\newlabel{sec: chap3 algo}{{3.2}{98}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {3}{\ignorespaces Bayesian optimization enhanced by the gradient estimated by the twin model method.\relax }}{98}}
-\newlabel{alg: bayes opt twin}{{3}{98}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-1}{\ignorespaces The flowchart of Algorithm \ref  {alg: bayes opt twin}.\relax }}{99}}
-\newlabel{fig: opt flowchart}{{3-1}{99}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Optimization Algorithm}{104}}
+\newlabel{sec: chap3 algo}{{3.2}{104}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {3}{\ignorespaces Bayesian optimization enhanced by the gradient estimated by the twin model method.\relax }}{104}}
+\newlabel{alg: bayes opt twin}{{3}{104}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-1}{\ignorespaces The flowchart of Algorithm \ref  {alg: bayes opt twin}.\relax }}{105}}
+\newlabel{fig: opt flowchart}{{3-1}{105}}
 \citation{Locatelli}
 \citation{convergen EI}
 \citation{converge Bull}
 \citation{GP bandit}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Convergence Properties Using True Hyper Parameters}{100}}
-\newlabel{sec: chap3 convergence}{{3.3}{100}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Convergence Properties Using True Hyper Parameters}{106}}
+\newlabel{sec: chap3 convergence}{{3.3}{106}}
 \citation{derivative RKHS}
-\@writefile{loa}{\contentsline {algocf}{\numberline {4}{\ignorespaces Prune the basis dictionary of previously trained twin model. To be consistent, the metric $\mathcal  {M}$ is set as the same metric, either $\mathcal  {M}_\tau $ or $\mathcal  {M}_u$, as in Algorithm \ref  {alg: train twin}.\relax }}{101}}
-\newlabel{alg: bayes opt twin prune}{{4}{101}}
-\newlabel{cond expectation}{{3.20}{102}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {4}{\ignorespaces Prune the basis dictionary of previously trained twin model. To be consistent, the metric $\mathcal  {M}$ is set as the same metric, either $\mathcal  {M}_\tau $ or $\mathcal  {M}_u$, as in Algorithm \ref  {alg: train twin}.\relax }}{107}}
+\newlabel{alg: bayes opt twin prune}{{4}{107}}
+\newlabel{cond expectation}{{3.20}{108}}
+\citation{RKHS book}
+\newlabel{theorem: 3}{{3}{109}}
+\citation{RKHS book}
 \citation{convergen EI}
-\newlabel{theorem: 3}{{3}{103}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Numerical Results}{103}}
-\newlabel{sec: chap3 numerical}{{3.4}{103}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Buckley-Leverett Equation}{104}}
-\newlabel{eqn: chap 3 BL obj fun}{{3.23}{104}}
-\newlabel{fig: opt BL source}{{3-2a}{105}}
-\newlabel{sub@fig: opt BL source}{{a}{105}}
-\newlabel{fig: opt BL sol}{{3-2b}{105}}
-\newlabel{sub@fig: opt BL sol}{{b}{105}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-2}{\ignorespaces Optimized results for the Buckley-Leverett equation.\relax }}{105}}
-\newlabel{fig: opt BL results}{{3-2}{105}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-3}{\ignorespaces A comparison of the current best $u(t=1,x)$ after $20$ gray-box simulations. The red line is obtained by the vanilla Bayesian optimization and the green line by the twin-model Bayesian optimization. The cyan dashed line is the $u(t=1,x)$ obtained by setting the source term to zero. \relax }}{105}}
-\newlabel{fig: u t=1 BL}{{3-3}{105}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-4}{\ignorespaces The current best objective evaluation at each iteration. The red line is obtained by the Bayesian optimization without using the estimated gradient. The green line is obtained by using the estimated gradient. The black horizontal line indicates the true optimal, which is obtained by BFGS using the true adjoint of the Buckley-Leverett equation.\relax }}{106}}
-\newlabel{fig: current best BL}{{3-4}{106}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Navier-Stokes Flow}{106}}
-\newlabel{eqn: mass flux 2}{{3.24}{106}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-5}{\ignorespaces (a) shows the initial guess of control points (blue dots), the initial guess of the geometry (blue line), the optimized control points (red dots), and the optimized geometry (red line) for the van der Waals gas. The blue squares indicate the bound constraints for each control point. (b) shows the pressure along the interior and the exterior boundaries for the initial (blue) and the optimized (red) geometry. (c) and (d) show the results for the Redlich-Kwong gas.\relax }}{108}}
-\newlabel{fig: NS opt geo combined}{{3-5}{108}}
-\newlabel{fig: RK iteration 0}{{3-6a}{109}}
-\newlabel{sub@fig: RK iteration 0}{{a}{109}}
-\newlabel{fig: RK iteration 1}{{3-6b}{109}}
-\newlabel{sub@fig: RK iteration 1}{{b}{109}}
-\newlabel{fig: RK iteration 2}{{3-6c}{110}}
-\newlabel{sub@fig: RK iteration 2}{{c}{110}}
-\newlabel{fig: RK iteration 3}{{3-6d}{110}}
-\newlabel{sub@fig: RK iteration 3}{{d}{110}}
-\newlabel{fig: RK iteration 4}{{3-6e}{111}}
-\newlabel{sub@fig: RK iteration 4}{{e}{111}}
-\newlabel{fig: RK iteration 99}{{3-6f}{112}}
-\newlabel{sub@fig: RK iteration 99}{{f}{112}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-6}{\ignorespaces The trained state equation, the error of the trained state equation, the return bend geometry, and the basis dictionary at some iterations of the Bayesian optimization. The gray-box model uses the Redlich-Kwong state equation. The resolution of the bases is represented using the same symbols as in Figure \ref  {fig: selected basis NS}.\relax }}{112}}
-\newlabel{fig: RK iteration}{{3-6}{112}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-7}{\ignorespaces The current best objective at each iteration for the van der Waals gas and the Redlich-Kwong gas. The green lines are obtained by the twin-model Bayesian optimization. The red lines are obtained by the Bayesian optimization without the estimated gradient. The black horizontal lines indicate the true optimal, obtained by BFGS using the true gradient.\relax }}{113}}
-\newlabel{fig: NS opt obj 2}{{3-7}{113}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-8}{\ignorespaces The cumulative and per-iteration wall clock time, in minutes. Although the twin-model Bayesian optimization is more costly per-iteration due to the training of twin model, it achieves near-optimality with less overall computational time. The gray-box model uses the Redlich-Kwong state equation.\relax }}{113}}
-\newlabel{fig: NS opt wall clock}{{3-8}{113}}
+\citation{convergen EI}
+\newlabel{eqn: CS ineq}{{3.3}{111}}
+\citation{converge Bull}
+\citation{RKHS aronszajn}
+\citation{Hilbert space Showalter Book}
+\citation{convergen EI}
+\citation{convergen EI}
+\citation{convergen EI}
+\citation{convergen EI}
+\newlabel{space equal}{{3.3}{112}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Numerical Results}{113}}
+\newlabel{sec: chap3 numerical}{{3.4}{113}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Buckley-Leverett Equation}{113}}
+\newlabel{eqn: chap 3 BL obj fun}{{3.23}{113}}
+\newlabel{fig: opt BL source}{{3-2a}{114}}
+\newlabel{sub@fig: opt BL source}{{a}{114}}
+\newlabel{fig: opt BL sol}{{3-2b}{114}}
+\newlabel{sub@fig: opt BL sol}{{b}{114}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-2}{\ignorespaces Optimized results for the Buckley-Leverett equation.\relax }}{114}}
+\newlabel{fig: opt BL results}{{3-2}{114}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-3}{\ignorespaces A comparison of the current best $u(t=1,x)$ after $20$ gray-box simulations. The red line is obtained by the vanilla Bayesian optimization and the green line by the twin-model Bayesian optimization. The cyan dashed line is the $u(t=1,x)$ obtained by setting the source term to zero. \relax }}{114}}
+\newlabel{fig: u t=1 BL}{{3-3}{114}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-4}{\ignorespaces The current best objective evaluation at each iteration. The red line is obtained by the Bayesian optimization without using the estimated gradient. The green line is obtained by using the estimated gradient. The black horizontal line indicates the true optimal, which is obtained by BFGS using the true adjoint of the Buckley-Leverett equation.\relax }}{115}}
+\newlabel{fig: current best BL}{{3-4}{115}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Navier-Stokes Flow}{115}}
+\newlabel{eqn: mass flux 2}{{3.24}{115}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-5}{\ignorespaces (a) shows the initial guess of control points (blue dots), the initial guess of the geometry (blue line), the optimized control points (red dots), and the optimized geometry (red line) for the van der Waals gas. The blue squares indicate the bound constraints for each control point. (b) shows the pressure along the interior and the exterior boundaries for the initial (blue) and the optimized (red) geometry. (c) and (d) show the results for the Redlich-Kwong gas.\relax }}{117}}
+\newlabel{fig: NS opt geo combined}{{3-5}{117}}
+\newlabel{fig: RK iteration 0}{{3-6a}{118}}
+\newlabel{sub@fig: RK iteration 0}{{a}{118}}
+\newlabel{fig: RK iteration 1}{{3-6b}{118}}
+\newlabel{sub@fig: RK iteration 1}{{b}{118}}
+\newlabel{fig: RK iteration 2}{{3-6c}{119}}
+\newlabel{sub@fig: RK iteration 2}{{c}{119}}
+\newlabel{fig: RK iteration 3}{{3-6d}{119}}
+\newlabel{sub@fig: RK iteration 3}{{d}{119}}
+\newlabel{fig: RK iteration 4}{{3-6e}{120}}
+\newlabel{sub@fig: RK iteration 4}{{e}{120}}
+\newlabel{fig: RK iteration 99}{{3-6f}{121}}
+\newlabel{sub@fig: RK iteration 99}{{f}{121}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-6}{\ignorespaces The trained state equation, the error of the trained state equation, the return bend geometry, and the basis dictionary at some iterations of the Bayesian optimization. The gray-box model uses the Redlich-Kwong state equation. The resolution of the bases is represented using the same symbols as in Figure \ref  {fig: selected basis NS}.\relax }}{121}}
+\newlabel{fig: RK iteration}{{3-6}{121}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-7}{\ignorespaces The current best objective at each iteration for the van der Waals gas and the Redlich-Kwong gas. The green lines are obtained by the twin-model Bayesian optimization. The red lines are obtained by the Bayesian optimization without the estimated gradient. The black horizontal lines indicate the true optimal, obtained by BFGS using the true gradient.\relax }}{122}}
+\newlabel{fig: NS opt obj 2}{{3-7}{122}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-8}{\ignorespaces The cumulative and per-iteration wall clock time, in minutes. Although the twin-model Bayesian optimization is more costly per-iteration due to the training of twin model, it achieves near-optimality with less overall computational time. The gray-box model uses the Redlich-Kwong state equation.\relax }}{122}}
+\newlabel{fig: NS opt wall clock}{{3-8}{122}}
 \citation{linear trust region}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Polymer Injection in Petroleum Reservoir}{114}}
-\newlabel{sec: chap 3 reservoir}{{3.4.3}{114}}
-\@writefile{toc}{\contentsline {subsubsection}{Time-independent control}{114}}
-\newlabel{eqn: chap 3 reservoir cum cost}{{3.25}{114}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Polymer Injection in Petroleum Reservoir}{123}}
+\newlabel{sec: chap 3 reservoir}{{3.4.3}{123}}
+\@writefile{toc}{\contentsline {subsubsection}{Time-independent control}{123}}
+\newlabel{eqn: chap 3 reservoir cum cost}{{3.25}{123}}
 \citation{linear trust region}
 \citation{linear trust region}
 \citation{backtrack line search}
 \citation{backtrack line search}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-9}{\ignorespaces The permeability of the reservoir, in 100 milli Darcy. The 5 injectors are indicated by the black dots, and the producer is indicated by the green dot.\relax }}{115}}
-\newlabel{fig: chap 3 reservoir setup}{{3-9}{115}}
-\@writefile{toc}{\contentsline {subsubsection}{Time-dependent control}{115}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-10}{\ignorespaces The current best objective evaluation against the number of iterates. The black line indicates the true optimal obtained by COBYLA optimization \cite  {linear trust region}, a derivative-free optimization method.\relax }}{116}}
-\newlabel{fig: chap 3 reservoir objective}{{3-10}{116}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-11}{\ignorespaces $\xi (t)$ for the initial and the optimized injection rates.\relax }}{116}}
-\newlabel{fig: chap 3 reservoir profit t}{{3-11}{116}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-9}{\ignorespaces The permeability of the reservoir, in 100 milli Darcy. The 5 injectors are indicated by the black dots, and the producer is indicated by the green dot.\relax }}{124}}
+\newlabel{fig: chap 3 reservoir setup}{{3-9}{124}}
+\@writefile{toc}{\contentsline {subsubsection}{Time-dependent control}{124}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-10}{\ignorespaces The current best objective evaluation against the number of iterates. The black line indicates the true optimal obtained by COBYLA optimization \cite  {linear trust region}, a derivative-free optimization method.\relax }}{125}}
+\newlabel{fig: chap 3 reservoir objective}{{3-10}{125}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-11}{\ignorespaces $\xi (t)$ for the initial and the optimized injection rates.\relax }}{125}}
+\newlabel{fig: chap 3 reservoir profit t}{{3-11}{125}}
 \citation{backtrack line search}
 \citation{backtrack line search}
-\@writefile{loa}{\contentsline {algocf}{\numberline {5}{\ignorespaces Determine the stepsize in the gradient descent optimization by the backtracking-Armijo line search \cite  {backtrack line search}.\relax }}{117}}
-\newlabel{alg: Armijo}{{5}{117}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}Chapter Summary}{117}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-12}{\ignorespaces The optimized time-dependent injection rates.\relax }}{118}}
-\newlabel{fig: chap 3 reservoir opt inj}{{3-12}{118}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3-13}{\ignorespaces The current best objective evaluation using the backtracking-Armijo gradient descent method, where the gradient is provided by the twin model.\relax }}{118}}
-\newlabel{fig: chap 3 reservoir grad descent obj}{{3-13}{118}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {5}{\ignorespaces Determine the stepsize in the gradient descent optimization by the backtracking-Armijo line search \cite  {backtrack line search}.\relax }}{126}}
+\newlabel{alg: Armijo}{{5}{126}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Chapter Summary}{126}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-12}{\ignorespaces The optimized time-dependent injection rates.\relax }}{127}}
+\newlabel{fig: chap 3 reservoir opt inj}{{3-12}{127}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-13}{\ignorespaces The current best objective evaluation using the backtracking-Armijo gradient descent method, where the gradient is provided by the twin model.\relax }}{127}}
+\newlabel{fig: chap 3 reservoir grad descent obj}{{3-13}{127}}
 \@setckpt{chap3}{
-\setcounter{page}{120}
+\setcounter{page}{129}
 \setcounter{equation}{25}
-\setcounter{enumi}{5}
+\setcounter{enumi}{3}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
 \setcounter{enumiv}{0}

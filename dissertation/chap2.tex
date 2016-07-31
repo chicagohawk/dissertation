@@ -160,7 +160,7 @@ solution for a special form of \eqref{eqn: 1D conceptual},
     \frac{\partial u}{\partial t}+ \nabla \cdot \big( F(u) \big) = q(u,c)\,,
 \end{split}
 \end{equation*}
-where the spatial dimension is 1.
+where the spatial dimension is one and the source term is zero.
 %However, the inferrability can be partially justified by the following theorem
 %if \eqref{eqn: govern PDE} has only one equation, has one dimensional space, $q=0$, and $D=1$.
 \begin{theorem}
@@ -188,7 +188,7 @@ where the spatial dimension is 1.
     $$
     be a non-empty and measurable set.
     We have:\\
-    For any $\epsilon >0$, there exist $\delta>0$ and $T>0$ such that 
+    For any $\epsilon >0$, there exist $\delta>0$ and $T>0$ such that
     \begin{itemize}
         \item if $|\tilde{u}(t,x)-u(t,x)| < \delta$ for all $x\in \mathbb{R}$ and $t\in [0,T]$, then
               $\left|\frac{d\tilde{F}}{du} - \frac{dF}{du}\right| < 
@@ -196,7 +196,72 @@ where the spatial dimension is 1.
     \end{itemize}
     \label{theorem: 1}
 \end{theorem}
-The proof is given in Appendix \ref{proof 1}. $B_u$ consists of the value of $u$ that 
+
+\emph{Proof}: \\
+We prove false the contradiction of the theorem, which reads:\\
+\emph{For any $\delta>0$ and $T>0$, there exist $\epsilon > 0$, and 
+$F, \tilde{F}$ satisfying the conditions stated
+in theorem \ref{theorem: 1}, such that $\|\tilde{u} - u\|_{\infty} < \delta$ and 
+$\left\| \frac{d\tilde{F}}{du} - \frac{dF}{du} \right\|_\infty > \epsilon$ on $B_u$.}\\
+
+We show the following exception to the contradiction in order to prove it false.\\
+\emph{For any $\epsilon >0$ and any $F,\tilde{F}$ satisfying $\left\|\frac{d\tilde{F}}{du} - \frac{dF}{du}\right\|_{\infty} > \epsilon$
+on $B_u$, we can find $\delta >0$ and $T>0$ such that $\|\tilde{u} - u\|_\infty > \delta$.
+}
+The idea is to construct such an exception by the method of lines \cite{method of lines}.\\
+
+Firstly, assume there is no shock wave for \eqref{eqn: easy 1} and \eqref{eqn: easy 2} for $t\in[0,T]$. 
+Choose a segment in space, $[x_0-\Delta, x_0]$ with $0< \Delta< \frac{\epsilon}{L_{F} L_{u}}$, that satisfies 
+\begin{itemize}
+    \item $u_0(x) \in B_u$ for any $x\in [x_0-\Delta, x_0]$;
+    \item $\left| \frac{d\tilde{F}}{du}\big(u_0(x_0)\big) - \frac{dF}{du} \big(u_0(x_0)\big) \right| > \epsilon$;
+    \item $x_0 - \Delta + \frac{dF}{du}\big( u_0(x_0 - \Delta) \big) T = x_0 + \frac{d\tilde{F}}{du}\big( u_0 \big)T \equiv x^*$.
+\end{itemize}
+Without loss of generality, we assume $\frac{dF}{du} >0$ and $\frac{d\tilde{F}}{du}>0$ for $\big\{u \big|u=u_0(x)\,,\; x\in[x_0-\Delta, x_0]\big\}$.
+Using the method of lines, we have
+$$u\left(T\,,\; x_0-\Delta +\frac{dF}{du}\big( u_0(x_0-\Delta) \big)T  \right) = u_0(x_0 -\Delta)\,,$$ and
+$$\tilde{u}\left(T\,,\; x_0+\frac{d\tilde{F}}{du}\big( u_0(x_0) \big)T  \right) = u_0(x_0 )\,.$$
+Therefore
+$$
+    \left| \tilde{u}(x^*, T) - u(x^*, T) \right| = \left| u_0(x_0) - u_0(x_0-\Delta) \right| \ge \gamma \Delta \equiv \delta\,,
+$$
+by using the definition of $B_u$.\\
+
+Set 
+$T= \frac{\Delta}{\left| \frac{d\tilde{F}}{du}\big( u_0(x_0-\Delta)\big) - \frac{dF}{du}\big( u_0(x_0) \big) \right|}$, we have
+\begin{equation*}\begin{split}
+     & \left| \frac{d\tilde{F}}{du}\big( u_0(x_0-\Delta)\big) - \frac{dF}{du}\big( u_0(x_0) \big) \right| \\
+    = &\left| \frac{d{F}}{du}\big( u_0(x_0)\big) - \frac{d\tilde{F}}{du}\big( u_0(x_0) \big) + 
+           \frac{dF}{du} \big( u_0(x_0-\Delta) \big) - \frac{dF}{du}\big( u_0(x_0)\big) \right|\\
+    = &\left| \frac{d{F}}{du}\big( u_0(x_0)\big) - \frac{d\tilde{F}}{du}\big( u_0(x_0) \big) + 
+       \overline{\frac{d^2 F}{du^2}} \big( u_0(x_0-\Delta) - u_0(x_0) \big) \right|\\
+    \ge& \left| \frac{dF}{du}\big( u_0(x_0) \big) - \frac{d\tilde{F}}{du}\big( u_0(x_0) \big) \right| - L_uL_F \Delta \\
+    \ge& \epsilon - L_uL_F\Delta\equiv \epsilon_{F} > 0
+\end{split}\end{equation*}
+by using the mean value theorem. Therefore $T \le \frac{\Delta}{\epsilon_F} < \infty$.
+So we find a $\delta = \gamma \Delta$ and a $T < \infty$ that provides an exception
+to the contradiction of the theorem. 
+
+Secondly, if there is shock wave within $[0,T]$ for either \eqref{eqn: easy 1} or \eqref{eqn: easy 2}, we let
+$T^*$ be the time of the shock occurrence. Without loss of generality, assume the shock occurs for \eqref{eqn: easy 1} first.
+The shock implies the intersection of two characteristic lines. Choose a $\Delta>0$
+such that $\big| \frac{dF}{du}\big(u_0(x)\big) - \frac{dF}{du} \big( u_0(x-\Delta) \big) \big|T^* = \Delta$.
+Using the mean value theorem, we have
+$$
+    T^* = \frac{\Delta}{ \overline{\frac{d^2 F}{du^2}} \big( u_0(x) - u_0(x-\Delta) \big) } \ge \frac{1}{L_u L_F}
+$$
+Thus, if we choose
+$$
+    T = \min \left\{ 
+        \frac{1}{L_uL_K},\;\frac{\Delta}{\epsilon_\Delta}
+    \right\}\,,
+$$
+no shock occurs in $t\in[0,T]$. Since the theorem is already proven for the no-shock scenario, the proof completes.\hfill \qedsymbol
+
+% ------------------ END OF PROOF -----------------------
+
+%The proof is given in Appendix \ref{proof 1}. 
+In this theorem, $B_u$ consists of the value of $u$ that 
 appears in the initial condition $u_0(x)$. In addition, on such value of $u$, the 
 initial condition must satisfy $\left|\frac{du_0}{dx}\right|\ge \gamma > 0$.
 An example of $B_u$ is given in Figure \ref{fig: excitedDomain}.
@@ -234,7 +299,8 @@ can only be drawn for values of $u$ which appeared in the initial condition
 $\left(u\in \left\{u_0(x)\, \textrm{for all } \, x\in \mathbb{R}\right\}\right)$, 
 and where the initial condition has large enough slope $\left(\left|\frac{du_0}{dx}\right|\ge \gamma > 0\right)$.
 Generally speaking, 
-we expect that $F$ is only inferrable (up to a constant) in the domain of $u$ covered by the gray-box 
+it is reasonable to expect
+that $F$ is only inferrable (up to a constant) in the domain of $u$ covered by the gray-box 
 solution, which will be demonstrated in the numerical examples in this chapter.\\
 %For the general form \eqref{eqn: govern PDE} which 1) has systems of equations, 2) has higher spatial dimensions, 
 %and 3) only discretized space-time solution is available,
@@ -274,14 +340,43 @@ A sufficient condition is studied under which $\mathcal{M}_u$ can be bounded by
 $\mathcal{M}_{\tau}$.\\
 
 \begin{theorem}
-    Consider a twin model simulator whose one-step time marching is
+    Consider a gray-box model whose one-step time marching is
+    \begin{equation}
+        \mathcal{H}_i:\, \mathbb{R}^N\mapsto\mathbb{R}^N,\, {\boldsymbol{u}}_{i\cdot}\rightarrow 
+        {\boldsymbol{u}}_{i+1\cdot}=\mathcal{H}_i
+        {\boldsymbol{u}}_{i\cdot} \,,\quad i=1,\cdots, M-1\,,
+    \end{equation}
+    and a twin model whose one-step time marching is
     \begin{equation}
         \mathcal{G}_i:\, \mathbb{R}^N\mapsto\mathbb{R}^N,\, \tilde{\boldsymbol{u}}_{i\cdot}\rightarrow 
         \tilde{\boldsymbol{u}}_{i+1\cdot}=\mathcal{G}_i
         \tilde{\boldsymbol{u}}_{i\cdot} \,,\quad i=1,\cdots, M-1\,.
     \end{equation}
-    Assume the quadrature weights are time-independent, i.e.
-    $w_{ij} = w_{j}$ for all $i,j$.
+    The solution mismatch is defined by \eqref{eqn: solution mismatch}
+    \begin{equation*}
+        \mathcal{M}_u(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \big( \tilde{\boldsymbol{u}}_{ij}
+         -\boldsymbol{u}_{ij}\big)^2 \,.
+    \end{equation*}
+    Assume $\Delta t= t_2-t_1=\cdots =t_{M}-t_{M-1}$ and $w_{ij} = w_{j}$ for all $i,j$.
+    %which approximates \eqref{eqn: cont sol mismatch}
+    %\begin{equation*}
+    %    \int_{0}^T\int_\Omega \big(\tilde{u}(t,x) - u(t,x)\big)^2 \, \textrm{d}x\,\textrm{d}t\,.
+    %\end{equation*}
+    The integrated truncation error is defined by
+    \eqref{eqn: truncation error},
+    \begin{equation*}
+        \mathcal{M}_{\tau}(\tilde{F}) = \sum_{i=1}^M \sum_{j=1}^N w_{ij} \boldsymbol{\tau}_{ij}^2 \,,
+    \end{equation*}
+    where 
+    \begin{equation}
+        \boldsymbol{\tau}_{ij} = \frac{1}{\Delta t}
+        \left(\boldsymbol{u}_{i+1\, j} - (\mathcal{G}\boldsymbol{u}_{i\, \cdot})_j\right)\,.
+        \label{eqn: truncation discretized error}
+    \end{equation}
+    %which approximates \eqref{eqn: integrated residual}
+    %\begin{equation*}
+    %    \int_0^T \int_\Omega \tau^2 \, \textrm{d}x\textrm{d}t\,.
+    %\end{equation*}
     If $\mathcal{G}_i$ satisfies
     \begin{equation}
         \|\mathcal{G}_ia-\mathcal{G}_ib\|^2_{W} \le \beta \|a-b\|^2_{W} \,,
@@ -290,7 +385,7 @@ $\mathcal{M}_{\tau}$.\\
     for any $a, b \in \mathbb{R}^N$ and for all $i$,
     then 
     \begin{equation}
-        \mathcal{M}_u \le \left(1+ \beta+ \cdots + \beta^{M-1}\right) \mathcal{M}_{\tau}\,,
+        \mathcal{M}_u \le \left(1+ \beta+ \cdots + \beta^{M-1}\right) \Delta t^2\mathcal{M}_{\tau}\,,
     \end{equation}
     where
     \begin{equation}
@@ -304,7 +399,149 @@ $\mathcal{M}_{\tau}$.\\
     for any $v\in \mathbb{R}^N$.
     \label{theorem: 2}
 \end{theorem}
-The proof is given in Appendix \ref{proof 2}. The theorem implies that,
+
+\emph{Proof}: \\
+%Let the one-step time marching of the twin model be
+%\begin{equation*}
+%    \mathcal{G}_i:\, \mathbb{R}^N\mapsto\mathbb{R}^N,\, \tilde{\boldsymbol{u}}_{i\cdot}\rightarrow 
+%    \tilde{\boldsymbol{u}}_{i+1\cdot}=\mathcal{G}_i
+%    \tilde{\boldsymbol{u}}_{i\cdot} \,,\quad i=1,\cdots, M-1\,,
+%\end{equation*}
+%and let the one-step time marching of the gray-box simulator be
+%\begin{equation*}
+%    \mathcal{H}:\, \mathbb{R}^n\mapsto\mathbb{R}^n,\, 
+%    \boldsymbol{u}_{i\cdot}
+%    \rightarrow 
+%    \boldsymbol{u}_{i+1\cdot} = \mathcal{H}_i\boldsymbol{u}_{i\cdot} \,,
+%    \quad i=1,\cdots, M-1\,.
+%\end{equation*}
+The integrated truncation error can be written as
+\begin{equation*}\begin{split}
+    \mathcal{M}_{\tau}(\tilde{F}) &= 
+        \sum_{i=1}^M \sum_{j=1}^N w_{j} \frac{1}{\Delta t^2}\left(
+        \boldsymbol{u}_{i+1\, j} - (\mathcal{G}\boldsymbol{u}_{i\, \cdot})_j
+        \right)^2\\
+    &= \sum_{i=1}^M \frac{1}{\Delta t^2}(u_{i+1\,\cdot} - \mathcal{G} u_{i\,\cdot})^T W
+                    (u_{i+1\,\cdot} - \mathcal{G} u_{i\,\cdot}) \\
+    &= \sum_{i=1}^M \frac{1}{\Delta t^2}\left\|u_{i+1\,\cdot} - \mathcal{G} u_{i\,\cdot}\right\|^2_{W}\\
+    &= \sum_{i=1}^M \frac{1}{\Delta t^2}\left\| \mathcal{H} u_{i\, \cdot} - \mathcal{G} u_{i\,\cdot} \right\|^2_{W}\\
+    &= \sum_{i=1}^M \frac{1}{\Delta t^2} \left\| \left(\mathcal{H}^i - \mathcal{G} \mathcal{H}^{i-1}\right)
+       u_{0\,\cdot} \right\|^2_{W}\,.
+\end{split}\end{equation*}
+Similarly, the solution mismatch can be written as
+\begin{equation*}
+    \mathcal{M}_u(\tilde{F}) = \sum_{i=1}^M \left\| 
+    \left(\mathcal{H}^i - \mathcal{G}^i\right)
+    u_{0\,\cdot} \right\|^2_{W}
+\end{equation*}
+Fig \ref{fig:sketch} gives an explanation of $\mathcal{M}_u$ and $\mathcal{M}_{\tau}$ by viewing 
+the simulators as discrete-time dynamical systems.\\
+
+\begin{figure}[htbp]\begin{center}
+    \includegraphics[height=7cm]{../sketch2.png}
+    \caption{The state-space trajectories of the gray-box model and the twin model. 
+             $\mathcal{M}_u$ measures the difference of the twin model trajectory (blue) with
+             the gray-box trajectory (red). $\mathcal{M}_{\tau}$ measures the difference of the
+             twin model trajectory with restarts (green) and the gray-box trajectory (red).}
+    \label{fig:sketch}
+\end{center}\end{figure}
+
+Using the equality
+\begin{equation*}
+    \mathcal{G}^i-\mathcal{H}^i = (\mathcal{G}^i-\mathcal{G}^{i-1}\mathcal{H}) + (\mathcal{G}^{i-1}
+    \mathcal{H} - \mathcal{G}^{i-2}\mathcal{H}^2) + \cdots + (\mathcal{G}\mathcal{H}^{i-1}-\mathcal{H}^i)\,,\quad
+    i\in \mathbb{N}\,,
+\end{equation*}
+and triangular inequality, we have 
+\footnotesize{
+\begin{equation*}
+    \mathcal{M}_u \le 
+    \left\{\begin{split}
+        \|(\mathcal{G}^{M-1} \mathcal{G} - \mathcal{G}^{M-1}\mathcal{H})u_{0\cdot}\|^2_{W} &+ \|(\mathcal{G}^{M-2}\mathcal{G}\mathcal{H} - \mathcal{G}^{M-2}\mathcal{H}^2)u_{0\cdot}\|^2_{W}&+\cdots
+        &+ \|(\mathcal{G}\mathcal{H}^{M-1} - \mathcal{H}^{M})u_{0\cdot}\|^2_{W}\\
+        &+\|(\mathcal{G}^{M-2} \mathcal{G} - \mathcal{G}^{M-2}\mathcal{H})u_{0\cdot}\|^2_{W} &+ \cdots 
+        &+ \|(\mathcal{G}\mathcal{H}^{M-2} - \mathcal{H}^{M-1})u_{0\cdot}\|^2_{W}\\
+        &\ddots&& \vdots\\
+        &&& + \|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_{W}
+    \end{split}
+    \right\}\,.
+    \label{expansion global error}
+\end{equation*}
+}
+\normalsize
+Therefore,
+\begin{equation*}
+    \mathcal{M}_u - \Delta t^2\mathcal{M}_{\tau} \le \qquad\hspace{11cm}
+\end{equation*}
+\footnotesize
+\begin{equation*}
+    \left\{\begin{split}
+        \|(\mathcal{G}^{M-1} \mathcal{G} - \mathcal{G}^{M-1}\mathcal{H})u_{0\cdot}\|^2_{W} &+ \|(\mathcal{G}^{M-2}\mathcal{G}\mathcal{H} - \mathcal{G}^{M-2}\mathcal{H}^2)u_{0\cdot}\|^2_{W}&+\cdots
+        &+ \|(\mathcal{G}\mathcal{G}\mathcal{H}^{M-2} - \mathcal{G} \mathcal{H}^{M-1})u_{0\cdot}\|^2_{W}\\
+        &+\|(\mathcal{G}^{M-2} \mathcal{G} - \mathcal{G}^{M-2}\mathcal{H})u_{0\cdot}\|^2_{W} &+ \cdots 
+        &+ \|(\mathcal{G}\mathcal{G}\mathcal{H}^{M-3} - \mathcal{G} \mathcal{H}^{M-2})u_{0\cdot}\|^2_{W}\\
+        &\ddots&& \vdots\\
+        &&& + \|(\mathcal{G} \mathcal{G} - \mathcal{G} \mathcal{H})u_{0\cdot}\|^2_{W}
+    \end{split}
+    \right\}\,.
+    \label{error diff}
+\end{equation*}
+\normalsize
+Under the assumption
+\begin{equation*}
+    \left\| \mathcal{G}a - \mathcal{G}b \right\|^2_{W} \le \beta \|a-b\|^2_{W}\,,
+\end{equation*}
+and its implication
+\begin{equation*}
+    \left\|\mathcal{G}^i a - \mathcal{G}^i b\right\|^2_W \le \beta^i \|a-b\|_W^2\,, \quad i\in \mathbb{N}\,,
+\end{equation*}
+we have\small
+\begin{equation*}
+    \mathcal{M}_u - \Delta t^2\mathcal{M}_{\tau} \le 
+     \left\{\begin{split}
+        \beta^{M-1}\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W &+ \beta^{M-2}\|(\mathcal{G}\mathcal{H} - \mathcal{H}^2)u_{0\cdot}\|^2_W&+\cdots
+        &+ \beta\|(\mathcal{G}\mathcal{H}^{M-2} - \mathcal{H}^{M-1})u_{0\cdot}\|^2_W\\
+        &+\beta^{M-2}\|( \mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_{M-1} &+ \cdots 
+        &+ \beta\|(\mathcal{G}\mathcal{H}^{n-3} - \mathcal{H}^{n-2})u_{0\cdot}\|^2_W\\
+        &\ddots&& \vdots\\
+        &&& + \beta\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W
+    \end{split}
+    \right\}\,.
+    \label{error diff}
+\end{equation*}
+\normalsize
+Reorder the summation, we get
+\small
+\begin{equation*}
+    \mathcal{M}_u - \Delta t^2 \mathcal{M}_{\tau} \le
+    \left\{\begin{split}
+        \beta^{M-1}\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W &+ \beta^{M-2}\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W&+\cdots
+        &+ \beta\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W\\
+        &+\beta^{M-2}\|( \mathcal{G}\mathcal{H} - \mathcal{H}^2)u_{0\cdot}\|^2_W &+ \cdots 
+        &+ \beta\|(\mathcal{G}\mathcal{H} - \mathcal{H}^{2})u_{0\cdot}\|^2_W\\
+        &\ddots&& \vdots\\
+        &&& + \beta\|(\mathcal{G}\mathcal{H}^{M-2} - \mathcal{H}^{M-1})u_{0\cdot}\|^2_W
+    \end{split}
+    \right\}\,.
+    \label{error diff 2}
+\end{equation*}
+\normalsize
+Therefore,
+\begin{equation*}
+    \mathcal{M}_u - \Delta t^2\mathcal{M}_{\tau} 
+    \le \left(\beta^{M-1} + \beta^{M-2} + \cdots + \beta \right)
+    \Delta t^2
+    \mathcal{M}_{\tau}
+\end{equation*}
+If $\beta$ is strictly less than $1$, then
+\begin{equation*}
+    \mathcal{M}_u \le \frac{\Delta t^2}{1-\beta} \mathcal{M}_{\tau}\,,
+\end{equation*}
+thus completes the proof.\hfill\qedsymbol
+% ---------------- END OF PROOF --------------------
+
+%The proof is given in Appendix \ref{proof 2}. 
+The theorem implies that,
 if the one-step time marching operator of the twin model is Lipschitz continuous, 
 as given by \eqref{eqn: contractive}, then the
 solution mismatch can be bounded by the integrated truncation error.
@@ -692,7 +929,7 @@ Two example gray-box
 and twin-model solutions are shown in Figure \ref{fig: outsample good test} and Figure \ref{fig: outsample bad test}.
 In Figure \ref{fig: outsample good test}, the domain of the gray-box solution is $[0.1, 0.3]$, which
 is contained in the the domain of the training solution, $[0,0.48]$.
-Therefore, we expect that the gray-box and the twin-model
+Therefore, it is reasonable to expect that the gray-box and the twin-model
 solutions match closely. In contrast, the domain of the gray-box solution in Figure 
 \ref{fig: outsample bad test} is $[0.05,0.9]$. The domain is not contained 
 in the domain of the training solution, and a larger solution mismatch is observed.\\

@@ -257,6 +257,11 @@ Conn, A. R., Gould, N. I., and Toint, P. L.
 \newblock Trust Region Methods.
 \newblock{ \em SIAM}, vol. 1, 2000.
 
+\bibitem{trust region grad free review}
+Karasozen, B. 
+\newblock{Survey of Trust-region Derivative Free Optimization Methods.}
+\newblock{\em Journal of Industrial and Management Optimization}, 3(2), 321, 2007.
+
 \bibitem{linear trust region}
 Powell, M.J.
 \newblock A Direct Search Optimization Method that Models the Objective and Constraint Functions
@@ -465,15 +470,15 @@ $\check{\textrm{Z}}$ilinskas, J.
 \newblock Branch and Bound with Simplicial Partitions for Global Optimization. 
 \newblock {\em Mathematical Modelling and Analysis}, 13(1):145-159, 2008.
 
-\bibitem{grad particle swarm}
-Noel, M. M. 
-\newblock A New Gradient Based Particle Swarm Optimization Algorithm for Accurate Computation of Global Minimum. 
-\newblock {\em Applied Soft Computing}, 12(1):353-359, 2012.
+%\bibitem{grad particle swarm}
+%Noel, M. M. 
+%\newblock A New Gradient Based Particle Swarm Optimization Algorithm for Accurate Computation of Global Minimum. 
+%\newblock {\em Applied Soft Computing}, 12(1):353-359, 2012.
 
-\bibitem{grad cuckoo}
-Yang, X. S., and Deb, S. 
-\newblock {Cuckoo Search: Recent Advances and Applications.} 
-\newblock {Neural Computing and Applications}, 24(1):169-174, 2014.
+%\bibitem{grad cuckoo}
+%Yang, X. S., and Deb, S. 
+%\newblock {Cuckoo Search: Recent Advances and Applications.} 
+%\newblock {Neural Computing and Applications}, 24(1):169-174, 2014.
 
 \bibitem{GP book}
 Rasmussen, C. E. 

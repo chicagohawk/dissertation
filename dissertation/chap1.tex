@@ -4,6 +4,7 @@
 %% You can process specific files by typing their names in at the 
 %% \files=
 %% prompt when you run the file main.tex through LaTeX.
+
 \chapter{Background}
 \label{chap 1}
 
@@ -302,17 +303,22 @@ Such methods are suitable for problems constrained by black-box simulators.\\
 Depending on whether a local or global optimum is desired,
 DFO methods can be categorized into local methods and global methods \cite{gradfreereview}.
 Local methods seek a local optimum which is also the global optimum for convex problems. 
-An important local method is the
-trust-region method \cite{trust region review}. Trust-region method introduces a surrogate model that is
-cheap to evaluate and presumably accurate within a trust region: an adaptive neighborhood around the current iterate \cite{trust region review}. 
+A local method is the derivative-free
+trust-region method \cite{trust region grad free review}.
+%\cite{trust region review}. 
+The derivative-free trust-region method introduces a surrogate model that interpolates the
+objective evaluations \cite{linear trust region, trustregionwild}.
+%, or by running a low-fidelity simulation \cite{MFO trust region, Alexandrov trust region}.
+The surrogate model is cheap to evaluate and presumably accurate within a trust region: 
+an adaptive neighborhood around the current iteration \cite{trust region review, 
+trust region grad free review}. 
 At each iteration, the surrogate is optimized in a domain bounded by the trust region to generate
-candidte steps for additional objective evaluations \cite{trust region review}.
-The surrogates can be constructed either by interpolating the objective evaluations \cite{linear trust region, trustregionwild}, or by running a low-fidelity simulation \cite{MFO trust region,
-Alexandrov trust region}.
-Convergence to the objective function's optimum is guaranteed by ensuring that
-the surrogate have the
-same value and gradient as the objective function when the size of the trust region shrinks to zero
-\cite{trustregionconn, trustregionwild}.\\
+candidte steps for additional objective evaluations \cite{trust region review, 
+trust region grad free review}.\\
+%Convergence to the objective function's optimum is guaranteed by ensuring that
+%the surrogate have the
+%same value and gradient as the objective function when the size of the trust region shrinks to zero
+%\cite{trustregionconn, trustregionwild}.\\
 
 Global methods seek the global optimum. 
 Example methods include the branch-and-bound search \cite{Branch and Bound}, evolution methods \cite{evolution review}, and 
@@ -332,13 +338,13 @@ and the posterior, a probability measure, of the objective
 is updated using Bayesian metrics \cite{practical Bayesian, review EI}. 
 The posterior is used to pick the next candidate step
 that best balances the exploration of unsampled regions and the exploitation around the sampled
-optimum \cite{Locatelli, jones1998, GP bandit}. Details of Bayesian optimization methods are discussed in Section \ref{section: bayes opt}.\\
+optimum \cite{Locatelli, jones1998, GP bandit}. The details of Bayesian optimization methods are discussed in Section \ref{section: bayes opt}.\\
 
 Because many real-world problems are non-convex, global methods are usually preferred to local methods
 if the global optimum is desired \cite{gradfreereview}. Besides, DFO methods usually require
 a large number of function evaluations to converge, especially when the dimension of control is large
 \cite{gradfreereview}. This issue can be alleviated by incorporating the gradient information
-\cite{derivative RKHS, grad coKriging, grad particle swarm, grad cuckoo}.
+\cite{derivative RKHS, grad coKriging}.
 The details are discussed in the next subsection.\\
 
 \subsubsection{Gradient-based Optimization}
@@ -370,26 +376,27 @@ of the search step, thereby reducing the required number of iterations
 \cite{trust region global, trust region inexact grad}.\\
 
 Global GBO methods search for the global optimum using gradient values \cite{opt via sim review, nonlinear program}.
-Many global GBO methods can trace their development to corresponding DFO methods \cite{stogo 1, stogo 2, grad particle swarm, grad cuckoo, grad coKriging}. 
+Some global GBO methods can trace their development to corresponding DFO methods.
 For example, the stochastic gradient-based global optimization method (StoGo) 
 \cite{stogo 1, stogo 2} works by partitioning the control space and bounding the optimum in the same way 
 as the branch-and-bound method \cite{Branch and Bound}. But the search in each partition is performed
-by gradient-based algorithms such as BFGS \cite{quasiNewton}. 
-Similarly, some gradient-based evolution methods,
-such as the gradient-based particle swarm method \cite{grad particle swarm} 
-and the gradient-based cuckoo search method \cite{grad cuckoo},
-can be viewed as gradient variations of corresponding derivative-free counterparts \cite{particle swarm, cuckoo}.
-For example, the gradient-based particle swarm method combines particle swarm algorithm with the
-stochastic gradient descent method \cite{grad particle swarm}. 
-The movement of each particle is dictated not only by the 
-function evaluations of all particles, but also by its local gradient \cite{grad particle swarm}.\\
+by gradient-based algorithms such as BFGS \cite{quasiNewton}.\\
+%Similarly, some gradient-based evolution methods,
+%such as the gradient-based particle swarm method \cite{grad particle swarm} 
+%and the gradient-based cuckoo search method \cite{grad cuckoo},
+%can be viewed as gradient variations of corresponding derivative-free counterparts \cite{particle swarm, cuckoo}.
+%For example, the gradient-based particle swarm method combines particle swarm algorithm with the
+%stochastic gradient descent method \cite{grad particle swarm}. 
+%The movement of each particle is dictated not only by the 
+%function evaluations of all particles, but also by its local gradient \cite{grad particle swarm}.\\
 
 My thesis is particularly interested in the gradient-based Bayesian optimization method \cite{coKriging}.
 In this method, the posterior of the objective function assimilates both the gradient 
 and function values in a CoKriging framework \cite{derivative RKHS, coKriging}.
 The details of my treatment is discussed in Section \ref{section: bayes opt} and
 Chapter \ref{chapter 3}.
-I expect that the inclusion of gradient values results in more accurate posterior mean and 
+It is reasonable to expect that 
+the inclusion of gradient values results in more accurate posterior mean and 
 reduced posterior uncertainty, which in turn reduces the number of iterations required to
 achieve near-optimality. The effect of iteration reduction 
 is analyzed numerically in Chapter \ref{chapter 3}.\\
@@ -568,9 +575,7 @@ admits gradient information \cite{derivative RKHS, grad coKriging}. In Chapter \
 I investigate the scenario where the gradient
 evaluations are inexact \cite{KennedyOhagan2}.
 The Bayesian optimization method developed in my thesis 
-allows both the exact function evaluation and the inexact gradient evaluation.
-Details of this topic will be discussed in Section
-\ref{sec: chap3 approach}.
+allows both the exact function evaluation and the inexact gradient evaluation.\\
 
 \subsection{The Adjoint Method}
 Consider a differentiable objective function constrained by a conservation law PDE 
@@ -1035,7 +1040,7 @@ where $\|\cdot\|_{L_p}$ indicates the $L_p$ norm\footnote{
 }.
 My thesis parameterizes the twin-model flux $\tilde{F}$ and
 optimizes the coefficients,
-so the twin model serves as a proxy of the gray-box model. Details are discussed in 
+so the twin model serves as a proxy of the gray-box model. The details are discussed in 
 Section \ref{sec: flux param}.\\
 
 If the dictionary is pre-determined,
@@ -1113,53 +1118,53 @@ The iteration stops only when no alternation is made to the dictionary or when a
 accuracy is achieved, without bounding the basis complexity a prior
 \cite{adaptive basis 1, adaptive basis 2, adaptive basis 3}.
 Such approach is adopted in my thesis to build up 
-the bases for $\tilde{F}$. Details are discussed in Section \ref{sec: adaptive basis}.\\
+the bases for $\tilde{F}$. The details are discussed in Section \ref{sec: adaptive basis}.\\
 
 
 
 
 
-\section{Notations}
-The general notations are declared here.
-\begin{itemize}
-    \item $t\in [0,T]$: the time,
-    \item $\{t_i\}_{i=1}^M$: the time steps,
-    \item $x\in \Omega$: the space,
-    \item $\{x_j\}_{j=1}^N$: the spatial grid points,
-    \item $u$: the space-time solution of gray-box conservation law,
-    \item $\tilde{u}$: the space-time solution of twin-model conservation law,
-    \item $\boldsymbol{u}$: the discretized space-time solution of gray-box simulator,
-    \item $\tilde{\boldsymbol{u}}$: the discretized space-time solution of twin-model simulator,
-    \item $k$: the number of equations of the conservation law; or the number of folds in 
-               cross validation.
-    \item $D$: a known differential operator,
-    \item $F$: the unknown function of the gray-box model,
-    \item $\tilde{F}$: the inferred $F$,
-    \item $q$: the source term,
-    \item $c$: the control variables,
-    \item $\underline{c}_n=(c_1, \cdots, c_n)$: a sequence of $n$ control variables,
-    \item $w$: the quadrature weights in the numerical space-time integration,
-    \item $\xi$: the objective function,
-    \item $c_{\min}, \, c_{\max}$: bound constraints,
-    \item $\xi_{\tilde{\nabla}}$: the estimated gradient of $\xi$ with respect to $c$,
-    \item $d$: the number of control variables,
-    \item $\mathcal{C}\subset \mathbb{R}^d$: the control space,
-    \item $K,\, G$: the covariance functions,
-    \item $a$: the acquisition function,
-    \item $\mathcal{M}_u$: the solution mismatch,
-    \item $\mathcal{M}_{\tau}$: the integrated truncation error,
-    \item $\overline{\mathcal{M}}$: the mean solution mismatch in cross validation,
-    \item $\phi$: a basis function for $\tilde{F}$,
-    \item $j, \boldsymbol{j}$: the dilation parameters of the basis for uni- and
-                               multi-variate functions,
-    \item $\eta, \boldsymbol{\eta}$: the translation parameters of the basis for uni- and
-                               multi-variate functions,
-    \item $\mathcal{A}$: the basis dictionary,
-    \item $\alpha$: the coefficients for $\phi$,
-    \item $T$: twin model,
-    \item $\tau$: residual,
-    \item $\boldsymbol{\tau}$: discretized residual,
-\end{itemize}
+%\section{Notations}
+%The general notations are declared here.
+%\begin{itemize}
+%    \item $t\in [0,T]$: the time,
+%    \item $\{t_i\}_{i=1}^M$: the time steps,
+%    \item $x\in \Omega$: the space,
+%    \item $\{x_j\}_{j=1}^N$: the spatial grid points,
+%    \item $u$: the space-time solution of gray-box conservation law,
+%    \item $\tilde{u}$: the space-time solution of twin-model conservation law,
+%    \item $\boldsymbol{u}$: the discretized space-time solution of gray-box simulator,
+%    \item $\tilde{\boldsymbol{u}}$: the discretized space-time solution of twin-model simulator,
+%    \item $k$: the number of equations of the conservation law; or the number of folds in 
+%               cross validation.
+%    \item $D$: a known differential operator,
+%    \item $F$: the unknown function of the gray-box model,
+%    \item $\tilde{F}$: the inferred $F$,
+%    \item $q$: the source term,
+%    \item $c$: the control variables,
+%    \item $\underline{c}_n=(c_1, \cdots, c_n)$: a sequence of $n$ control variables,
+%    \item $w$: the quadrature weights in the numerical space-time integration,
+%    \item $\xi$: the objective function,
+%    \item $c_{\min}, \, c_{\max}$: bound constraints,
+%    \item $\xi_{\tilde{\nabla}}$: the estimated gradient of $\xi$ with respect to $c$,
+%    \item $d$: the number of control variables,
+%    \item $\mathcal{C}\subset \mathbb{R}^d$: the control space,
+%    \item $K,\, G$: the covariance functions,
+%    \item $a$: the acquisition function,
+%    \item $\mathcal{M}_u$: the solution mismatch,
+%    \item $\mathcal{M}_{\tau}$: the integrated truncation error,
+%    \item $\overline{\mathcal{M}}$: the mean solution mismatch in cross validation,
+%    \item $\phi$: a basis function for $\tilde{F}$,
+%    \item $j, \boldsymbol{j}$: the dilation parameters of the basis for uni- and
+%                               multi-variate functions,
+%    \item $\eta, \boldsymbol{\eta}$: the translation parameters of the basis for uni- and
+%                               multi-variate functions,
+%    \item $\mathcal{A}$: the basis dictionary,
+%    \item $\alpha$: the coefficients for $\phi$,
+%    \item $T$: twin model,
+%    \item $\tau$: residual,
+%    \item $\boldsymbol{\tau}$: discretized residual,
+%\end{itemize}
 
 
 

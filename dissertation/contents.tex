@@ -9,3 +9,48 @@
 \newpage
 \listoftables
 
+\clearpage
+\hspace{-1.cm}\Huge{\textbf{Nomenclature}}\\\vspace{.5cm}
+\normalsize
+\begin{itemize}
+    \item $t\in [0,T]$: the time,
+    \item $\{t_i\}_{i=1}^M$: the time steps,
+    \item $x\in \Omega$: the space,
+    \item $\{x_j\}_{j=1}^N$: the spatial grid points,
+    \item $u$: the space-time solution of gray-box conservation law,
+    \item $\tilde{u}$: the space-time solution of twin-model conservation law,
+    \item $\boldsymbol{u}$: the discretized space-time solution of gray-box simulator,
+    \item $\tilde{\boldsymbol{u}}$: the discretized space-time solution of twin-model simulator,
+    \item $k$: the number of equations of the conservation law; or the number of folds in
+               cross validation.
+    \item $D$: a known differential operator,
+    \item $F$: the unknown function of the gray-box model,
+    \item $\tilde{F}$: the inferred $F$,
+    \item $q$: the source term,
+    \item $c$: the control variables,
+    \item $\underline{c}_n=(c_1, \cdots, c_n)$: a sequence of $n$ control variables,
+    \item $w$: the quadrature weights in the numerical space-time integration,
+    \item $\xi$: the objective function,
+    \item $c_{\min}, \, c_{\max}$: bound constraints,
+    \item $\xi_{\tilde{\nabla}}$: the estimated gradient of $\xi$ with respect to $c$,
+    \item $d$: the number of control variables,
+    \item $\mathcal{C}\subset \mathbb{R}^d$: the control space,
+    \item $K,\, G$: the covariance functions,
+    \item $a$: the acquisition function,
+    \item $\mathcal{M}_u$: the solution mismatch,
+    \item $\mathcal{M}_{\tau}$: the integrated truncation error,
+    \item $\overline{\mathcal{M}}$: the mean solution mismatch in cross validation,
+    \item $\phi$: a basis function for $\tilde{F}$,
+    \item $j, \boldsymbol{j}$: the dilation parameters of the basis for uni- and
+                               multi-variate functions,
+    \item $\eta, \boldsymbol{\eta}$: the translation parameters of the basis for uni- and
+                               multi-variate functions,
+    \item $\mathcal{A}$: the basis dictionary,
+    \item $\alpha$: the coefficients for $\phi$,
+    \item $T$: twin model,
+    \item $\tau$: residual,
+    \item $\boldsymbol{\tau}$: discretized residual,
+\end{itemize}
+
+
+\clearpage

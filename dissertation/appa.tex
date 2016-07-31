@@ -67,31 +67,31 @@ no shock occurs in $t\in[0,T]$. Since the theorem is already proven for the no-s
 \section{Theorem \ref{theorem: 2}}
 \label{proof 2}
 Proof: \\
-Let the one-step time marching of the twin model be
-\begin{equation*}
-    \mathcal{G}_i:\, \mathbb{R}^N\mapsto\mathbb{R}^N,\, \tilde{\boldsymbol{u}}_{i\cdot}\rightarrow 
-    \tilde{\boldsymbol{u}}_{i+1\cdot}=\mathcal{G}_i
-    \tilde{\boldsymbol{u}}_{i\cdot} \,,\quad i=1,\cdots, M-1\,,
-\end{equation*}
-and let the one-step time marching of the gray-box simulator be
-\begin{equation*}
-    \mathcal{H}:\, \mathbb{R}^n\mapsto\mathbb{R}^n,\, 
-    \boldsymbol{u}_{i\cdot}
-    \rightarrow 
-    \boldsymbol{u}_{i+1\cdot} = \mathcal{H}_i\boldsymbol{u}_{i\cdot} \,,
-    \quad i=1,\cdots, M-1\,.
-\end{equation*}
+%Let the one-step time marching of the twin model be
+%\begin{equation*}
+%    \mathcal{G}_i:\, \mathbb{R}^N\mapsto\mathbb{R}^N,\, \tilde{\boldsymbol{u}}_{i\cdot}\rightarrow 
+%    \tilde{\boldsymbol{u}}_{i+1\cdot}=\mathcal{G}_i
+%    \tilde{\boldsymbol{u}}_{i\cdot} \,,\quad i=1,\cdots, M-1\,,
+%\end{equation*}
+%and let the one-step time marching of the gray-box simulator be
+%\begin{equation*}
+%    \mathcal{H}:\, \mathbb{R}^n\mapsto\mathbb{R}^n,\, 
+%    \boldsymbol{u}_{i\cdot}
+%    \rightarrow 
+%    \boldsymbol{u}_{i+1\cdot} = \mathcal{H}_i\boldsymbol{u}_{i\cdot} \,,
+%    \quad i=1,\cdots, M-1\,.
+%\end{equation*}
 The integrated truncation error can be written as
 \begin{equation*}\begin{split}
     \mathcal{M}_{\tau}(\tilde{F}) &= 
-        \sum_{i=1}^M \sum_{j=1}^N w_{j} \left(
+        \sum_{i=1}^M \sum_{j=1}^N w_{j} \frac{1}{\Delta t^2}\left(
         \boldsymbol{u}_{i+1\, j} - (\mathcal{G}\boldsymbol{u}_{i\, \cdot})_j
         \right)^2\\
-    &= \sum_{i=1}^M (u_{i+1\,\cdot} - \mathcal{G} u_{i\,\cdot})^T W
+    &= \sum_{i=1}^M \frac{1}{\Delta t^2}(u_{i+1\,\cdot} - \mathcal{G} u_{i\,\cdot})^T W
                     (u_{i+1\,\cdot} - \mathcal{G} u_{i\,\cdot}) \\
-    &= \sum_{i=1}^M \left\|u_{i+1\,\cdot} - \mathcal{G} u_{i\,\cdot}\right\|^2_{W}\\
-    &= \sum_{i=1}^M \left\| \mathcal{H} u_{i\, \cdot} - \mathcal{G} u_{i\,\cdot} \right\|^2_{W}\\
-    &= \sum_{i=1}^M \left\| \left(\mathcal{H}^i - \mathcal{G} \mathcal{H}^{i-1}\right)
+    &= \sum_{i=1}^M \frac{1}{\Delta t^2}\left\|u_{i+1\,\cdot} - \mathcal{G} u_{i\,\cdot}\right\|^2_{W}\\
+    &= \sum_{i=1}^M \frac{1}{\Delta t^2}\left\| \mathcal{H} u_{i\, \cdot} - \mathcal{G} u_{i\,\cdot} \right\|^2_{W}\\
+    &= \sum_{i=1}^M \frac{1}{\Delta t^2} \left\| \left(\mathcal{H}^i - \mathcal{G} \mathcal{H}^{i-1}\right)
        u_{0\,\cdot} \right\|^2_{W}\,.
 \end{split}\end{equation*}
 Similarly, the solution mismatch can be written as
@@ -137,7 +137,7 @@ and triangular inequality, we have
 \normalsize
 Therefore,
 \begin{equation*}
-    \mathcal{M}_u - \mathcal{M}_{\tau} \le \qquad\hspace{11cm}
+    \mathcal{M}_u - \Delta t^2\mathcal{M}_{\tau} \le \qquad\hspace{11cm}
 \end{equation*}
 \footnotesize
 \begin{equation*}
@@ -161,10 +161,10 @@ and its implication
 \begin{equation*}
     \left\|\mathcal{G}^i a - \mathcal{G}^i b\right\|^2_W \le \beta^i \|a-b\|_W^2\,, \quad i\in \mathbb{N}\,,
 \end{equation*}
-we have
+we have\small
 \begin{equation*}
-    \mathcal{M}_u - \mathcal{M}_{\tau} \le 
-    \left\{\begin{split}
+    \mathcal{M}_u - \Delta t^2\mathcal{M}_{\tau} \le 
+     \left\{\begin{split}
         \beta^{M-1}\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W &+ \beta^{M-2}\|(\mathcal{G}\mathcal{H} - \mathcal{H}^2)u_{0\cdot}\|^2_W&+\cdots
         &+ \beta\|(\mathcal{G}\mathcal{H}^{M-2} - \mathcal{H}^{M-1})u_{0\cdot}\|^2_W\\
         &+\beta^{M-2}\|( \mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_{M-1} &+ \cdots 
@@ -175,9 +175,11 @@ we have
     \right\}\,.
     \label{error diff}
 \end{equation*}
+\normalsize
 Reorder the summation, we get
+\small
 \begin{equation*}
-    \mathcal{M}_u - \mathcal{M}_{\tau} \le 
+    \mathcal{M}_u - \Delta t^2 \mathcal{M}_{\tau} \le
     \left\{\begin{split}
         \beta^{M-1}\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W &+ \beta^{M-2}\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W&+\cdots
         &+ \beta\|(\mathcal{G} - \mathcal{H})u_{0\cdot}\|^2_W\\
@@ -189,14 +191,17 @@ Reorder the summation, we get
     \right\}\,.
     \label{error diff 2}
 \end{equation*}
+\normalsize
 Therefore,
 \begin{equation*}
-    \mathcal{M}_u - \mathcal{M}_{\tau} \le \left(\beta^{M-1} + \beta^{M-2} + \cdots + \beta \right)
+    \mathcal{M}_u - \Delta t^2\mathcal{M}_{\tau} 
+    \le \left(\beta^{M-1} + \beta^{M-2} + \cdots + \beta \right)
+    \Delta t^2
     \mathcal{M}_{\tau}
 \end{equation*}
 If $\beta$ is strictly less than $1$, then
 \begin{equation*}
-    \mathcal{M}_u \le \frac{1}{1-\beta} \mathcal{M}_{\tau}\,,
+    \mathcal{M}_u \le \frac{\Delta t^2}{1-\beta} \mathcal{M}_{\tau}\,,
 \end{equation*}
 thus completes the proof.\hfill\qedsymbol
 
